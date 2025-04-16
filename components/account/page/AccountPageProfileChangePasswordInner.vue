@@ -38,7 +38,7 @@ const changePassword = async (passwordForm: ChangePasswordForm) => {
     <UiAccordion type="single" class="w-full" collapsible>
         <UiAccordionItem value="password" class="border-gray-100">
             <UiAccordionTrigger class="text-base">
-                {{ $t('account.personalProfile.changePassword') }}
+                {{ $t('account.personalProfile.changePassword.headline') }}
             </UiAccordionTrigger>
             <UiAccordionContent class="text-base">
                 <UiAutoForm

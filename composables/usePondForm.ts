@@ -30,7 +30,7 @@ export const usePondForm = () => {
         const showTitle = configStore.get('core.loginRegistration.showTitleField') as boolean;
         if (showTitle) {
             personalDataForm = personalDataForm.extend({
-                title: z.string().optional(),
+                title: z.string().optional().description('test'),
             });
         }
 
