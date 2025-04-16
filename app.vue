@@ -14,6 +14,8 @@ await updateSessionWithLanguage();
 
 const { refreshCart } = useCart();
 const { getWishlistProducts } = useWishlist();
+const { refreshContext } = useCustomerStore();
+await refreshContext();
 
 useNotifications();
 useBreadcrumbs();
