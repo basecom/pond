@@ -98,6 +98,13 @@ const { formatLink } = useInternationalization();
                             {{ $t('account.auth.logout') }}
                         </slot>
                     </UiDropdownMenuItem>
+
+                    <UiDropdownMenuSeparator />
+                    <UiDropdownMenuItem class="cursor-pointer" @click="$emit('logout')">
+                        <slot name="logout">
+                            {{ $t('account.auth.logout') }}
+                        </slot>
+                    </UiDropdownMenuItem>
                 </slot>
             </template>
 

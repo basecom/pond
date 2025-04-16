@@ -43,5 +43,6 @@
             "defaultShippingAddress": "Standard-Lieferadresse",
             "addressesIdentical": "Entspricht der Rechnungsadresse"
         }
+      }
     }
 }
