@@ -10,10 +10,10 @@ export const useCustomerStore = defineStore('customer', () => {
     const signedIn = computed(() => !!sessionContext.value?.customer);
 
     const refreshContext = async () => {
-        console.log('refresh context in store')
         loading.value = true;
         await refreshSessionContext();
         loading.value = false;
+        console.log('sessioncontext', sessionContext.value)
     };
 
     return {
