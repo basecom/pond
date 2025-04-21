@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
 import UiButton from "../../ui/button/UiButton.vue";
+import CartItem from "../../lineItem/CartItem.vue";
 
 const props = withDefaults(
     defineProps<{
       cartItems?: Schemas['LineItem'][];
+      cartDeliveries?: Schemas['CartDelivery'][];
     }>(),
     {
         cartItems: undefined,
@@ -12,6 +14,11 @@ const props = withDefaults(
 );
 
 const hasLineItems = () => props.cartItems && props.cartItems?.length > 0;
+const cartDeliveryPositions = () => props.cartDeliveries?.find(() => true)?.positions;
+const getCartDeliveryPosition = (id: string) => cartDeliveryPositions()?.find(
+    (cartDelivery) => cartDelivery.lineItem?.id === id
+
+);
 </script>
 
 <template>
@@ -34,16 +41,24 @@ const hasLineItems = () => props.cartItems && props.cartItems?.length > 0;
             <UiSheetHeader>
                 <UiSheetTitle>Cart</UiSheetTitle>
                 <UiSheetDescription>
-                    <template v-if="hasLineItems()">
 
+                    <template v-if="hasLineItems()">
+                        <template v-for="cartItem in cartItems">
+                            <CartItem :cart-item="cartItem" :cart-delivery-position="getCartDeliveryPosition(cartItem.id)">
+
+                            </CartItem>
+                        </template>
                     </template>
                   <template v-else>
-
+                    <div class="w-full">
+                      <UiAlert>
+                        <UiAlertDescription>Your shopping cart is empty.</UiAlertDescription>
+                      </UiAlert>
+                    </div>
                   </template>
-                  <div class="flex flex-col">
-                    <div class="text-center"><a href="/"><UiButton variant="link">{{$t('proceedToCheckout')}}</UiButton></a></div>
-                    <div class="text-center"><a href="/"><UiButton variant="link">{{$t('proceedToCart')}}</UiButton></a></div>
-
+                  <div class="flex flex-col w-full gap-1">
+                    <div class="text-center w-full"><NuxtLinkLocale to="/"><UiButton :class="'w-full'">{{$t('proceedToCheckout')}}</UiButton></NuxtLinkLocale></div>
+                    <div class="text-center w-full"><NuxtLinkLocale to="/"><UiButton variant="link">{{$t('proceedToCart')}}</UiButton></NuxtLinkLocale></div>
                   </div>
                 </UiSheetDescription>
             </UiSheetHeader>
