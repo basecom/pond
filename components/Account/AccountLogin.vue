@@ -74,7 +74,7 @@ const handleLogin = async (fields: LoginForm) => {
                 v-for="(error, index) in apiErrors"
                 :key="`login-error-${index}`"
             >
-                {{ error.code }}
+                {{ $t('error.api.' + error.code) }}
             </li>
         </ul>
 
@@ -97,7 +97,7 @@ const handleLogin = async (fields: LoginForm) => {
 
     <div
         v-if="!signedIn"
-        class="mt-2 flex justify-between"
+        class="mt-2 flex w-full flex-wrap justify-between gap-2"
     >
         <LocaleLink
             v-if="showCreateLink"

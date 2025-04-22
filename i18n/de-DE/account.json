@@ -77,7 +77,7 @@
             "submitLabel": "Einloggen",
             "email": {
                 "label": "Email",
-                "placeholder": "Geben Sie ihre Email-Adresse ein",
+                "placeholder": "Geben Sie Ihre Email-Adresse ein",
                 "help": "Ihre Email-Adresse"
             },
             "password": {
@@ -95,6 +95,10 @@
             "company": {
                 "label": "Firma",
                 "placeholder": "Ihre Firma"
+            },
+            "confirm": {
+                "success": "Vielen Dank für Ihre Anmeldung! Ihr Account wurde erfolgreich freigeschaltet.",
+                "error": "Die Bestätigung dieses Accounts ist bereits erfolgt oder der Link ist ungültig."
             },
             "submitLabel": "Registrieren",
             "dataHeading": "Ihre Daten:",

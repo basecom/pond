@@ -8,9 +8,7 @@ useAnalytics({ trackPageView: true, pageType: 'login' });
 </script>
 
 <template>
-    <div class="flex w-full justify-center">
-        <div class="w-60">
-            <AccountLogin :redirect-after-success="true" />
-        </div>
+    <div class="container flex w-full flex-wrap justify-between md:w-3/5">
+        <AccountLogin :redirect-after-success="true" />
     </div>
 </template>

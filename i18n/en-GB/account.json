@@ -96,6 +96,10 @@
                 "label": "Company",
                 "placeholder": "Your company"
             },
+            "confirm": {
+                "success": "Thank you for your registration! Your account has been successfully activated",
+                "error": "The confirmation has already been completed or the link is invalid."
+            },
             "submitLabel": "Register",
             "dataHeading": "Your data:",
             "salutation": {
