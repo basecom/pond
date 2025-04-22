@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { Schemas } from '@shopware/api-client/api-types';
+import type {Schemas} from '@shopware/api-client/api-types';
 import UiNumberField from "../../ui/number-field/UiNumberField.vue";
 import UiNumberFieldContent from "../../ui/number-field//UiNumberFieldContent.vue";
 import UiNumberFieldDecrement from "../../ui/number-field//UiNumberFieldDecrement.vue";
 import UiNumberFieldInput from "../../ui/number-field/UiNumberFieldInput.vue";
 import UiNumberFieldIncrement from "../../ui/number-field/UiNumberFieldIncrement.vue";
+
 const props = withDefaults(
     defineProps<{
       cartItem?: Schemas['LineItem']
@@ -13,13 +14,14 @@ const props = withDefaults(
       cartItem: undefined
     },
 );
-const { cartItem } = toRefs(props);
+const {cartItem} = toRefs(props);
 const {
   itemQuantity,
   changeItemQuantity,
   itemStock
 } = useCartItem(cartItem);
-const { refreshCart } = useCart();
+
+const {refreshCart} = useCart();
 const quantity = ref();
 syncRefs(itemQuantity, quantity);
 
@@ -36,16 +38,18 @@ const changeCartItemQuantity = async (quantityInput: number) => {
 
 </script>
 <template>
-  <UiNumberField :min="1"
-                 :max="itemStock"
-                 :default-value="itemQuantity"
-                 v-model="quantity"
-                 @update:model-value="changeCartItemQuantity">
-    <Label>{{quantity}}</Label>
-    <UiNumberFieldContent>
-      <UiNumberFieldDecrement />
-      <UiNumberFieldInput />
-      <UiNumberFieldIncrement />
-    </UiNumberFieldContent>
-  </UiNumberField>
+  <label class="flex">{{ $t('quantity') }}: </label>
+  <div class="w-1/3">
+    <UiNumberField :min="1"
+                   :max="itemStock"
+                   :default-value="itemQuantity"
+                   v-model="quantity"
+                   @update:model-value="changeCartItemQuantity">
+      <UiNumberFieldContent>
+        <UiNumberFieldDecrement/>
+        <UiNumberFieldInput/>
+        <UiNumberFieldIncrement/>
+      </UiNumberFieldContent>
+    </UiNumberField>
+  </div>
 </template>

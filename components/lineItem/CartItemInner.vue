@@ -4,6 +4,9 @@ import CartItemImage from "./element/CartItemImage.vue";
 import CartItemRemove from "./element/CartItemRemove.vue";
 import CartItemQuantity from "./element/CartItemQuantity.vue";
 import CartItemOptions from "./element/CartItemOptions.vue";
+import CartItemDeliveryPosition from "./element/CartItemDeliveryPosition.vue";
+import CartItemTotalPrice from "./element/price/CartItemTotalPrice.vue";
+import CartItemUnitPrice from "./element/price/CartItemUnitPrice.vue";
 
 const props = withDefaults(
     defineProps<{
@@ -16,9 +19,11 @@ const props = withDefaults(
     },
 );
 const { cartItem } = toRefs(props);
-
+const { getFormattedPrice } = usePrice();
 const {
-  itemOptions
+  itemOptions,
+    itemTotalPrice,
+    itemRegularPrice
 } = useCartItem(cartItem);
 
 </script>
@@ -26,27 +31,26 @@ const {
   <div class="flex flex-wrap">
     <div class="flex-col flex order-1 w-[83.33333333%]">
       <div>
-        <CartItemImage :cart-item-image="cartItem.cover.url"></CartItemImage>
+        <CartItemImage :cart-item-image="cartItem.cover.url" />
       </div>
       <div>
         {{ cartItem.label }}
       </div>
       <div>
-       <CartItemOptions :cart-item-options="itemOptions">
-
-       </CartItemOptions>
+       <CartItemOptions :cart-item-options="itemOptions" />
       </div>
       <div>{{ cartItem.payload.productNumber }}</div>
       <div class="line-item-delivery-date">
         <template v-if="cartDeliveryPosition">
-          {{ cartDeliveryPosition.deliveryDate.earliest }} - {{ cartDeliveryPosition.deliveryDate.latest }}
+          <CartItemDeliveryPosition :cart-item-delivery-position="cartDeliveryPosition" />
         </template>
       </div>
       <div>add-to-wishlist</div>
     </div>
-    <div class="order-3"> <CartItemQuantity :cart-item="cartItem"></CartItemQuantity> </div>
-    <div class="order-5 w-full">{{ cartItem.price.unitPrice }}</div>
-    <div class="order-4 w-full">{{ cartItem.price.totalPrice }}</div>
-    <div class="order-2 w-[16.66666667%]"><CartItemRemove :cart-item="cartItem"></CartItemRemove></div>
+    <div class="order-3 flex justify-between items-center w-full">
+      <CartItemQuantity :cart-item="cartItem" /></div>
+    <div class="order-5 w-full flex justify-end"><CartItemUnitPrice :cart-item-unit-price="getFormattedPrice(itemRegularPrice)"/></div>
+    <div class="order-4 w-full flex justify-end"><CartItemTotalPrice :cart-item-total-price="getFormattedPrice(itemTotalPrice)"/></div>
+    <div class="order-2 w-[16.66666667%]"><CartItemRemove :cart-item="cartItem" /></div>
   </div>
 </template>

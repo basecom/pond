@@ -1,4 +1,7 @@
 {
   "proceedToCheckout": "Go to checkout",
-  "proceedToCart": "Display shopping cart"
+  "proceedToCart": "Display shopping cart",
+  "deliveryPeriod": "Delivery period",
+  "quantity": "Quantity",
+  "lineItemUnitPriceDescriptor": "Unit"
 }
