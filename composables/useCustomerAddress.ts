@@ -61,7 +61,7 @@ export function useCustomerAddress() {
             return await updateAddress(addressData, newAddressId);
         }
 
-        await createAddress(addressData);
+        return await createAddress(addressData);
     };
 
     const updateAddress = async (addressData: ShippingAddressForm|BillingAddressForm, id: string) => {
