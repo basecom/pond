@@ -96,6 +96,10 @@
                 "label": "Firma",
                 "placeholder": "Ihre Firma"
             },
+            "confirm": {
+                "success": "Vielen Dank für Ihre Anmeldung! Ihr Account wurde erfolgreich freigeschaltet.",
+                "error": "Die Bestätigung dieses Accounts ist bereits erfolgt oder der Link ist ungültig."
+            },
             "submitLabel": "Registrieren",
             "dataHeading": "Ihre Daten:",
             "salutation": {

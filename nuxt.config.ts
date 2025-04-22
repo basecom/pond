@@ -64,6 +64,7 @@ export default defineNuxtConfig({
 
     routeRules: {
         '/newsletter-subscribe': { redirect: '/newsletter/confirm' },
+        '/registration/confirm': { redirect: '/account/register/confirm' },
     },
 
     extends: ['@shopware-pwa/composables-next/nuxt-layer'],

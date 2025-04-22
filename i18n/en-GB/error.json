@@ -17,6 +17,11 @@
         "unknown": {
             "heading": "Unknown error",
             "detail": "An unknown error occurred. We apologize for the inconvenience."
+        },
+        "api": {
+            "CHECKOUT__CUSTOMER_NOT_FOUND": "No account with the specified data was found",
+            "CHECKOUT__CUSTOMER_OPTIN_NOT_COMPLETED": "This account has not been activated yet",
+            "CHECKOUT__CUSTOMER_AUTH_BAD_CREDENTIALS": "No account with the specified data was found. Verify your input."
         }
     }
 }

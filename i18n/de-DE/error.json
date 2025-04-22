@@ -17,6 +17,11 @@
         "unknown": {
             "heading": "Unbekannter Fehler",
             "detail": "Ein unbekannter Fehler ist aufgetreten. Wir entschuldigen uns für die Unannehmlichkeiten."
+        },
+        "api": {
+            "CHECKOUT__CUSTOMER_NOT_FOUND": "Es konnte kein Konto mit den angegebenen Zugangsdaten gefunden werden",
+            "CHECKOUT__CUSTOMER_OPTIN_NOT_COMPLETED": "Dieses Kundenkonto wurde noch nicht aktiviert",
+            "CHECKOUT__CUSTOMER_AUTH_BAD_CREDENTIALS": "Es konnte kein Konto mit den angegebenen Zugangsdaten gefunden werden. Prüfen Sie Ihre Eingabe."
         }
     }
 }
