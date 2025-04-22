@@ -10,14 +10,16 @@ const props = withDefaults(
     }>(),
     {
         cartItems: undefined,
+        cartDeliveries: undefined,
     },
 );
 
 const hasLineItems = () => props.cartItems && props.cartItems?.length > 0;
+
 const cartDeliveryPositions = () => props.cartDeliveries?.find(() => true)?.positions;
+
 const getCartDeliveryPosition = (id: string) => cartDeliveryPositions()?.find(
     (cartDelivery) => cartDelivery.lineItem?.id === id
-
 );
 </script>
 
