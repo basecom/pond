@@ -32,7 +32,7 @@ const getCartDeliveryPosition = (id: string) => cartDeliveryPositions()?.find(
                 </slot>
 
                 <slot name="cart-badge">
-                    <UiBadge v-if="hasLineItems()" class="absolute -right-2 -top-1.5 px-1 py-0 text-xs font-normal">
+                    <UiBadge v-if="hasLineItems()" class="absolute -top-1 px-1 py-0 text-xs font-normal">
                         {{ cartItems.length }}
                     </UiBadge>
                 </slot>
