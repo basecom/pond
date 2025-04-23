@@ -10,8 +10,8 @@ const props = withDefaults(
 );
 </script>
 <template>
-    <span>
-    {{cartItemTotalPrice}}*
-  </span>
+    <span class="font-bold">
+      {{cartItemTotalPrice}}*
+    </span>
 
 </template>

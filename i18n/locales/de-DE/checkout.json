@@ -3,5 +3,7 @@
   "proceedToCart": "Zum Warenkorb",
   "deliveryPeriod": "Lieferzeitraum",
   "quantity": "Menge",
-  "lineItemUnitPriceDescriptor": "Stück"
+  "lineItemUnitPriceDescriptor": "Stück",
+  "removeFromWishlist": "Vom Merkzettel entfernen",
+  "addToWishlist": "Zum Merkzettel hinzufügen"
 }

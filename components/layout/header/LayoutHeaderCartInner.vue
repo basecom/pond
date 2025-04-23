@@ -39,7 +39,7 @@ const getCartDeliveryPosition = (id: string) => cartDeliveryPositions()?.find(
             </UiSheetTrigger>
         </slot>
 
-        <UiSheetContent>
+        <UiSheetContent class="overflow-y-scroll">
             <UiSheetHeader>
                 <UiSheetTitle>Cart</UiSheetTitle>
                 <UiSheetDescription>

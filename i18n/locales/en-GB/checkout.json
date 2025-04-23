@@ -3,5 +3,7 @@
   "proceedToCart": "Display shopping cart",
   "deliveryPeriod": "Delivery period",
   "quantity": "Quantity",
-  "lineItemUnitPriceDescriptor": "Unit"
+  "lineItemUnitPriceDescriptor": "Unit",
+  "removeFromWishlist": "Remove from wishlist",
+  "addToWishlist": "Add to wishlist"
 }
