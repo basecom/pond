@@ -5,5 +5,7 @@
   "quantity": "Menge",
   "lineItemUnitPriceDescriptor": "Stück",
   "removeFromWishlist": "Vom Merkzettel entfernen",
-  "addToWishlist": "Zum Merkzettel hinzufügen"
+  "addToWishlist": "Zum Merkzettel hinzufügen",
+  "addPromotionPlaceholder": "Promocode hinzufügen...",
+  "addPromotionLabel": "Promocode"
 }

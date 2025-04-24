@@ -5,5 +5,7 @@
   "quantity": "Quantity",
   "lineItemUnitPriceDescriptor": "Unit",
   "removeFromWishlist": "Remove from wishlist",
-  "addToWishlist": "Add to wishlist"
+  "addToWishlist": "Add to wishlist",
+  "addPromotionPlaceholder": "Enter Promo Code...",
+  "addPromotionLabel": "Promo code"
 }

@@ -1,5 +1,7 @@
 {
     "general": {
-        "close": "Schließen"
+        "close": "Schließen",
+        "grossTaxInformation": "Prices incl. VAT plus shipping costs",
+        "netTaxInformation": " Prices incl. VAT plus shipping costs"
     }
 }

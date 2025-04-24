@@ -2,6 +2,7 @@
 import type { Schemas } from '@shopware/api-client/api-types';
 import UiButton from "../../ui/button/UiButton.vue";
 import CartItem from "../../lineItem/CartItem.vue";
+import OffcanvasCartSummary from "../../checkout/OffcanvasCartSummary.vue";
 
 const props = withDefaults(
     defineProps<{
@@ -43,7 +44,7 @@ const getCartDeliveryPosition = (id: string) => cartDeliveryPositions()?.find(
             <UiSheetHeader>
                 <UiSheetTitle>Cart</UiSheetTitle>
                 <UiSheetDescription>
-
+                <div class="mb-4">
                     <template v-if="hasLineItems()">
                         <template v-for="cartItem in cartItems">
                             <CartItem :cart-item="cartItem" :cart-delivery-position="getCartDeliveryPosition(cartItem.id)">
@@ -51,6 +52,7 @@ const getCartDeliveryPosition = (id: string) => cartDeliveryPositions()?.find(
                             </CartItem>
                         </template>
                     </template>
+
                   <template v-else>
                     <div class="w-full">
                       <UiAlert>
@@ -58,6 +60,10 @@ const getCartDeliveryPosition = (id: string) => cartDeliveryPositions()?.find(
                       </UiAlert>
                     </div>
                   </template>
+                </div>
+                  <div>
+                    <OffcanvasCartSummary :cart-deliveries="cartDeliveries"/>
+                  </div>
                   <div class="flex flex-col w-full gap-1">
                     <div class="text-center w-full"><NuxtLinkLocale to="/"><UiButton :class="'w-full'">{{$t('proceedToCheckout')}}</UiButton></NuxtLinkLocale></div>
                     <div class="text-center w-full"><NuxtLinkLocale to="/"><UiButton variant="link">{{$t('proceedToCart')}}</UiButton></NuxtLinkLocale></div>

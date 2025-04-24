@@ -30,31 +30,32 @@ const {
 </script>
 <template>
   <div class="flex flex-wrap py-4 border-b">
-    <div class="flex-col flex order-1 w-[83.33333333%]">
-      <div class="w-auto">
-        <CartItemImage :cart-item-image="cartItem.cover.url" />
+    <div class="flex flex-col order-1 mb-4 w-5/6">
+      <div class="w-auto mb-2">
+        <template></template>
+        <CartItemImage :cart-item-image="cartItem.cover?.url" />
       </div>
       <div class="font-bold">
         <NuxtLinkLocale to="/">
         {{ cartItem.label }}
         </NuxtLinkLocale>
       </div>
-      <div class="text-xs">
+      <div class="text-xs my-2">
        <CartItemOptions :cart-item-options="itemOptions" />
       </div>
-      <div class="text-xs">{{ cartItem.payload.productNumber }}</div>
+      <div class="text-xs mb-2">{{ cartItem.payload.productNumber }}</div>
       <div class="text-xs">
         <template v-if="cartDeliveryPosition">
           <CartItemDeliveryPosition :cart-item-delivery-position="cartDeliveryPosition" />
         </template>
       </div>
-      <div class="text-xs">
+      <div class="text-xs mt-2">
         <CartItemAddToWishlist :referenced-id="cartItem.referencedId"/>
       </div>
     </div>
     <div class="order-3 flex justify-between items-center mb-4 w-full"><CartItemQuantity :cart-item="cartItem" /></div>
     <div class="order-5 w-full flex justify-end text-xs"><CartItemUnitPrice :cart-item-unit-price="getFormattedPrice(itemRegularPrice)"/></div>
     <div class="order-4 w-full flex justify-end"><CartItemTotalPrice :cart-item-total-price="getFormattedPrice(itemTotalPrice)"/></div>
-    <div class="order-2 w-[16.66666667%] flex justify-end"><CartItemRemove :cart-item="cartItem" /></div>
+    <div class="order-2 w-1/6 flex justify-end"><CartItemRemove :cart-item="cartItem" /></div>
   </div>
 </template>

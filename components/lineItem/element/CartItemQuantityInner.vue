@@ -38,10 +38,9 @@ const changeCartItemQuantity = async (quantityInput: number) => {
 
 </script>
 <template>
-  <label class="flex">{{ $t('quantity') }}: </label>
+  <label class="flex font-bold">{{ $t('quantity') }} </label>
   <div class="w-1/3">
     <UiNumberField :min="1"
-                   :max="itemStock"
                    :default-value="itemQuantity"
                    v-model="quantity"
                    @update:model-value="changeCartItemQuantity">
