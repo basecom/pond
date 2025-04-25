@@ -14,8 +14,9 @@ const props = withDefaults(
 
 </script>
 <template>
+  <template v-if="cartItemDeliveryPosition && cartItemDeliveryPosition.deliveryDate">
   <span>
-    {{$t('deliveryPeriod')}}
+    {{$t('checkout.deliveryPeriod')}}
   </span>:
   <span>
     <!-- todo: locale -->
@@ -23,5 +24,5 @@ const props = withDefaults(
     -
     {{ useDateFormat(cartItemDeliveryPosition.deliveryDate.latest, 'DD/MM/YYYY') }}
   </span>
-
+  </template>
 </template>

@@ -15,13 +15,14 @@ const props = withDefaults(
     },
 );
 const {cartItem} = toRefs(props);
+
 const {
   itemQuantity,
   changeItemQuantity,
   itemStock
 } = useCartItem(cartItem);
-
 const {refreshCart} = useCart();
+
 const quantity = ref();
 syncRefs(itemQuantity, quantity);
 
@@ -31,14 +32,14 @@ const changeCartItemQuantity = async (quantityInput: number) => {
     // Refresh cart after quantity update
     await refreshCart(response);
   } catch (error) {
-
   }
+
   quantity.value = itemQuantity.value;
 };
 
 </script>
 <template>
-  <label class="flex font-bold">{{ $t('quantity') }} </label>
+  <label class="flex font-bold">{{ $t('checkout.quantity') }} </label>
   <div class="w-1/3">
     <UiNumberField :min="1"
                    :default-value="itemQuantity"

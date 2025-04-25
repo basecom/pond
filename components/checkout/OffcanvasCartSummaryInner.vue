@@ -63,7 +63,7 @@ const addSelectedPromotionCode = async (promotionCode:string) => {
             </UiSelectTrigger>
             <UiSelectContent>
               <UiSelectGroup>
-                <template v-for="(shippingMethod, index) in shippingMethods">
+                <template v-for="(shippingMethod) in shippingMethods">
                   <UiSelectItem :value="shippingMethod.id">
                     {{ shippingMethod.translated.name }}
                   </UiSelectItem>

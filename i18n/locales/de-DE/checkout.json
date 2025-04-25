@@ -1,11 +1,16 @@
 {
-  "proceedToCheckout": "Zum Checkout",
-  "proceedToCart": "Zum Warenkorb",
-  "deliveryPeriod": "Lieferzeitraum",
-  "quantity": "Menge",
-  "lineItemUnitPriceDescriptor": "Stück",
-  "removeFromWishlist": "Vom Merkzettel entfernen",
-  "addToWishlist": "Zum Merkzettel hinzufügen",
-  "addPromotionPlaceholder": "Promocode hinzufügen...",
-  "addPromotionLabel": "Promocode"
+  "checkout": {
+    "proceedToCheckout": "Zum Checkout",
+    "proceedToCart": "Zum Warenkorb",
+    "deliveryPeriod": "Lieferzeitraum",
+    "quantity": "Menge",
+    "lineItemUnitPriceDescriptor": "Stück",
+    "removeFromWishlist": "Vom Merkzettel entfernen",
+    "addToWishlist": "Zum Merkzettel hinzufügen",
+    "addPromotionPlaceholder": "Promocode hinzufügen...",
+    "addPromotionLabel": "Promocode",
+    "subTotal": "Zwischensumme",
+    "summaryShipping": "Lieferung",
+    "cartItemInfoId": "Produktnummer"
+  }
 }

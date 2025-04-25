@@ -13,6 +13,6 @@ const props = withDefaults(
   <span>
     {{cartItemUnitPrice}}*
   </span>
-  <span class="line-item-unit-price-value-descriptor"> / {{ $t('lineItemUnitPriceDescriptor') }}</span>
+  <span class="line-item-unit-price-value-descriptor"> / {{ $t('checkout.lineItemUnitPriceDescriptor') }}</span>
 
 </template>

@@ -1,11 +1,16 @@
 {
-  "proceedToCheckout": "Go to checkout",
-  "proceedToCart": "Display shopping cart",
-  "deliveryPeriod": "Delivery period",
-  "quantity": "Quantity",
-  "lineItemUnitPriceDescriptor": "Unit",
-  "removeFromWishlist": "Remove from wishlist",
-  "addToWishlist": "Add to wishlist",
-  "addPromotionPlaceholder": "Enter Promo Code...",
-  "addPromotionLabel": "Promo code"
+  "checkout": {
+    "proceedToCheckout": "Go to checkout",
+    "proceedToCart": "Display shopping cart",
+    "deliveryPeriod": "Delivery period",
+    "quantity": "Quantity",
+    "lineItemUnitPriceDescriptor": "Unit",
+    "removeFromWishlist": "Remove from wishlist",
+    "addToWishlist": "Add to wishlist",
+    "addPromotionPlaceholder": "Enter promo code...",
+    "addPromotionLabel": "Promo code",
+    "subTotal": "Subtotal",
+    "summaryShipping": "Shipping",
+    "cartItemInfoId": "Product number"
+  }
 }

@@ -23,7 +23,7 @@ getWishlistProducts(); //needs to be called again in cart
       <Icon name="mdi:heart" class="size-5"/>
     </UiButton>
     <UiButton variant="link" class="pl-0 text-xs">
-      {{ $t('removeFromWishlist') }}
+      {{ $t('checkout.removeFromWishlist') }}
     </UiButton>
     </div>
   </template>
@@ -33,7 +33,7 @@ getWishlistProducts(); //needs to be called again in cart
       <Icon name="mdi:heart-outline" class="size-5"/>
     </UiButton>
     <UiButton variant="link" class="pl-0 text-xs">
-      {{ $t('addToWishlist') }}
+      {{ $t('checkout.addToWishlist') }}
     </UiButton>
     </div>
   </template>
