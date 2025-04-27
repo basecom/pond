@@ -5,14 +5,14 @@ const props = withDefaults(
       cartItemUnitPrice?: string
     }>(),
     {
-      cartItemUnitPrice: undefined
+        cartItemUnitPrice: undefined,
     },
 );
 </script>
 <template>
-  <span>
-    {{cartItemUnitPrice}}*
-  </span>
-  <span class="line-item-unit-price-value-descriptor"> / {{ $t('checkout.lineItemUnitPriceDescriptor') }}</span>
+    <span>
+        {{ cartItemUnitPrice }}*
+    </span>
+    <span class="line-item-unit-price-value-descriptor"> / {{ $t('checkout.lineItemUnitPriceDescriptor') }}</span>
 
 </template>

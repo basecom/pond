@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import { useDateFormat } from '@vueuse/core'
+import { useDateFormat } from '@vueuse/core';
 
 
 const props = withDefaults(
@@ -8,21 +8,21 @@ const props = withDefaults(
       cartItemDeliveryPosition?: Schemas['CartDeliveryPosition']
     }>(),
     {
-      cartItemDeliveryPosition: undefined
+        cartItemDeliveryPosition: undefined,
     },
 );
 
 </script>
 <template>
-  <template v-if="cartItemDeliveryPosition && cartItemDeliveryPosition.deliveryDate">
-  <span>
-    {{$t('checkout.deliveryPeriod')}}
-  </span>:
-  <span>
-    <!-- todo: locale -->
-    {{ useDateFormat(cartItemDeliveryPosition.deliveryDate.earliest, 'DD/MM/YYYY') }}
-    -
-    {{ useDateFormat(cartItemDeliveryPosition.deliveryDate.latest, 'DD/MM/YYYY') }}
-  </span>
-  </template>
+    <template v-if="cartItemDeliveryPosition && cartItemDeliveryPosition.deliveryDate">
+        <span>
+            {{ $t('checkout.deliveryPeriod') }}
+        </span>:
+        <span>
+            <!-- todo: locale -->
+            {{ useDateFormat(cartItemDeliveryPosition.deliveryDate.earliest, 'DD/MM/YYYY') }}
+            -
+            {{ useDateFormat(cartItemDeliveryPosition.deliveryDate.latest, 'DD/MM/YYYY') }}
+        </span>
+    </template>
 </template>

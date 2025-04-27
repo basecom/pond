@@ -5,25 +5,25 @@ const props = withDefaults(
       cartItem?: Schemas['LineItem']
     }>(),
     {
-      cartItem: undefined
+        cartItem: undefined,
     },
 );
 const { cartItem } = toRefs(props);
 const {removeItem} = useCartItem(cartItem);
 
 const removeCartItem = async () => {
-  try {
-    await removeItem();
-    console.log("success");
-  } catch (error) {
-    console.log("error")
-  }
+    try {
+        await removeItem();
+        console.log('success');
+    } catch (error) {
+        console.log('error');
+    }
 };
 
 </script>
 <template>
-  <UiButton variant="outline" size="icon" @click="removeCartItem">
-    <Icon name="mdi-close" class="size-4" />
-  </UiButton>
+    <UiButton variant="outline" size="icon" @click="removeCartItem">
+        <Icon name="mdi-close" class="size-4" />
+    </UiButton>
 
 </template>

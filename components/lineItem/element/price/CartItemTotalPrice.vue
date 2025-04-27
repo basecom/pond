@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import CartItemTotalPriceInner from "./CartItemTotalPriceInner.vue";
+import CartItemTotalPriceInner from './CartItemTotalPriceInner.vue';
 const props = withDefaults(
     defineProps<{
       cartItemTotalPrice?: string
     }>(),
     {
-      cartItemTotalPrice: undefined
+        cartItemTotalPrice: undefined,
     },
 );
 </script>
 <template>
-  <CartItemTotalPriceInner :cart-item-total-price="cartItemTotalPrice"/>
+    <CartItemTotalPriceInner :cart-item-total-price="cartItemTotalPrice" />
 
 </template>

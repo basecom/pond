@@ -5,13 +5,13 @@ const props = withDefaults(
       cartItemTotalPrice?: string
     }>(),
     {
-      cartItemTotalPrice: undefined
+        cartItemTotalPrice: undefined,
     },
 );
 </script>
 <template>
     <span class="font-bold">
-      {{cartItemTotalPrice}}*
+        {{ cartItemTotalPrice }}*
     </span>
 
 </template>

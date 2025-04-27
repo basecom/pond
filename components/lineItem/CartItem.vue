@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import CartItemInner from "./CartItemInner.vue";
+import CartItemInner from './CartItemInner.vue';
 const props = withDefaults(
     defineProps<{
       cartItem?: Schemas['LineItem'];
       cartDeliveryPosition?: Schemas['CartDeliveryPosition']
     }>(),
     {
-      cartItem: undefined,
-      cartDeliveryPosition: undefined
+        cartItem: undefined,
+        cartDeliveryPosition: undefined,
     },
 );
 </script>
 <template>
-  <CartItemInner :cart-item="cartItem" :cart-delivery-position="cartDeliveryPosition"/>
+    <CartItemInner :cart-item="cartItem" :cart-delivery-position="cartDeliveryPosition" />
 
 </template>

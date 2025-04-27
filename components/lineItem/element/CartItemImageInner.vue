@@ -6,16 +6,16 @@ const props = withDefaults(
       cartItemImage?: string
     }>(),
     {
-      cartItemImage: undefined
+        cartItemImage: undefined,
     },
 );
 </script>
 <template>
-  <template v-if="cartItemImage">
-    <div class="text-center w-[70px]">
-      <NuxtLinkLocale to="/">
-        <img :src="cartItemImage" alt="image" class="w-100 h-[70px] object-contain border p-1"/>
-      </NuxtLinkLocale>
-    </div>
-  </template>
+    <template v-if="cartItemImage">
+        <div class="w-[70px] text-center">
+            <NuxtLinkLocale to="/">
+                <img :src="cartItemImage" alt="image" class="w-100 h-[70px] border object-contain p-1">
+            </NuxtLinkLocale>
+        </div>
+    </template>
 </template>
