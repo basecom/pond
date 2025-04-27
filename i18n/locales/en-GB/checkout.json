@@ -11,6 +11,7 @@
     "addPromotionLabel": "Promo code",
     "subTotal": "Subtotal",
     "summaryShipping": "Shipping",
-    "cartItemInfoId": "Product number"
+    "cartItemInfoId": "Product number",
+    "noLineItems": "Your shopping cart is empty."
   }
 }

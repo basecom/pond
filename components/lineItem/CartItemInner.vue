@@ -5,6 +5,8 @@ import CartItemQuantity from './element/CartItemQuantity.vue';
 import CartItemTotalPrice from './element/price/CartItemTotalPrice.vue';
 import CartItemUnitPrice from './element/price/CartItemUnitPrice.vue';
 import CartItemProduct from './element/type/CartItemProduct.vue';
+import CartItemDiscount from './element/type/CartItemDiscount.vue';
+import {Loader2} from 'lucide-vue-next';
 
 const props = withDefaults(
     defineProps<{
@@ -16,20 +18,23 @@ const props = withDefaults(
         cartDeliveryPosition: undefined,
     },
 );
-const { cartItem, cartDeliveryPosition } = toRefs(props);
-const { getFormattedPrice } = usePrice();
-const {
-    itemTotalPrice,
-    itemRegularPrice,
-} = useCartItem(cartItem);
 
+const isLoading = ref(false);
 </script>
 <template>
-    <div class="flex flex-wrap border-b py-4">
-        <CartItemProduct :cart-item="cartItem" :cart-delivery-position="cartDeliveryPosition" />
-        <div class="order-3 mb-4 flex w-full items-center justify-between"><CartItemQuantity :cart-item="cartItem" /></div>
-        <div class="order-5 flex w-full justify-end text-xs"><CartItemUnitPrice :cart-item-unit-price="getFormattedPrice(itemRegularPrice)" /></div>
-        <div class="order-4 flex w-full justify-end"><CartItemTotalPrice :cart-item-total-price="getFormattedPrice(itemTotalPrice)" /></div>
-        <div class="order-2 flex w-1/6 justify-end"><CartItemRemove :cart-item="cartItem" /></div>
+  <div v-if="isLoading">
+    <div class="flex justify-center items-center p-24">
+    <Loader2 class="size-12 animate-spin" />
+    </div>
+  </div>
+    <div v-else class="flex flex-wrap border-b py-4">
+        <template v-if="cartItem.type === 'product'">
+          <CartItemProduct :cart-item="cartItem" :cart-delivery-position="cartDeliveryPosition" />
+          <div class="order-2 flex w-1/6 justify-end"><CartItemRemove :cart-item="cartItem" @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"/></div>
+        </template>
+        <template v-if="cartItem.type === 'promotion'">
+          <CartItemDiscount :cart-item="cartItem" />
+          <div class="order-2 flex w-1/6 justify-end"><CartItemRemove :cart-item="cartItem" @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit" /></div>
+        </template>
     </div>
 </template>

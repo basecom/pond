@@ -2,19 +2,24 @@
 import type { Schemas } from '@shopware/api-client/api-types';
 const props = withDefaults(
     defineProps<{
-      cartItem?: Schemas['LineItem']
+      cartItem?: Schemas['LineItem'],
+      isLoading?: boolean
     }>(),
     {
         cartItem: undefined,
+      isLoading: false
     },
 );
 const { cartItem } = toRefs(props);
 const {removeItem} = useCartItem(cartItem);
-
+const emits = defineEmits<{
+  isLoading: [boolean]
+}>();
 const removeCartItem = async () => {
     try {
+        emits('isLoading', true);
         await removeItem();
-        console.log('success');
+        emits('isLoading', false);
     } catch (error) {
         console.log('error');
     }

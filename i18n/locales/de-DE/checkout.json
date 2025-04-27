@@ -11,6 +11,7 @@
     "addPromotionLabel": "Promocode",
     "subTotal": "Zwischensumme",
     "summaryShipping": "Lieferung",
-    "cartItemInfoId": "Produktnummer"
+    "cartItemInfoId": "Produktnummer",
+    "noLineItems": "Der Einkaufswagen ist leer."
   }
 }
