@@ -192,7 +192,7 @@ export const usePondRegisterForm = () => {
         }
 
         registerForm = registerForm.extend({
-            deliveryAddressVaries: z.boolean().optional(),
+            shippingAddressVaries: z.boolean().optional(),
         })
 
         return registerForm;
@@ -201,6 +201,10 @@ export const usePondRegisterForm = () => {
     // TODO: Duplicated Schemas due non customization of nested zod fields in autoForm. Is there a better way?
     const getAddressSchema = () => {
         let addressForm = z.object({});
+
+        addressForm = addressForm.extend({
+            addressHeader: z.void()
+        })
 
         if (configStore.get('core.loginRegistration.showAccountTypeSelection')) {
             addressForm = addressForm.extend({
@@ -389,40 +393,117 @@ export const usePondRegisterForm = () => {
                 accountType !== accountTypes.business.value
         },
         {
-            sourceField: 'deliveryAddressVaries',
+            sourceField: 'shippingAddressVaries',
+            type: DependencyType.HIDES,
+            targetField: 'addressHeader',
+            when: (shippingAddressVaries: boolean) =>
+                !shippingAddressVaries
+        },
+        {
+            sourceField: 'shippingAddressVaries',
             type: DependencyType.HIDES,
             targetField: 'addressAccountType',
-            when: (deliveryAddressVaries: boolean) =>
-                !deliveryAddressVaries
+            when: (shippingAddressVaries: boolean) =>
+                !shippingAddressVaries
         },
         {
-            sourceField: 'deliveryAddressVaries',
+            sourceField: 'shippingAddressVaries',
+            type: DependencyType.HIDES,
+            targetField: 'addressSalutationId',
+            when: (shippingAddressVaries: boolean) =>
+                !shippingAddressVaries
+        },
+        {
+            sourceField: 'shippingAddressVaries',
             type: DependencyType.HIDES,
             targetField: 'addressTitle',
-            when: (deliveryAddressVaries: boolean) =>
-                !deliveryAddressVaries
+            when: (shippingAddressVaries: boolean) =>
+                !shippingAddressVaries
         },
         {
-            sourceField: 'deliveryAddressVaries',
+            sourceField: 'shippingAddressVaries',
             type: DependencyType.HIDES,
             targetField: 'addressFirstName',
-            when: (deliveryAddressVaries: boolean) =>
-                !deliveryAddressVaries
+            when: (shippingAddressVaries: boolean) =>
+                !shippingAddressVaries
         },
         {
-            sourceField: 'deliveryAddressVaries',
+            sourceField: 'shippingAddressVaries',
             type: DependencyType.HIDES,
             targetField: 'addressLastName',
-            when: (deliveryAddressVaries: boolean) =>
-                !deliveryAddressVaries
+            when: (shippingAddressVaries: boolean) =>
+                !shippingAddressVaries
         },
         {
-            sourceField: 'deliveryAddressVaries',
+            sourceField: 'shippingAddressVaries',
+            type: DependencyType.HIDES,
+            targetField: 'addressCompany',
+            when: (shippingAddressVaries: boolean) =>
+                !shippingAddressVaries
+        },
+        {
+            sourceField: 'shippingAddressVaries',
+            type: DependencyType.HIDES,
+            targetField: 'addressDepartment',
+            when: (shippingAddressVaries: boolean) =>
+                !shippingAddressVaries
+        },
+        {
+            sourceField: 'shippingAddressVaries',
             type: DependencyType.HIDES,
             targetField: 'addressStreet',
-            when: (deliveryAddressVaries: boolean) =>
-                !deliveryAddressVaries
+            when: (shippingAddressVaries: boolean) =>
+                !shippingAddressVaries
         },
+        {
+            sourceField: 'shippingAddressVaries',
+            type: DependencyType.HIDES,
+            targetField: 'addressZipcode',
+            when: (shippingAddressVaries: boolean) =>
+                !shippingAddressVaries
+        },
+        {
+            sourceField: 'shippingAddressVaries',
+            type: DependencyType.HIDES,
+            targetField: 'addressCity',
+            when: (shippingAddressVaries: boolean) =>
+                !shippingAddressVaries
+        },
+        {
+            sourceField: 'shippingAddressVaries',
+            type: DependencyType.HIDES,
+            targetField: 'addressAdditionalAddressLine1',
+            when: (shippingAddressVaries: boolean) =>
+                !shippingAddressVaries
+        },
+        {
+            sourceField: 'shippingAddressVaries',
+            type: DependencyType.HIDES,
+            targetField: 'addressAdditionalAddressLine2',
+            when: (shippingAddressVaries: boolean) =>
+                !shippingAddressVaries
+        },
+        {
+            sourceField: 'shippingAddressVaries',
+            type: DependencyType.HIDES,
+            targetField: 'addressCountryId',
+            when: (shippingAddressVaries: boolean) =>
+                !shippingAddressVaries
+        },
+        {
+            sourceField: 'shippingAddressVaries',
+            type: DependencyType.HIDES,
+            targetField: 'addressCountryState',
+            when: (shippingAddressVaries: boolean) =>
+                !shippingAddressVaries
+        },
+        {
+            sourceField: 'shippingAddressVaries',
+            type: DependencyType.HIDES,
+            targetField: 'addressPhoneNumber',
+            when: (shippingAddressVaries: boolean) =>
+                !shippingAddressVaries
+        }
     ];
 
     const getRegisterFieldConfig = {
@@ -528,7 +609,7 @@ export const usePondRegisterForm = () => {
                 placeholder: t('account.register.phone.placeholder'),
             }
         },
-        deliveryAddressVaries: {
+        shippingAddressVaries: {
             label: t('account.register.differentShippingAddress')
         },
         addressAccountType: {
