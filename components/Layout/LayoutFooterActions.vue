@@ -8,11 +8,10 @@ const { t } = useI18n();
 
         <CookieBannerModal>
             <template #trigger>
-                <button class="rounded-full bg-brand-primary p-2">
+                <button class="rounded-full bg-brand-primary p-2" :title="t('icon.cookie')">
                     <FormKitIcon
                         class="block size-4 cursor-pointer text-white"
                         icon="cookie"
-                        :title="t('icon.cookie')"
                     />
                 </button>
             </template>

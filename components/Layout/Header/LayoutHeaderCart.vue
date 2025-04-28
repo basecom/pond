@@ -9,11 +9,11 @@ const { t } = useI18n();
 <template>
     <button
         class="relative"
+        :title="t('icon.cart')"
         @click="offcanvasCartController.open()"
     >
         <FormKitIcon
             icon="cart-shopping"
-            :title="t('icon.cart')"
             class="block size-6"
         />
         <UtilityPill

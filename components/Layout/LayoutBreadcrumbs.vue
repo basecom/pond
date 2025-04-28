@@ -27,6 +27,7 @@ const { t } = useI18n();
             >
                 <LocaleLink
                     :to="'/'"
+                    :title="rootIcon ?? ''"
                     class="inline-flex items-center gap-2 text-sm font-medium last:text-brand-primary hover:text-brand-primary"
                 >
                     <FormKitIcon

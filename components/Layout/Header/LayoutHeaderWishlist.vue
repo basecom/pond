@@ -7,6 +7,7 @@ const { t } = useI18n();
     <LocaleLink
         to="/wishlist"
         class="relative"
+        :title="t('icon.wishlist')"
     >
         <FormKitIcon
             class="block size-6"
