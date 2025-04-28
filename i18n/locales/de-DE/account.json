@@ -32,6 +32,10 @@
                 "addressFields": "Ihre Adresse"
             },
             "submit": "Abschicken",
+            "toast": {
+                "title": "Registrierung erfolgreich",
+                "description": "Sie werden jetzt weitergeleitet."
+            },
             "accountTypes": {
                 "label": "Kontotyp",
                 "placeholder": "Auswählen...",

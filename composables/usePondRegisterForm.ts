@@ -21,8 +21,6 @@ export const usePondRegisterForm = () => {
         'business': {label: t('account.register.accountTypes.business'), value: 'business'},
     };
 
-    //type accountType = { label: string, value: string };
-
     const getGeneralFieldSchema = (): z.ZodObject<any, any> => {
         let registerForm = z.object({});
 
@@ -116,129 +114,203 @@ export const usePondRegisterForm = () => {
                 })
             })
         }
+        registerForm = registerForm.extend({
+            headerAddress: z.void()
+        });
+        registerForm = registerForm.extend({
+            street: z
+                .string({
+                    required_error: t('account.register.address.error.required')
+                })
+                .min(3, t('account.register.address.error.general'))
+                .regex(
+                    /^(\d+[a-zA-Z]?(?:-\d+[a-zA-Z]?)?\s[A-Za-zÄÖÜäöüß\s-]+|\b[A-Za-zÄÖÜäöüß\s-]+\s\d+[a-zA-Z]?(?:-\d+[a-zA-Z]?)?\b)$/,
+                    t('account.register.address.error.general')
+                ),
+            zipcode: z
+                .string({
+                    required_error: t('account.register.postalCode.error.required'),
+                })
+                .regex(/^\d{5}$/, t('account.register.postalCode.error.general')),
+            city: z
+                .string({
+                    required_error: t('account.register.city.error.required'),
+                })
+                .regex(/^[a-zA-ZäöüÄÖÜß\s-]+$/, t('account.register.city.error.general')),
+        });
+        if (configStore.get('core.loginRegistration.showAdditionalAddressField1')) {
+            if (configStore.get('core.loginRegistration.additionalAddressField1Required')) {
+                registerForm = registerForm.extend({
+                    additionalAddressLine1: z.string({
+                        required_error: t('account.register.additionalAddressLine1.error.required'),
+                    })
+                })
+            } else {
+                registerForm = registerForm.extend({
+                    additionalAddressLine1: z.string().optional()
+                })
+            }
+        }
+        if (configStore.get('core.loginRegistration.showAdditionalAddressField2')) {
+            if (configStore.get('core.loginRegistration.additionalAddressField2Required')) {
+                registerForm = registerForm.extend({
+                    additionalAddressLine2: z.string({
+                        required_error: t('account.register.additionalAddressLine2.error.required'),
+                    })
+                })
+            } else {
+                registerForm = registerForm.extend({
+                    additionalAddressLine2: z.string().optional()
+                })
+            }
+        }
+        registerForm = registerForm.extend({
+            countryId: z.string({
+                required_error: t('account.register.country.error.required'),
+            }),
+            countryState: z.string(),
+        })
+        if (configStore.get('core.loginRegistration.phoneNumberFieldRequired')) {
+            registerForm = registerForm.extend({
+                phoneNumber: z.string({
+                    required_error: t('account.register.phone.error.required')
+                })
+                    .regex(
+                        /^\+?\d{1,4}[-.\s]?\(?\d{1,5}\)?[-.\s]?\d{1,9}([-.\s]?\d{1,9})?$/,
+                        t('account.register.phone.error.general')
+                    )
+            })
+        } else {
+            registerForm = registerForm.extend({
+                phoneNumber: z.string()
+                    .regex(
+                        /^\+?\d{1,4}[-.\s]?\(?\d{1,5}\)?[-.\s]?\d{1,9}([-.\s]?\d{1,9})?$/,
+                        t('account.register.phone.error.general')
+                    )
+                    .optional()
+            })
+        }
+
+        registerForm = registerForm.extend({
+            deliveryAddressVaries: z.boolean().optional(),
+        })
 
         return registerForm;
     }
 
-    const getAddressSchema = (shortHand: boolean) => {
+    // TODO: Duplicated Schemas due non customization of nested zod fields in autoForm. Is there a better way?
+    const getAddressSchema = () => {
         let addressForm = z.object({});
 
+        if (configStore.get('core.loginRegistration.showAccountTypeSelection')) {
+            addressForm = addressForm.extend({
+                addressAccountType: z.string({
+                    required_error: t('account.register.accountTypes.errorGeneral')
+                })
+            })
+        }
+        if (salutations.value) {
+            addressForm = addressForm.extend({
+                //salutation: z.enum(salutations.value).optional().default('Herr'),
+                addressSalutationId: z.string({
+                    required_error: t('account.register.salutations.errorGeneral'),
+                }),
+            })
+        }
+        if (configStore.get('core.loginRegistration.showTitleField')) {
+            addressForm = addressForm.extend({
+                addressTitle: z.string().optional()
+            })
+        }
         addressForm = addressForm.extend({
-            headerAddress: z.void()
+            addressFirstName: z.string({
+                required_error: t('account.register.firstName.errorGeneral'),
+            }),
+            addressLastName: z.string({
+                required_error: t('account.register.lastName.errorGeneral'),
+            })
         })
-        if (!shortHand) {
-            if (configStore.get('core.loginRegistration.showAccountTypeSelection')) {
+        if (configStore.get('core.loginRegistration.showAccountTypeSelection')) {
+            addressForm = addressForm.extend({
+                addressCompany: z.string({
+                    required_error: t('account.register.company.errorGeneral'),
+                }),
+                addressDepartment: z.string({
+                    required_error: t('account.register.department.errorGeneral'),
+                })
+            })
+        }
+        addressForm = addressForm.extend({
+            addressStreet: z
+                .string({
+                    required_error: t('account.register.address.error.required')
+                })
+                .min(3, t('account.register.address.error.general'))
+                .regex(
+                    /^(\d+[a-zA-Z]?(?:-\d+[a-zA-Z]?)?\s[A-Za-zÄÖÜäöüß\s-]+|\b[A-Za-zÄÖÜäöüß\s-]+\s\d+[a-zA-Z]?(?:-\d+[a-zA-Z]?)?\b)$/,
+                    t('account.register.address.error.general')
+                ),
+            addressZipcode: z
+                .string({
+                    required_error: t('account.register.postalCode.error.required'),
+                })
+                .regex(/^\d{5}$/, t('account.register.postalCode.error.general')),
+            addressCity: z
+                .string({
+                    required_error: t('account.register.city.error.required'),
+                })
+                .regex(/^[a-zA-ZäöüÄÖÜß\s-]+$/, t('account.register.city.error.general')),
+        })
+        if (configStore.get('core.loginRegistration.showAdditionalAddressField1')) {
+            if (configStore.get('core.loginRegistration.additionalAddressField1Required')) {
                 addressForm = addressForm.extend({
-                    accountType: z.string({
-                        required_error: t('account.register.accountTypes.errorGeneral')
+                    addressAdditionalAddressLine1: z.string({
+                        required_error: t('account.register.additionalAddressLine1.error.required'),
                     })
                 })
-            }
-            if (salutations.value) {
+            } else {
                 addressForm = addressForm.extend({
-                    //salutation: z.enum(salutations.value).optional().default('Herr'),
-                    salutation: z.string({
-                        required_error: t('account.register.salutations.errorGeneral'),
-                    }),
+                    addressAdditionalAddressLine1: z.string().optional()
                 })
             }
-            // if (configStore.get('core.loginRegistration.showTitleField')) {
-            //     addressForm = addressForm.extend({
-            //         title: z.string().optional()
-            //     })
-            // }
-            // addressForm = addressForm.extend({
-            //     firstName: z.string({
-            //         required_error: t('account.register.firstName.errorGeneral'),
-            //     }),
-            //     lastName: z.string({
-            //         required_error: t('account.register.lastName.errorGeneral'),
-            //     })
-            // })
-            // if (configStore.get('core.loginRegistration.showAccountTypeSelection')) {
-            //     addressForm = addressForm.extend({
-            //         company: z.string({
-            //             required_error: t('account.register.company.errorGeneral'),
-            //         }),
-            //         department: z.string({
-            //             required_error: t('account.register.department.errorGeneral'),
-            //         })
-            //     })
-            // }
         }
-        // addressForm = addressForm.extend({
-        //     street: z
-        //         .string({
-        //             required_error: t('account.register.address.error.required')
-        //         })
-        //         .min(3, t('account.register.address.error.general'))
-        //         .regex(
-        //             /^(\d+[a-zA-Z]?(?:-\d+[a-zA-Z]?)?\s[A-Za-zÄÖÜäöüß\s-]+|\b[A-Za-zÄÖÜäöüß\s-]+\s\d+[a-zA-Z]?(?:-\d+[a-zA-Z]?)?\b)$/,
-        //             t('account.register.address.error.general')
-        //         ),
-        //     zipcode: z
-        //         .string({
-        //             required_error: t('account.register.postalCode.error.required'),
-        //         })
-        //         .regex(/^\d{5}$/, t('account.register.postalCode.error.general')),
-        //     city: z
-        //         .string({
-        //             required_error: t('account.register.city.error.required'),
-        //         })
-        //         .regex(/^[a-zA-ZäöüÄÖÜß\s-]+$/, t('account.register.city.error.general')),
-        // })
-        // if (configStore.get('core.loginRegistration.showAdditionalAddressField1')) {
-        //     if (configStore.get('core.loginRegistration.additionalAddressField1Required')) {
-        //         addressForm = addressForm.extend({
-        //             additionalAddressLine1: z.string({
-        //                 required_error: t('account.register.additionalAddressLine1.error.required'),
-        //             })
-        //         })
-        //     } else {
-        //         addressForm = addressForm.extend({
-        //             additionalAddressLine1: z.string().optional()
-        //         })
-        //     }
-        // }
-        // if (configStore.get('core.loginRegistration.showAdditionalAddressField2')) {
-        //     if (configStore.get('core.loginRegistration.additionalAddressField2Required')) {
-        //         addressForm = addressForm.extend({
-        //             additionalAddressLine2: z.string({
-        //                 required_error: t('account.register.additionalAddressLine2.error.required'),
-        //             })
-        //         })
-        //     } else {
-        //         addressForm = addressForm.extend({
-        //             additionalAddressLine2: z.string().optional()
-        //         })
-        //     }
-        // }
-        // addressForm = addressForm.extend({
-        //     countryId: z.string({
-        //         required_error: t('account.register.country.error.required'),
-        //     }),
-        //     countryState: z.string(),
-        // })
-        // if (configStore.get('core.loginRegistration.phoneNumberFieldRequired')) {
-        //     z.string({
-        //         required_error: t('account.register.phone.error.required')
-        //     })
-        //         .regex(
-        //             /^\+?\d{1,4}[-.\s]?\(?\d{1,5}\)?[-.\s]?\d{1,9}([-.\s]?\d{1,9})?$/,
-        //             t('account.register.phone.error.general')
-        //         )
-        // } else {
-        //     z.string()
-        //         .regex(
-        //             /^\+?\d{1,4}[-.\s]?\(?\d{1,5}\)?[-.\s]?\d{1,9}([-.\s]?\d{1,9})?$/,
-        //             t('account.register.phone.error.general')
-        //         )
-        //         .optional()
-        // }
-
-        if (shortHand) {
+        if (configStore.get('core.loginRegistration.showAdditionalAddressField2')) {
+            if (configStore.get('core.loginRegistration.additionalAddressField2Required')) {
+                addressForm = addressForm.extend({
+                    addressAdditionalAddressLine2: z.string({
+                        required_error: t('account.register.additionalAddressLine2.error.required'),
+                    })
+                })
+            } else {
+                addressForm = addressForm.extend({
+                    addressAdditionalAddressLine2: z.string().optional()
+                })
+            }
+        }
+        addressForm = addressForm.extend({
+            addressCountryId: z.string({
+                required_error: t('account.register.country.error.required'),
+            }),
+            addressCountryState: z.string(),
+        })
+        if (configStore.get('core.loginRegistration.phoneNumberFieldRequired')) {
             addressForm = addressForm.extend({
-                deliveryAddressVaries: z.boolean().optional(),
+                addressPhoneNumber: z.string({
+                    required_error: t('account.register.phone.error.required')
+                })
+                    .regex(
+                        /^\+?\d{1,4}[-.\s]?\(?\d{1,5}\)?[-.\s]?\d{1,9}([-.\s]?\d{1,9})?$/,
+                        t('account.register.phone.error.general')
+                    )
+            })
+        } else {
+            addressForm = addressForm.extend({
+                addressPhoneNumber: z.string()
+                    .regex(
+                        /^\+?\d{1,4}[-.\s]?\(?\d{1,5}\)?[-.\s]?\d{1,9}([-.\s]?\d{1,9})?$/,
+                        t('account.register.phone.error.general')
+                    )
+                    .optional()
             })
         }
 
@@ -247,18 +319,14 @@ export const usePondRegisterForm = () => {
 
     const getRegisterSchema = (): ZodObjectOrWrapped => {
         const schema = getGeneralFieldSchema()
-            .merge(getAddressSchema(true))
-            .merge(z.object({
-                shippingAddress: getAddressSchema(false)
-            }))
+            .merge(getAddressSchema())
             .merge(z.object({
                 acceptedDataProtection: z.boolean({
                     required_error: t('account.register.tos.errorGeneral')
                 })
             }))
 
-        // TODO: SuperRefine wont work
-
+        // TODO: SuperRefine wont work, refine wasn't tested yet
         return schema.superRefine((data, context) => {
             if (configStore.get('core.loginRegistration.requirePasswordConfirmation')) {
                 if (!data.confirmPassword || data.confirmPassword === '' || data.password !== data.confirmPassword) {
@@ -286,13 +354,6 @@ export const usePondRegisterForm = () => {
     /* eslint-disable */
     const getRegisterDependencies = [
         {
-            sourceField: 'deliveryAddressVaries',
-            type: DependencyType.HIDES,
-            targetField: 'shippingAddress',
-            when: (deliveryAddressVaries: boolean) =>
-                !deliveryAddressVaries
-        },
-        {
             sourceField: 'accountType',
             type: DependencyType.HIDES,
             targetField: 'company',
@@ -314,19 +375,54 @@ export const usePondRegisterForm = () => {
                 accountType !== accountTypes.business.value
         },
         {
-            sourceField: 'shippingAddress.accountType',
+            sourceField: 'addressAccountType',
             type: DependencyType.HIDES,
-            targetField: 'shippingAddress.company',
+            targetField: 'addressCompany',
             when: (accountType: string) =>
                 accountType !== accountTypes.business.value
         },
         {
-            sourceField: 'shippingAddress.accountType',
+            sourceField: 'addressAccountType',
             type: DependencyType.HIDES,
-            targetField: 'shippingAddress.department',
+            targetField: 'addressDepartment',
             when: (accountType: string) =>
                 accountType !== accountTypes.business.value
-        }
+        },
+        {
+            sourceField: 'deliveryAddressVaries',
+            type: DependencyType.HIDES,
+            targetField: 'addressAccountType',
+            when: (deliveryAddressVaries: boolean) =>
+                !deliveryAddressVaries
+        },
+        {
+            sourceField: 'deliveryAddressVaries',
+            type: DependencyType.HIDES,
+            targetField: 'addressTitle',
+            when: (deliveryAddressVaries: boolean) =>
+                !deliveryAddressVaries
+        },
+        {
+            sourceField: 'deliveryAddressVaries',
+            type: DependencyType.HIDES,
+            targetField: 'addressFirstName',
+            when: (deliveryAddressVaries: boolean) =>
+                !deliveryAddressVaries
+        },
+        {
+            sourceField: 'deliveryAddressVaries',
+            type: DependencyType.HIDES,
+            targetField: 'addressLastName',
+            when: (deliveryAddressVaries: boolean) =>
+                !deliveryAddressVaries
+        },
+        {
+            sourceField: 'deliveryAddressVaries',
+            type: DependencyType.HIDES,
+            targetField: 'addressStreet',
+            when: (deliveryAddressVaries: boolean) =>
+                !deliveryAddressVaries
+        },
     ];
 
     const getRegisterFieldConfig = {
@@ -435,97 +531,95 @@ export const usePondRegisterForm = () => {
         deliveryAddressVaries: {
             label: t('account.register.differentShippingAddress')
         },
-        shippingAddress: {
-            accountType: {
-                label: t('account.register.accountTypes.label'),
-                inputProps: {
-                    placeholder: t('account.register.accountTypes.placeholder'),
-                }
-            },
-            salutation: {
-                label: t('account.register.salutations.label'),
-                inputProps: {
-                    placeholder: t('account.register.salutations.placeholder'),
-                }
-            },
-            title: {
-                label: t('account.register.title.label'),
-                inputProps: {
-                    placeholder: t('account.register.title.placeholder'),
-                }
-            },
-            firstName: {
-                label: t('account.register.firstName.label'),
-                inputProps: {
-                    placeholder: t('account.register.firstName.placeholder'),
-                }
-            },
-            lastName: {
-                label: t('account.register.lastName.label'),
-                inputProps: {
-                    placeholder: t('account.register.lastName.placeholder'),
-                }
-            },
-            company: {
-                label: t('account.register.company.label'),
-                inputProps: {
-                    placeholder: t('account.register.company.placeholder'),
-                }
-            },
-            department: {
-                label: t('account.register.department.label'),
-                inputProps: {
-                    placeholder: t('account.register.department.placeholder'),
-                }
-            },
-            street: {
-                label: t('account.register.address.label'),
-                inputProps: {
-                    placeholder: t('account.register.address.placeholder'),
-                }
-            },
-            zipcode: {
-                label: t('account.register.postalCode.label'),
-                inputProps: {
-                    placeholder: t('account.register.postalCode.placeholder'),
-                }
-            },
-            city: {
-                label: t('account.register.city.label'),
-                inputProps: {
-                    placeholder: t('account.register.city.placeholder'),
-                }
-            },
-            additionalAddressLine1: {
-                label: t('account.register.additionalAddressLine1.label'),
-                inputProps: {
-                    placeholder: t('account.register.additionalAddressLine1.placeholder'),
-                }
-            },
-            additionalAddressLine2: {
-                label: t('account.register.additionalAddressLine2.label'),
-                inputProps: {
-                    placeholder: t('account.register.additionalAddressLine2.placeholder'),
-                }
-            },
-            countryId: {
-                label: t('account.register.country.label'),
-                inputProps: {
-                    placeholder: t('account.register.country.placeholder'),
-                }
-            },
-            countryState: {
-                label: t('account.register.state.label'),
-                inputProps: {
-                    placeholder: t('account.register.state.placeholder'),
-                }
-            },
-            phoneNumber: {
-                label: t('account.register.phone.label'),
-                inputProps: {
-                    placeholder: t('account.register.phone.placeholder'),
-                }
-            },
+        addressAccountType: {
+            label: t('account.register.accountTypes.label'),
+            inputProps: {
+                placeholder: t('account.register.accountTypes.placeholder'),
+            }
+        },
+        addressSalutationId: {
+            label: t('account.register.salutations.label'),
+            inputProps: {
+                placeholder: t('account.register.salutations.placeholder'),
+            }
+        },
+        addressTitle: {
+            label: t('account.register.title.label'),
+            inputProps: {
+                placeholder: t('account.register.title.placeholder'),
+            }
+        },
+        addressFirstName: {
+            label: t('account.register.firstName.label'),
+            inputProps: {
+                placeholder: t('account.register.firstName.placeholder'),
+            }
+        },
+        addressLastName: {
+            label: t('account.register.lastName.label'),
+            inputProps: {
+                placeholder: t('account.register.lastName.placeholder'),
+            }
+        },
+        addressCompany: {
+            label: t('account.register.company.label'),
+            inputProps: {
+                placeholder: t('account.register.company.placeholder'),
+            }
+        },
+        addressDepartment: {
+            label: t('account.register.department.label'),
+            inputProps: {
+                placeholder: t('account.register.department.placeholder'),
+            }
+        },
+        addressStreet: {
+            label: t('account.register.address.label'),
+            inputProps: {
+                placeholder: t('account.register.address.placeholder'),
+            }
+        },
+        addressZipcode: {
+            label: t('account.register.postalCode.label'),
+            inputProps: {
+                placeholder: t('account.register.postalCode.placeholder'),
+            }
+        },
+        addressCity: {
+            label: t('account.register.city.label'),
+            inputProps: {
+                placeholder: t('account.register.city.placeholder'),
+            }
+        },
+        addressAdditionalAddressLine1: {
+            label: t('account.register.additionalAddressLine1.label'),
+            inputProps: {
+                placeholder: t('account.register.additionalAddressLine1.placeholder'),
+            }
+        },
+        addressAdditionalAddressLine2: {
+            label: t('account.register.additionalAddressLine2.label'),
+            inputProps: {
+                placeholder: t('account.register.additionalAddressLine2.placeholder'),
+            }
+        },
+        addressCountryId: {
+            label: t('account.register.country.label'),
+            inputProps: {
+                placeholder: t('account.register.country.placeholder'),
+            }
+        },
+        addressCountryState: {
+            label: t('account.register.state.label'),
+            inputProps: {
+                placeholder: t('account.register.state.placeholder'),
+            }
+        },
+        addressPhoneNumber: {
+            label: t('account.register.phone.label'),
+            inputProps: {
+                placeholder: t('account.register.phone.placeholder'),
+            }
         },
         acceptedDataProtection: {
             label: t('account.register.tos.label'),

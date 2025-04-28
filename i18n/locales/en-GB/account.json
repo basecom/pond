@@ -32,6 +32,10 @@
                 "addressFields": "Your address"
             },
             "submit": "Submit",
+            "toast": {
+                "title": "Registration successfull",
+                "description": "You will be redirected now"
+            },
             "accountTypes": {
                 "label": "Account Type",
                 "placeholder": "Select...",

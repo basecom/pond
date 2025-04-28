@@ -1,14 +1,23 @@
 <script setup lang="ts">
 import {ApiClientError} from '@shopware/api-client';
 import type {RegisterData} from "./AccountRegisterInner.vue";
+import {useToast} from '@/components/ui/toast/use-toast'
+import {useCustomerStore} from "#imports";
 
 const isLoading = ref(false);
 const errorMessage: Ref<string | undefined> = ref(undefined);
 
 const customerStore = useCustomerStore();
 const {t} = useI18n();
+const router = useRouter();
+const customer = useCustomerStore();
+const {toast} = useToast();
 
-// TODO: Review type errors due schema omit
+// TODO: storefrontUrl seems fishy. Is there a better approach?
+/**
+ * Helper function to parse the autoForm data into required shopware register API format
+ * @param registerData - generated from autoForm
+ */
 function buildRegisterForm(registerData: RegisterData) {
     const address = {
         countryId: registerData.countryId,
@@ -27,6 +36,28 @@ function buildRegisterForm(registerData: RegisterData) {
         additionalAddressLine2: registerData.additionalAddressLine2 ?? null,
     };
 
+    // Calculate shippingAddress depending on form inputs
+    let shippingAddress = address;
+
+    if (registerData.deliveryAddressVaries) {
+        shippingAddress = {
+            countryId: registerData.addressCountryId,
+            countryState: registerData.addressCountryState ?? null,
+            salutationId: registerData.addressSalutationId,
+            firstName: registerData.addressFirstName,
+            lastName: registerData.addressLastName,
+            zipcode: registerData.addressZipcode ?? null,
+            city: registerData.addressCity,
+            company: registerData.addressCompany ?? null,
+            street: registerData.addressStreet,
+            department: registerData.addressDepartment ?? null,
+            title: registerData.addressTitle ?? null,
+            phoneNumber: registerData.addressPhoneNumber ?? null,
+            additionalAddressLine1: registerData.addressAdditionalAddressLine1 ?? null,
+            additionalAddressLine2: registerData.addressAdditionalAddressLine2 ?? null,
+        }
+    }
+
     return {
         email: registerData.email,
         password: registerData.password,
@@ -34,7 +65,7 @@ function buildRegisterForm(registerData: RegisterData) {
         firstName: registerData.firstName,
         lastName: registerData.lastName,
         billingAddress: address,
-        shippingAddress: registerData.shippingAddress ?? address,
+        shippingAddress: shippingAddress,
         birthdayDay: registerData.birthdate ? registerData.birthdate.getDay() : null,
         birthdayMonth: registerData.birthdate ? registerData.birthdate.getMonth() : null,
         birthdayYear: registerData.birthdate ? registerData.birthdate.getFullYear() : null,
@@ -51,10 +82,14 @@ const register = async (registerData: RegisterData) => {
     errorMessage.value = undefined;
 
     try {
+        //
         const registerForm = buildRegisterForm(registerData);
-        console.log('Firing API request!', registerForm);
         await customerStore.register(registerForm);
-        console.log('register done!');
+        toast({
+            title: t('account.register.toast.title'),
+            description: t('account.register.toast.description')
+        });
+        router.push('/');
     } catch (error) {
         if (error instanceof ApiClientError) {
             console.warn('API Error detected');
@@ -66,6 +101,13 @@ const register = async (registerData: RegisterData) => {
         isLoading.value = false;
     }
 };
+
+onMounted(() => {
+    // Ensure that a signed in user will not be able to go to the registration page
+    if (customer.signedIn) {
+        router.push('/');
+    }
+})
 
 </script>
 

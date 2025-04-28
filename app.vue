@@ -1,11 +1,11 @@
 <script setup lang="ts">
-const { locale } = useI18n();
+const {locale} = useI18n();
 const url = useRequestURL();
 const route = useRoute();
 
 const configStore = useConfigStore();
 await configStore.loadConfig();
-const shopName = configStore.get('core.basicInformation.shopName') as string|null ?? 'pond';
+const shopName = configStore.get('core.basicInformation.shopName') as string | null ?? 'pond';
 
 useHead(() => ({
     title: shopName,
@@ -22,5 +22,7 @@ useHead(() => ({
 </script>
 
 <template>
-    <NuxtLayout />
+    <UiToaster/>
+
+    <NuxtLayout/>
 </template>

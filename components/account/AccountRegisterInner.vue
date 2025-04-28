@@ -221,11 +221,9 @@ onBeforeMount(async () => {
         </template>
         <!-- TODO: Implement shippingAddress.state template -->
         <!-- TODO: Add hidden-Input field for storefrontUrl -->
-        <template #shippingAddress="slotProps">
-            <UiAutoFormField
-                v-if="configStore.get('core.loginRegistration.requireDataProtectionCheckbox')"
-                v-bind="slotProps"
-            />
+        <template v-slot:[`shippingAddress.city`]="slotProps">
+            <p>Test</p>
+            <UiAutoFormField v-bind="slotProps"/>
         </template>
         <template #acceptedDataProtection="slotProps">
             <div class="pt-6">
