@@ -8,7 +8,7 @@ const props = withDefaults(
     }>(),
     {
         cartItem: undefined,
-        isLoading: false
+        isLoading: false,
     },
 );
 const emits = defineEmits<{
@@ -17,5 +17,5 @@ const emits = defineEmits<{
 
 </script>
 <template>
-    <CartItemRemoveInner :cart-item="cartItem" @is-loading="(isLoadingEmit: boolean) => {emits('isLoading', isLoadingEmit)}"/>
+    <CartItemRemoveInner :cart-item="cartItem" @is-loading="(isLoadingEmit: boolean) => {emits('isLoading', isLoadingEmit)}" />
 </template>

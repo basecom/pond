@@ -8,7 +8,7 @@ import UiNumberFieldIncrement from '../../ui/number-field/UiNumberFieldIncrement
 
 const props = withDefaults(
     defineProps<{
-      cartItem?: Schemas['LineItem']
+      cartItem?: Schemas['LineItem'],
     }>(),
     {
         cartItem: undefined,
@@ -25,33 +25,43 @@ const {refreshCart} = useCart();
 
 const quantity = ref();
 syncRefs(itemQuantity, quantity);
-
+const emits = defineEmits<{
+  isLoading: [boolean]
+}>();
 const changeCartItemQuantity = async (quantityInput: number) => {
     try {
+
+        emits('isLoading', true);
         const response = await changeItemQuantity(Number(quantityInput));
         // Refresh cart after quantity update
         await refreshCart(response);
+        emits('isLoading', false);
     } catch (error) {
     }
 
     quantity.value = itemQuantity.value;
 };
 
+
 </script>
 <template>
-    <label class="flex font-bold">{{ $t('checkout.quantity') }} </label>
-    <div class="w-1/3">
-        <UiNumberField
-            v-model="quantity"
-            :min="1"
-            :default-value="itemQuantity"
-            @update:model-value="changeCartItemQuantity"
-        >
-            <UiNumberFieldContent>
-                <UiNumberFieldDecrement />
-                <UiNumberFieldInput />
-                <UiNumberFieldIncrement />
-            </UiNumberFieldContent>
-        </UiNumberField>
-    </div>
+    <slot name="quantityLabel">
+        <label class="flex font-bold">{{ $t('checkout.quantity') }}</label>
+    </slot>
+    <slot name="quantityField">
+        <div class="w-1/3">
+            <UiNumberField
+                v-model="quantity"
+                :min="1"
+                :default-value="itemQuantity"
+                @update:model-value="changeCartItemQuantity"
+            >
+                <UiNumberFieldContent>
+                    <UiNumberFieldDecrement />
+                    <UiNumberFieldInput />
+                    <UiNumberFieldIncrement />
+                </UiNumberFieldContent>
+            </UiNumberField>
+        </div>
+    </slot>
 </template>

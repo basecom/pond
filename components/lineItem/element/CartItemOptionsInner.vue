@@ -11,8 +11,12 @@ const props = withDefaults(
 );
 </script>
 <template>
-    <span v-for="(property, index) in cartItemOptions">
-        {{ property.group }}: <span class="font-bold">{{ property.option }}</span>
-        <template v-if="index+1 < cartItemOptions.length"> | </template>
-    </span>
+    <slot name="cartItemOptions">
+        <span v-for="(property, index) in cartItemOptions">
+            <slot name="cartItemOptionContent">
+                {{ property.group }}: <span class="font-bold">{{ property.option }}</span>
+                <template v-if="index+1 < cartItemOptions.length"> | </template>
+            </slot>
+        </span>
+    </slot>
 </template>

@@ -4,31 +4,37 @@ import CartItemAddToWishlist from '../CartItemAddToWishlist.vue';
 import CartItemDeliveryPosition from '../CartItemDeliveryPosition.vue';
 import CartItemImage from '../CartItemImage.vue';
 import CartItemOptions from '../CartItemOptions.vue';
-import CartItemUnitPrice from "../price/CartItemUnitPrice.vue";
-import CartItemTotalPrice from "../price/CartItemTotalPrice.vue";
-import CartItemQuantity from "../CartItemQuantity.vue";
+import CartItemUnitPrice from '../price/CartItemUnitPrice.vue';
+import CartItemTotalPrice from '../price/CartItemTotalPrice.vue';
+import CartItemQuantity from '../CartItemQuantity.vue';
 
 const props = withDefaults(
     defineProps<{
       cartItem?: Schemas['LineItem'];
-      cartDeliveryPosition?: Schemas['CartDeliveryPosition']
+      cartDeliveryPosition?: Schemas['CartDeliveryPosition'],
+      isLoading?: boolean
     }>(),
     {
         cartItem: undefined,
         cartDeliveryPosition: undefined,
+        isLoading: false,
     },
 );
-const { cartItem } = toRefs(props);
+const { cartItem, isLoading } = toRefs(props);
 const {
     itemOptions,
 } = useCartItem(cartItem);
-
 const { getFormattedPrice } = usePrice();
 const {
-  itemTotalPrice,
-  itemRegularPrice,
+    itemTotalPrice,
+    itemRegularPrice,
 } = useCartItem(cartItem);
-
+const configStore = useConfigStore();
+const showDeliveryTime = configStore.get('core.cart.showDeliveryTime') as boolean;
+console.log(showDeliveryTime);
+const emits = defineEmits<{
+  isLoading: [boolean]
+}>();
 </script>
 <template>
     <div class="order-1 mb-4 flex w-5/6 flex-col">
@@ -46,14 +52,14 @@ const {
         <div class="mb-2 text-xs">
             {{ $t('checkout.cartItemInfoId') }}: {{ cartItem.payload.productNumber }}
         </div>
-        <div class="text-xs">
+        <div class="text-xs" v-if="showDeliveryTime">
             <CartItemDeliveryPosition :cart-item-delivery-position="cartDeliveryPosition" />
         </div>
         <div class="mt-2 text-xs">
             <CartItemAddToWishlist :referenced-id="cartItem.referencedId" />
         </div>
     </div>
-    <div class="order-3 mb-4 flex w-full items-center justify-between"><CartItemQuantity :cart-item="cartItem" /></div>
+    <div class="order-3 mb-4 flex w-full items-center justify-between"><CartItemQuantity :cart-item="cartItem" @is-loading="(isLoadingEmit: boolean) => {emits('isLoading', isLoadingEmit)}" /></div>
     <div class="order-5 flex w-full justify-end text-xs"><CartItemUnitPrice :cart-item-unit-price="getFormattedPrice(itemRegularPrice)" /></div>
     <div class="order-4 flex w-full justify-end"><CartItemTotalPrice :cart-item-total-price="getFormattedPrice(itemTotalPrice)" /></div>
 </template>

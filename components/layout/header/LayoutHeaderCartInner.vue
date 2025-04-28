@@ -57,7 +57,7 @@ const getCartDeliveryPosition = (id: string, cartDeliveryPositions?: Schemas['Ca
                         <template v-else>
                             <div class="w-full">
                                 <UiAlert>
-                                    <UiAlertDescription>{{$t('checkout.noLineItems')}}</UiAlertDescription>
+                                    <UiAlertDescription>{{ $t('checkout.noLineItems') }}</UiAlertDescription>
                                 </UiAlert>
                             </div>
                         </template>

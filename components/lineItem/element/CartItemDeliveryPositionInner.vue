@@ -19,7 +19,6 @@ const props = withDefaults(
             {{ $t('checkout.deliveryPeriod') }}
         </span>:
         <span>
-            <!-- todo: locale -->
             {{ useDateFormat(cartItemDeliveryPosition.deliveryDate.earliest, 'DD/MM/YYYY') }}
             -
             {{ useDateFormat(cartItemDeliveryPosition.deliveryDate.latest, 'DD/MM/YYYY') }}

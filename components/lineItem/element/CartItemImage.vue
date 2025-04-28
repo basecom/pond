@@ -8,7 +8,7 @@ const props = withDefaults(
     }>(),
     {
         cartItemImage: undefined,
-        fallback: 'mdi:duck'
+        fallback: 'mdi:duck',
     },
 );
 </script>

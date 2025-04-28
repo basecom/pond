@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import type {Schemas} from '@shopware/api-client/api-types';
 import CartItemRemove from './element/CartItemRemove.vue';
-import CartItemQuantity from './element/CartItemQuantity.vue';
-import CartItemTotalPrice from './element/price/CartItemTotalPrice.vue';
-import CartItemUnitPrice from './element/price/CartItemUnitPrice.vue';
 import CartItemProduct from './element/type/CartItemProduct.vue';
 import CartItemDiscount from './element/type/CartItemDiscount.vue';
 import {Loader2} from 'lucide-vue-next';
+import CartItemContainer from "./element/type/CartItemContainer.vue";
+import CartItemGeneric from "./element/type/CartItemGeneric.vue";
 
 const props = withDefaults(
     defineProps<{
@@ -18,23 +17,91 @@ const props = withDefaults(
         cartDeliveryPosition: undefined,
     },
 );
-
+const { cartItem } = toRefs(props);
 const isLoading = ref(false);
+
+const isProduct = computed(() => cartItem.value?.type === 'product');
+const isContainer = computed(() => cartItem.value?.type === 'container');
+const isDiscount = computed(() => ((!cartItem.value?.good && ((cartItem.value?.price?.totalPrice ?? 0) <= 0)) || cartItem.value?.type === 'discount'));
+
+
 </script>
 <template>
-  <div v-if="isLoading">
-    <div class="flex justify-center items-center p-24">
-    <Loader2 class="size-12 animate-spin" />
-    </div>
-  </div>
-    <div v-else class="flex flex-wrap border-b py-4">
-        <template v-if="cartItem.type === 'product'">
-          <CartItemProduct :cart-item="cartItem" :cart-delivery-position="cartDeliveryPosition" />
-          <div class="order-2 flex w-1/6 justify-end"><CartItemRemove :cart-item="cartItem" @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"/></div>
-        </template>
-        <template v-if="cartItem.type === 'promotion'">
-          <CartItemDiscount :cart-item="cartItem" />
-          <div class="order-2 flex w-1/6 justify-end"><CartItemRemove :cart-item="cartItem" @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit" /></div>
-        </template>
-    </div>
+    <slot name="container">
+        <div :class="isLoading ? 'pointer-events-none opacity-50':''">
+            <div class="relative">
+                <div v-if="isLoading" class="absolute flex size-full items-center justify-center pb-4">
+                    <slot name="loadingSpinner">
+                        <Loader2 class="size-12 animate-spin" />
+                    </slot>
+                </div>
+                <div class="flex flex-wrap border-b py-4">
+                    <template v-if="isProduct">
+                        <slot name="productWrapper">
+                            <slot name="product">
+                                <CartItemProduct
+                                    :cart-item="cartItem"
+                                    :cart-delivery-position="cartDeliveryPosition"
+                                    @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"
+                                />
+                            </slot>
+                            <div class="order-2 flex w-1/6 justify-end">
+                              <slot name="promotionRemove">
+                                <CartItemRemove
+                                    :cart-item="cartItem"
+                                    @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"
+                                />
+                              </slot>
+                            </div>
+                        </slot>
+                    </template>
+                    <template v-else-if="isDiscount">
+                        <slot name="discountWrapper">
+                            <slot name="discount">
+                                <CartItemDiscount :cart-item="cartItem" />
+                            </slot>
+                            <div class="order-2 flex w-1/6 justify-end">
+                              <slot name="discountRemove">
+                                <CartItemRemove
+                                    :cart-item="cartItem"
+                                    @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"
+                                />
+                              </slot>
+                            </div>
+                        </slot>
+                    </template>
+                  <template v-else-if="isContainer">
+                    <slot name="containerWrapper">
+                      <slot name="container">
+                        <CartItemContainer :cart-item="cartItem" />
+                      </slot>
+                      <div class="order-2 flex w-1/6 justify-end">
+                        <slot name="containerRemove">
+                          <CartItemRemove
+                              :cart-item="cartItem"
+                              @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"
+                          />
+                        </slot>
+                      </div>
+                    </slot>
+                  </template>
+                  <template v-else>
+                    <slot name="genericWrapper">
+                      <slot name="generic">
+                        <CartItemGeneric :cart-item="cartItem" />
+                      </slot>
+                      <div class="order-2 flex w-1/6 justify-end">
+                        <slot name="genericRemove">
+                          <CartItemRemove
+                              :cart-item="cartItem"
+                              @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"
+                          />
+                        </slot>
+                      </div>
+                    </slot>
+                  </template>
+                </div>
+            </div>
+        </div>
+    </slot>
 </template>

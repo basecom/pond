@@ -7,7 +7,7 @@ const props = withDefaults(
     }>(),
     {
         cartItem: undefined,
-      isLoading: false
+        isLoading: false,
     },
 );
 const { cartItem } = toRefs(props);
@@ -27,8 +27,11 @@ const removeCartItem = async () => {
 
 </script>
 <template>
-    <UiButton variant="outline" size="icon" @click="removeCartItem">
-        <Icon name="mdi-close" class="size-4" />
-    </UiButton>
-
+    <slot name="removeButton">
+        <UiButton variant="outline" size="icon" @click="removeCartItem">
+            <slot name="removeIcon">
+                <Icon name="mdi-close" class="size-4" />
+            </slot>
+        </UiButton>
+    </slot>
 </template>
