@@ -44,51 +44,65 @@ const emits = defineEmits<{
           <CartItemImage :cart-item-image="cartItem.cover?.url" fallback="mdi:image"/>
         </slot>
       </div>
-      <div class="font-bold">
-        <slot name="labelWrapper">
+      <slot name="labelWrapper">
+        <div class="font-bold">
           <NuxtLinkLocale to="/">
             <slot name="label">
               {{ cartItem.label }}
             </slot>
           </NuxtLinkLocale>
-        </slot>
-      </div>
-      <div class="my-2 text-xs">
-        <slot name="options">
-          <CartItemOptions :cart-item-options="itemOptions"/>
-        </slot>
-      </div>
-      <div class="mb-2 text-xs">
-        <slot name="productNumber">
-          {{ $t('checkout.cartItemInfoId') }}: {{ cartItem.payload.productNumber }}
-        </slot>
-      </div>
-      <div class="text-xs" v-if="showDeliveryTime">
-        <slot name="deliveryPosition">
-          <CartItemDeliveryPosition :cart-item-delivery-position="cartDeliveryPosition"/>
-        </slot>
-      </div>
-      <div class="mt-2 text-xs">
-        <slot name="wishlist">
-          <CartItemAddToWishlist :referenced-id="cartItem.referencedId"/>
-        </slot>
-      </div>
+        </div>
+      </slot>
+      <slot name="optionsWrapper">
+        <div class="my-2 text-xs">
+          <slot name="options">
+            <CartItemOptions :cart-item-options="itemOptions"/>
+          </slot>
+        </div>
+      </slot>
+      <slot name="productNumberWrapper">
+        <div class="mb-2 text-xs">
+          <slot name="productNumber">
+            {{ $t('checkout.cartItemInfoId') }}: {{ cartItem.payload.productNumber }}
+          </slot>
+        </div>
+      </slot>
+      <slot name="deliveryPositionWrapper">
+        <div class="text-xs" v-if="showDeliveryTime">
+          <slot name="deliveryPosition">
+            <CartItemDeliveryPosition :cart-item-delivery-position="cartDeliveryPosition"/>
+          </slot>
+        </div>
+      </slot>
+      <slot name="wishlistWrapper">
+        <div class="mt-2 text-xs">
+          <slot name="wishlist">
+            <CartItemAddToWishlist :referenced-id="cartItem.referencedId"/>
+          </slot>
+        </div>
+      </slot>
     </div>
   </slot>
-  <slot name="quantity">
+  <slot name="quantityWrapper">
     <div class="order-3 mb-4 flex w-full items-center justify-between">
-      <CartItemQuantity :cart-item="cartItem"
-                        @is-loading="(isLoadingEmit: boolean) => {emits('isLoading', isLoadingEmit)}"/>
+      <slot name="quantity">
+        <CartItemQuantity :cart-item="cartItem"
+                          @is-loading="(isLoadingEmit: boolean) => {emits('isLoading', isLoadingEmit)}"/>
+      </slot>
     </div>
   </slot>
-  <slot name="unitPrice">
+  <slot name="unitPriceWrapper">
     <div class="order-5 flex w-full justify-end text-xs">
-      <CartItemUnitPrice :cart-item-unit-price="getFormattedPrice(itemRegularPrice)"/>
+      <slot name="unitPrice">
+        <CartItemUnitPrice :cart-item-unit-price="getFormattedPrice(itemRegularPrice)"/>
+      </slot>
     </div>
   </slot>
-  <slot name="totalPrice">
+  <slot name="totalPriceWrapper">
     <div class="order-4 flex w-full justify-end">
-      <CartItemTotalPrice :cart-item-total-price="getFormattedPrice(itemTotalPrice)"/>
+      <slot name="totalPrice">
+        <CartItemTotalPrice :cart-item-total-price="getFormattedPrice(itemTotalPrice)"/>
+      </slot>
     </div>
   </slot>
 </template>

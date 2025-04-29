@@ -4,8 +4,6 @@ import CartItemRemove from './element/CartItemRemove.vue';
 import CartItemProduct from './element/type/CartItemProduct.vue';
 import CartItemDiscount from './element/type/CartItemDiscount.vue';
 import {Loader2} from 'lucide-vue-next';
-import CartItemContainer from "./element/type/CartItemContainer.vue";
-import CartItemGeneric from "./element/type/CartItemGeneric.vue";
 
 const props = withDefaults(
     defineProps<{
@@ -70,25 +68,10 @@ const isDiscount = computed(() => ((!cartItem.value?.good && ((cartItem.value?.p
                             </div>
                         </slot>
                     </template>
-                  <template v-else-if="isContainer">
-                    <slot name="containerWrapper">
-                      <slot name="container">
-                        <CartItemContainer :cart-item="cartItem" />
-                      </slot>
-                      <div class="order-2 flex w-1/6 justify-end">
-                        <slot name="containerRemove">
-                          <CartItemRemove
-                              :cart-item="cartItem"
-                              @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"
-                          />
-                        </slot>
-                      </div>
-                    </slot>
-                  </template>
                   <template v-else>
                     <slot name="genericWrapper">
                       <slot name="generic">
-                        <CartItemGeneric :cart-item="cartItem" />
+                        <CartItemProduct :cart-item="cartItem" />
                       </slot>
                       <div class="order-2 flex w-1/6 justify-end">
                         <slot name="genericRemove">

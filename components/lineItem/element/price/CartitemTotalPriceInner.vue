@@ -11,7 +11,9 @@ const props = withDefaults(
 </script>
 <template>
     <span class="font-bold">
+      <slot name="totalPrice">
         {{ cartItemTotalPrice }}*
+        </slot>
     </span>
 
 </template>
