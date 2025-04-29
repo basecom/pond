@@ -13,8 +13,6 @@ export const useCustomerStore = defineStore('customer', () => {
         loading.value = true;
         await refreshSessionContext();
         loading.value = false;
-        console.log('sessioncontext', sessionContext.value)
-        console.log('signedin', signedIn.value)
     };
 
     return {
