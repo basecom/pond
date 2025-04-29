@@ -5,10 +5,8 @@ export function usePondAuthentication() {
 
     const rerouteIfLoggedOut = async (targetRoute: string = '/account/login') => {
         await sessionContextLoaded();
-        console.log('signedIn', signedIn.value)
         if (!signedIn.value) {
-            console.log('lets reroute')
-            //navigateTo(formatLink(targetRoute));
+            navigateTo(formatLink(targetRoute));
         }
     };
 
