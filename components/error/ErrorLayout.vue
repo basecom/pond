@@ -1,5 +1,5 @@
 <template>
-    <LayoutErrorInner>
+    <ErrorLayoutInner>
         <template #wrapper>
             <slot name="wrapper" />
         </template>
@@ -15,5 +15,5 @@
         <template #button>
             <slot name="button" />
         </template>
-    </LayoutErrorInner>
+    </ErrorLayoutInner>
 </template>

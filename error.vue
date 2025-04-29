@@ -39,14 +39,14 @@ const pageNotFound = computed(() => props.error?.statusCode === 404);
             <ErrorNotFound />
         </template>
         <template v-else>
-            <LayoutError>
+            <ErrorLayout>
                 <template #title>
                     {{ error?.message }}
                 </template>
                 <template #subTitle>
                     {{ error?.statusCode }}
                 </template>
-            </LayoutError>
+            </ErrorLayout>
         </template>
     </main>
 </template>
