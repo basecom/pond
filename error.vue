@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { NuxtError } from '#app';
-import NotFoundError from './components/error/NotFoundError.vue';
+import type {NuxtError} from '#app';
 
 const props = defineProps({
     // we don't need a default value -> it's always set
@@ -8,15 +7,15 @@ const props = defineProps({
     error: Object as () => NuxtError,
 });
 
-const { locale } = useI18n();
+const {locale} = useI18n();
 const url = useRequestURL();
 const route = useRoute();
 const configStore = useConfigStore();
 await configStore.loadConfig();
-const shopName = configStore.get('core.basicInformation.shopName') as string|null ?? 'pond';
+const shopName = configStore.get('core.basicInformation.shopName') as string | null ?? 'pond';
 
 useHead(() => ({
-    title: `${shopName  } - ${ props.error?.statusCode}`,
+    title: `${shopName} - ${props.error?.statusCode}`,
     htmlAttrs: {
         lang: locale.value,
     },
@@ -37,13 +36,17 @@ const pageNotFound = computed(() => props.error?.statusCode === 404);
 
     <main class="container">
         <template v-if="pageNotFound">
-            <NotFoundError />
+            <ErrorNotFound />
         </template>
         <template v-else>
-            <div class="container mt-12">
-                <h1 class="mb-4 text-center text-4xl uppercase">{{ error?.statusCode }}</h1>
-                <p class="mb-4 text-center">{{ error?.message }}</p>
-            </div>
+            <LayoutError>
+                <template #title>
+                    {{ error?.message }}
+                </template>
+                <template #subTitle>
+                    {{ error?.statusCode }}
+                </template>
+            </LayoutError>
         </template>
     </main>
 </template>
