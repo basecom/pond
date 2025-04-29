@@ -1,5 +1,6 @@
 <script setup lang="ts">
-await usePondAuthentication().rerouteIfLoggedOut();
+const { rerouteIfLoggedOut } = usePondAuthentication();
+await rerouteIfLoggedOut();
 </script>
 
 <template>
