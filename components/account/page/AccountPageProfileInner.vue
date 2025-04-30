@@ -72,9 +72,9 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
                 </div>
             </template>
 
-            <template #salutationId>
+            <template #salutationId="slotProps">
                 <div class="col-span-12">
-                    <FormField v-slot="{ componentField }" name="salutationId">
+                    <FormField v-slot="{ componentField }" v-bind="slotProps" name="salutationId">
                         <UiFormItem>
                             <UiAutoFormLabel>{{ $t('account.customer.salutation') }}</UiAutoFormLabel>
                             <UiSelect v-bind="componentField" :default-value="customer.salutationId">
@@ -132,9 +132,9 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
                 </div>
             </template>
 
-            <template #birthdayDay>
+            <template #birthdayDay="slotProps">
                 <div class="col-span-4">
-                    <FormField v-slot="{ componentField }" name="birthdayDay">
+                    <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayDay">
                         <UiFormItem>
                             <UiAutoFormLabel>{{ $t('account.customer.birthday') }}</UiAutoFormLabel>
                             <UiSelect v-bind="componentField" :default-value="birthday.getDate()">
@@ -162,9 +162,9 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
                 </div>
             </template>
 
-            <template #birthdayMonth>
+            <template #birthdayMonth="slotProps">
                 <div class="col-span-4 grid items-end">
-                    <FormField v-slot="{ componentField }" name="birthdayMonth">
+                    <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayMonth">
                         <UiFormItem>
                             <UiSelect v-bind="componentField" :default-value="birthday.getMonth() + 1">
                                 <UiFormControl>
@@ -190,9 +190,9 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
                 </div>
             </template>
 
-            <template #birthdayYear>
+            <template #birthdayYear="slotProps">
                 <div class="col-span-4 grid items-end">
-                    <FormField v-slot="{ componentField }" name="birthdayYear">
+                    <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayYear">
                         <UiFormItem>
                             <UiSelect v-bind="componentField" :default-value="birthday.getFullYear()">
                                 <UiFormControl>
