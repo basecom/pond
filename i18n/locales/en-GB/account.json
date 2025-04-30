@@ -28,12 +28,16 @@
             }
         },
         "customer": {
+            "accountType": "Account type",
             "salutation": "Salutation",
+            "firstName": "First name",
+            "lastName": "Last name",
             "name": "Name",
             "mail": "Email",
             "title": "Title",
             "companyName": "Company",
-            "vat": "VAT ID"
+            "vat": "VAT ID",
+            "birthday": "Birthday"
         },
         "overview": {
             "label": "Overview",

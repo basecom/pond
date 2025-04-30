@@ -39,7 +39,7 @@ const changeMail = async (mailData: ChangeMailForm) => {
 
 <template>
     <h3 class="mb-2 mt-6 border-b border-gray-100 pb-2 text-lg font-bold md:mb-4 md:mt-8">
-        {{ $t('account.customer.mail') }}
+        {{ $t('account.personalProfile.changeMailAddress.headline') }}
     </h3>
 
     <p>{{ $t('account.personalProfile.currentMailAddress') }}: {{ customer.email }}</p>

@@ -1,23 +1,29 @@
 <script setup lang="ts">
-import type { Schemas } from '@shopware/api-client/api-types';
-import type { ChangePasswordForm } from '~/components/account/page/AccountPageProfileChangePasswordInner.vue';
-import type { ChangeMailForm } from '~/components/account/page/AccountPageProfileChangeMailInner.vue';
+import type {Schemas} from '@shopware/api-client/api-types';
+import type {ChangePasswordForm} from '~/components/account/page/AccountPageProfileChangePasswordInner.vue';
+import type {ChangeMailForm} from '~/components/account/page/AccountPageProfileChangeMailInner.vue';
 import type * as z from 'zod';
+import {getTranslatedProperty} from '@shopware/helpers';
 
 const props = defineProps<{
-  customer: Schemas['Customer'];
+    customer: Schemas['Customer'];
 }>();
 
 const emits = defineEmits<{
-  'update-personal-data': [personalDataForm: PersonalDataForm];
-  'update-mail': [mailForm: ChangeMailForm];
-  'update-password': [passwordForm: ChangePasswordForm];
+    'update-personal-data': [personalDataForm: PersonalDataForm];
+    'update-mail': [mailForm: ChangeMailForm];
+    'update-password': [passwordForm: ChangePasswordForm];
 }>();
 
 const { getPersonalDataForm, getPersonalDataDependencies } = usePondForm();
+const { getSalutations: salutations } = useSalutations();
 const schema = getPersonalDataForm(props.customer);
 const dependencies = getPersonalDataDependencies();
 export type PersonalDataForm = z.infer<typeof schema>;
+
+const birthday = new Date(props.customer.birthday);
+console.log(props.customer.birthday)
+console.log(birthday, birthday.getMonth())
 
 const changePersonalData = async (personalDataForm: PersonalDataForm) => {
     emits('update-personal-data', personalDataForm);
@@ -41,6 +47,16 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
         class="grid gap-4 md:grid-cols-2"
         :schema="schema"
         :dependencies="dependencies"
+        :field-config="{
+            accountType: { label: $t('account.customer.accountType') },
+            salutationId: { label: $t('account.customer.salutation') },
+            title: { label: $t('account.customer.title') },
+            firstName: { label: $t('account.customer.firstName') },
+            lastName: { label: $t('account.customer.lastName') },
+            company: { label: $t('account.customer.companyName') },
+            vatIds: { label: $t('account.customer.vat') },
+            birthday: { label: $t('account.customer.birthday') },
+        }"
         @submit="changePersonalData"
     >
         <template #accountType="slotProps">
@@ -49,9 +65,33 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
             </div>
         </template>
 
-        <template #salutation="slotProps">
+        <template #salutationId>
             <div class="md:col-span-2">
-                <UiAutoFormField v-bind="slotProps" />
+                <FormField v-slot="{ componentField }" name="salutationId">
+                    <UiFormItem>
+                        <UiAutoFormLabel>{{ $t('account.customer.salutation') }}</UiAutoFormLabel>
+                        <UiSelect v-bind="componentField" :default-value="customer.salutationId">
+                            <UiFormControl>
+                                <UiSelectTrigger>
+                                    <UiSelectValue />
+                                </UiSelectTrigger>
+                            </UiFormControl>
+
+                            <UiSelectContent>
+                                <UiSelectGroup>
+                                    <UiSelectItem
+                                        v-for="salutation in salutations"
+                                        :key="salutation.id"
+                                        :value="salutation.id"
+                                    >
+                                        {{ getTranslatedProperty(salutation, 'displayName') }}
+                                    </UiSelectItem>
+                                </UiSelectGroup>
+                            </UiSelectContent>
+                        </UiSelect>
+                        <UiFormMessage />
+                    </UiFormItem>
+                </FormField>
             </div>
         </template>
 
@@ -62,8 +102,60 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
         </template>
 
         <template #birthday="slotProps">
-            <div class="md:col-span-2">
-                <UiAutoFormField v-bind="slotProps" />
+            <div class="md:col-span-2 grid grid-cols-3 gap-4 items-end">
+                <FormField v-slot="{ componentField }" name="birthdayDay">
+                    <UiFormItem>
+                        <UiAutoFormLabel>{{ $t('account.customer.birthday') }}</UiAutoFormLabel>
+                        <UiSelect v-bind="componentField" :default-value="birthday.getDate()">
+                            <UiFormControl>
+                                <UiSelectTrigger>
+                                    <UiSelectValue />
+                                </UiSelectTrigger>
+                            </UiFormControl>
+
+                            <UiSelectContent>
+                                <UiSelectGroup>
+                                    <UiSelectItem
+                                        v-for="day in 31"
+                                        :key="day"
+                                        :value="day"
+                                    >
+                                        {{ day }}
+                                    </UiSelectItem>
+                                </UiSelectGroup>
+                            </UiSelectContent>
+                        </UiSelect>
+                        <UiFormMessage />
+                    </UiFormItem>
+                </FormField>
+
+                <FormField v-slot="{ componentField }" name="birthdayMonth">
+                    <UiFormItem>
+                        <UiSelect v-bind="componentField" :default-value="birthday.getMonth()">
+                            <UiFormControl>
+                                <UiSelectTrigger>
+                                    <UiSelectValue />
+                                </UiSelectTrigger>
+                            </UiFormControl>
+
+                            <UiSelectContent>
+                                <UiSelectGroup>
+                                    <UiSelectItem
+                                        v-for="month in 12"
+                                        :key="month"
+                                        :value="month"
+                                    >
+                                        {{ month }}
+                                    </UiSelectItem>
+                                </UiSelectGroup>
+                            </UiSelectContent>
+                        </UiSelect>
+                    </UiFormItem>
+                </FormField>
+
+                <FormField v-slot="{ componentField }" name="birthdayYear">
+                    {{ birthday.getFullYear() }}
+                </FormField>
             </div>
         </template>
 
@@ -78,5 +170,6 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
         :customer="customer"
         @update-mail="(mailForm: ChangeMailForm) => $emit('update-mail', mailForm)"
     />
+
     <AccountPageProfileChangePassword @update-password="(passwordForm: ChangePasswordForm) => $emit('update-password', passwordForm)" />
 </template>

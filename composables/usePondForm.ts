@@ -5,12 +5,9 @@ import type { ZodObjectOrWrapped } from '~/components/ui/auto-form/utils';
 
 export const usePondForm = () => {
     const configStore = useConfigStore();
-    const { getSalutations } = useSalutations();
-
-    const salutations = computed(() => getSalutations.value.map((salutation: Schemas['Salutation']) => salutation.displayName));
 
     const getPersonalDataForm = (customer: Schemas['Customer']): ZodObjectOrWrapped => {
-        // todo: salutation error fixen, birthday anschauen
+        // todo: birthday anschauen
         let personalDataForm = z.object({});
 
         // add selection of account type
@@ -21,11 +18,9 @@ export const usePondForm = () => {
             });
         }
 
-        if (salutations.value) {
-            personalDataForm = personalDataForm.extend({
-                salutationId: z.enum(salutations.value).optional().default(customer.salutation?.displayName ?? ''),
-            });
-        }
+        personalDataForm = personalDataForm.extend({
+            salutationId: z.string().optional(),
+        });
 
         // add title (if set in the admin)
         const showTitle = configStore.get('core.loginRegistration.showTitleField') as boolean;
@@ -42,10 +37,12 @@ export const usePondForm = () => {
         });
 
         // add company and vat number (if we can select the account type)
-        if (showAccountType && customer.accountType === 'business') {
+        if (showAccountType) {
+            const companyName = customer.accountType === 'business' ? customer.company : '';
+            const vatIds = customer.accountType === 'business' ? customer.vatIds?.join(', ') : '';
             personalDataForm = personalDataForm.extend({
-                company: z.string().default(customer.company),
-                vatNumber: z.string().optional().default(customer.vatIds?.join(', ')),
+                company: z.string().default(companyName),
+                vatIds: z.string().optional().default(vatIds),
             });
         }
 
@@ -67,7 +64,7 @@ export const usePondForm = () => {
         {
             sourceField: 'accountType',
             type: DependencyType.HIDES,
-            targetField: 'vatNumber',
+            targetField: 'vatIds',
             when: (accountType: string) => accountType !== 'business',
         },
         {
