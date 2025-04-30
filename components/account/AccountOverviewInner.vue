@@ -7,6 +7,8 @@ defineProps<{
 
 const configStore = useConfigStore();
 const showTitle = configStore.get('core.loginRegistration.showTitleField') as boolean;
+const showAdditionalAddressField1 = configStore.get('core.loginRegistration.showAdditionalAddressField1') as boolean;
+const showAdditionalAddressField2 = configStore.get('core.loginRegistration.showAdditionalAddressField2') as boolean;
 </script>
 
 <template>
@@ -80,18 +82,21 @@ const showTitle = configStore.get('core.loginRegistration.showTitleField') as bo
 
                 <slot name="billing-address-content">
                     <div class="space-y-2">
-                        <p v-if="customer.defaultBillingAddress.company || customer.defaultBillingAddress.department" class="font-bold">
-                            {{ [customer.defaultBillingAddress.company, customer.defaultBillingAddress.department].join(' - ') }}
+                        <p v-if="customer.accountType === 'business' && (customer.defaultBillingAddress.company || customer.defaultBillingAddress.department)" class="font-bold">
+                            {{ customer.defaultBillingAddress.company }}
+                            <template v-if="customer.defaultBillingAddress.department">
+                                - {{ customer.defaultBillingAddress.department }}
+                            </template>
                         </p>
                         <p>{{ customer.defaultBillingAddress.firstName }} {{ customer.defaultBillingAddress.lastName }}</p>
                         <p>{{ customer.defaultBillingAddress.street }}</p>
-                        <p>{{ customer.defaultBillingAddress.zipcode }} {{ customer.defaultBillingAddress.city }}</p>
-                        <p v-if="customer.defaultBillingAddress.additionalAddressLine1">
+                        <p v-if="showAdditionalAddressField1 && customer.defaultBillingAddress.additionalAddressLine1">
                             {{ customer.defaultBillingAddress.additionalAddressLine1 }}
                         </p>
-                        <p v-if="customer.defaultBillingAddress.additionalAddressLine2">
+                        <p v-if="showAdditionalAddressField2 && customer.defaultBillingAddress.additionalAddressLine2">
                             {{ customer.defaultBillingAddress.additionalAddressLine2 }}
                         </p>
+                        <p>{{ customer.defaultBillingAddress.zipcode }} {{ customer.defaultBillingAddress.city }}</p>
                         <p>
                             <template v-if="customer.defaultBillingAddress.countryState">
                                 {{ customer.defaultBillingAddress.countryState.name }},
@@ -122,18 +127,21 @@ const showTitle = configStore.get('core.loginRegistration.showTitleField') as bo
 
                         <template v-else>
                             <slot name="shipping-address-not-identical">
-                                <p v-if="customer.defaultShippingAddress.company || customer.defaultShippingAddress.department" class="font-bold">
-                                    {{ [customer.defaultShippingAddress.company, customer.defaultShippingAddress.department].join(' - ') }}
+                                <p v-if="customer.accountType === 'business' && (customer.defaultShippingAddress.company || customer.defaultShippingAddress.department)" class="font-bold">
+                                    {{ customer.defaultShippingAddress.company }}
+                                    <template v-if="customer.defaultShippingAddress.department">
+                                        - {{ customer.defaultShippingAddress.department }}
+                                    </template>
                                 </p>
                                 <p>{{ customer.defaultShippingAddress.firstName }} {{ customer.defaultShippingAddress.lastName }}</p>
                                 <p>{{ customer.defaultShippingAddress.street }}</p>
-                                <p>{{ customer.defaultShippingAddress.zipcode }} {{ customer.defaultShippingAddress.city }}</p>
-                                <p v-if="customer.defaultShippingAddress.additionalAddressLine1">
+                                <p v-if="showAdditionalAddressField1 && customer.defaultShippingAddress.additionalAddressLine1">
                                     {{ customer.defaultShippingAddress.additionalAddressLine1 }}
                                 </p>
-                                <p v-if="customer.defaultShippingAddress.additionalAddressLine2">
+                                <p v-if="showAdditionalAddressField2 && customer.defaultShippingAddress.additionalAddressLine2">
                                     {{ customer.defaultShippingAddress.additionalAddressLine2 }}
                                 </p>
+                                <p>{{ customer.defaultShippingAddress.zipcode }} {{ customer.defaultShippingAddress.city }}</p>
                                 <p>
                                     <template v-if="customer.defaultShippingAddress.countryState">
                                         {{ customer.defaultShippingAddress.countryState.name }},
