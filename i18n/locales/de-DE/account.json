@@ -59,7 +59,7 @@
             "status": {
                 "changePersonalDataSuccessfully": {
                     "title": "Erfolgreich geändert",
-                    "description": "Ihre persönlichen Daten wurde erfolgreich geändert"
+                    "description": "Ihre persönlichen Daten wurden erfolgreich geändert"
                 },
                 "changeMailSuccessfully": {
                     "title": "Erfolgreich geändert",

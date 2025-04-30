@@ -4,7 +4,7 @@ import type { ChangePasswordForm } from '~/components/account/page/AccountPagePr
 import type { ChangeMailForm } from '~/components/account/page/AccountPageProfileChangeMailInner.vue';
 import type * as z from 'zod';
 
-defineProps<{
+const props = defineProps<{
   customer: Schemas['Customer'];
 }>();
 
@@ -14,9 +14,9 @@ const emits = defineEmits<{
   'update-password': [passwordForm: ChangePasswordForm];
 }>();
 
-const pondForm = usePondForm();
-const schema = pondForm.getPersonalDataForm();
-const dependencies = pondForm.getPersonalDataDependencies();
+const { getPersonalDataForm, getPersonalDataDependencies } = usePondForm();
+const schema = getPersonalDataForm(props.customer);
+const dependencies = getPersonalDataDependencies();
 export type PersonalDataForm = z.infer<typeof schema>;
 
 const changePersonalData = async (personalDataForm: PersonalDataForm) => {

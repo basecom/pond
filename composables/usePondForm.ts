@@ -9,20 +9,21 @@ export const usePondForm = () => {
 
     const salutations = computed(() => getSalutations.value.map((salutation: Schemas['Salutation']) => salutation.displayName));
 
-    const getPersonalDataForm = (): ZodObjectOrWrapped => {
+    const getPersonalDataForm = (customer: Schemas['Customer']): ZodObjectOrWrapped => {
+        // todo: salutation error fixen, birthday anschauen
         let personalDataForm = z.object({});
 
         // add selection of account type
         const showAccountType = configStore.get('core.loginRegistration.showAccountTypeSelection') as boolean;
         if (showAccountType) {
             personalDataForm = personalDataForm.extend({
-                accountType: z.enum(['business', 'private']).optional().default('business'),
+                accountType: z.enum(['business', 'private']).optional().default(customer.accountType),
             });
         }
 
         if (salutations.value) {
             personalDataForm = personalDataForm.extend({
-                salutation: z.enum(salutations.value).optional().default('Herr'),
+                salutationId: z.enum(salutations.value).optional().default(customer.salutation?.displayName ?? ''),
             });
         }
 
@@ -30,21 +31,21 @@ export const usePondForm = () => {
         const showTitle = configStore.get('core.loginRegistration.showTitleField') as boolean;
         if (showTitle) {
             personalDataForm = personalDataForm.extend({
-                title: z.string().optional().description('test'),
+                title: z.string().optional().default(customer.title ?? ''),
             });
         }
 
         // add fields we always have (first name, last name)
         personalDataForm = personalDataForm.extend({
-            firstName: z.string(),
-            lastName: z.string(),
+            firstName: z.string().default(customer.firstName),
+            lastName: z.string().default(customer.lastName),
         });
 
         // add company and vat number (if we can select the account type)
-        if (showAccountType) {
+        if (showAccountType && customer.accountType === 'business') {
             personalDataForm = personalDataForm.extend({
-                company: z.string(),
-                vatNumber: z.string().optional(),
+                company: z.string().default(customer.company),
+                vatNumber: z.string().optional().default(customer.vatIds?.join(', ')),
             });
         }
 
@@ -59,7 +60,7 @@ export const usePondForm = () => {
         return personalDataForm;
     };
 
-     
+    // we exclude this one because the return type is defined by shadcn
     // @ts-nocheck
     /* eslint-disable */
     const getPersonalDataDependencies = (): Dependency<{ [x: string]: any; }>[] => [
