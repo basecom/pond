@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import * as z from 'zod';
-import type {Schemas} from '@shopware/api-client/api-types';
+import type { Schemas } from '@shopware/api-client/api-types';
 
 defineProps<{
   customer: Schemas['Customer'];

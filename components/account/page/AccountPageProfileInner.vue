@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type {Schemas} from '@shopware/api-client/api-types';
-import type {ChangePasswordForm} from '~/components/account/page/AccountPageProfileChangePasswordInner.vue';
-import type {ChangeMailForm} from '~/components/account/page/AccountPageProfileChangeMailInner.vue';
+import type { Schemas } from '@shopware/api-client/api-types';
+import type { ChangePasswordForm } from '~/components/account/page/AccountPageProfileChangePasswordInner.vue';
+import type { ChangeMailForm } from '~/components/account/page/AccountPageProfileChangeMailInner.vue';
 import type * as z from 'zod';
-import {getTranslatedProperty} from '@shopware/helpers';
+import { getTranslatedProperty } from '@shopware/helpers';
 
 const props = defineProps<{
     customer: Schemas['Customer'];
@@ -234,6 +234,8 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
     </slot>
 
     <slot name="change-password">
-        <AccountPageProfileChangePassword @update-password="(passwordForm: ChangePasswordForm) => $emit('update-password', passwordForm)" />
+        <AccountPageProfileChangePassword
+            @update-password="(passwordForm: ChangePasswordForm) => $emit('update-password', passwordForm)"
+        />
     </slot>
 </template>
