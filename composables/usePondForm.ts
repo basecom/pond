@@ -49,9 +49,23 @@ export const usePondForm = () => {
         // add birthday (if set in the admin)
         const showBirthday = configStore.get('core.loginRegistration.showBirthdayField') as boolean;
         if (showBirthday) {
-            personalDataForm = personalDataForm.extend({
-                birthday: z.date().optional(),
-            });
+            if (customer.birthday) {
+                const birthday = new Date(customer.birthday);
+                const day = birthday.getDate();
+                const month = birthday.getMonth() + 1;
+                const year = birthday.getFullYear();
+                personalDataForm = personalDataForm.extend({
+                    birthdayDay: z.number().optional().default(day),
+                    birthdayMonth: z.number().optional().default(month),
+                    birthdayYear: z.number().optional().default(year),
+                });
+            } else {
+                personalDataForm = personalDataForm.extend({
+                    birthdayDay: z.number().optional(),
+                    birthdayMonth: z.number().optional(),
+                    birthdayYear: z.number().optional(),
+                });
+            }
         }
 
         return personalDataForm;

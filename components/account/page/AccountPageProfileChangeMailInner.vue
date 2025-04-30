@@ -38,61 +38,69 @@ const changeMail = async (mailData: ChangeMailForm) => {
 </script>
 
 <template>
-    <h3 class="mb-2 mt-6 border-b border-gray-100 pb-2 text-lg font-bold md:mb-4 md:mt-8">
-        {{ $t('account.personalProfile.changeMailAddress.headline') }}
-    </h3>
+    <slot name="headline">
+        <h3 class="mb-2 mt-6 border-b border-gray-100 pb-2 text-lg font-bold md:mb-4 md:mt-8">
+            {{ $t('account.personalProfile.changeMailAddress.headline') }}
+        </h3>
+    </slot>
 
-    <p>{{ $t('account.personalProfile.currentMailAddress') }}: {{ customer.email }}</p>
+    <slot name="current-mail">
+        <p>{{ $t('account.personalProfile.currentMailAddress') }}: {{ customer.email }}</p>
+    </slot>
 
-    <UiAccordion type="single" class="w-full" collapsible>
-        <UiAccordionItem value="mail" class="border-gray-100">
-            <UiAccordionTrigger class="text-base">
-                {{ $t('account.personalProfile.changeMailAddress.headline') }}
-            </UiAccordionTrigger>
+    <slot name="change-mail">
+        <UiAccordion type="single" class="w-full" collapsible>
+            <UiAccordionItem value="mail" class="border-gray-100">
+                <UiAccordionTrigger class="text-base">
+                    {{ $t('account.personalProfile.changeMailAddress.headline') }}
+                </UiAccordionTrigger>
 
-            <UiAccordionContent class="text-base">
-                <UiAutoForm
-                    v-auto-animate
-                    class="grid gap-4 md:grid-cols-2"
-                    :schema="schema"
-                    :field-config="{
-                        email: {
-                            label: $t('account.login.email.label'),
-                            inputProps: {
-                                type: 'email',
-                                placeholder: $t('account.login.email.placeholder'),
-                            },
-                        },
-                        emailConfirmation: {
-                            label: $t('account.personalProfile.changeMailAddress.confirmation'),
-                            inputProps: {
-                                type: 'email',
-                                placeholder: $t('account.login.email.placeholder'),
-                            },
-                        },
-                        password: {
-                            label: $t('account.login.password.label'),
-                            inputProps: {
-                                type: 'password',
-                                placeholder: $t('account.login.password.placeholder'),
-                            },
-                        },
-                    }"
-                    @submit="changeMail"
-                >
-                    <template #password="slotProps">
-                        <div class="md:col-span-2">
-                            <UiAutoFormField v-bind="slotProps" />
-                        </div>
-                    </template>
+                <UiAccordionContent class="text-base">
+                    <slot name="change-mail-form">
+                        <UiAutoForm
+                            v-auto-animate
+                            class="grid gap-4 md:grid-cols-2"
+                            :schema="schema"
+                            :field-config="{
+                                email: {
+                                    label: $t('account.login.email.label'),
+                                    inputProps: {
+                                        type: 'email',
+                                        placeholder: $t('account.login.email.placeholder'),
+                                    },
+                                },
+                                emailConfirmation: {
+                                    label: $t('account.personalProfile.changeMailAddress.confirmation'),
+                                    inputProps: {
+                                        type: 'email',
+                                        placeholder: $t('account.login.email.placeholder'),
+                                    },
+                                },
+                                password: {
+                                    label: $t('account.login.password.label'),
+                                    inputProps: {
+                                        type: 'password',
+                                        placeholder: $t('account.login.password.placeholder'),
+                                    },
+                                },
+                            }"
+                            @submit="changeMail"
+                        >
+                            <template #password="slotProps">
+                                <div class="md:col-span-2">
+                                    <UiAutoFormField v-bind="slotProps" />
+                                </div>
+                            </template>
 
-                    <slot name="submit-button">
-                        <UiButton type="submit" class="md:col-span-2">
-                            {{ $t('general.save') }}
-                        </UiButton>
+                            <slot name="submit-button">
+                                <UiButton type="submit" class="md:col-span-2">
+                                    {{ $t('general.save') }}
+                                </UiButton>
+                            </slot>
+                        </UiAutoForm>
                     </slot>
-                </UiAutoForm>
-            </UiAccordionContent>
-        </UiAccordionItem>
-    </UiAccordion>
+                </UiAccordionContent>
+            </UiAccordionItem>
+        </UiAccordion>
+    </slot>
 </template>

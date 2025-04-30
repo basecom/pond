@@ -21,9 +21,15 @@ const schema = getPersonalDataForm(props.customer);
 const dependencies = getPersonalDataDependencies();
 export type PersonalDataForm = z.infer<typeof schema>;
 
-const birthday = new Date(props.customer.birthday);
-console.log(props.customer.birthday)
-console.log(birthday, birthday.getMonth())
+const birthday = new Date(props.customer.birthday ?? '');
+const possibleBirthdayYears = computed(() => {
+    const years = [];
+    const today = new Date();
+    // we can not use a foreach here
+    // eslint-disable-next-line no-restricted-syntax
+    for (let i = (today.getFullYear() - 120); i <= today.getFullYear(); i++) years.push(i);
+    return years;
+});
 
 const changePersonalData = async (personalDataForm: PersonalDataForm) => {
     emits('update-personal-data', personalDataForm);
@@ -42,134 +48,192 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
         </h3>
     </slot>
 
-    <UiAutoForm
-        v-auto-animate
-        class="grid gap-4 md:grid-cols-2"
-        :schema="schema"
-        :dependencies="dependencies"
-        :field-config="{
-            accountType: { label: $t('account.customer.accountType') },
-            salutationId: { label: $t('account.customer.salutation') },
-            title: { label: $t('account.customer.title') },
-            firstName: { label: $t('account.customer.firstName') },
-            lastName: { label: $t('account.customer.lastName') },
-            company: { label: $t('account.customer.companyName') },
-            vatIds: { label: $t('account.customer.vat') },
-            birthday: { label: $t('account.customer.birthday') },
-        }"
-        @submit="changePersonalData"
-    >
-        <template #accountType="slotProps">
-            <div class="md:col-span-2">
-                <UiAutoFormField v-bind="slotProps" />
-            </div>
-        </template>
+    <slot name="form">
+        <UiAutoForm
+            v-auto-animate
+            class="grid grid-cols-12 gap-4"
+            :schema="schema"
+            :dependencies="dependencies"
+            :field-config="{
+                accountType: { label: $t('account.customer.accountType') },
+                salutationId: { label: $t('account.customer.salutation') },
+                title: { label: $t('account.customer.title') },
+                firstName: { label: $t('account.customer.firstName') },
+                lastName: { label: $t('account.customer.lastName') },
+                company: { label: $t('account.customer.companyName') },
+                vatIds: { label: $t('account.customer.vat') },
+                birthdayDay: { label: $t('account.customer.birthday') },
+            }"
+            @submit="changePersonalData"
+        >
+            <template #accountType="slotProps">
+                <div class="col-span-12">
+                    <UiAutoFormField v-bind="slotProps" />
+                </div>
+            </template>
 
-        <template #salutationId>
-            <div class="md:col-span-2">
-                <FormField v-slot="{ componentField }" name="salutationId">
-                    <UiFormItem>
-                        <UiAutoFormLabel>{{ $t('account.customer.salutation') }}</UiAutoFormLabel>
-                        <UiSelect v-bind="componentField" :default-value="customer.salutationId">
-                            <UiFormControl>
-                                <UiSelectTrigger>
-                                    <UiSelectValue />
-                                </UiSelectTrigger>
-                            </UiFormControl>
+            <template #salutationId>
+                <div class="col-span-12">
+                    <FormField v-slot="{ componentField }" name="salutationId">
+                        <UiFormItem>
+                            <UiAutoFormLabel>{{ $t('account.customer.salutation') }}</UiAutoFormLabel>
+                            <UiSelect v-bind="componentField" :default-value="customer.salutationId">
+                                <UiFormControl>
+                                    <UiSelectTrigger>
+                                        <UiSelectValue />
+                                    </UiSelectTrigger>
+                                </UiFormControl>
 
-                            <UiSelectContent>
-                                <UiSelectGroup>
-                                    <UiSelectItem
-                                        v-for="salutation in salutations"
-                                        :key="salutation.id"
-                                        :value="salutation.id"
-                                    >
-                                        {{ getTranslatedProperty(salutation, 'displayName') }}
-                                    </UiSelectItem>
-                                </UiSelectGroup>
-                            </UiSelectContent>
-                        </UiSelect>
-                        <UiFormMessage />
-                    </UiFormItem>
-                </FormField>
-            </div>
-        </template>
+                                <UiSelectContent>
+                                    <UiSelectGroup>
+                                        <UiSelectItem
+                                            v-for="salutation in salutations"
+                                            :key="salutation.id"
+                                            :value="salutation.id"
+                                        >
+                                            {{ getTranslatedProperty(salutation, 'displayName') }}
+                                        </UiSelectItem>
+                                    </UiSelectGroup>
+                                </UiSelectContent>
+                            </UiSelect>
+                            <UiFormMessage />
+                        </UiFormItem>
+                    </FormField>
+                </div>
+            </template>
 
-        <template #title="slotProps">
-            <div class="md:col-span-2">
-                <UiAutoFormField v-bind="slotProps" />
-            </div>
-        </template>
+            <template #title="slotProps">
+                <div class="col-span-12">
+                    <UiAutoFormField v-bind="slotProps" />
+                </div>
+            </template>
 
-        <template #birthday="slotProps">
-            <div class="md:col-span-2 grid grid-cols-3 gap-4 items-end">
-                <FormField v-slot="{ componentField }" name="birthdayDay">
-                    <UiFormItem>
-                        <UiAutoFormLabel>{{ $t('account.customer.birthday') }}</UiAutoFormLabel>
-                        <UiSelect v-bind="componentField" :default-value="birthday.getDate()">
-                            <UiFormControl>
-                                <UiSelectTrigger>
-                                    <UiSelectValue />
-                                </UiSelectTrigger>
-                            </UiFormControl>
+            <template #firstName="slotProps">
+                <div class="col-span-12 md:col-span-6">
+                    <UiAutoFormField v-bind="slotProps" />
+                </div>
+            </template>
 
-                            <UiSelectContent>
-                                <UiSelectGroup>
-                                    <UiSelectItem
-                                        v-for="day in 31"
-                                        :key="day"
-                                        :value="day"
-                                    >
-                                        {{ day }}
-                                    </UiSelectItem>
-                                </UiSelectGroup>
-                            </UiSelectContent>
-                        </UiSelect>
-                        <UiFormMessage />
-                    </UiFormItem>
-                </FormField>
+            <template #lastName="slotProps">
+                <div class="col-span-12 md:col-span-6">
+                    <UiAutoFormField v-bind="slotProps" />
+                </div>
+            </template>
 
-                <FormField v-slot="{ componentField }" name="birthdayMonth">
-                    <UiFormItem>
-                        <UiSelect v-bind="componentField" :default-value="birthday.getMonth()">
-                            <UiFormControl>
-                                <UiSelectTrigger>
-                                    <UiSelectValue />
-                                </UiSelectTrigger>
-                            </UiFormControl>
+            <template #company="slotProps">
+                <div class="col-span-12 md:col-span-6">
+                    <UiAutoFormField v-bind="slotProps" />
+                </div>
+            </template>
 
-                            <UiSelectContent>
-                                <UiSelectGroup>
-                                    <UiSelectItem
-                                        v-for="month in 12"
-                                        :key="month"
-                                        :value="month"
-                                    >
-                                        {{ month }}
-                                    </UiSelectItem>
-                                </UiSelectGroup>
-                            </UiSelectContent>
-                        </UiSelect>
-                    </UiFormItem>
-                </FormField>
+            <template #vatIds="slotProps">
+                <div class="col-span-12 md:col-span-6">
+                    <UiAutoFormField v-bind="slotProps" />
+                </div>
+            </template>
 
-                <FormField v-slot="{ componentField }" name="birthdayYear">
-                    {{ birthday.getFullYear() }}
-                </FormField>
-            </div>
-        </template>
+            <template #birthdayDay>
+                <div class="col-span-4">
+                    <FormField v-slot="{ componentField }" name="birthdayDay">
+                        <UiFormItem>
+                            <UiAutoFormLabel>{{ $t('account.customer.birthday') }}</UiAutoFormLabel>
+                            <UiSelect v-bind="componentField" :default-value="birthday.getDate()">
+                                <UiFormControl>
+                                    <UiSelectTrigger>
+                                        <UiSelectValue />
+                                    </UiSelectTrigger>
+                                </UiFormControl>
 
-        <slot name="submit-button">
-            <UiButton type="submit" class="md:col-span-2">
-                {{ $t('general.save') }}
-            </UiButton>
-        </slot>
-    </UiAutoForm>
+                                <UiSelectContent>
+                                    <UiSelectGroup>
+                                        <UiSelectItem
+                                            v-for="day in 31"
+                                            :key="day"
+                                            :value="day"
+                                        >
+                                            {{ day }}
+                                        </UiSelectItem>
+                                    </UiSelectGroup>
+                                </UiSelectContent>
+                            </UiSelect>
+                            <UiFormMessage />
+                        </UiFormItem>
+                    </FormField>
+                </div>
+            </template>
 
-    <AccountPageProfileChangeMail
-        :customer="customer"
-        @update-mail="(mailForm: ChangeMailForm) => $emit('update-mail', mailForm)"
-    />
+            <template #birthdayMonth>
+                <div class="col-span-4 grid items-end">
+                    <FormField v-slot="{ componentField }" name="birthdayMonth">
+                        <UiFormItem>
+                            <UiSelect v-bind="componentField" :default-value="birthday.getMonth() + 1">
+                                <UiFormControl>
+                                    <UiSelectTrigger>
+                                        <UiSelectValue />
+                                    </UiSelectTrigger>
+                                </UiFormControl>
 
-    <AccountPageProfileChangePassword @update-password="(passwordForm: ChangePasswordForm) => $emit('update-password', passwordForm)" />
+                                <UiSelectContent>
+                                    <UiSelectGroup>
+                                        <UiSelectItem
+                                            v-for="month in 12"
+                                            :key="month"
+                                            :value="month"
+                                        >
+                                            {{ month }}
+                                        </UiSelectItem>
+                                    </UiSelectGroup>
+                                </UiSelectContent>
+                            </UiSelect>
+                        </UiFormItem>
+                    </FormField>
+                </div>
+            </template>
+
+            <template #birthdayYear>
+                <div class="col-span-4 grid items-end">
+                    <FormField v-slot="{ componentField }" name="birthdayYear">
+                        <UiFormItem>
+                            <UiSelect v-bind="componentField" :default-value="birthday.getFullYear()">
+                                <UiFormControl>
+                                    <UiSelectTrigger>
+                                        <UiSelectValue />
+                                    </UiSelectTrigger>
+                                </UiFormControl>
+
+                                <UiSelectContent>
+                                    <UiSelectGroup>
+                                        <UiSelectItem
+                                            v-for="year in possibleBirthdayYears"
+                                            :key="year"
+                                            :value="year"
+                                        >
+                                            {{ year }}
+                                        </UiSelectItem>
+                                    </UiSelectGroup>
+                                </UiSelectContent>
+                            </UiSelect>
+                        </UiFormItem>
+                    </FormField>
+                </div>
+            </template>
+
+            <slot name="submit-button">
+                <UiButton type="submit" class="col-span-12">
+                    {{ $t('general.save') }}
+                </UiButton>
+            </slot>
+        </UiAutoForm>
+    </slot>
+
+    <slot name="change-mail">
+        <AccountPageProfileChangeMail
+            :customer="customer"
+            @update-mail="(mailForm: ChangeMailForm) => $emit('update-mail', mailForm)"
+        />
+    </slot>
+
+    <slot name="change-password">
+        <AccountPageProfileChangePassword @update-password="(passwordForm: ChangePasswordForm) => $emit('update-password', passwordForm)" />
+    </slot>
 </template>
