@@ -18,6 +18,7 @@ const { t } = useI18n();
 const { $i18n } = useNuxtApp();
 const { locale } = useI18n();
 const defaultLocale = $i18n.defaultLocale;
+console.log('route',route)
 const routePath =
     locale.value !== defaultLocale
         ? route.path.replace(/^\/[^/]+/, '')
