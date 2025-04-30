@@ -19,13 +19,11 @@ const { cartItem } = toRefs(props);
 const isLoading = ref(false);
 
 const isProduct = computed(() => cartItem.value?.type === 'product');
-const isContainer = computed(() => cartItem.value?.type === 'container');
 const isDiscount = computed(() => ((!cartItem.value?.good && ((cartItem.value?.price?.totalPrice ?? 0) <= 0)) || cartItem.value?.type === 'discount'));
-
 
 </script>
 <template>
-    <slot name="container">
+    <slot name="wrapper">
         <div :class="isLoading ? 'pointer-events-none opacity-50':''">
             <div class="relative">
                 <div v-if="isLoading" class="absolute flex size-full items-center justify-center pb-4">
@@ -87,4 +85,5 @@ const isDiscount = computed(() => ((!cartItem.value?.good && ((cartItem.value?.p
             </div>
         </div>
     </slot>
+
 </template>

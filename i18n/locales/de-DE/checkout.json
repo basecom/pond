@@ -12,6 +12,9 @@
     "subTotal": "Zwischensumme",
     "summaryShipping": "Lieferung",
     "cartItemInfoId": "Produktnummer",
-    "noLineItems": "Der Einkaufswagen ist leer."
+    "noLineItems": "Der Einkaufswagen ist leer.",
+    "cart": "Einkaufswagen",
+    "items": "Produkte",
+    "success": "Akton war erfolgreich"
   }
 }

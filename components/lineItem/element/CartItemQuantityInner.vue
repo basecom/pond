@@ -5,6 +5,7 @@ import UiNumberFieldContent from '../../ui/number-field//UiNumberFieldContent.vu
 import UiNumberFieldDecrement from '../../ui/number-field//UiNumberFieldDecrement.vue';
 import UiNumberFieldInput from '../../ui/number-field/UiNumberFieldInput.vue';
 import UiNumberFieldIncrement from '../../ui/number-field/UiNumberFieldIncrement.vue';
+const { t } = useI18n();
 
 const props = withDefaults(
     defineProps<{
@@ -19,40 +20,47 @@ const {cartItem} = toRefs(props);
 const {
     itemQuantity,
     changeItemQuantity,
-    itemStock,
 } = useCartItem(cartItem);
 const {refreshCart} = useCart();
-
+const {pushError, pushSuccess} = useNotifications();
+const configStore = useConfigStore();
 const quantity = ref();
 syncRefs(itemQuantity, quantity);
 const emits = defineEmits<{
   isLoading: [boolean]
 }>();
+
+const maxQuantityConfig = configStore.get('core.cart.maxQuantity') as number;
 const changeCartItemQuantity = async (quantityInput: number) => {
     try {
 
         emits('isLoading', true);
         const response = await changeItemQuantity(Number(quantityInput));
-        // Refresh cart after quantity update
         await refreshCart(response);
-        emits('isLoading', false);
-    } catch (error) {
-    }
+        await pushSuccess(t('checkout.success'));
 
+    } catch (error: Error) {
+      await pushError(t('error.generalHeadline'));
+    }
+    emits('isLoading', false);
     quantity.value = itemQuantity.value;
 };
 
+const isDigital = (computed(() => cartItem.value?.states && cartItem.value?.states.includes('is-download') && (cartItem.value?.states.includes('is-download') || cartItem.value.payload.maxPurchase === 1)));
 
 </script>
 <template>
     <slot name="quantityLabel">
         <label class="flex font-bold">{{ $t('checkout.quantity') }}</label>
     </slot>
-    <slot name="quantityField">
+    <slot name="quantityContainer">
         <div class="w-1/3">
             <UiNumberField
                 v-model="quantity"
-                :min="1"
+                :max="cartItem.payload.maxPurchase ?? maxQuantityConfig"
+
+                :step="cartItem.payload.purchaseSteps"
+                :disabled="!cartItem.stackable || isDigital"
                 :default-value="itemQuantity"
                 @update:model-value="changeCartItemQuantity"
             >

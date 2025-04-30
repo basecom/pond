@@ -1,0 +1,4 @@
+<template>
+  <LayoutNotificationsInner
+  />
+</template>

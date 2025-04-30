@@ -12,6 +12,9 @@
     "subTotal": "Subtotal",
     "summaryShipping": "Shipping",
     "cartItemInfoId": "Product number",
-    "noLineItems": "Your shopping cart is empty."
+    "noLineItems": "Your shopping cart is empty.",
+    "cart": "Shopping cart",
+    "items": "items",
+    "success": "Action was successful"
   }
 }

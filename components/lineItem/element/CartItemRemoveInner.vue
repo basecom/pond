@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
+
 const props = withDefaults(
     defineProps<{
       cartItem?: Schemas['LineItem'],
@@ -12,6 +13,8 @@ const props = withDefaults(
 );
 const { cartItem } = toRefs(props);
 const {removeItem} = useCartItem(cartItem);
+const { t } = useI18n();
+const {pushError, pushSuccess} = useNotifications();
 const emits = defineEmits<{
   isLoading: [boolean]
 }>();
@@ -19,10 +22,13 @@ const removeCartItem = async () => {
     try {
         emits('isLoading', true);
         await removeItem();
-        emits('isLoading', false);
+      await pushSuccess(t('checkout.success'));
+
     } catch (error) {
-        console.log('error');
+      await pushError(t('error.generalHeadline'));
+
     }
+  emits('isLoading', false);
 };
 
 </script>

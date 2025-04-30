@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type {Schemas} from '@shopware/api-client/api-types';
 import {Loader2} from 'lucide-vue-next';
+const { t } = useI18n();
+const {pushError, pushSuccess} = useNotifications();
 const {subtotal, shippingCosts, addPromotionCode} = useCart();
 const {getShippingMethods, setShippingMethod, selectedShippingMethod} = useCheckout();
 const {getFormattedPrice} = usePrice();
@@ -21,12 +23,27 @@ const isLoadingSelect = ref(false);
 
 const setSelectedShippingMethod = async (shippingMethodId: string) => {
     isLoadingSelect.value = true;
+  try {
     await setShippingMethod({id: shippingMethodId});
+    pushSuccess(t('checkout.success'));
+  }
+  catch(error: Error) {
+    pushError(t('error.generalHeadline'));
+  }
+
     isLoadingSelect.value = false;
 };
 const addSelectedPromotionCode = async (promotionCode: string) => {
-    isLoadingPromo.value = true;
-    await addPromotionCode(promotionCode);
+
+    try {
+      isLoadingPromo.value = true;
+      const result = await addPromotionCode(promotionCode);
+      //todo find way to filter for error
+      result.errors? pushError(t('error.generalHeadline')): pushSuccess(t('checkout.success'));;
+    }
+    catch(error: Error) {
+      pushError(t('error.generalHeadline'));
+    }
     isLoadingPromo.value = false;
 };
 </script>

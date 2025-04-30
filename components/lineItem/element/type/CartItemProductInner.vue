@@ -36,6 +36,7 @@ const emits = defineEmits<{
   isLoading: [boolean]
 }>();
 </script>
+
 <template>
   <slot name="wrapper">
     <div class="order-1 mb-4 flex w-5/6 flex-col">
