@@ -2,6 +2,9 @@
     "general": {
         "save": "Speichern",
         "close": "Schließen",
-        "homepage": "Startseite"
+        "homepage": "Startseite",
+        "back": "Zurück",
+        "showAll": "Alle anzeigen",
+        "categories": "Kategorien"
     }
 }
