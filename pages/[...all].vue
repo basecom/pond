@@ -18,13 +18,11 @@ const { t } = useI18n();
 const { $i18n } = useNuxtApp();
 const { locale } = useI18n();
 const defaultLocale = $i18n.defaultLocale;
-console.log('route',route)
 const routePath =
     locale.value !== defaultLocale
         ? route.path.replace(/^\/[^/]+/, '')
         : route.path;
 
-console.log('routePath', routePath)
 const { data: seoResult } = await usePondCacheAsyncData(`seoPath-${routePath}`, async () => {
     // For client links if the history state contains seo url information we can omit the api call
     if (import.meta.client) {
@@ -40,7 +38,6 @@ const { data: seoResult } = await usePondCacheAsyncData(`seoPath-${routePath}`, 
 });
 
 const { routeName, foreignKey } = useNavigationContext(seoResult);
-console.log('routeName', routeName.value)
 const { componentExists } = usePondCmsUtils();
 
 if (!routeName.value) {

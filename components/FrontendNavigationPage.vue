@@ -12,21 +12,17 @@ const categoryResponse = await search(props.navigationId, {
     withCmsAssociations: true,
 });
 
-console.log('navigation page')
-const route = useRoute();
-console.log('route',route)
+if (!categoryResponse) {
+    throw createError({statusCode: 404, message: t('error.404.heading')});
+}
 
-// if (!categoryResponse) {
-//     throw createError({statusCode: 404, message: t('error.404.heading')});
-// }
-//
-// const { category } = useCategory(categoryResponse);
-//
-// useHead(() => ({
-//     title: getTranslatedProperty(category.value, 'name'),
-// }));
+const { category } = useCategory(categoryResponse);
+
+useHead(() => ({
+    title: getTranslatedProperty(category.value, 'name'),
+}));
 </script>
 
 <template>
-<!--    <CmsPage v-if="category.cmsPage" :content="category.cmsPage" />-->
+    <CmsPage v-if="category.cmsPage" :content="category.cmsPage" />
 </template>
