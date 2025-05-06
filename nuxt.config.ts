@@ -91,7 +91,7 @@ export default defineNuxtConfig({
         '/account/**': { ssr: false },
     },
 
-    extends: ['@shopware/composables/nuxt-layer'],
+    extends: ['@shopware/composables/nuxt-layer', '@shopware/cms-base-layer'],
 
     shadcn: {
         prefix: '',
