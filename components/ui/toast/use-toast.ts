@@ -120,11 +120,18 @@ function dispatch(action: Action) {
     }
 }
 
+function clearToasts() {
+    toastTimeouts.forEach((timeout) => clearTimeout(timeout));
+    toastTimeouts.clear();
+    state.value.toasts = [];
+}
+
 function useToast() {
     return {
         toasts: computed(() => state.value.toasts),
         toast,
         dismiss: (toastId?: string) => dispatch({ type: actionTypes.DISMISS_TOAST, toastId }),
+        clearToasts,
     };
 }
 

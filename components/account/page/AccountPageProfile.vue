@@ -23,9 +23,10 @@ const doUpdatePersonalData = async (personalDataForm: PersonalDataForm) => {
         });
     } catch (error) {
         if (error instanceof ApiClientError) {
+            const errorCode = error.details?.errors?.[0]?.code ?? 'GENERAL';
             toast({
                 title: t('error.generalHeadline'),
-                description: t(`error.${ error.details.errors[0]?.code}`),
+                description: t(`error.${errorCode}`),
                 variant: 'destructive',
             });
         }

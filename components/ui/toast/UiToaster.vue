@@ -22,7 +22,7 @@ const { toasts } = useToast();
                 </template>
                 <UiToastClose />
             </div>
-            <component :is="toast.action" />
+            <component :is="toast.action" v-if="toast.action" />
         </UiToast>
         <UiToastViewport />
     </UiToastProvider>

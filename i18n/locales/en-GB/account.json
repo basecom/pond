@@ -37,7 +37,9 @@
             "title": "Title",
             "companyName": "Company",
             "vat": "VAT ID",
-            "birthday": "Birthday"
+            "birthday": "Birthday",
+            "birthdayMonth": "Month of birth",
+            "birthdayYear": "Year of birth"
         },
         "overview": {
             "label": "Overview",

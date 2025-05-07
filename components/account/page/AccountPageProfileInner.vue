@@ -21,7 +21,15 @@ const schema = getPersonalDataForm(props.customer);
 const dependencies = getPersonalDataDependencies();
 export type PersonalDataForm = z.infer<typeof schema>;
 
-const birthday = new Date(props.customer.birthday ?? '');
+const birthday = computed(() => {
+    const birthdayString = props.customer.birthday;
+    if (!birthdayString) {
+        return new Date(); // current date as fallback or use another default
+    }
+    const date = new Date(birthdayString);
+    return isNaN(date.getTime()) ? new Date() : date;
+});
+
 const possibleBirthdayYears = computed(() => {
     const years = [];
     const today = new Date();
@@ -166,6 +174,7 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
                 <div class="col-span-4 grid items-end">
                     <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayMonth">
                         <UiFormItem>
+                            <UiAutoFormLabel class="sr-only">{{ $t('account.customer.birthdayMonth') }}</UiAutoFormLabel>
                             <UiSelect v-bind="componentField" :default-value="birthday.getMonth() + 1">
                                 <UiFormControl>
                                     <UiSelectTrigger>
@@ -194,6 +203,7 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
                 <div class="col-span-4 grid items-end">
                     <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayYear">
                         <UiFormItem>
+                            <UiAutoFormLabel class="sr-only">{{ $t('account.customer.birthdayYear') }}</UiAutoFormLabel>
                             <UiSelect v-bind="componentField" :default-value="birthday.getFullYear()">
                                 <UiFormControl>
                                     <UiSelectTrigger>
