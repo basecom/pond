@@ -60,6 +60,7 @@ const config = useCmsElementConfig(props.element);
 const boxLayout = config.getConfigValue('boxLayout');
 
 listingStore.setSearchResult(props.element.data.listing, true);
+listingStore.isLoading = false;
 
 const products = computed(() => 
     // If the store is loading, return an empty array
