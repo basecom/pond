@@ -3,7 +3,7 @@ const cookieBannerStore = useCookieBannerStore();
 const { activatedCookies, cookieGroups } = storeToRefs(cookieBannerStore);
 const configStore = useConfigStore();
 const isAcceptAllEnabled = configStore.get('core.basicInformation.acceptAllCookies') as boolean | null;
-const modalController = useModal();
+const modalController = useModal(false);
 
 const onUpdateCookie = (active: CookieEntry['cookie'][], inactive: CookieEntry['cookie'][]) => {
     cookieBannerStore.updateCookies(active, inactive);

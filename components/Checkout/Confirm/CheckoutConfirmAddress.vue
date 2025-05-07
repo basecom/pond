@@ -8,7 +8,7 @@ const { refreshContext, signedIn } = useCustomerStore();
 const { handleError } = useFormErrorStore();
 const { pushError } = useNotifications();
 const { t } = useI18n();
-const modalController = useModal();
+const modalController = useModal(false);
 const { refreshCart } = useCart();
 const isLoading = ref(false);
 

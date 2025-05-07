@@ -3,7 +3,7 @@ import type { Schemas } from '@shopware/api-client/api-types';
 import { type ApiClientError } from '@shopware/api-client';
 import type { BillingAddressForm } from '~/types/form/AddressForm';
 
-const modalController = useModal();
+const modalController = useModal(false);
 const { handleError } = useFormErrorStore();
 
 const { customerAddresses, loadCustomerAddresses, saveAddress, deleteAddress } = useCustomerAddress();

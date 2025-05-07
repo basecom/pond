@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const customerStore = useCustomerStore();
 const { signedIn } = storeToRefs(customerStore);
-const modalController = useModal();
+const modalController = useModal(false);
 const { t } = useI18n();
 
 const closeModal = () => {
