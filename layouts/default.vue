@@ -29,8 +29,9 @@ await customerStore.refreshContext();
 refreshCart();
 
 const route = useRoute();
-if (route.path !== '/wishlist' && wishlistEnabled) {
-    // If not on wishlist page we fetch for displaying the amount of items in the header
+// wishlist products should not block ssr
+if (route.path !== '/wishlist' && wishlistEnabled && import.meta.client) {
+    // If not on wishlist page we fetch for displaying the number of items in the header
     getWishlistProducts();
 }
 
