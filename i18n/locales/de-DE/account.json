@@ -76,6 +76,15 @@
                     "description": "Ihr Passwort wurde erfolgreich geändert"
                 }
             }
+        },
+        "defaultPaymentMethod": {
+            "description": "Welche ist Ihre Standard-Zahlungsart?",
+            "status": {
+                "changeSuccessfully": {
+                    "title": "Erfolgreich geändert",
+                    "description": "Ihre Standard-Zahlungsart wurde erfolgreich geändert"
+                }
+            }
         }
     }
 }
