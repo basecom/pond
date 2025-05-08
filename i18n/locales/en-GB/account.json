@@ -43,6 +43,7 @@
             "defaultBillingAddress": "Default billing address",
             "defaultShippingAddress": "Default shipping address",
             "addressesIdentical": "Equal to billing address"
-        }
+        },
+        "wishlistNoProducts": "There are no products in your wishlist yet"
     }
 }

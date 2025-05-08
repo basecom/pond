@@ -42,6 +42,7 @@
             "defaultBillingAddress": "Standard-Rechnungsadresse",
             "defaultShippingAddress": "Standard-Lieferadresse",
             "addressesIdentical": "Entspricht der Rechnungsadresse"
-        }
+        },
+        "wishlistNoProducts": "Sie haben noch keine Produkte auf Ihrem Merkzettel"
     }
 }
