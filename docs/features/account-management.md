@@ -2,7 +2,7 @@
 
 ## Login
 
-The login flow allows customers to sign in using their email and password. It is built using a layered component structure that separates logic from presentation. Layout and behavior are customizable through named slots and props. The components are used in a full page login page as well as a modal opening from the header.
+The login flow allows customers to sign in using their email and password. It is built using a layered component structure that separates logic from presentation. Layout and behavior are customizable through named slots and props. The components are used in a full-page login page as well as a modal opening from the header.
 
 ---
 
