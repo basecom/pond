@@ -10,7 +10,7 @@ await configStore.loadConfig();
 const shopName = configStore.get('core.basicInformation.shopName') as string|null ?? 'pond';
 
 useHead(() => ({
-    title: `${t('account.account')  } | ${  shopName}`,
+    title: `${t('account.account')  } | ${shopName}`,
 }));
 </script>
 
