@@ -29,6 +29,7 @@ if (route.path === '/search') {
         />
     </button>
 
+    <!-- Nuxt currently has SSR support only for teleports to #teleports, so other targets need to use a <ClientOnly> wrapper. See: https://nuxt.com/docs/api/components/teleports -->
     <ClientOnly>
         <teleport to="#flyouts">
             <LayoutHeaderSearchBar

@@ -4,11 +4,12 @@ const { isAcceptAllEnabled } = storeToRefs(cookieBannerStore);
 </script>
 
 <template>
-    <div class="flex flex-wrap justify-center gap-2">
+    <div class="flex flex-wrap justify-center gap-2 [&>button]:w-full [&>button]:sm:w-fit">
         <FormKit
             type="button"
             :classes="{
-                input: 'max-w-fit',
+                outer: 'w-full sm:w-fit',
+                input: 'max-w-full sm:max-w-fit',
             }"
             @click="cookieBannerStore.denyAll()"
         >
@@ -20,7 +21,7 @@ const { isAcceptAllEnabled } = storeToRefs(cookieBannerStore);
                 <FormKit
                     type="button"
                     :classes="{
-                        input: 'max-w-fit',
+                        input: 'max-w-full sm:max-w-fit',
                     }"
                 >
                     {{ $t('cookie.banner.configureButton') }}
@@ -32,7 +33,8 @@ const { isAcceptAllEnabled } = storeToRefs(cookieBannerStore);
             v-if="isAcceptAllEnabled"
             type="submit"
             :classes="{
-                input: 'max-w-fit',
+                outer: 'w-full sm:w-fit',
+                input: 'max-w-full sm:max-w-fit',
             }"
             @click="cookieBannerStore.acceptAll()"
         >

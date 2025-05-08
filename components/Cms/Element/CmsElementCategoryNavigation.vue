@@ -10,6 +10,9 @@ const navigationStore = useNavigationStore();
 const { mainNavigation } = storeToRefs(navigationStore);
 
 const { isActive } = useActivePath();
+
+const route = useRoute();
+const listingStore = useListingStore(route.path === '/search' ? 'search' : 'category');
 </script>
 
 <template>
@@ -23,6 +26,7 @@ const { isActive } = useActivePath();
                 :to="getCategoryRoute(item)"
                 class="text-lg"
                 :class="{ 'font-bold': isActive(item.seoUrls) }"
+                @click="listingStore.isLoading = true;"
             >
                 {{ getTranslatedProperty(item, 'name') }}
             </LocaleLink>
@@ -36,6 +40,7 @@ const { isActive } = useActivePath();
                     <LocaleLink
                         :to="getCategoryRoute(child)"
                         :class="{ 'font-bold': isActive(child.seoUrls) }"
+                        @click="listingStore.isLoading = true;"
                     >
                         {{ getTranslatedProperty(child, 'name') }}
                     </LocaleLink>

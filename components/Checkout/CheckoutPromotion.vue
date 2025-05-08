@@ -38,9 +38,13 @@ const addPromotion = async (promotionCodeForm: PromotionCodeForm) => {
             {{ cartErrors['promotion-not-found'].message }}
         </li>
     </ul>
+
     <FormKit
         type="form"
         :submit-label="$t('checkout.promotion.submitLabel')"
+        :submit-attrs="{
+            wrapperClass: 'min-w-max',
+        }"
         :classes="{
             form: 'w-full flex flex-row gap-4',
         }"

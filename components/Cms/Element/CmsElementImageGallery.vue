@@ -22,7 +22,7 @@ const isZoomEnabled = elementConfig.getConfigValue('zoom');
 const thumbnailSlidesPerView = 3;
 const spaceBetween = 16;
 
-const lightboxModalController = useModal();
+const lightboxModalController = useModal(false);
 const lightboxSliderIndex = ref(0);
 const staticThumbnails = computed(() => slides.slice(0, thumbnailSlidesPerView));
 
