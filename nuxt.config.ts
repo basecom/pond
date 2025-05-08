@@ -87,6 +87,10 @@ export default defineNuxtConfig({
         },
     },
 
+    routeRules: {
+        '/account/**': { ssr: false },
+    },
+
     extends: ['@shopware/composables/nuxt-layer', '@shopware/cms-base-layer'],
 
     shadcn: {
