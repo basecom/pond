@@ -20,7 +20,7 @@ const emits = defineEmits<{
 const schema = z.object({
     email: z
         .string({
-            required_error: t('account.recover.email.error'),
+            required_error: t('account.email.error'),
         })
         .email(),
 });
@@ -67,10 +67,10 @@ const recover = (recoverData: RecoverData) => {
                     :schema="schema"
                     :field-config="{
                         email: {
-                            label: $t('account.recover.email.label'),
+                            label: $t('account.email.label'),
                             inputProps: {
                                 type: 'email',
-                                placeholder: $t('account.recover.email.placeholder'),
+                                placeholder: $t('account.email.placeholder'),
                             },
                         }
                     }"
