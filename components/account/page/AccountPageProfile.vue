@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useToast } from '@/components/ui/toast/use-toast';
-import {ApiClientError} from '@shopware/api-client';
+import { ApiClientError } from '@shopware/api-client';
 import type { ChangePasswordForm } from '~/components/account/page/AccountPageProfileChangePasswordInner.vue';
 import type { ChangeMailForm } from '~/components/account/page/AccountPageProfileChangeMailInner.vue';
 import type { PersonalDataForm } from '~/components/account/page/AccountPageProfileInner.vue';
