@@ -77,6 +77,15 @@
                     "description": "Your password has been successfully changed"
                 }
             }
+        },
+        "defaultPaymentMethod": {
+            "description": "What is your default payment method?",
+            "status": {
+                "changeSuccessfully": {
+                    "title": "Changed successfully",
+                    "description": "Your default payment method has been successfully changed"
+                }
+            }
         }
     }
 }
