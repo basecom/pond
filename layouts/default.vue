@@ -4,7 +4,7 @@
 
     <LayoutHeader />
 
-    <main class="text-gray-950">
+    <main>
         <NuxtPage />
     </main>
 
