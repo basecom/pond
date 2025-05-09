@@ -4,7 +4,9 @@
 
     <LayoutHeader />
 
-    <main>
+    <main class="text-gray-950">
         <NuxtPage />
     </main>
+
+    <LayoutFooter />
 </template>
