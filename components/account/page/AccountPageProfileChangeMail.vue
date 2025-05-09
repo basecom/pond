@@ -2,9 +2,15 @@
 import type { Schemas } from '@shopware/api-client/api-types';
 import type { ChangeMailForm } from '~/components/account/page/AccountPageProfileChangeMailInner.vue';
 
-defineProps<{
-  customer: Schemas['Customer'];
-}>();
+withDefaults(
+    defineProps<{
+        customer: Schemas['Customer'];
+        isLoading?: boolean
+    }>(),
+    {
+        isLoading: false,
+    },
+);
 
 defineEmits<{
   'update-mail': [mailForm: ChangeMailForm];
@@ -14,6 +20,7 @@ defineEmits<{
 <template>
     <AccountPageProfileChangeMailInner
         :customer="customer"
+        :is-loading="isLoading"
         @update-mail="(mailForm: ChangeMailForm) => $emit('update-mail', mailForm)"
     />
 </template>

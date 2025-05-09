@@ -12,8 +12,15 @@ const { updatePassword } = useCustomerPassword();
 const { toast } = useToast();
 
 const { customer } = storeToRefs(customerStore);
+const isLoading = ref({
+    personalData: false,
+    mail: false,
+    password: false,
+});
 
 const doUpdatePersonalData = async (personalDataForm: PersonalDataForm) => {
+    isLoading.value.personalData = true;
+
     try {
         await updatePersonalInfo(personalDataForm);
         await customerStore.refreshContext();
@@ -30,10 +37,14 @@ const doUpdatePersonalData = async (personalDataForm: PersonalDataForm) => {
                 variant: 'destructive',
             });
         }
+    } finally {
+        isLoading.value.personalData = false;
     }
 };
 
 const doUpdateEmail = async (mailForm: ChangeMailForm) => {
+    isLoading.value.mail = true;
+
     try {
         await updateEmail(mailForm);
         await customerStore.refreshContext();
@@ -49,10 +60,14 @@ const doUpdateEmail = async (mailForm: ChangeMailForm) => {
                 variant: 'destructive',
             });
         }
+    } finally {
+        isLoading.value.mail = false;
     }
 };
 
 const doUpdatePassword = async (passwordForm: ChangePasswordForm) => {
+    isLoading.value.password = true;
+
     try {
         await updatePassword(passwordForm);
         toast({
@@ -67,6 +82,8 @@ const doUpdatePassword = async (passwordForm: ChangePasswordForm) => {
                 variant: 'destructive',
             });
         }
+    } finally {
+        isLoading.value.password = false;
     }
 };
 </script>
@@ -75,6 +92,7 @@ const doUpdatePassword = async (passwordForm: ChangePasswordForm) => {
     <AccountPageProfileInner
         v-if="customer"
         :customer="customer"
+        :is-loading="isLoading"
         @update-personal-data="(personalDataForm: PersonalDataForm) => doUpdatePersonalData(personalDataForm)"
         @update-mail="(mailForm: ChangeMailForm) => doUpdateEmail(mailForm)"
         @update-password="(passwordForm: ChangePasswordForm) => doUpdatePassword(passwordForm)"

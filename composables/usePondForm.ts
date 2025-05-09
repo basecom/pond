@@ -7,7 +7,6 @@ export const usePondForm = () => {
     const configStore = useConfigStore();
 
     const getPersonalDataForm = (customer: Schemas['Customer']): ZodObjectOrWrapped => {
-        // todo: birthday anschauen
         let personalDataForm = z.object({});
 
         // add selection of account type
@@ -42,7 +41,7 @@ export const usePondForm = () => {
             const vatIds = customer.accountType === 'business' ? customer.vatIds?.join(', ') : '';
             personalDataForm = personalDataForm.extend({
                 company: z.string().default(companyName),
-                vatIds: z.string().optional().default(vatIds),
+                'vatIds[]': z.string().optional().default(vatIds),
             });
         }
 

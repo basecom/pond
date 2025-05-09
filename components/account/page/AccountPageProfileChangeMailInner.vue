@@ -2,9 +2,15 @@
 import * as z from 'zod';
 import type { Schemas } from '@shopware/api-client/api-types';
 
-defineProps<{
-  customer: Schemas['Customer'];
-}>();
+withDefaults(
+    defineProps<{
+        customer: Schemas['Customer'];
+        isLoading?: boolean
+    }>(),
+    {
+        isLoading: false,
+    },
+);
 
 const emits = defineEmits<{
   'update-mail': [mailForm: ChangeMailForm];
@@ -55,7 +61,7 @@ const changeMail = async (mailData: ChangeMailForm) => {
                     {{ $t('account.personalProfile.changeMailAddress.headline') }}
                 </UiAccordionTrigger>
 
-                <UiAccordionContent class="text-base">
+                <UiAccordionContent class="px-px text-base">
                     <slot name="change-mail-form">
                         <UiAutoForm
                             v-auto-animate
@@ -93,7 +99,7 @@ const changeMail = async (mailData: ChangeMailForm) => {
                             </template>
 
                             <slot name="submit-button">
-                                <UiButton type="submit" class="md:col-span-2">
+                                <UiButton type="submit" class="md:col-span-2" :is-loading="isLoading">
                                     {{ $t('general.save') }}
                                 </UiButton>
                             </slot>
