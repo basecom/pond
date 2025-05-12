@@ -173,8 +173,16 @@ const onSubmitAddress= (fields: ShippingAddressForm|BillingAddressForm) => {
             </ul>
 
             <AddressFormFields
+                v-if="mode === 'edit-address'"
                 :address-type="addressType"
-                :initial-address="mode === 'edit-address' ? selectedAddress : null"
+                :initial-address="selectedAddress"
+                :error-name-nested="false"
+            />
+
+            <AddressFormFields
+                v-else-if="mode === 'add-address'"
+                :address-type="addressType"
+                :initial-address="null"
                 :error-name-nested="false"
             />
 
