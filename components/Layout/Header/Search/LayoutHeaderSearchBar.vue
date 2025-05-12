@@ -46,9 +46,11 @@ const performDebouncedSearch = useDebounceFn(async (value: string) => {
                     search: value,
                 },
             });
+        } else {
+            // Only trigger search call and suggestion tracking if not on search page, since there we already fetch the products and hide the suggestion
+            await search();
+            trackSearchSuggestions();
         }
-        await search();
-        trackSearchSuggestions();
     }
 }, 500);
 

@@ -37,11 +37,7 @@ const { y: windowYPosition } = useScroll(window, { behavior: 'smooth' });
 const changePage = async (page: number) => {
     windowYPosition.value = 0;
     listingStore.setPage(page);
-
-    listingStore.displayCardSkeleton = true;
-    await search(listingState.value.criteria);
-    listingStore.setSearchResult(getCurrentListing.value, true);
-    listingStore.displayCardSkeleton = false;
+    // Removed search call and setting result in listingStore here, since the watcher from CmsElementSidebarFilter already triggers on pagination
 };
 
 const cardSkeletons = computed(() => {
