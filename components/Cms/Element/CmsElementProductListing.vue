@@ -13,7 +13,7 @@ const props = withDefaults(
 
 const route = useRoute();
 const { trackSelectItem } = useAnalytics();
-const { getElements, search, getCurrentListing } = useCategoryListing();
+const { getElements, getCurrentListing } = useCategoryListing();
 
 const listingStore = useListingStore(props.productListingStoreKey);
 const { listingState } = storeToRefs(listingStore);
