@@ -52,11 +52,6 @@ const loadProductsByItemIds = async (itemIds: string[]) => {
             body: {
                 ids: itemIds,
                 associations: {
-                    children: {
-                        associations: {
-                            cover: {},
-                        },
-                    },
                     manufacturer: {},
                     options: {},
                     seoUrls: {},
@@ -83,13 +78,6 @@ const changePage = async (page: number) => {
     await getWishlistProducts({
         page,
         limit: limit.value,
-        associations: {
-            children: {
-                associations: {
-                    cover: {},
-                },
-            },
-        },
     });
 };
 
@@ -120,23 +108,10 @@ watch(
     },
 );
 
-// Initial request to fetch wishlist items with limit and page on mount and trigger items watcher through it
-onMounted(() => {
-    const route = useRoute();
-    const limit = ref(route.query.limit ? Number(route.query.limit) : defaultLimit);
-    const page = ref(route.query.page ? Number(route.query.page) : defaultPage);
-
-    getWishlistProducts({
-        limit: limit.value,
-        page: page.value,
-        associations: {
-            children: {
-                associations: {
-                    cover: {},
-                },
-            },
-        },
-    });
+// Initial request to fetch wishlist items
+await getWishlistProducts({
+    limit: limit.value,
+    page: page.value,
 });
 </script>
 
