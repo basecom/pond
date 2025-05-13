@@ -48,6 +48,7 @@ const { listingState } = storeToRefs(useListingStore(props.productListingStoreKe
         :classes="{
             input: 'items-center',
         }"
+        :title="t('icon.totalFilter')"
         @click="sideMenuController.open()"
     >
         <span>
@@ -58,7 +59,6 @@ const { listingState } = storeToRefs(useListingStore(props.productListingStoreKe
 
         <FormKitIcon
             icon="filter"
-            :title="t('icon.totalFilter')"
             class="size-6"
         />
     </FormKit>
@@ -76,11 +76,11 @@ const { listingState } = storeToRefs(useListingStore(props.productListingStoreKe
             <button
                 v-else
                 class="flex items-center gap-2"
+                :title="t('icon.leftArrow')"
                 @click="displayedFilter = null"
             >
                 <FormKitIcon
                     icon="chevron-left"
-                    :title="t('icon.leftArrow')"
                     class="block size-4"
                 />
                 {{ name }}

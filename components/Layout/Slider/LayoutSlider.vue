@@ -97,11 +97,11 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
                 <!-- Zoom in button -->
                 <button
                     class="mr-2 flex"
+                    :title="t('icon.zoomIn')"
                     @click="computedSwiperContainer.zoom.in()"
                 >
                     <FormKitIcon
                         icon="plus"
-                        :title="t('icon.zoomIn')"
                         class="size-6"
                     />
                 </button>
@@ -109,11 +109,11 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
                 <!-- Zoom out button -->
                 <button
                     class="flex"
+                    :title="t('icon.zoomOut')"
                     @click="computedSwiperContainer.zoom.out()"
                 >
                     <FormKitIcon
                         icon="minus"
-                        :title="t('icon.zoomOut')"
                         class="size-6"
                     />
                 </button>

@@ -4,7 +4,7 @@ export function useImagePreload(config: PreloadImageConfig) {
     const runtimeConfig = useRuntimeConfig();
     const enableImagePreloading = runtimeConfig.public.pond.preloading.enabled;
 
-    if (import.meta.client || !enableImagePreloading) {
+    if (import.meta.client || !enableImagePreloading || !config.src) {
         return;
     }
 
