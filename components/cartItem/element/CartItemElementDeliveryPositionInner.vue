@@ -3,7 +3,7 @@ import type { Schemas } from '@shopware/api-client/api-types';
 import { useDateFormat } from '@vueuse/core';
 
 
-const props = withDefaults(
+withDefaults(
     defineProps<{
       cartItemDeliveryPosition?: Schemas['CartDeliveryPosition']
     }>(),

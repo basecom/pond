@@ -4,15 +4,13 @@ const props = withDefaults(
     defineProps<{
       cartItem?: Schemas['LineItem'];
       cartDeliveryPosition?: Schemas['CartDeliveryPosition'],
-      isLoading?: boolean
     }>(),
     {
         cartItem: undefined,
         cartDeliveryPosition: undefined,
-        isLoading: false,
     },
 );
-const {cartItem, isLoading} = toRefs(props);
+const {cartItem } = toRefs(props);
 const {
     itemOptions,
 } = useCartItem(cartItem);

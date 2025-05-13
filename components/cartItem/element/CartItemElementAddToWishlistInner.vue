@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import type {Schemas} from '@shopware/api-client/api-types';
 import {toast} from '../../ui/toast';
 const { t } = useI18n();
-const props = withDefaults(
+withDefaults(
     defineProps<{
       referencedId?: string
     }>(),

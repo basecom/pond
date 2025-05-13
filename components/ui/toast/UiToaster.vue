@@ -4,7 +4,6 @@ import { UiToast, UiToastClose, UiToastDescription, UiToastProvider, UiToastTitl
 import { useToast } from './use-toast';
 
 const { toasts } = useToast();
-console.log('avc');
 </script>
 
 <template>

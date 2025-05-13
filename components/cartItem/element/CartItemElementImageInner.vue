@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = withDefaults(
+withDefaults(
     defineProps<{
       cartItemImage?: string,
       fallback? :string
@@ -13,11 +13,11 @@ const props = withDefaults(
 <template>
     <template v-if="cartItemImage">
         <slot name="container">
-            <div class="w-[70px] text-center">
+            <div class="w-20 text-center">
                 <slot name="link">
                     <NuxtLinkLocale to="/">
                         <slot name="cartImage">
-                            <img :src="cartItemImage" alt="image" class="w-100 h-[70px] border object-contain p-1">
+                            <img :src="cartItemImage" alt="image" class="w-100 h-20 border object-contain p-1">
                         </slot>
                     </NuxtLinkLocale>
                 </slot>
@@ -26,7 +26,7 @@ const props = withDefaults(
     </template>
     <template v-else>
         <slot name="fallbackContainer">
-            <div class="flex size-[70px] items-center justify-center border text-center">
+            <div class="flex size-20 items-center justify-center border text-center">
                 <slot name="fallbackLink">
                     <NuxtLinkLocale to="/">
                         <slot name="fallbackIcon">

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-const props = withDefaults(
+withDefaults(
     defineProps<{
       referencedId?: string
     }>(),

@@ -82,5 +82,4 @@ const isDiscount = computed(() => ((!cartItem.value?.good && ((cartItem.value?.p
             </div>
         </div>
     </slot>
-
 </template>
