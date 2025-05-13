@@ -39,12 +39,12 @@ const isDiscount = computed(() => ((!cartItem.value?.good && ((cartItem.value?.p
                                 />
                             </slot>
                             <div class="order-2 flex w-1/6 justify-end">
-                              <slot name="promotionRemove">
-                                <CartItemElementRemove
-                                    :cart-item="cartItem"
-                                    @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"
-                                />
-                              </slot>
+                                <slot name="promotionRemove">
+                                    <CartItemElementRemove
+                                        :cart-item="cartItem"
+                                        @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"
+                                    />
+                                </slot>
                             </div>
                         </slot>
                     </template>
@@ -54,30 +54,30 @@ const isDiscount = computed(() => ((!cartItem.value?.good && ((cartItem.value?.p
                                 <CartItemElementTypeDiscount :cart-item="cartItem" />
                             </slot>
                             <div class="order-2 flex w-1/6 justify-end">
-                              <slot name="discountRemove">
-                                <CartItemElementRemove
-                                    :cart-item="cartItem"
-                                    @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"
-                                />
-                              </slot>
+                                <slot name="discountRemove">
+                                    <CartItemElementRemove
+                                        :cart-item="cartItem"
+                                        @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"
+                                    />
+                                </slot>
                             </div>
                         </slot>
                     </template>
-                  <template v-else>
-                    <slot name="genericWrapper">
-                      <slot name="generic">
-                        <CartItemElementTypeProduct :cart-item="cartItem" />
-                      </slot>
-                      <div class="order-2 flex w-1/6 justify-end">
-                        <slot name="genericRemove">
-                          <CartItemElementRemove
-                              :cart-item="cartItem"
-                              @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"
-                          />
+                    <template v-else>
+                        <slot name="genericWrapper">
+                            <slot name="generic">
+                                <CartItemElementTypeProduct :cart-item="cartItem" />
+                            </slot>
+                            <div class="order-2 flex w-1/6 justify-end">
+                                <slot name="genericRemove">
+                                    <CartItemElementRemove
+                                        :cart-item="cartItem"
+                                        @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"
+                                    />
+                                </slot>
+                            </div>
                         </slot>
-                      </div>
-                    </slot>
-                  </template>
+                    </template>
                 </div>
             </div>
         </div>

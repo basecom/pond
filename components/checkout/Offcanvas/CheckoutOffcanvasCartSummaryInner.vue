@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type {Schemas} from '@shopware/api-client/api-types';
 import {Loader2} from 'lucide-vue-next';
-import {toast} from "../../ui/toast";
+import {toast} from '../../ui/toast';
 const { t } = useI18n();
 
 const {subtotal, shippingCosts, addPromotionCode} = useCart();
@@ -24,42 +24,40 @@ const isLoadingSelect = ref(false);
 
 const setSelectedShippingMethod = async (shippingMethodId: string) => {
     isLoadingSelect.value = true;
-  try {
-    await setShippingMethod({id: shippingMethodId});
-    toast({
-      description: t('checkout.success'),
-    });
-  }
-  catch(error: Error) {
-    toast({
-      title: t('error.generalHeadline'),
-      description: t(`error.${ error.details.errors[0]?.code}`),
-      variant: 'destructive',
-    });
-  }
+    try {
+        await setShippingMethod({id: shippingMethodId});
+        toast({
+            description: t('checkout.success'),
+        });
+    } catch(error: Error) {
+        toast({
+            title: t('error.generalHeadline'),
+            description: t(`error.${ error.details.errors[0]?.code}`),
+            variant: 'destructive',
+        });
+    }
 
     isLoadingSelect.value = false;
 };
 const addSelectedPromotionCode = async (promotionCode: string) => {
 
     try {
-      isLoadingPromo.value = true;
-      const result = await addPromotionCode(promotionCode);
-      //todo find way to filter for error
-      result.errors? toast({
-        title: t('error.generalHeadline'),
-        description: t(`error.${ result.errors[0]?.code}`),
-        variant: 'destructive',
-      }):  toast({
-        description: t('checkout.success'),
-      });
-    }
-    catch(error: Error) {
-      toast({
-        title: t('error.generalHeadline'),
-        description: t(`error.${ error.details.errors[0]?.code}`),
-        variant: 'destructive',
-      });
+        isLoadingPromo.value = true;
+        const result = await addPromotionCode(promotionCode);
+        //todo find way to filter for error
+        result.errors? toast({
+            title: t('error.generalHeadline'),
+            description: t(`error.${ result.errors[0]?.code}`),
+            variant: 'destructive',
+        }):  toast({
+            description: t('checkout.success'),
+        });
+    } catch(error: Error) {
+        toast({
+            title: t('error.generalHeadline'),
+            description: t(`error.${ error.details.errors[0]?.code}`),
+            variant: 'destructive',
+        });
     }
     isLoadingPromo.value = false;
 };

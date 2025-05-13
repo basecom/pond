@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type {Schemas} from '@shopware/api-client/api-types';
-import {toast} from "../../ui/toast";
+import {toast} from '../../ui/toast';
 const { t } = useI18n();
 
 const props = withDefaults(
@@ -33,18 +33,19 @@ const changeCartItemQuantity = async (quantityInput: number) => {
         emits('isLoading', true);
         const response = await changeItemQuantity(Number(quantityInput));
         await refreshCart(response);
-      toast({
-        description: t('checkout.success'),
-      });
+        toast({
+            description: t('checkout.success'),
+        });
 
 
     } catch (error: Error) {
-      toast({
-        title: t('error.generalHeadline'),
-        description: t(`error.${ error.details.errors[0]?.code}`),
-        variant: 'destructive',
-      });
+        toast({
+            title: t('error.generalHeadline'),
+            description: t(`error.${ error.details.errors[0]?.code}`),
+            variant: 'destructive',
+        });
     }
+
     emits('isLoading', false);
     quantity.value = itemQuantity.value;
 };
@@ -61,7 +62,7 @@ const isDigital = (computed(() => cartItem.value?.states && cartItem.value?.stat
             <UiNumberField
                 v-model="quantity"
                 :max="cartItem.payload.maxPurchase ?? maxQuantityConfig"
-
+                :min="cartItem.payload.minPurchase ?? 1"
                 :step="cartItem.payload.purchaseSteps"
                 :disabled="!cartItem.stackable || isDigital"
                 :default-value="itemQuantity"

@@ -41,61 +41,61 @@ const getCartDeliveryPosition = (id: string, cartDeliveryPositions?: Schemas['Ca
         <UiSheetContent class="overflow-y-scroll">
             <UiSheetHeader>
                 <UiSheetTitle>
-                  <slot name="offcanvasHeader">
-                  <div class="flex justify-between mt-4 items-center">
-                    <slot name="cartTitle">
-                      <span>{{$t('checkout.cart')}}</span>
-                      <span>{{cartItems.length}} {{$t('checkout.items')}}</span>
+                    <slot name="offcanvasHeader">
+                        <div class="mt-4 flex items-center justify-between">
+                            <slot name="cartTitle">
+                                <span>{{ $t('checkout.cart') }}</span>
+                                <span>{{ cartItems.length }} {{ $t('checkout.items') }}</span>
+                            </slot>
+                        </div>
                     </slot>
-                  </div>
-                  </slot>
                 </UiSheetTitle>
                 <UiSheetDescription>
-                  <slot name="offcanvasContent">
-                    <div class="mb-4">
-                        <template v-if="hasLineItems(cartItems)">
-                            <template v-for="cartItem in cartItems">
-                              <slot name="cartItem">
-                                <CartItem
-                                    :cart-item="cartItem"
-                                    :cart-delivery-position="getCartDeliveryPosition(cartItem.id, getCartDeliveryPositions(cartDeliveries))"
-                                />
-                              </slot>
+                    <slot name="offcanvasContent">
+                        <div class="mb-4">
+                            <template v-if="hasLineItems(cartItems)">
+                                <template v-for="cartItem in cartItems">
+                                    <slot name="cartItem">
+                                        <CartItem
+                                            :cart-item="cartItem"
+                                            :cart-delivery-position="getCartDeliveryPosition(cartItem.id, getCartDeliveryPositions(cartDeliveries))"
+                                        />
+                                    </slot>
+                                </template>
                             </template>
-                        </template>
 
-                        <template v-else>
-                            <div class="w-full">
-                              <slot name="noLineItemsLabel">
-                                <UiAlert>
-                                    <UiAlertDescription>{{ $t('checkout.noLineItems') }}</UiAlertDescription>
-                                </UiAlert>
-                              </slot>
+                            <template v-else>
+                                <div class="w-full">
+                                    <slot name="noLineItemsLabel">
+                                        <UiAlert>
+                                            <UiAlertDescription>{{ $t('checkout.noLineItems') }}</UiAlertDescription>
+                                        </UiAlert>
+                                    </slot>
+                                </div>
+                            </template>
+                        </div>
+                        <div>
+                            <slot name="cartSummary">
+                                <CheckoutOffcanvasCartSummary :cart-deliveries="cartDeliveries" />
+                            </slot>
+                        </div>
+                        <div class="flex w-full flex-col gap-1">
+                            <div class="w-full text-center">
+                                <slot name="proceedToCheckoutButton">
+                                    <NuxtLinkLocale to="/">
+                                        <UiButton :class="'w-full'">{{ $t('checkout.proceedToCheckout') }}</UiButton>
+                                    </NuxtLinkLocale>
+                                </slot>
                             </div>
-                        </template>
-                    </div>
-                    <div>
-                      <slot name="cartSummary">
-                        <CheckoutOffcanvasCartSummary :cart-deliveries="cartDeliveries" />
-                      </slot>
-                    </div>
-                    <div class="flex w-full flex-col gap-1">
-                        <div class="w-full text-center">
-                          <slot name="proceedToCheckoutButton">
-                            <NuxtLinkLocale to="/">
-                                <UiButton :class="'w-full'">{{ $t('checkout.proceedToCheckout') }}</UiButton>
-                            </NuxtLinkLocale>
-                          </slot>
+                            <div class="w-full text-center">
+                                <slot name="proceedToCartButton">
+                                    <NuxtLinkLocale to="/">
+                                        <UiButton variant="link">{{ $t('checkout.proceedToCart') }}</UiButton>
+                                    </NuxtLinkLocale>
+                                </slot>
+                            </div>
                         </div>
-                        <div class="w-full text-center">
-                          <slot name="proceedToCartButton">
-                            <NuxtLinkLocale to="/">
-                                <UiButton variant="link">{{ $t('checkout.proceedToCart') }}</UiButton>
-                            </NuxtLinkLocale>
-                          </slot>
-                        </div>
-                    </div>
-                  </slot>
+                    </slot>
                 </UiSheetDescription>
             </UiSheetHeader>
         </UiSheetContent>

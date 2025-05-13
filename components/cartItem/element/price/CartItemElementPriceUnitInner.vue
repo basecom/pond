@@ -9,12 +9,12 @@ const props = withDefaults(
 );
 </script>
 <template>
-  <slot name="unitPrice">
-    <span>
-        {{ cartItemUnitPrice }}*
-    </span>
-  </slot>
-  <slot name="unitPriceDescriptor">
-    <span> / {{ $t('checkout.lineItemUnitPriceDescriptor') }}</span>
-  </slot>
+    <slot name="unitPrice">
+        <span>
+            {{ cartItemUnitPrice }}*
+        </span>
+    </slot>
+    <slot name="unitPriceDescriptor">
+        <span> / {{ $t('checkout.lineItemUnitPriceDescriptor') }}</span>
+    </slot>
 </template>

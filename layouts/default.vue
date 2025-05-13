@@ -29,4 +29,5 @@ getWishlistProducts();
     <main>
         <NuxtPage />
     </main>
+    <UiToaster />
 </template>
