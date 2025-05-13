@@ -102,7 +102,6 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
                 >
                     <FormKitIcon
                         icon="plus"
-                        :title="t('icon.zoomIn')"
                         class="size-6"
                     />
                 </button>
