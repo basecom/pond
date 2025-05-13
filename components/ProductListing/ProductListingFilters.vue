@@ -81,7 +81,7 @@ const { t } = useI18n();
                     v-if="containerMultipleLined"
                     ref="expandPopoverContainerButton"
                     class="flex h-fit items-center gap-2 whitespace-nowrap rounded border border-gray px-4 py-2"
-                    :title="t('icon.showLess')"
+                    :title="displayFullPopoverContainer ? t('icon.showLess') : t('icon.showMore')"
                     @click="() => (displayFullPopoverContainer = !displayFullPopoverContainer)"
                 >
                     <template v-if="displayFullPopoverContainer">
