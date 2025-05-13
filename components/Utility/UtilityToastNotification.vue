@@ -59,6 +59,7 @@ const icon = computed(() => iconMap[props.notification.type] || 'information');
                 class="ml-auto hover:rounded-md hover:bg-gray-medium hover:ring-4 hover:ring-gray-medium"
                 :data-dismiss-target="`toast-${notification.id}`"
                 :aria-label="$t('utility.toast.closeButtonAriaLabel')"
+                :title="t('icon.close')"
                 @click="removeOne(notification.id)"
             >
                 <FormKitIcon
