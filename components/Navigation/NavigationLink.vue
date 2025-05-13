@@ -44,6 +44,9 @@ const categoryLink = computed(() => {
 const { isActive } = useActivePath();
 const { trackNavigation } = useAnalytics();
 const { t } = useI18n();
+
+const route = useRoute();
+const listingStore = useListingStore(route.path === '/search' ? 'search' : 'category');
 </script>
 
 <template>
@@ -56,7 +59,7 @@ const { t } = useI18n();
         :format="!isExternalLink"
         class="block transition-all hover:text-brand-primary"
         :class="[classes, isActive(navigationElement.seoUrls, activeWithExactMatch) ? activeClasses : '']"
-        @click="trackNavigation(navigationElement.level ? navigationElement.level - 1 : 0, getTranslatedProperty(navigationElement, 'name'))"
+        @click="trackNavigation(navigationElement.level ? navigationElement.level - 1 : 0, getTranslatedProperty(navigationElement, 'name')); listingStore.isLoading = true;"
     >
         <template v-if="asAllItemsLink">
             {{ $t('navigation.sidebar.allItems') }}

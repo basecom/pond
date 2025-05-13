@@ -26,11 +26,20 @@ useNotifications();
 useBreadcrumbs();
 
 await customerStore.refreshContext();
-refreshCart();
 
 const route = useRoute();
-if (route.path !== '/wishlist' && wishlistEnabled) {
-    // If not on wishlist page we fetch for displaying the amount of items in the header
+
+if (route.path.includes('/checkout')) {
+    // await cart on checkout pages
+    await refreshCart();
+} else {
+    // when not on checkout page we can unblock the navigation earlier
+    refreshCart();
+}
+
+// wishlist products should not block ssr
+if (route.path !== '/wishlist' && wishlistEnabled && import.meta.client) {
+    // If not on wishlist page we fetch for displaying the number of items in the header
     getWishlistProducts();
 }
 

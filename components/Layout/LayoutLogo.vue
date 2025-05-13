@@ -22,10 +22,6 @@ const shopName = configStore.get('core.basicInformation.shopName') as string|nul
         :title="shopName"
         :to="withLink ? '/' : ''"
     >
-        <span class="sr-only">
-            {{ shopName }}
-        </span>
-
         <img
             v-if="!smallLogo"
             src="/logo.svg"

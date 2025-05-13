@@ -13,7 +13,7 @@ const props = withDefaults(
 
 const route = useRoute();
 const { trackSelectItem } = useAnalytics();
-const { getElements, search, getCurrentListing } = useCategoryListing();
+const { getElements, getCurrentListing } = useCategoryListing();
 
 const listingStore = useListingStore(props.productListingStoreKey);
 const { listingState } = storeToRefs(listingStore);
@@ -37,11 +37,7 @@ const { y: windowYPosition } = useScroll(window, { behavior: 'smooth' });
 const changePage = async (page: number) => {
     windowYPosition.value = 0;
     listingStore.setPage(page);
-
-    listingStore.displayCardSkeleton = true;
-    await search(listingState.value.criteria);
-    listingStore.setSearchResult(getCurrentListing.value, true);
-    listingStore.displayCardSkeleton = false;
+    // Removed search call and setting result in listingStore here, since the watcher from CmsElementSidebarFilter already triggers on pagination
 };
 
 const cardSkeletons = computed(() => {
@@ -60,6 +56,7 @@ const config = useCmsElementConfig(props.element);
 const boxLayout = config.getConfigValue('boxLayout');
 
 listingStore.setSearchResult(props.element.data.listing, true);
+listingStore.isLoading = false;
 
 const products = computed(() => 
     // If the store is loading, return an empty array

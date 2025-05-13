@@ -6,10 +6,10 @@
 
         <LazySharedModal
             :with-close-button="true"
-            size="sm"
+            size="md"
         >
             <template #trigger>
-                <button class="text-status-info">
+                <button class="text-brand-primary-dark hover:underline">
                     {{ $t('cookie.banner.additionalInformationTriggerButton') }}
                 </button>
             </template>
