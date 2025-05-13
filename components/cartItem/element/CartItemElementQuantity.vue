@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import CartItemRemoveInner from './CartItemRemoveInner.vue';
 const props = withDefaults(
     defineProps<{
       cartItem?: Schemas['LineItem'],
-      isLoading?: boolean
     }>(),
     {
         cartItem: undefined,
-        isLoading: false,
     },
 );
 const emits = defineEmits<{
@@ -17,5 +14,5 @@ const emits = defineEmits<{
 
 </script>
 <template>
-    <CartItemRemoveInner :cart-item="cartItem" @is-loading="(isLoadingEmit: boolean) => {emits('isLoading', isLoadingEmit)}" />
+    <CartItemElementQuantityInner :cart-item="cartItem" @is-loading="(isLoadingEmit: boolean) => {emits('isLoading', isLoadingEmit)}" />
 </template>

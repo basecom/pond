@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
+import {toast} from "../../ui/toast";
 
 const props = withDefaults(
     defineProps<{
@@ -14,7 +15,6 @@ const props = withDefaults(
 const { cartItem } = toRefs(props);
 const {removeItem} = useCartItem(cartItem);
 const { t } = useI18n();
-const {pushError, pushSuccess} = useNotifications();
 const emits = defineEmits<{
   isLoading: [boolean]
 }>();
@@ -22,10 +22,16 @@ const removeCartItem = async () => {
     try {
         emits('isLoading', true);
         await removeItem();
-      await pushSuccess(t('checkout.success'));
+      toast({
+        description: t('checkout.success'),
+      });
 
-    } catch (error) {
-      await pushError(t('error.generalHeadline'));
+    } catch (error: Error) {
+      toast({
+        title: t('error.generalHeadline'),
+        description: t(`error.${ error.details.errors[0]?.code}`),
+        variant: 'destructive',
+      });
 
     }
   emits('isLoading', false);

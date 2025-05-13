@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import type {Schemas} from '@shopware/api-client/api-types';
-import UiButton from '../../ui/button/UiButton.vue';
-import CartItem from '../../lineItem/CartItem.vue';
-import OffcanvasCartSummary from '../../checkout/OffcanvasCartSummary.vue';
 
 const props = withDefaults(
     defineProps<{
@@ -79,7 +76,7 @@ const getCartDeliveryPosition = (id: string, cartDeliveryPositions?: Schemas['Ca
                     </div>
                     <div>
                       <slot name="cartSummary">
-                        <OffcanvasCartSummary :cart-deliveries="cartDeliveries" />
+                        <CheckoutOffcanvasCartSummary :cart-deliveries="cartDeliveries" />
                       </slot>
                     </div>
                     <div class="flex w-full flex-col gap-1">

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type {Schemas} from '@shopware/api-client/api-types';
 import {Loader2} from 'lucide-vue-next';
+import {toast} from "../../ui/toast";
 const { t } = useI18n();
-const {pushError, pushSuccess} = useNotifications();
+
 const {subtotal, shippingCosts, addPromotionCode} = useCart();
 const {getShippingMethods, setShippingMethod, selectedShippingMethod} = useCheckout();
 const {getFormattedPrice} = usePrice();
@@ -25,10 +26,16 @@ const setSelectedShippingMethod = async (shippingMethodId: string) => {
     isLoadingSelect.value = true;
   try {
     await setShippingMethod({id: shippingMethodId});
-    pushSuccess(t('checkout.success'));
+    toast({
+      description: t('checkout.success'),
+    });
   }
   catch(error: Error) {
-    pushError(t('error.generalHeadline'));
+    toast({
+      title: t('error.generalHeadline'),
+      description: t(`error.${ error.details.errors[0]?.code}`),
+      variant: 'destructive',
+    });
   }
 
     isLoadingSelect.value = false;
@@ -39,10 +46,20 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
       isLoadingPromo.value = true;
       const result = await addPromotionCode(promotionCode);
       //todo find way to filter for error
-      result.errors? pushError(t('error.generalHeadline')): pushSuccess(t('checkout.success'));;
+      result.errors? toast({
+        title: t('error.generalHeadline'),
+        description: t(`error.${ result.errors[0]?.code}`),
+        variant: 'destructive',
+      }):  toast({
+        description: t('checkout.success'),
+      });
     }
     catch(error: Error) {
-      pushError(t('error.generalHeadline'));
+      toast({
+        title: t('error.generalHeadline'),
+        description: t(`error.${ error.details.errors[0]?.code}`),
+        variant: 'destructive',
+      });
     }
     isLoadingPromo.value = false;
 };

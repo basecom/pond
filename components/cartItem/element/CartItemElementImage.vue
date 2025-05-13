@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Schemas } from '@shopware/api-client/api-types';
-import CartItemImageInner from './CartItemImageInner.vue';
 const props = withDefaults(
     defineProps<{
       cartItemImage?: string,
@@ -13,6 +11,6 @@ const props = withDefaults(
 );
 </script>
 <template>
-    <CartItemImageInner :cart-item-image="cartItemImage" />
+    <CartItemElementImageInner :cart-item-image="cartItemImage" />
 
 </template>

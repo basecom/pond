@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type {Schemas} from '@shopware/api-client/api-types';
+import {toast} from "../../ui/toast";
 const { t } = useI18n();
-const {pushError, pushSuccess} = useNotifications();
 const props = withDefaults(
     defineProps<{
       referencedId?: string
@@ -21,10 +21,16 @@ const addProductToWishlist = async () => {
   try {
     isLoading.value = true;
     await addToWishlist();
-    pushSuccess(t('checkout.success'));
+    toast({
+      description: t('checkout.success'),
+    });
   }
   catch(error: Error) {
-    pushError(t('error.generalHeadline'));
+    toast({
+      title: t('error.generalHeadline'),
+      description: t(`error.${ error.details.errors[0]?.code}`),
+      variant: 'destructive',
+    });
   }
   isLoading.value = false;
 };
@@ -32,10 +38,16 @@ const removeProductFromWishlist = async () => {
   try {
     isLoading.value = true;
     await removeFromWishlist();
-    pushSuccess(t('checkout.success'));
+    toast({
+      description: t('checkout.success'),
+    });
   }
   catch(error: Error) {
-    pushError(t('error.generalHeadline'));
+    toast({
+      title: t('error.generalHeadline'),
+      description: t(`error.${ error.details.errors[0]?.code}`),
+      variant: 'destructive',
+    });
   }
   isLoading.value = false;
 };

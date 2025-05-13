@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import CartItemDiscountInner from './CartItemDiscountInner.vue';
 const props = withDefaults(
     defineProps<{
       cartItem?: Schemas['LineItem'];
@@ -11,6 +10,5 @@ const props = withDefaults(
 );
 </script>
 <template>
-    <CartItemDiscountInner :cart-item="cartItem" />
-
+    <CartItemElementTypeDiscountInner :cart-item="cartItem" />
 </template>

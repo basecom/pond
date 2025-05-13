@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import type {Schemas} from '@shopware/api-client/api-types';
-import UiNumberField from '../../ui/number-field/UiNumberField.vue';
-import UiNumberFieldContent from '../../ui/number-field//UiNumberFieldContent.vue';
-import UiNumberFieldDecrement from '../../ui/number-field//UiNumberFieldDecrement.vue';
-import UiNumberFieldInput from '../../ui/number-field/UiNumberFieldInput.vue';
-import UiNumberFieldIncrement from '../../ui/number-field/UiNumberFieldIncrement.vue';
+import {toast} from "../../ui/toast";
 const { t } = useI18n();
 
 const props = withDefaults(
@@ -22,7 +18,7 @@ const {
     changeItemQuantity,
 } = useCartItem(cartItem);
 const {refreshCart} = useCart();
-const {pushError, pushSuccess} = useNotifications();
+
 const configStore = useConfigStore();
 const quantity = ref();
 syncRefs(itemQuantity, quantity);
@@ -37,10 +33,17 @@ const changeCartItemQuantity = async (quantityInput: number) => {
         emits('isLoading', true);
         const response = await changeItemQuantity(Number(quantityInput));
         await refreshCart(response);
-        await pushSuccess(t('checkout.success'));
+      toast({
+        description: t('checkout.success'),
+      });
+
 
     } catch (error: Error) {
-      await pushError(t('error.generalHeadline'));
+      toast({
+        title: t('error.generalHeadline'),
+        description: t(`error.${ error.details.errors[0]?.code}`),
+        variant: 'destructive',
+      });
     }
     emits('isLoading', false);
     quantity.value = itemQuantity.value;

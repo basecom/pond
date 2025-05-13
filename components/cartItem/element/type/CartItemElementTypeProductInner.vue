@@ -1,13 +1,5 @@
 <script setup lang="ts">
 import type {Schemas} from '@shopware/api-client/api-types';
-import CartItemAddToWishlist from '../CartItemAddToWishlist.vue';
-import CartItemDeliveryPosition from '../CartItemDeliveryPosition.vue';
-import CartItemImage from '../CartItemImage.vue';
-import CartItemOptions from '../CartItemOptions.vue';
-import CartItemUnitPrice from '../price/CartItemUnitPrice.vue';
-import CartItemTotalPrice from '../price/CartItemTotalPrice.vue';
-import CartItemQuantity from '../CartItemQuantity.vue';
-
 const props = withDefaults(
     defineProps<{
       cartItem?: Schemas['LineItem'];
@@ -42,7 +34,7 @@ const emits = defineEmits<{
     <div class="order-1 mb-4 flex w-5/6 flex-col">
       <div class="mb-2 w-auto">
         <slot name="cart-image">
-          <CartItemImage :cart-item-image="cartItem.cover?.url" fallback="mdi:image"/>
+          <CartItemElementImage :cart-item-image="cartItem.cover?.url" fallback="mdi:image"/>
         </slot>
       </div>
       <slot name="labelWrapper">
@@ -57,7 +49,7 @@ const emits = defineEmits<{
       <slot name="optionsWrapper">
         <div class="my-2 text-xs">
           <slot name="options">
-            <CartItemOptions :cart-item-options="itemOptions"/>
+            <CartItemElementOptions :cart-item-options="itemOptions"/>
           </slot>
         </div>
       </slot>
@@ -71,14 +63,14 @@ const emits = defineEmits<{
       <slot name="deliveryPositionWrapper">
         <div class="text-xs" v-if="showDeliveryTime">
           <slot name="deliveryPosition">
-            <CartItemDeliveryPosition :cart-item-delivery-position="cartDeliveryPosition"/>
+            <CartItemElementDeliveryPosition :cart-item-delivery-position="cartDeliveryPosition"/>
           </slot>
         </div>
       </slot>
       <slot name="wishlistWrapper">
         <div class="mt-2 text-xs">
           <slot name="wishlist">
-            <CartItemAddToWishlist :referenced-id="cartItem.referencedId"/>
+            <CartItemElementAddToWishlist :referenced-id="cartItem.referencedId"/>
           </slot>
         </div>
       </slot>
@@ -87,7 +79,7 @@ const emits = defineEmits<{
   <slot name="quantityWrapper">
     <div class="order-3 mb-4 flex w-full items-center justify-between">
       <slot name="quantity">
-        <CartItemQuantity :cart-item="cartItem"
+        <CartItemElementQuantity :cart-item="cartItem"
                           @is-loading="(isLoadingEmit: boolean) => {emits('isLoading', isLoadingEmit)}"/>
       </slot>
     </div>
@@ -95,14 +87,14 @@ const emits = defineEmits<{
   <slot name="unitPriceWrapper">
     <div class="order-5 flex w-full justify-end text-xs">
       <slot name="unitPrice">
-        <CartItemUnitPrice :cart-item-unit-price="getFormattedPrice(itemRegularPrice)"/>
+        <CartItemElementPriceUnit :cart-item-unit-price="getFormattedPrice(itemRegularPrice)"/>
       </slot>
     </div>
   </slot>
   <slot name="totalPriceWrapper">
     <div class="order-4 flex w-full justify-end">
       <slot name="totalPrice">
-        <CartItemTotalPrice :cart-item-total-price="getFormattedPrice(itemTotalPrice)"/>
+        <CartItemElementPriceTotal :cart-item-total-price="getFormattedPrice(itemTotalPrice)"/>
       </slot>
     </div>
   </slot>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import CartItemInner from './CartItemInner.vue';
 const props = withDefaults(
     defineProps<{
       cartItem?: Schemas['LineItem'];

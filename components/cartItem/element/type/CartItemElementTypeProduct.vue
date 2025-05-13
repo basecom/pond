@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import CartItemProductInner from './CartItemProductInner.vue';
 const props = withDefaults(
     defineProps<{
       cartItem?: Schemas['LineItem'],
@@ -16,6 +15,6 @@ const emits = defineEmits<{
 }>();
 </script>
 <template>
-    <CartItemProductInner :cart-item="cartItem" :cart-delivery-position="cartDeliveryPosition" @is-loading="(isLoadingEmit: boolean) => {emits('isLoading', isLoadingEmit)}" />
+    <CartItemElementTypeProductInner :cart-item="cartItem" :cart-delivery-position="cartDeliveryPosition" @is-loading="(isLoadingEmit: boolean) => {emits('isLoading', isLoadingEmit)}" />
 
 </template>
