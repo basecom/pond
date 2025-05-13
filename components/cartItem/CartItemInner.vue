@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import type {Schemas} from '@shopware/api-client/api-types';
-import CartItemRemove from './element/CartItemRemove.vue';
-import CartItemProduct from './element/type/CartItemProduct.vue';
-import CartItemDiscount from './element/type/CartItemDiscount.vue';
 import {Loader2} from 'lucide-vue-next';
 
 const props = withDefaults(
@@ -35,7 +32,7 @@ const isDiscount = computed(() => ((!cartItem.value?.good && ((cartItem.value?.p
                     <template v-if="isProduct">
                         <slot name="productWrapper">
                             <slot name="product">
-                                <CartItemProduct
+                                <CartItemElementTypeProduct
                                     :cart-item="cartItem"
                                     :cart-delivery-position="cartDeliveryPosition"
                                     @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"
@@ -43,7 +40,7 @@ const isDiscount = computed(() => ((!cartItem.value?.good && ((cartItem.value?.p
                             </slot>
                             <div class="order-2 flex w-1/6 justify-end">
                               <slot name="promotionRemove">
-                                <CartItemRemove
+                                <CartItemElementRemove
                                     :cart-item="cartItem"
                                     @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"
                                 />
@@ -54,11 +51,11 @@ const isDiscount = computed(() => ((!cartItem.value?.good && ((cartItem.value?.p
                     <template v-else-if="isDiscount">
                         <slot name="discountWrapper">
                             <slot name="discount">
-                                <CartItemDiscount :cart-item="cartItem" />
+                                <CartItemElementTypeDiscount :cart-item="cartItem" />
                             </slot>
                             <div class="order-2 flex w-1/6 justify-end">
                               <slot name="discountRemove">
-                                <CartItemRemove
+                                <CartItemElementRemove
                                     :cart-item="cartItem"
                                     @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"
                                 />
@@ -69,11 +66,11 @@ const isDiscount = computed(() => ((!cartItem.value?.good && ((cartItem.value?.p
                   <template v-else>
                     <slot name="genericWrapper">
                       <slot name="generic">
-                        <CartItemProduct :cart-item="cartItem" />
+                        <CartItemElementTypeProduct :cart-item="cartItem" />
                       </slot>
                       <div class="order-2 flex w-1/6 justify-end">
                         <slot name="genericRemove">
-                          <CartItemRemove
+                          <CartItemElementRemove
                               :cart-item="cartItem"
                               @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"
                           />

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { Schemas } from '@shopware/api-client/api-types';
-import CartItemAddToWishlistInner from './CartItemAddToWishlistInner.vue';
+
 const props = withDefaults(
     defineProps<{
       referencedId?: string
@@ -11,6 +10,6 @@ const props = withDefaults(
 );
 </script>
 <template>
-    <CartItemAddToWishlistInner :referenced-id="referencedId" />
+    <CartItemElementAddToWishlistInner :referenced-id="referencedId" />
 
 </template>
