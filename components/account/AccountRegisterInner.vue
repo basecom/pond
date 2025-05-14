@@ -10,7 +10,7 @@ const {getCountries, fetchCountries, getStatesForCountry} = useCountries();
 const configStore = useConfigStore();
 const pondRegisterForm = usePondRegisterForm();
 const schema = pondRegisterForm.getRegisterSchema();
-const dependencies = pondRegisterForm.getRegisterDependencies;
+const dependencies = pondRegisterForm.getRegisterDependencies();
 const fieldConfig = pondRegisterForm.getRegisterFieldConfig;
 
 // Types
@@ -43,8 +43,17 @@ const form = useForm({
     validationSchema: toTypedSchema(schema),
 })
 
+const possibleBirthdayYears = computed(() => {
+    const years = [];
+    const today = new Date();
+    // we can not use a foreach here
+    // eslint-disable-next-line no-restricted-syntax
+    for (let i = (today.getFullYear() - 120); i <= today.getFullYear(); i++) years.push(i);
+    return years;
+});
+
 const register = async (registerData: any) => {
-    // TODO: Emit wont fire, remove console.log
+    // TODO: Emit wont fire with a nested schema which is also put into hidden state with autoFrom dependencies, remove console.log
     console.log(form.values);
     emits('register', registerData);
 };
@@ -59,8 +68,6 @@ watch(form.values, (values) => {
     if (form.values.shippingAddressVaries) {
         shippingAddressStates.value = getStatesForCountry(values.addressCountryId);
     }
-
-    console.log(form.values.shippingAddressVaries, shippingAddressStates.value)
 });
 
 // API fetches
@@ -172,6 +179,91 @@ onBeforeMount(async () => {
                     <UiFormMessage/>
                 </UiFormItem>
             </FormField>
+        </template>
+        <template #birthdateDay="slotProps">
+            <div class="inline-block w-[25%] max-w-24 mr-2">
+                <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdateDay">
+                    <UiFormItem>
+                        <UiAutoFormLabel>{{ $t('account.register.birthdate.label') }}</UiAutoFormLabel>
+                        <UiSelect v-bind="componentField">
+                            <UiFormControl>
+                                <UiSelectTrigger>
+                                    <UiSelectValue/>
+                                </UiSelectTrigger>
+                            </UiFormControl>
+
+                            <UiSelectContent>
+                                <UiSelectGroup>
+                                    <UiSelectItem
+                                        v-for="day in 31"
+                                        :key="day"
+                                        :value="day"
+                                    >
+                                        {{ day }}
+                                    </UiSelectItem>
+                                </UiSelectGroup>
+                            </UiSelectContent>
+                        </UiSelect>
+                        <UiFormMessage/>
+                    </UiFormItem>
+                </FormField>
+            </div>
+        </template>
+        <template #birthdateMonth="slotProps">
+            <div class="inline-block w-[25%] max-w-24 mr-2">
+                <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdateMonth">
+                    <UiFormItem>
+                        <UiAutoFormLabel class="sr-only">{{ $t('account.customer.birthdayMonth') }}</UiAutoFormLabel>
+                        <UiSelect v-bind="componentField">
+                            <UiFormControl>
+                                <UiSelectTrigger>
+                                    <UiSelectValue/>
+                                </UiSelectTrigger>
+                            </UiFormControl>
+
+                            <UiSelectContent>
+                                <UiSelectGroup>
+                                    <UiSelectItem
+                                        v-for="month in 12"
+                                        :key="month"
+                                        :value="month"
+                                    >
+                                        {{ month }}
+                                    </UiSelectItem>
+                                </UiSelectGroup>
+                            </UiSelectContent>
+                        </UiSelect>
+                    </UiFormItem>
+                </FormField>
+            </div>
+        </template>
+        <template #birthdateYear="slotProps">
+            <div class="inline-block w-[25%] max-w-24">
+                <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdateYear">
+                    <UiFormItem>
+                        <UiAutoFormLabel class="sr-only">{{ $t('account.customer.birthdayYear') }}</UiAutoFormLabel>
+                        <UiSelect v-bind="componentField">
+                            <UiFormControl>
+                                <UiSelectTrigger>
+                                    <UiSelectValue/>
+                                </UiSelectTrigger>
+                            </UiFormControl>
+
+                            <UiSelectContent>
+                                <UiSelectGroup>
+                                    <UiSelectItem
+                                        v-for="year in possibleBirthdayYears"
+                                        :key="year"
+                                        :value="year"
+                                    >
+                                        {{ year }}
+                                    </UiSelectItem>
+                                </UiSelectGroup>
+                            </UiSelectContent>
+                        </UiSelect>
+                    </UiFormItem>
+                </FormField>
+            </div>
         </template>
         <template #countryId>
             <FormField v-slot="{ componentField }" name="countryId">

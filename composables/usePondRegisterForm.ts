@@ -1,7 +1,7 @@
 import * as z from 'zod';
 import type {Schemas} from '@shopware/api-client/api-types';
 import type {ZodObjectOrWrapped} from "~/components/ui/auto-form/utils";
-import {DependencyType} from "~/components/ui/auto-form/interface";
+import {DependencyType, type Dependency} from "~/components/ui/auto-form/interface";
 
 export const usePondRegisterForm = () => {
     const configStore = useConfigStore();
@@ -76,13 +76,21 @@ export const usePondRegisterForm = () => {
         if (configStore.get('core.loginRegistration.showBirthdayField')) {
             if (configStore.get('core.loginRegistration.birthdayFieldRequired')) {
                 registerForm = registerForm.extend({
-                    birthdate: z.coerce.date({
+                    birthdateDay: z.number({
                         required_error: t('account.register.birthdate.errorGeneral'),
-                    })
+                    }),
+                    birthdateMonth: z.number({
+                        required_error: t('account.register.birthdate.errorGeneral'),
+                    }),
+                    birthdateYear: z.number({
+                        required_error: t('account.register.birthdate.errorGeneral'),
+                    }),
                 })
             } else {
                 registerForm = registerForm.extend({
-                    birthdate: z.coerce.date().optional()
+                    birthdateDay: z.number().optional(),
+                    birthdateMonth: z.number().optional(),
+                    birthdateYear: z.number().optional(),
                 })
             }
         }
@@ -215,7 +223,6 @@ export const usePondRegisterForm = () => {
         }
         if (salutations.value) {
             addressForm = addressForm.extend({
-                //salutation: z.enum(salutations.value).optional().default('Herr'),
                 addressSalutationId: z.string({
                     required_error: t('account.register.salutations.errorGeneral'),
                 }),
@@ -354,9 +361,10 @@ export const usePondRegisterForm = () => {
         });
     }
 
+    // we exclude this one because the return type is defined by shadcn
     // @ts-nocheck
     /* eslint-disable */
-    const getRegisterDependencies = [
+    const getRegisterDependencies = (): Dependency<{ [x: string]: any; }>[] => [
         {
             sourceField: 'accountType',
             type: DependencyType.HIDES,
@@ -537,11 +545,8 @@ export const usePondRegisterForm = () => {
                 placeholder: t('account.register.email.confirm.placeholder'),
             }
         },
-        birthdate: {
+        birthdateDay: {
             label: t('account.register.birthdate.label'),
-            inputProps: {
-                placeholder: 'Test',
-            }
         },
         company: {
             label: t('account.register.company.label'),

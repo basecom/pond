@@ -19,6 +19,8 @@ const {toast} = useToast();
  * @param registerData - generated from autoForm
  */
 function buildRegisterForm(registerData: RegisterData) {
+    // In case of optional input: Make sure that birthdate is always complete
+    const isBirthdateComplete = registerData.birthdateDay && registerData.birthdateMonth && registerData.birthdateYear;
     const address = {
         countryId: registerData.countryId,
         countryState: registerData.countryState ?? null,
@@ -66,9 +68,9 @@ function buildRegisterForm(registerData: RegisterData) {
         lastName: registerData.lastName,
         billingAddress: address,
         shippingAddress: shippingAddress,
-        birthdayDay: registerData.birthdate ? registerData.birthdate.getDay() : null,
-        birthdayMonth: registerData.birthdate ? registerData.birthdate.getMonth() : null,
-        birthdayYear: registerData.birthdate ? registerData.birthdate.getFullYear() : null,
+        birthdayDay: isBirthdateComplete ? registerData.birthdateDay : null,
+        birthdayMonth: isBirthdateComplete ? registerData.birthdateMonth : null,
+        birthdayYear: isBirthdateComplete ? registerData.birthdateYear : null,
         title: registerData.title ?? null,
         accountType: registerData.accountType ?? null,
         vatIds: registerData.vatNumber ?? null,
@@ -82,20 +84,20 @@ const register = async (registerData: RegisterData) => {
     errorMessage.value = undefined;
 
     try {
-        //
         const registerForm = buildRegisterForm(registerData);
         await customerStore.register(registerForm);
         toast({
             title: t('account.register.toast.title'),
-            description: t('account.register.toast.description')
+            description: t('account.register.toast.description'),
         });
         router.push('/');
     } catch (error) {
         if (error instanceof ApiClientError) {
-            console.warn('API Error detected');
-            console.warn('This is the error:', error)
-            errorMessage.value = t(`error.${error.details.errors[0]?.code}`);
-            return;
+            toast({
+                title: t('error.generalHeadline'),
+                description: t(`error.${error.details.errors[0]?.code}`),
+                variant: 'destructive'
+            })
         }
     } finally {
         isLoading.value = false;
