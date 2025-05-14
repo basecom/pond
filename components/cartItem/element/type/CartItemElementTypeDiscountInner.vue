@@ -14,6 +14,7 @@ const {getFormattedPrice} = usePrice();
 const {
     itemTotalPrice,
 } = useCartItem(cartItem);
+
 </script>
 <template>
     <slot name="imageContainer">

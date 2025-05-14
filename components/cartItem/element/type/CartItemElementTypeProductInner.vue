@@ -25,6 +25,7 @@ const showDeliveryTime = configStore.get('core.cart.showDeliveryTime') as boolea
 const emits = defineEmits<{
   isLoading: [boolean]
 }>();
+
 </script>
 
 <template>

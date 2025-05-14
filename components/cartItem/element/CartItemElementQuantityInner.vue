@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type {Schemas} from '@shopware/api-client/api-types';
 import {toast} from '../../ui/toast';
+import {ApiClientError} from '@shopware/api-client';
 const { t } = useI18n();
 
 const props = withDefaults(
@@ -29,21 +30,20 @@ const emits = defineEmits<{
 const maxQuantityConfig = configStore.get('core.cart.maxQuantity') as number;
 const changeCartItemQuantity = async (quantityInput: number) => {
     try {
-
         emits('isLoading', true);
         const response = await changeItemQuantity(Number(quantityInput));
         await refreshCart(response);
         toast({
             description: t('checkout.success'),
         });
-
-
-    } catch (error: Error) {
-        toast({
-            title: t('error.generalHeadline'),
-            description: t(`error.${ error.details.errors[0]?.code}`),
-            variant: 'destructive',
-        });
+    } catch (error) {
+        if(error instanceof ApiClientError) {
+            toast({
+                title: t('error.generalHeadline'),
+                description: t(`error.${error.details.errors[0]?.code}`),
+                variant: 'destructive',
+            });
+        }
     }
 
     emits('isLoading', false);

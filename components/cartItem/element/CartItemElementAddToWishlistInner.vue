@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {toast} from '../../ui/toast';
+import {ApiClientError} from '@shopware/api-client';
 const { t } = useI18n();
 const props = withDefaults(
     defineProps<{
@@ -23,12 +24,15 @@ const addProductToWishlist = async () => {
         toast({
             description: t('checkout.addToWishlistSuccess'),
         });
-    } catch(error: Error) {
-        toast({
-            title: t('error.generalHeadline'),
-            description: t(`error.${ error.details.errors[0]?.code}`),
-            variant: 'destructive',
-        });
+    } catch(error) {
+        if(error instanceof ApiClientError) {
+            toast({
+                title: t('error.generalHeadline'),
+                description: t(`error.${ error.details.errors[0]?.code}`),
+                variant: 'destructive',
+            });
+
+        }
     }
     isLoading.value = false;
 };
@@ -39,12 +43,14 @@ const removeProductFromWishlist = async () => {
         toast({
             description: t('checkout.removeFromWishlistSuccess'),
         });
-    } catch(error: Error) {
-        toast({
-            title: t('error.generalHeadline'),
-            description: t(`error.${ error.details.errors[0]?.code}`),
-            variant: 'destructive',
-        });
+    } catch(error) {
+        if(error instanceof ApiClientError) {
+            toast({
+                title: t('error.generalHeadline'),
+                description: t(`error.${error.details.errors[0]?.code}`),
+                variant: 'destructive',
+            });
+        }
     }
     isLoading.value = false;
 };
@@ -57,7 +63,7 @@ getWishlistProducts(); //needs to be called again in cart
         <slot name="addWishlistWrapper">
             <div class="flex" @click="removeProductFromWishlist">
                 <slot name="removeFromWishlistButton">
-                    <UiButton variant="icon" class="pl-0 pr-2">
+                    <UiButton variant="ghost" size="icon" class="pl-0 pr-2">
                         <slot name="iconInWishlist">
                             <Icon name="mdi:heart" class="size-5" />
                         </slot>
@@ -73,7 +79,7 @@ getWishlistProducts(); //needs to be called again in cart
         <slot name="removeWishlistWrapper">
             <div class="flex" @click="addProductToWishlist">
                 <slot name="removeFromWishlistButton">
-                    <UiButton variant="icon" class="pl-0 pr-2">
+                    <UiButton variant="ghost" size="icon" class="pl-0 pr-2">
                         <slot name="iconNotInWishlist">
                             <Icon name="mdi:heart-outline" class="size-5" />
                         </slot>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type {Schemas} from '@shopware/api-client/api-types';
 
-const props = withDefaults(
+withDefaults(
     defineProps<{
       cartItems?: Schemas['LineItem'][];
       cartDeliveries?: Schemas['CartDelivery'][];
@@ -44,7 +44,7 @@ const hasLineItems = (cartItems?: Schemas['LineItem'][]) => cartItems && cartIte
                 </UiSheetTitle>
                 <UiSheetDescription>
                     <slot name="offcanvasContent">
-                      <CheckoutOffcanvasCart :cart-deliveries="cartDeliveries" :cart-items="cartItems"/>
+                        <CheckoutOffcanvasCart :cart-deliveries="cartDeliveries" :cart-items="cartItems" />
                     </slot>
                 </UiSheetDescription>
             </UiSheetHeader>

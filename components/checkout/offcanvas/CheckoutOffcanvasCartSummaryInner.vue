@@ -2,12 +2,14 @@
 import type {Schemas} from '@shopware/api-client/api-types';
 import {Loader2} from 'lucide-vue-next';
 import {toast} from '../../ui/toast';
+import {ApiClientError} from '@shopware/api-client';
+import type {AcceptableValue} from 'reka-ui';
 
 const {t} = useI18n();
 
 const {subtotal, shippingCosts, addPromotionCode, cart} = useCart();
 const {getShippingMethods, setShippingMethod, selectedShippingMethod} = useCheckout();
-const {getFormattedPrice } = usePrice();
+const {getFormattedPrice} = usePrice();
 withDefaults(
     defineProps<{
       cartDeliveries?: Schemas['CartDelivery'][];
@@ -23,19 +25,24 @@ const shippingCost = ref(shippingCosts.value.find((shippingCost) => shippingCost
 const isLoadingPromo = ref(false);
 const isLoadingSelect = ref(false);
 
-const setSelectedShippingMethod = async (shippingMethodId: string) => {
+const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
     isLoadingSelect.value = true;
     try {
-        await setShippingMethod({id: shippingMethodId});
-        toast({
-            description: t('checkout.success'),
-        });
-    } catch (error: Error) {
-        toast({
-            title: t('error.generalHeadline'),
-            description: t(`error.${error.details.errors[0]?.code}`),
-            variant: 'destructive',
-        });
+        const shippingMethodIdString = shippingMethodId?.toString();
+        if(shippingMethodIdString) {
+            await setShippingMethod({id: shippingMethodIdString});
+            toast({
+                description: t('checkout.success'),
+            });
+        }
+    } catch (error) {
+        if(error instanceof ApiClientError) {
+            toast({
+                title: t('error.generalHeadline'),
+                description: t(`error.${error.details.errors[0]?.code}`),
+                variant: 'destructive',
+            });
+        }
     }
 
     isLoadingSelect.value = false;
@@ -45,11 +52,11 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
     try {
         isLoadingPromo.value = true;
         const result = await addPromotionCode(promotionCode);
-
+        console.log(result.errors);
         if (result.errors) {
             toast({
                 title: t('error.generalHeadline'),
-                description: t(`error.${result.errors[0]?.code}`),
+                description: t(`error.${Object.keys(result.errors)[0] ?? 'DEFAULT'}`),
                 variant: 'destructive',
             });
         } else {
@@ -58,12 +65,14 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
             });
         }
 
-    } catch (error: Error) {
-        toast({
-            title: t('error.generalHeadline'),
-            description: t(`error.${error.details.errors[0]?.code}`),
-            variant: 'destructive',
-        });
+    } catch (error) {
+        if(error instanceof ApiClientError) {
+            toast({
+                title: t('error.generalHeadline'),
+                description: t(`error.${error.details.errors[0]?.code ?? 'DEFAULT'}`),
+                variant: 'destructive',
+            });
+        }
     }
     isLoadingPromo.value = false;
 };
@@ -124,13 +133,14 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
         </slot>
     </div>
     <div class="mb-4 text-xs">
-      <template v-if="cart.price?.taxStatus === 'gross'">
-        *{{ $t('general.grossTaxInformation') }}
-      </template>
-      <template v-else>
-        *{{ $t('general.netTaxInformation') }}
-      </template>
-
+        <slot name="tax-information">
+            <template v-if="cart.price?.taxStatus === 'gross'">
+                *{{ $t('general.grossTaxInformation') }}
+            </template>
+            <template v-else>
+                *{{ $t('general.netTaxInformation') }}
+            </template>
+        </slot>
     </div>
     <slot name="promotion">
         <div class="mb-4">

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
 import {toast} from '../../ui/toast';
+import {ApiClientError} from '@shopware/api-client';
 
 const props = withDefaults(
     defineProps<{
@@ -26,13 +27,14 @@ const removeCartItem = async () => {
             description: t('checkout.removeSuccess'),
         });
 
-    } catch (error: Error) {
-        toast({
-            title: t('error.generalHeadline'),
-            description: t(`error.${ error.details.errors[0]?.code}`),
-            variant: 'destructive',
-        });
-
+    } catch (error) {
+        if(error instanceof ApiClientError) {
+            toast({
+                title: t('error.generalHeadline'),
+                description: t(`error.${error.details.errors[0]?.code}`),
+                variant: 'destructive',
+            });
+        }
     }
     emits('isLoading', false);
 };
