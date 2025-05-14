@@ -46,7 +46,5 @@ useHead(() => ({
 </script>
 
 <template>
-    <div class="text-gray-950">
-        <NuxtLayout />
-    </div>
+    <NuxtLayout />
 </template>
