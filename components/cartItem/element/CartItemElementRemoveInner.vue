@@ -23,7 +23,7 @@ const removeCartItem = async () => {
         emits('isLoading', true);
         await removeItem();
         toast({
-            description: t('checkout.success'),
+            description: t('checkout.removeSuccess'),
         });
 
     } catch (error: Error) {

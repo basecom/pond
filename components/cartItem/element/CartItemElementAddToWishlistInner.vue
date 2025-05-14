@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {toast} from '../../ui/toast';
 const { t } = useI18n();
-withDefaults(
+const props = withDefaults(
     defineProps<{
       referencedId?: string
     }>(),
@@ -21,7 +21,7 @@ const addProductToWishlist = async () => {
         isLoading.value = true;
         await addToWishlist();
         toast({
-            description: t('checkout.success'),
+            description: t('checkout.addToWishlistSuccess'),
         });
     } catch(error: Error) {
         toast({
@@ -37,7 +37,7 @@ const removeProductFromWishlist = async () => {
         isLoading.value = true;
         await removeFromWishlist();
         toast({
-            description: t('checkout.success'),
+            description: t('checkout.removeFromWishlistSuccess'),
         });
     } catch(error: Error) {
         toast({
@@ -51,6 +51,7 @@ const removeProductFromWishlist = async () => {
 
 getWishlistProducts(); //needs to be called again in cart
 </script>
+
 <template>
     <template v-if="isInWishlist">
         <slot name="addWishlistWrapper">

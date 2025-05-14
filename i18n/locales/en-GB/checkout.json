@@ -15,6 +15,10 @@
     "noLineItems": "Your shopping cart is empty.",
     "cart": "Shopping cart",
     "items": "items",
-    "success": "Action was successful"
+    "success": "Action was successful",
+    "promoLabel": "Promo Code",
+    "addToWishlistSuccess": "Product was successfully added to wishlist.",
+    "removeFromWishlistSuccess": "Product was successfully removed to wishlist.",
+    "removeSuccess": "Product was successfully removed."
   }
 }

@@ -5,9 +5,9 @@ import {toast} from '../../ui/toast';
 
 const {t} = useI18n();
 
-const {subtotal, shippingCosts, addPromotionCode} = useCart();
+const {subtotal, shippingCosts, addPromotionCode, cart} = useCart();
 const {getShippingMethods, setShippingMethod, selectedShippingMethod} = useCheckout();
-const {getFormattedPrice} = usePrice();
+const {getFormattedPrice } = usePrice();
 withDefaults(
     defineProps<{
       cartDeliveries?: Schemas['CartDelivery'][];
@@ -124,11 +124,17 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
         </slot>
     </div>
     <div class="mb-4 text-xs">
+      <template v-if="cart.price?.taxStatus === 'gross'">
         *{{ $t('general.grossTaxInformation') }}
+      </template>
+      <template v-else>
+        *{{ $t('general.netTaxInformation') }}
+      </template>
+
     </div>
     <slot name="promotion">
         <div class="mb-4">
-            <UiLabel>Promocode</UiLabel>
+            <UiLabel>{{ $t('checkout.label') }}</UiLabel>
             <div class="flex w-full max-w-sm">
                 <UiInput
                     v-model="inputPromotionCode"

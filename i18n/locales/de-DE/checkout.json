@@ -15,6 +15,10 @@
     "noLineItems": "Der Einkaufswagen ist leer.",
     "cart": "Einkaufswagen",
     "items": "Produkte",
-    "success": "Akton war erfolgreich"
+    "success": "Akton war erfolgreich",
+    "promoLabel": "Promocode",
+    "addToWishlistSuccess": "Produkt wurde erfolgreich zur Wunschliste hinzugefügt.",
+    "removeFromWishlistSuccess": "Produkt wurde erfolgreich vom der Wunschliste entfernt",
+    "removeSuccess": "Product wurde erfolgreich entfernt."
   }
 }

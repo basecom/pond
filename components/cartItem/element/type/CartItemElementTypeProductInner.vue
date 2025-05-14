@@ -10,7 +10,7 @@ const props = withDefaults(
         cartDeliveryPosition: undefined,
     },
 );
-const {cartItem } = toRefs(props);
+const {cartItem} = toRefs(props);
 const {
     itemOptions,
 } = useCartItem(cartItem);
