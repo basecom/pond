@@ -2,10 +2,6 @@
 import { pascalCase } from 'scule';
 
 const { clearBreadcrumbs } = useBreadcrumbs();
-
-const { refreshSessionContext } = useSessionContext();
-await refreshSessionContext();
-
 const { resolvePath } = useNavigationSearch();
 const route = useRoute();
 const { t } = useI18n();
@@ -23,7 +19,7 @@ const routePath =
         ? route.path.replace(/^\/[^/]+/, '')
         : route.path;
 
-const { data: seoResult } = await useAsyncData(`seoPath${routePath}`, async () => {
+const { data: seoResult } = await usePondCacheAsyncData(`seoPath-${routePath}`, async () => {
     // For client links if the history state contains seo url information we can omit the api call
     if (import.meta.client) {
         if (history.state?.routeName) {
@@ -41,7 +37,7 @@ const { routeName, foreignKey } = useNavigationContext(seoResult);
 const { componentExists } = usePondCmsUtils();
 
 if (!routeName.value) {
-    throw createError({ statusCode: 404, message: t('error.404.detail') });
+    throw createError({ statusCode: 404, message: t('error.404.heading') });
 }
 
 onBeforeRouteLeave(() => {
