@@ -178,25 +178,27 @@ export const usePondRegisterForm = () => {
             }),
             countryState: z.string(),
         })
-        if (configStore.get('core.loginRegistration.phoneNumberFieldRequired')) {
-            registerForm = registerForm.extend({
-                phoneNumber: z.string({
-                    required_error: t('account.register.phone.error.required')
+        if (configStore.get('core.loginRegistration.showPhoneNumberField')) {
+            if (configStore.get('core.loginRegistration.phoneNumberFieldRequired')) {
+                registerForm = registerForm.extend({
+                    phoneNumber: z.string({
+                        required_error: t('account.register.phone.error.required')
+                    })
+                        .regex(
+                            /^\+?\d{1,4}[-.\s]?\(?\d{1,5}\)?[-.\s]?\d{1,9}([-.\s]?\d{1,9})?$/,
+                            t('account.register.phone.error.general')
+                        )
                 })
-                    .regex(
-                        /^\+?\d{1,4}[-.\s]?\(?\d{1,5}\)?[-.\s]?\d{1,9}([-.\s]?\d{1,9})?$/,
-                        t('account.register.phone.error.general')
-                    )
-            })
-        } else {
-            registerForm = registerForm.extend({
-                phoneNumber: z.string()
-                    .regex(
-                        /^\+?\d{1,4}[-.\s]?\(?\d{1,5}\)?[-.\s]?\d{1,9}([-.\s]?\d{1,9})?$/,
-                        t('account.register.phone.error.general')
-                    )
-                    .optional()
-            })
+            } else {
+                registerForm = registerForm.extend({
+                    phoneNumber: z.string()
+                        .regex(
+                            /^\+?\d{1,4}[-.\s]?\(?\d{1,5}\)?[-.\s]?\d{1,9}([-.\s]?\d{1,9})?$/,
+                            t('account.register.phone.error.general')
+                        )
+                        .optional()
+                })
+            }
         }
 
         registerForm = registerForm.extend({
@@ -304,25 +306,27 @@ export const usePondRegisterForm = () => {
             }),
             addressCountryState: z.string(),
         })
-        if (configStore.get('core.loginRegistration.phoneNumberFieldRequired')) {
-            addressForm = addressForm.extend({
-                addressPhoneNumber: z.string({
-                    required_error: t('account.register.phone.error.required')
+        if (configStore.get('core.loginRegistration.showPhoneNumberField')) {
+            if (configStore.get('core.loginRegistration.phoneNumberFieldRequired')) {
+                addressForm = addressForm.extend({
+                    addressPhoneNumber: z.string({
+                        required_error: t('account.register.phone.error.required')
+                    })
+                        .regex(
+                            /^\+?\d{1,4}[-.\s]?\(?\d{1,5}\)?[-.\s]?\d{1,9}([-.\s]?\d{1,9})?$/,
+                            t('account.register.phone.error.general')
+                        )
                 })
-                    .regex(
-                        /^\+?\d{1,4}[-.\s]?\(?\d{1,5}\)?[-.\s]?\d{1,9}([-.\s]?\d{1,9})?$/,
-                        t('account.register.phone.error.general')
-                    )
-            })
-        } else {
-            addressForm = addressForm.extend({
-                addressPhoneNumber: z.string()
-                    .regex(
-                        /^\+?\d{1,4}[-.\s]?\(?\d{1,5}\)?[-.\s]?\d{1,9}([-.\s]?\d{1,9})?$/,
-                        t('account.register.phone.error.general')
-                    )
-                    .optional()
-            })
+            } else {
+                addressForm = addressForm.extend({
+                    addressPhoneNumber: z.string()
+                        .regex(
+                            /^\+?\d{1,4}[-.\s]?\(?\d{1,5}\)?[-.\s]?\d{1,9}([-.\s]?\d{1,9})?$/,
+                            t('account.register.phone.error.general')
+                        )
+                        .optional()
+                })
+            }
         }
 
         return addressForm;

@@ -94,7 +94,10 @@
             "birthdate": {
                 "label": "Birthdate",
                 "labelRequired": "Birthdate*",
-                "errorGeneral": "Please select your birthdate."
+                "errorGeneral": "Please select your birthdate.",
+                "day": "Day",
+                "month": "Month",
+                "year": "Year"
             },
             "company": {
                 "label": "Company",

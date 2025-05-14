@@ -93,7 +93,10 @@
             "birthdate": {
                 "label": "Geburtsdatum",
                 "labelRequired": "Geburtsdatum*",
-                "errorGeneral": "Bitte wähle Sie ihr Geburtsdatum."
+                "errorGeneral": "Bitte wähle Sie ihr Geburtsdatum.",
+                "day": "Tag",
+                "month": "Monat",
+                "year": "Jahr"
             },
             "company": {
                 "label": "Firma",

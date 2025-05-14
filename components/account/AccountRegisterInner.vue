@@ -188,7 +188,7 @@ onBeforeMount(async () => {
                         <UiSelect v-bind="componentField">
                             <UiFormControl>
                                 <UiSelectTrigger>
-                                    <UiSelectValue/>
+                                    <UiSelectValue :placeholder="$t('account.register.birthdate.year')"/>
                                 </UiSelectTrigger>
                             </UiFormControl>
 
@@ -213,11 +213,10 @@ onBeforeMount(async () => {
             <div class="inline-block w-[25%] max-w-24 mr-2">
                 <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdateMonth">
                     <UiFormItem>
-                        <UiAutoFormLabel class="sr-only">{{ $t('account.customer.birthdayMonth') }}</UiAutoFormLabel>
                         <UiSelect v-bind="componentField">
                             <UiFormControl>
                                 <UiSelectTrigger>
-                                    <UiSelectValue/>
+                                    <UiSelectValue :placeholder="$t('account.register.birthdate.month')"/>
                                 </UiSelectTrigger>
                             </UiFormControl>
 
@@ -241,11 +240,10 @@ onBeforeMount(async () => {
             <div class="inline-block w-[25%] max-w-24">
                 <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdateYear">
                     <UiFormItem>
-                        <UiAutoFormLabel class="sr-only">{{ $t('account.customer.birthdayYear') }}</UiAutoFormLabel>
                         <UiSelect v-bind="componentField">
                             <UiFormControl>
                                 <UiSelectTrigger>
-                                    <UiSelectValue/>
+                                    <UiSelectValue :placeholder="$t('account.register.birthdate.year')"/>
                                 </UiSelectTrigger>
                             </UiFormControl>
 
@@ -426,7 +424,12 @@ onBeforeMount(async () => {
         </template>
         <template #acceptedDataProtection="slotProps">
             <div class="pt-6">
-                <UiLabel class="font-bold">{{ $t('account.register.tos.header') }}</UiLabel>
+                <UiLabel
+                    class="font-bold"
+                    :class="{ 'block': !configStore.get('core.loginRegistration.requireDataProtectionCheckbox') }"
+                >
+                    {{ $t('account.register.tos.header') }}
+                </UiLabel>
                 <UiAutoFormField
                     v-if="configStore.get('core.loginRegistration.requireDataProtectionCheckbox')"
                     v-bind="slotProps"
