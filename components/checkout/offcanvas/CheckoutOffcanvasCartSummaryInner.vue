@@ -39,7 +39,7 @@ const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
         if(error instanceof ApiClientError) {
             toast({
                 title: t('error.generalHeadline'),
-                description: t(`error.${error.details.errors[0]?.code}`),
+                description: t(`error.${error.details.errors[0]?.code ?? 'DEFAULT'}`),
                 variant: 'destructive',
             });
         }
