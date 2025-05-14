@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const { changeLanguage, getLanguageIdFromCode, getAvailableLanguages } = useInternationalization();
-const { locale } = useI18n();
+const {changeLanguage, getLanguageIdFromCode, getAvailableLanguages} = useInternationalization();
+const {locale} = useI18n();
 const url = useRequestURL();
 const route = useRoute();
 
@@ -12,9 +12,9 @@ const updateSessionWithLanguage = async () => {
 
 await updateSessionWithLanguage();
 
-const { refreshCart } = useCart();
-const { getWishlistProducts } = useWishlist();
-const { refreshContext } = useCustomerStore();
+const {refreshCart} = useCart();
+const {getWishlistProducts} = useWishlist();
+const {refreshContext} = useCustomerStore();
 const configStore = useConfigStore();
 await configStore.loadConfig();
 await refreshContext();
@@ -29,7 +29,7 @@ if (route.path !== '/wishlist' && wishlistEnabled && import.meta.client) {
     getWishlistProducts();
 }
 
-const shopName = configStore.get('core.basicInformation.shopName') as string|null ?? 'pond';
+const shopName = configStore.get('core.basicInformation.shopName') as string | null ?? 'pond';
 
 useHead(() => ({
     title: shopName,

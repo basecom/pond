@@ -5,7 +5,7 @@
         "profile": "Persönliches Profil",
         "address": "Adressen",
         "payment": "Zahlungsarten",
-        "order": "Bestellungen",
+        "orders": "Bestellungen",
         "wishlist": "Merkzettel",
         "welcome": "Hallo {name}",
         "auth": {
