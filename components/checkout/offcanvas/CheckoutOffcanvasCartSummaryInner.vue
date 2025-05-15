@@ -5,77 +5,50 @@ import {toast} from '../../ui/toast';
 import {ApiClientError} from '@shopware/api-client';
 import type {AcceptableValue} from 'reka-ui';
 
-const {t} = useI18n();
-
-const {subtotal, shippingCosts, addPromotionCode, cart} = useCart();
-const {getShippingMethods, setShippingMethod, selectedShippingMethod} = useCheckout();
 const {getFormattedPrice} = usePrice();
+const showSelectionSelect = ref(false);
+
 withDefaults(
     defineProps<{
+      cart?: Schemas['Cart'];
       cartDeliveries?: Schemas['CartDelivery'][];
+      shippingMethods?: Schemas['ShippingMethod'][];
+      selectedShippingMethod?: Schemas['ShippingMethod'];
+      shippingCost?: Schemas['CartDelivery'];
+      subtotal?: Number;
+      isLoading: {
+        promo: boolean,
+        select: boolean
+      };
     }>(),
     {
+        cart: undefined,
         cartDeliveries: undefined,
+        shippingMethods: undefined,
+        selectedShippingMethod: undefined,
+        shippingCost: undefined,
+        subtotal: undefined,
+        isLoading: () => ({
+          promo: false,
+          select: false
+      })
     },
 );
-const showSelectionSelect = ref(false);
 const inputPromotionCode = ref('');
-const shippingMethods = await getShippingMethods();
-const shippingCost = ref(shippingCosts.value.find((shippingCost) => shippingCost.shippingMethod.id === selectedShippingMethod.value.id));
-const isLoadingPromo = ref(false);
-const isLoadingSelect = ref(false);
 
-const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
-    isLoadingSelect.value = true;
-    try {
-        const shippingMethodIdString = shippingMethodId?.toString();
-        if(shippingMethodIdString) {
-            await setShippingMethod({id: shippingMethodIdString});
-            toast({
-                description: t('checkout.success'),
-            });
-        }
-    } catch (error) {
-        if(error instanceof ApiClientError) {
-            toast({
-                title: t('error.generalHeadline'),
-                description: t(`error.${error.details.errors[0]?.code ?? 'DEFAULT'}`),
-                variant: 'destructive',
-            });
-        }
-    }
+const emits = defineEmits<{
+  setSelectedShippingMethod: [shippingMethodId: string];
+  addSelectedPromotionCode: [promotionCode: string];
+}>();
 
-    isLoadingSelect.value = false;
+const setSelectedShippingMethod = async (shippingMethodId: string) => {
+  emits('setSelectedShippingMethod', shippingMethodId);
 };
+
 const addSelectedPromotionCode = async (promotionCode: string) => {
-
-    try {
-        isLoadingPromo.value = true;
-        const result = await addPromotionCode(promotionCode);
-        console.log(result.errors);
-        if (result.errors) {
-            toast({
-                title: t('error.generalHeadline'),
-                description: t(`error.${Object.keys(result.errors)[0] ?? 'DEFAULT'}`),
-                variant: 'destructive',
-            });
-        } else {
-            toast({
-                description: t('checkout.success'),
-            });
-        }
-
-    } catch (error) {
-        if(error instanceof ApiClientError) {
-            toast({
-                title: t('error.generalHeadline'),
-                description: t(`error.${error.details.errors[0]?.code ?? 'DEFAULT'}`),
-                variant: 'destructive',
-            });
-        }
-    }
-    isLoadingPromo.value = false;
+  emits('addSelectedPromotionCode', promotionCode);
 };
+
 </script>
 <template>
     <div>
@@ -91,7 +64,7 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
         </slot>
         <slot name="shipping">
             <div class="mb-4">
-                <template v-if="!isLoadingSelect">
+                <template v-if="!isLoading.select">
                     <div class="flex justify-between">
                         <div>
                             <span>{{ $t('checkout.summaryShipping') }}</span>
@@ -101,9 +74,11 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
                             </UiButton>
                         </div>
                         <div class="flex items-center">
+                          <template v-if="shippingCost">
                             <strong>{{ shippingCost.shippingCosts.totalPrice < 0 ? '-' : '+' }} {{
                                 getFormattedPrice(shippingCost.shippingCosts.totalPrice)
                             }}*</strong>
+                            </template>
                         </div>
                     </div>
                     <template v-if="showSelectionSelect">
@@ -152,7 +127,7 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
                     type="text"
                     :placeholder="$t('checkout.addPromotionPlaceholder')"
                 />
-                <UiButton :is-loading="isLoadingPromo" @click="addSelectedPromotionCode(inputPromotionCode)">
+                <UiButton :is-loading="isLoading.promo" @click="addSelectedPromotionCode(inputPromotionCode)">
                     <Icon name="mdi:check" class="size-4" />
                 </UiButton>
             </div>

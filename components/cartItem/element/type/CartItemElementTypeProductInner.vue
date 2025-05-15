@@ -3,29 +3,28 @@ import type {Schemas} from '@shopware/api-client/api-types';
 const props = withDefaults(
     defineProps<{
       cartItem?: Schemas['LineItem'];
-      cartDeliveryPosition?: Schemas['CartDeliveryPosition'],
+      cartDeliveryPosition?: Schemas['CartDeliveryPosition'];
+      itemTotalPrice: number;
+      itemRegularPrice: number;
+      itemOptions?: Schemas["LineItem"]["payload"]["options"]
     }>(),
     {
         cartItem: undefined,
         cartDeliveryPosition: undefined,
+        itemTotalPrice: 0,
+        itemRegularPrice: 0,
+        itemOptions: undefined
     },
 );
 const {cartItem} = toRefs(props);
-const {
-    itemOptions,
-} = useCartItem(cartItem);
 const {getFormattedPrice} = usePrice();
-const {
-    itemTotalPrice,
-    itemRegularPrice,
-} = useCartItem(cartItem);
+
 const configStore = useConfigStore();
 const showDeliveryTime = configStore.get('core.cart.showDeliveryTime') as boolean;
 
 const emits = defineEmits<{
   isLoading: [boolean]
 }>();
-
 </script>
 
 <template>

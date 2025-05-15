@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-withDefaults(
+const props = withDefaults(
     defineProps<{
       cartItem?: Schemas['LineItem'],
       cartDeliveryPosition?: Schemas['CartDeliveryPosition'],
@@ -10,11 +10,27 @@ withDefaults(
         cartDeliveryPosition: undefined,
     },
 );
+const {cartItem} = toRefs(props);
+const {
+  itemOptions,
+} = useCartItem(cartItem);
+
+const {
+  itemTotalPrice,
+  itemRegularPrice,
+} = useCartItem(cartItem);
+
+
 const emits = defineEmits<{
   isLoading: [boolean]
 }>();
 </script>
 <template>
-    <CartItemElementTypeProductInner :cart-item="cartItem" :cart-delivery-position="cartDeliveryPosition" @is-loading="(isLoadingEmit: boolean) => {emits('isLoading', isLoadingEmit)}" />
+    <CartItemElementTypeProductInner :cart-item="cartItem"
+                                     :cart-delivery-position="cartDeliveryPosition"
+                                     :item-total-price="itemTotalPrice"
+                                     :item-regular-price="itemRegularPrice"
+                                     :item-options="itemOptions"
+                                     @is-loading="(isLoadingEmit: boolean) => {emits('isLoading', isLoadingEmit)}" />
 
 </template>

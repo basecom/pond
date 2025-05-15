@@ -4,16 +4,14 @@ import type {Schemas} from '@shopware/api-client/api-types';
 const props = withDefaults(
     defineProps<{
       cartItem?: Schemas['LineItem'];
+      itemTotalPrice: number
     }>(),
     {
         cartItem: undefined,
+        itemTotalPrice: 0
     },
 );
-const {cartItem} = toRefs(props);
 const {getFormattedPrice} = usePrice();
-const {
-    itemTotalPrice,
-} = useCartItem(cartItem);
 
 </script>
 <template>
