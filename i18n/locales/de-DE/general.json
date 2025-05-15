@@ -1,5 +1,9 @@
 {
     "general": {
-        "close": "Schließen"
+        "close": "Schließen",
+        "homepage": "Startseite",
+        "back": "Zurück",
+        "showAll": "Alle anzeigen",
+        "categories": "Kategorien"
     }
 }

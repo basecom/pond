@@ -2,10 +2,6 @@
 import { pascalCase } from 'scule';
 
 const { clearBreadcrumbs } = useBreadcrumbs();
-
-const { refreshSessionContext } = useSessionContext();
-await refreshSessionContext();
-
 const { resolvePath } = useNavigationSearch();
 const route = useRoute();
 const { t } = useI18n();
