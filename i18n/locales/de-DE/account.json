@@ -47,7 +47,8 @@
             "header": {
                 "main": "Registrierung",
                 "generalFields": "Allgemein",
-                "addressFields": "Ihre Adresse"
+                "addressFields": "Ihre Adresse",
+                "shippingAddressFields": "Abweichende Lieferadresse"
             },
             "submit": "Abschicken",
             "toast": {

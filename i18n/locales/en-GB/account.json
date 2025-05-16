@@ -48,7 +48,8 @@
             "header": {
                 "main": "register",
                 "generalFields": "General Fields",
-                "addressFields": "Your address"
+                "addressFields": "Your address",
+                "shippingAddressFields": "Alternative shipping address"
             },
             "submit": "Submit",
             "toast": {

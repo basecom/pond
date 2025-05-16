@@ -60,12 +60,10 @@ const register = async (registerData: any) => {
 
 // Updates current states if selected country has any
 watch(form.values, (values) => {
-    if (!values.countryId || !values.addressCountryId) {
-        return;
+    if (values.countryId) {
+        states.value = getStatesForCountry(values.countryId);
     }
-    states.value = getStatesForCountry(values.countryId);
-
-    if (form.values.shippingAddressVaries) {
+    if (values.addressCountryId && form.values.shippingAddressVaries) {
         shippingAddressStates.value = getStatesForCountry(values.addressCountryId);
     }
 });
@@ -313,114 +311,127 @@ onBeforeMount(async () => {
                     </UiFormItem>
                 </FormField>
             </div>
-            <div v-else></div>
         </template>
-        <!-- TODO: Implement shippingAddress header template -->
+        <!-- TODO: Re-Evaluate current implementation. Best way: nested schema. Current way: prefix for address-schema. -->
         <!-- TODO: Add hidden-Input field for storefrontUrl (maybe. discuss with Jordan or Nele) -->
-        <template #addressAccountType>
-            <FormField
-                v-slot="{ componentField }"
-                name="addressAccountType"
-            >
-                <UiFormItem v-if="configStore.get('core.loginRegistration.showAccountTypeSelection')">
-                    <UiAutoFormLabel required>{{ $t('account.register.accountTypes.label') }}</UiAutoFormLabel>
-                    <UiSelect v-bind="componentField">
-                        <UiFormControl>
-                            <UiSelectTrigger>
-                                <UiSelectValue :placeholder="$t('account.register.accountTypes.placeholder')"/>
-                            </UiSelectTrigger>
-                        </UiFormControl>
-                        <UiSelectContent>
-                            <UiSelectGroup>
-                                <UiSelectItem
-                                    v-for="accountType in pondRegisterForm.accountTypes"
-                                    :value="accountType.value"
-                                >
-                                    {{ accountType.label }}
-                                </UiSelectItem>
-                            </UiSelectGroup>
-                        </UiSelectContent>
-                    </UiSelect>
-                    <UiFormMessage/>
-                </UiFormItem>
-            </FormField>
+        <template #addressHeader="slotProps">
+            <UiAutoFormField v-bind="slotProps">
+                <slot name="registerShippingAddressHeader">
+                    <div>
+                        <h2 class="text-lg font-semibold">{{ $t('account.register.header.shippingAddressFields') }}</h2>
+                        <hr>
+                    </div>
+                </slot>
+            </UiAutoFormField>
         </template>
-        <template #addressSalutation>
-            <FormField v-slot="{ componentField }" name="addressSalutationId">
-                <UiFormItem>
-                    <UiAutoFormLabel required>{{ $t('account.register.salutations.label') }}</UiAutoFormLabel>
-                    <UiSelect v-bind="componentField">
-                        <UiFormControl>
-                            <UiSelectTrigger>
-                                <UiSelectValue :placeholder="$t('account.register.salutations.placeholder')"/>
-                            </UiSelectTrigger>
-                        </UiFormControl>
-                        <UiSelectContent>
-                            <UiSelectGroup>
-                                <UiSelectItem
-                                    v-for="salutation in salutations"
-                                    :value="salutation.id"
-                                >
-                                    {{ salutation.translated.displayName }}
-                                </UiSelectItem>
-                            </UiSelectGroup>
-                        </UiSelectContent>
-                    </UiSelect>
-                    <UiFormMessage/>
-                </UiFormItem>
-            </FormField>
-        </template>
-        <template #addressCountryId>
-            <FormField v-slot="{ componentField }" name="addressCountryId">
-                <UiFormItem>
-                    <UiAutoFormLabel required>{{ $t('account.register.country.label') }}</UiAutoFormLabel>
-                    <UiSelect v-bind="componentField">
-                        <UiFormControl>
-                            <UiSelectTrigger>
-                                <UiSelectValue :placeholder="$t('account.register.country.placeholder')"/>
-                            </UiSelectTrigger>
-                        </UiFormControl>
-                        <UiSelectContent>
-                            <UiSelectGroup>
-                                <UiSelectItem
-                                    v-for="country in countries"
-                                    :value="country.id"
-                                >
-                                    {{ country.translated.name }}
-                                </UiSelectItem>
-                            </UiSelectGroup>
-                        </UiSelectContent>
-                    </UiSelect>
-                    <UiFormMessage/>
-                </UiFormItem>
-            </FormField>
-        </template>
-        <template #addressCountryState>
-            <div v-if="shippingAddressStates && shippingAddressStates.length > 0">
-                <FormField v-slot="{ componentField }" name="addressCountryState">
-                    <UiFormItem>
-                        <UiAutoFormLabel>{{ $t('account.register.state.label') }}</UiAutoFormLabel>
+        <template #addressAccountType="slotProps">
+            <UiAutoFormField v-bind="slotProps">
+                <FormField
+                    v-slot="{ componentField }"
+                    name="addressAccountType"
+                >
+                    <UiFormItem v-if="configStore.get('core.loginRegistration.showAccountTypeSelection')">
                         <UiSelect v-bind="componentField">
                             <UiFormControl>
                                 <UiSelectTrigger>
-                                    <UiSelectValue :placeholder="$t('account.register.state.placeholder')"/>
+                                    <UiSelectValue :placeholder="$t('account.register.accountTypes.placeholder')"/>
                                 </UiSelectTrigger>
                             </UiFormControl>
                             <UiSelectContent>
                                 <UiSelectGroup>
                                     <UiSelectItem
-                                        v-for="state in shippingAddressStates"
-                                        :value="state.id"
+                                        v-for="accountType in pondRegisterForm.accountTypes"
+                                        :value="accountType.value"
                                     >
-                                        {{ state.translated.name }}
+                                        {{ accountType.label }}
                                     </UiSelectItem>
                                 </UiSelectGroup>
                             </UiSelectContent>
                         </UiSelect>
+                        <UiFormMessage/>
                     </UiFormItem>
                 </FormField>
-            </div>
-            <div v-else></div>
+            </UiAutoFormField>
+        </template>
+        <template #addressSalutation="slotProps">
+            <UiAutoFormField v-bind="slotProps">
+                <FormField v-slot="{ componentField }" name="addressSalutationId">
+                    <UiFormItem>
+                        <UiSelect v-bind="componentField">
+                            <UiFormControl>
+                                <UiSelectTrigger>
+                                    <UiSelectValue :placeholder="$t('account.register.salutations.placeholder')"/>
+                                </UiSelectTrigger>
+                            </UiFormControl>
+                            <UiSelectContent>
+                                <UiSelectGroup>
+                                    <UiSelectItem
+                                        v-for="salutation in salutations"
+                                        :value="salutation.id"
+                                    >
+                                        {{ salutation.translated.displayName }}
+                                    </UiSelectItem>
+                                </UiSelectGroup>
+                            </UiSelectContent>
+                        </UiSelect>
+                        <UiFormMessage/>
+                    </UiFormItem>
+                </FormField>
+            </UiAutoFormField>
+        </template>
+        <template #addressCountryId="slotProps">
+            <UiAutoFormField v-bind="slotProps">
+                <FormField v-slot="{ componentField }" name="addressCountryId">
+                    <UiFormItem>
+                        <UiSelect v-bind="componentField">
+                            <UiFormControl>
+                                <UiSelectTrigger>
+                                    <UiSelectValue :placeholder="$t('account.register.country.placeholder')"/>
+                                </UiSelectTrigger>
+                            </UiFormControl>
+                            <UiSelectContent>
+                                <UiSelectGroup>
+                                    <UiSelectItem
+                                        v-for="country in countries"
+                                        :value="country.id"
+                                    >
+                                        {{ country.translated.name }}
+                                    </UiSelectItem>
+                                </UiSelectGroup>
+                            </UiSelectContent>
+                        </UiSelect>
+                        <UiFormMessage/>
+                    </UiFormItem>
+                </FormField>
+            </UiAutoFormField>
+        </template>
+        <template #addressCountryState="slotProps">
+            <UiAutoFormField v-bind="slotProps">
+                <div v-if="shippingAddressStates && shippingAddressStates.length > 0">
+                    <FormField v-slot="{ componentField }" name="addressCountryState">
+                        <UiFormItem>
+                            <UiAutoFormLabel>{{ $t('account.register.state.label') }}</UiAutoFormLabel>
+                            <UiSelect v-bind="componentField">
+                                <UiFormControl>
+                                    <UiSelectTrigger>
+                                        <UiSelectValue :placeholder="$t('account.register.state.placeholder')"/>
+                                    </UiSelectTrigger>
+                                </UiFormControl>
+                                <UiSelectContent>
+                                    <UiSelectGroup>
+                                        <UiSelectItem
+                                            v-for="state in shippingAddressStates"
+                                            :value="state.id"
+                                        >
+                                            {{ state.translated.name }}
+                                        </UiSelectItem>
+                                    </UiSelectGroup>
+                                </UiSelectContent>
+                            </UiSelect>
+                        </UiFormItem>
+                    </FormField>
+                </div>
+            </UiAutoFormField>
         </template>
         <template #acceptedDataProtection="slotProps">
             <div class="pt-6">

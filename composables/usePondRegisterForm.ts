@@ -176,7 +176,7 @@ export const usePondRegisterForm = () => {
             countryId: z.string({
                 required_error: t('account.register.country.error.required'),
             }),
-            countryState: z.string(),
+            countryState: z.string().optional(),
         })
         if (configStore.get('core.loginRegistration.showPhoneNumberField')) {
             if (configStore.get('core.loginRegistration.phoneNumberFieldRequired')) {
@@ -213,7 +213,7 @@ export const usePondRegisterForm = () => {
         let addressForm = z.object({});
 
         addressForm = addressForm.extend({
-            addressHeader: z.void()
+            addressHeader: z.string()
         })
 
         if (configStore.get('core.loginRegistration.showAccountTypeSelection')) {
@@ -304,7 +304,7 @@ export const usePondRegisterForm = () => {
             addressCountryId: z.string({
                 required_error: t('account.register.country.error.required'),
             }),
-            addressCountryState: z.string(),
+            addressCountryState: z.string().optional(),
         })
         if (configStore.get('core.loginRegistration.showPhoneNumberField')) {
             if (configStore.get('core.loginRegistration.phoneNumberFieldRequired')) {
@@ -620,6 +620,9 @@ export const usePondRegisterForm = () => {
         },
         shippingAddressVaries: {
             label: t('account.register.differentShippingAddress')
+        },
+        addressHeader: {
+            hideLabel: true
         },
         addressAccountType: {
             label: t('account.register.accountTypes.label'),
