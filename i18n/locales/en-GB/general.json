@@ -2,6 +2,7 @@
     "general": {
         "close": "Close",
         "homepage": "Home",
+        "copyright": "© 2025 {companyName}",
         "back": "Back",
         "showAll": "Show all",
         "categories": "Categories"
