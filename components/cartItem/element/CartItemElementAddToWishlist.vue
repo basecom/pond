@@ -1,15 +1,35 @@
 <script setup lang="ts">
+import {toast} from '../../ui/toast';
+import {ApiClientError} from '@shopware/api-client';
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
-      referencedId?: string
+      isInWishlist: boolean,
+      isLoading: boolean
     }>(),
     {
-        referencedId: undefined,
     },
 );
+const { t } = useI18n();
+
+const emits = defineEmits<{
+  removeProductFromWishlist: [];
+  addProductToWishlist: [];
+}>();
+
+const removeProductFromWishlist = async () => {
+  emits('removeProductFromWishlist');
+};
+
+const addProductToWishlist= async () => {
+  emits('addProductToWishlist');
+};
 </script>
 <template>
-    <CartItemElementAddToWishlistInner :referenced-id="referencedId" />
+    <CartItemElementAddToWishlistInner :is-in-wishlist="isInWishlist"
+                                       :is-loading="isLoading"
+                                       @remove-product-from-wishlist="removeProductFromWishlist"
+                                       @add-product-to-wishlist="addProductToWishlist"
+    />
 
 </template>

@@ -2,43 +2,13 @@
 import type { Schemas } from '@shopware/api-client/api-types';
 import {toast} from '../../ui/toast';
 import {ApiClientError} from '@shopware/api-client';
-
-const props = withDefaults(
-    defineProps<{
-      cartItem?: Schemas['LineItem'],
-      isLoading?: boolean
-    }>(),
-    {
-        cartItem: undefined,
-        isLoading: false,
-    },
-);
-const { cartItem } = toRefs(props);
-const {removeItem} = useCartItem(cartItem);
-const { t } = useI18n();
 const emits = defineEmits<{
-  isLoading: [boolean]
+  removeCartItem: [];
 }>();
+
 const removeCartItem = async () => {
-    try {
-        emits('isLoading', true);
-        await removeItem();
-        toast({
-            description: t('checkout.removeSuccess'),
-        });
-
-    } catch (error) {
-        if(error instanceof ApiClientError) {
-            toast({
-                title: t('error.generalHeadline'),
-                description: t(`error.${error.details.errors[0]?.code ?? 'DEFAULT'}`),
-                variant: 'destructive',
-            });
-        }
-    }
-    emits('isLoading', false);
+  emits('removeCartItem');
 };
-
 </script>
 <template>
     <slot name="removeButton">

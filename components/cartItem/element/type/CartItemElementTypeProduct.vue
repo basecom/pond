@@ -1,9 +1,20 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
+import {toast} from '../../../ui/toast';
+import {ApiClientError} from "@shopware/api-client";
+const { t } = useI18n();
 const props = withDefaults(
     defineProps<{
       cartItem?: Schemas['LineItem'],
       cartDeliveryPosition?: Schemas['CartDeliveryPosition'],
+      itemTotalPrice: number,
+      itemRegularPrice: number,
+      itemOptions: Schemas['LineItem']['payload']['options'],
+      quantity: number,
+      itemQuantity: number,
+      isInWishlist: boolean,
+      isLoading: boolean
+
     }>(),
     {
         cartItem: undefined,
@@ -11,19 +22,15 @@ const props = withDefaults(
     },
 );
 const {cartItem} = toRefs(props);
-const {
-  itemOptions,
-} = useCartItem(cartItem);
-
-const {
-  itemTotalPrice,
-  itemRegularPrice,
-} = useCartItem(cartItem);
-
-
 const emits = defineEmits<{
-  isLoading: [boolean]
+  isLoading: [boolean],
+  changeCartItemQuantity: [number],
+  removeProductFromWishlist: [],
+  addProductToWishlist: [],
 }>();
+
+
+
 </script>
 <template>
     <CartItemElementTypeProductInner :cart-item="cartItem"
@@ -31,6 +38,14 @@ const emits = defineEmits<{
                                      :item-total-price="itemTotalPrice"
                                      :item-regular-price="itemRegularPrice"
                                      :item-options="itemOptions"
-                                     @is-loading="(isLoadingEmit: boolean) => {emits('isLoading', isLoadingEmit)}" />
+                                     :quantity="quantity"
+                                     :item-quantity="itemQuantity"
+                                     :is-loading="isLoading"
+                                     :is-in-wishlist="isInWishlist"
+                                     @is-loading="(isLoadingEmit: boolean) => {emits('isLoading', isLoadingEmit)}"
+                                     @change-cart-item-quantity="(quantityInput: number) => emits('changeCartItemQuantity', quantityInput)"
+                                     @remove-product-from-wishlist="emits('removeProductFromWishlist')"
+                                     @add-product-to-wishlist="emits('addProductToWishlist')"
+    />
 
 </template>

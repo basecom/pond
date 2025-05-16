@@ -4,58 +4,27 @@ import {ApiClientError} from '@shopware/api-client';
 const { t } = useI18n();
 const props = withDefaults(
     defineProps<{
-      referencedId?: string
+      isInWishlist?: boolean;
+      isLoading: boolean;
     }>(),
     {
-        referencedId: undefined,
+        isInWishlist: false,
+        isLoading: false
     },
 );
+const emits = defineEmits<{
+  removeProductFromWishlist: [];
+  addProductToWishlist: [];
+}>();
 
-const { getWishlistProducts } = useWishlist();
-
-const {addToWishlist, isInWishlist, removeFromWishlist } = useProductWishlist(props.referencedId ?? '');
-
-const isLoading = ref(false);
-
-const addProductToWishlist = async () => {
-    try {
-        isLoading.value = true;
-        await addToWishlist();
-        toast({
-            description: t('checkout.addToWishlistSuccess'),
-        });
-    } catch(error) {
-        if(error instanceof ApiClientError) {
-            toast({
-                title: t('error.generalHeadline'),
-                description: t(`error.${ error.details.errors[0]?.code}`),
-                variant: 'destructive',
-            });
-
-        }
-    }
-    isLoading.value = false;
-};
 const removeProductFromWishlist = async () => {
-    try {
-        isLoading.value = true;
-        await removeFromWishlist();
-        toast({
-            description: t('checkout.removeFromWishlistSuccess'),
-        });
-    } catch(error) {
-        if(error instanceof ApiClientError) {
-            toast({
-                title: t('error.generalHeadline'),
-                description: t(`error.${error.details.errors[0]?.code} ?? 'DEFAULT'`),
-                variant: 'destructive',
-            });
-        }
-    }
-    isLoading.value = false;
+  emits('removeProductFromWishlist');
 };
 
-getWishlistProducts(); //needs to be called again in cart
+const addProductToWishlist= async () => {
+  emits('addProductToWishlist');
+};
+
 </script>
 
 <template>

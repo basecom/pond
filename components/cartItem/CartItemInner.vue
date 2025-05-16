@@ -6,18 +6,31 @@ const props = withDefaults(
     defineProps<{
       cartItem?: Schemas['LineItem'];
       cartDeliveryPosition?: Schemas['CartDeliveryPosition'];
+      itemTotalPrice: number;
+      itemRegularPrice: number;
+      itemOptions?: Schemas["LineItem"]["payload"]["options"];
+      quantity: number;
+      itemQuantity: number;
+      isLoading: boolean;
+      isInWishlist: boolean;
     }>(),
     {
         cartItem: undefined,
         cartDeliveryPosition: undefined,
+      isLoading: false
     },
 );
-const { cartItem } = toRefs(props);
-const isLoading = ref(false);
+const { cartItem, isLoading } = toRefs(props);
 
 const isProduct = computed(() => cartItem.value?.type === 'product');
 const isDiscount = computed(() => ((!cartItem.value?.good && ((cartItem.value?.price?.totalPrice ?? 0) <= 0)) || cartItem.value?.type === 'discount'));
-
+const emits = defineEmits<{
+  removeCartItem: [],
+  changeCartItemQuantity: [number],
+  isLoading: [boolean],
+  removeProductFromWishlist: [],
+  addProductToWishlist: [],
+}>();
 </script>
 <template>
     <slot name="wrapper">
@@ -35,14 +48,24 @@ const isDiscount = computed(() => ((!cartItem.value?.good && ((cartItem.value?.p
                                 <CartItemElementTypeProduct
                                     :cart-item="cartItem"
                                     :cart-delivery-position="cartDeliveryPosition"
-                                    @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"
+                                    :item-total-price="itemTotalPrice"
+                                    :item-regular-price="itemRegularPrice"
+                                    :item-options="itemOptions"
+                                    :quantity="quantity"
+                                    :item-quantity="itemQuantity"
+                                    :is-in-wishlist="isInWishlist"
+                                    :is-loading="isLoading"
+                                    @is-loading="(isLoadingEmit: boolean) => emits('isLoading', isLoadingEmit)"
+                                    @change-cart-item-quantity="(quantityInput: number)=> emits('changeCartItemQuantity', quantityInput)"
+                                    @remove-product-from-wishlist="emits('removeProductFromWishlist')"
+                                    @add-product-to-wishlist="emits('addProductToWishlist')"
                                 />
                             </slot>
                             <div class="order-2 flex w-1/6 justify-end">
                                 <slot name="promotionRemove">
                                     <CartItemElementRemove
                                         :cart-item="cartItem"
-                                        @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"
+                                        @remove-cart-item="emits('removeCartItem')"
                                     />
                                 </slot>
                             </div>
@@ -51,13 +74,14 @@ const isDiscount = computed(() => ((!cartItem.value?.good && ((cartItem.value?.p
                     <template v-else-if="isDiscount">
                         <slot name="discountWrapper">
                             <slot name="discount">
-                                <CartItemElementTypeDiscount :cart-item="cartItem" />
+                                <CartItemElementTypeDiscount :cart-item="cartItem"
+                                />
                             </slot>
                             <div class="order-2 flex w-1/6 justify-end">
                                 <slot name="discountRemove">
                                     <CartItemElementRemove
                                         :cart-item="cartItem"
-                                        @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"
+                                        @remove-cart-item="emits('removeCartItem')"
                                     />
                                 </slot>
                             </div>
@@ -66,13 +90,24 @@ const isDiscount = computed(() => ((!cartItem.value?.good && ((cartItem.value?.p
                     <template v-else>
                         <slot name="genericWrapper">
                             <slot name="generic">
-                                <CartItemElementTypeProduct :cart-item="cartItem" />
+                                <CartItemElementTypeProduct :cart-item="cartItem"
+                                                            :cart-delivery-position="cartDeliveryPosition"
+                                                            :item-total-price="itemTotalPrice"
+                                                            :item-regular-price="itemRegularPrice"
+                                                            :item-options="itemOptions"
+                                                            :quantity="quantity"
+                                                            :item-quantity="itemQuantity"
+                                                            @is-loading="(isLoadingEmit: boolean) => emits('isLoading', isLoadingEmit)"
+                                                            @change-cart-item-quantity="(quantityInput: number)=> emits('changeCartItemQuantity', quantityInput)"
+                                                            @remove-product-from-wishlist="emits('removeProductFromWishlist')"
+                                                            @add-product-to-wishlist="emits('addProductToWishlist')"
+                                />
                             </slot>
                             <div class="order-2 flex w-1/6 justify-end">
                                 <slot name="genericRemove">
                                     <CartItemElementRemove
                                         :cart-item="cartItem"
-                                        @is-loading="(isLoadingEmit: boolean) => isLoading = isLoadingEmit"
+                                        @remove-cart-item="emits('removeCartItem')"
                                     />
                                 </slot>
                             </div>

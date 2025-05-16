@@ -6,25 +6,37 @@ const props = withDefaults(
       cartDeliveryPosition?: Schemas['CartDeliveryPosition'];
       itemTotalPrice: number;
       itemRegularPrice: number;
-      itemOptions?: Schemas["LineItem"]["payload"]["options"]
+      itemOptions?: Schemas["LineItem"]["payload"]["options"];
+      quantity: number;
+      itemQuantity: number;
+      isInWishlist: boolean;
+      isLoading: boolean;
     }>(),
     {
         cartItem: undefined,
         cartDeliveryPosition: undefined,
         itemTotalPrice: 0,
         itemRegularPrice: 0,
-        itemOptions: undefined
+        itemOptions: undefined,
+        quantity: 0,
+        itemQuantity: 0
     },
 );
-const {cartItem} = toRefs(props);
+const {cartItem, quantity} = toRefs(props);
 const {getFormattedPrice} = usePrice();
 
 const configStore = useConfigStore();
 const showDeliveryTime = configStore.get('core.cart.showDeliveryTime') as boolean;
 
 const emits = defineEmits<{
-  isLoading: [boolean]
+  isLoading: [boolean],
+  changeCartItemQuantity: [number],
+  removeProductFromWishlist: [],
+  addProductToWishlist: [],
 }>();
+
+
+
 </script>
 
 <template>
@@ -68,7 +80,12 @@ const emits = defineEmits<{
             <slot name="wishlistWrapper">
                 <div class="mt-2 text-xs">
                     <slot name="wishlist">
-                        <CartItemElementAddToWishlist :referenced-id="cartItem.referencedId" />
+                        <CartItemElementAddToWishlist
+                            :is-in-wishlist="isInWishlist"
+                            :is-loading="isLoading"
+                            @remove-product-from-wishlist="emits('removeProductFromWishlist')"
+                            @add-product-to-wishlist="emits('addProductToWishlist')"
+                        />
                     </slot>
                 </div>
             </slot>
@@ -79,7 +96,9 @@ const emits = defineEmits<{
             <slot name="quantity">
                 <CartItemElementQuantity
                     :cart-item="cartItem"
-                    @is-loading="(isLoadingEmit: boolean) => {emits('isLoading', isLoadingEmit)}"
+                    :quantity="quantity"
+                    :item-quantity="itemQuantity"
+                    @change-cart-item-quantity="(quantityInput: number) => emits('changeCartItemQuantity', quantityInput)"
                 />
             </slot>
         </div>

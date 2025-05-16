@@ -1,20 +1,22 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-withDefaults(
+import {toast} from '../../ui/toast';
+import {ApiClientError} from '@shopware/api-client';
+const props = withDefaults(
     defineProps<{
       cartItem?: Schemas['LineItem'],
-      isLoading?: boolean
     }>(),
     {
         cartItem: undefined,
-        isLoading: false,
     },
 );
 const emits = defineEmits<{
-  isLoading: [boolean]
+  removeCartItem: [],
 }>();
 
 </script>
 <template>
-    <CartItemElementRemoveInner :cart-item="cartItem" @is-loading="(isLoadingEmit: boolean) => {emits('isLoading', isLoadingEmit)}" />
+    <CartItemElementRemoveInner
+      @remove-cart-item="emits('removeCartItem')"
+    />
 </template>
