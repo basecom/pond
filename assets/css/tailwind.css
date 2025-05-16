@@ -14,5 +14,5 @@
 }
 
 #__nuxt {
-    @apply grid min-h-screen grid-rows-[auto_1fr_auto];
+    @apply flex flex-col min-h-screen;
 }
