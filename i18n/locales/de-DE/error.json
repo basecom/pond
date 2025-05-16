@@ -4,9 +4,12 @@
             "heading": "Seite nicht gefunden",
             "detail": "Die angeforderte Seite konnte nicht gefunden werden."
         },
-      "generalHeadline": "Leider lief etwas schief",
-      "CHECKOUT__CUSTOMER_NOT_FOUND": "Es konnte kein Account mit den angegebenen Zugangsdaten gefunden werden.",
-      "CHECKOUT__CUSTOMER_AUTH_BAD_CREDENTIALS": "Es konnte kein Account mit den angegebenen Zugangsdaten gefunden werden.",
-      "CHECKOUT__CUSTOMER_AUTH_THROTTLED": "Die maximale Anzahl an Versuchen wurde überschritten. Versuchen Sie es später noch einmal."
+        "generalHeadline": "Leider lief etwas schief",
+        "CHECKOUT__CUSTOMER_NOT_FOUND": "Es konnte kein Account mit den angegebenen Zugangsdaten gefunden werden.",
+        "CHECKOUT__CUSTOMER_AUTH_BAD_CREDENTIALS": "Es konnte kein Account mit den angegebenen Zugangsdaten gefunden werden.",
+        "CHECKOUT__CUSTOMER_AUTH_THROTTLED": "Die maximale Anzahl an Versuchen wurde überschritten. Versuchen Sie es später noch einmal.",
+        "VIOLATION::CUSTOMER_EMAIL_NOT_UNIQUE": "Bitte wählen Sie eine andere E-Mail-Adresse",
+        "VIOLATION::CUSTOMER_PASSWORD_NOT_CORRECT": "Bitte geben Sie das korrekte Passwort ein",
+        "VIOLATION::IS_BLANK_ERROR": "Bitte füllen Sie alle benötigten Felder aus"
     }
 }
