@@ -9,23 +9,23 @@ withDefaults(
       shippingMethods?: Schemas['ShippingMethod'][];
       selectedShippingMethod?: Schemas['ShippingMethod'];
       shippingCost?: Schemas['CartDelivery'];
-      subtotal?: Number;
+      subtotal?: number;
       isLoading: {
         promo: boolean,
         select: boolean
       };
     }>(),
     {
-      cart: undefined,
-      cartDeliveries: undefined,
-      shippingMethods: undefined,
-      selectedShippingMethod: undefined,
-      shippingCost: undefined,
-      subtotal: undefined,
-      isLoading: () => ({
-        promo: false,
-        select: false
-      })
+        cart: undefined,
+        cartDeliveries: undefined,
+        shippingMethods: undefined,
+        selectedShippingMethod: undefined,
+        shippingCost: undefined,
+        subtotal: undefined,
+        isLoading: () => ({
+            promo: false,
+            select: false,
+        }),
     },
 );
 
@@ -35,11 +35,11 @@ const emits = defineEmits<{
 }>();
 
 const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
-  emits('setSelectedShippingMethod', shippingMethodId);
+    emits('setSelectedShippingMethod', shippingMethodId);
 };
 
 const addSelectedPromotionCode = async (promotionCode: string) => {
-  emits('addSelectedPromotionCode', promotionCode);
+    emits('addSelectedPromotionCode', promotionCode);
 };
 
 </script>

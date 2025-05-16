@@ -9,7 +9,7 @@ const props = withDefaults(
     }>(),
     {
         isInWishlist: false,
-        isLoading: false
+        isLoading: false,
     },
 );
 const emits = defineEmits<{
@@ -18,11 +18,11 @@ const emits = defineEmits<{
 }>();
 
 const removeProductFromWishlist = async () => {
-  emits('removeProductFromWishlist');
+    emits('removeProductFromWishlist');
 };
 
 const addProductToWishlist= async () => {
-  emits('addProductToWishlist');
+    emits('addProductToWishlist');
 };
 
 </script>

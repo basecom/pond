@@ -17,6 +17,6 @@ const emits = defineEmits<{
 </script>
 <template>
     <CartItemElementRemoveInner
-      @remove-cart-item="emits('removeCartItem')"
+        @remove-cart-item="emits('removeCartItem')"
     />
 </template>

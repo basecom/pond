@@ -15,7 +15,7 @@ withDefaults(
       shippingMethods?: Schemas['ShippingMethod'][];
       selectedShippingMethod?: Schemas['ShippingMethod'];
       shippingCost?: Schemas['CartDelivery'];
-      subtotal?: Number;
+      subtotal?: number;
       isLoading: {
         promo: boolean,
         select: boolean
@@ -29,9 +29,9 @@ withDefaults(
         shippingCost: undefined,
         subtotal: undefined,
         isLoading: () => ({
-          promo: false,
-          select: false
-      })
+            promo: false,
+            select: false,
+        }),
     },
 );
 const inputPromotionCode = ref('');
@@ -42,11 +42,11 @@ const emits = defineEmits<{
 }>();
 
 const setSelectedShippingMethod = async (shippingMethodId: string) => {
-  emits('setSelectedShippingMethod', shippingMethodId);
+    emits('setSelectedShippingMethod', shippingMethodId);
 };
 
 const addSelectedPromotionCode = async (promotionCode: string) => {
-  emits('addSelectedPromotionCode', promotionCode);
+    emits('addSelectedPromotionCode', promotionCode);
 };
 
 </script>
@@ -74,10 +74,10 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
                             </UiButton>
                         </div>
                         <div class="flex items-center">
-                          <template v-if="shippingCost">
-                            <strong>{{ shippingCost.shippingCosts.totalPrice < 0 ? '-' : '+' }} {{
-                                getFormattedPrice(shippingCost.shippingCosts.totalPrice)
-                            }}*</strong>
+                            <template v-if="shippingCost">
+                                <strong>{{ shippingCost.shippingCosts.totalPrice < 0 ? '-' : '+' }} {{
+                                    getFormattedPrice(shippingCost.shippingCosts.totalPrice)
+                                }}*</strong>
                             </template>
                         </div>
                     </div>

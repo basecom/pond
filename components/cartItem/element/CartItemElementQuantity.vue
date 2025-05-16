@@ -11,8 +11,8 @@ const props = withDefaults(
     }>(),
     {
         cartItem: undefined,
-      quantity: 1,
-      itemQuantity: 1
+        quantity: 1,
+        itemQuantity: 1,
     },
 );
 const {cartItem, quantity} = toRefs(props);
@@ -24,8 +24,10 @@ const emits = defineEmits<{
 
 </script>
 <template>
-    <CartItemElementQuantityInner :cart-item="cartItem"
-                                  :quantity="quantity"
-                                  :item-quantity="itemQuantity"
-                                  @change-cart-item-quantity="(quantityInput: number) => emits('changeCartItemQuantity', quantityInput)"/>
+    <CartItemElementQuantityInner
+        :cart-item="cartItem"
+        :quantity="quantity"
+        :item-quantity="itemQuantity"
+        @change-cart-item-quantity="(quantityInput: number) => emits('changeCartItemQuantity', quantityInput)"
+    />
 </template>

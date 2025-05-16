@@ -10,9 +10,9 @@ const props = withDefaults(
 );
 const {cartItem} = toRefs(props);
 const {
-  itemTotalPrice,
+    itemTotalPrice,
 } = useCartItem(cartItem);
 </script>
 <template>
-    <CartItemElementTypeDiscountInner :cart-item="cartItem" :item-total-price="itemTotalPrice"/>
+    <CartItemElementTypeDiscountInner :cart-item="cartItem" :item-total-price="itemTotalPrice" />
 </template>

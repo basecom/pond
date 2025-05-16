@@ -11,9 +11,9 @@ const props = withDefaults(
 
     }>(),
     {
-      cartItem: undefined,
-      itemQuantity: 1,
-      quantity: 1,
+        cartItem: undefined,
+        itemQuantity: 1,
+        quantity: 1,
     },
 );
 const {cartItem, quantity} = toRefs(props);
@@ -26,34 +26,34 @@ const emits = defineEmits<{
   changeCartItemQuantity: [quantityInput: number]
 }>();
 const changeCartItemQuantity = async (quantityInput: number) => {
-  emits('changeCartItemQuantity', quantityInput);
+    emits('changeCartItemQuantity', quantityInput);
 };
 const quantityRef = ref();
 watch(quantity, () => {
-  quantityRef.value = quantity.value;
+    quantityRef.value = quantity.value;
 });
 </script>
 <template>
-  <slot name="quantityLabel">
-    <label class="flex font-bold">{{ $t('checkout.quantity') }}</label>
-  </slot>
-  <slot name="quantityContainer">
-    <div class="w-1/3">
-      <UiNumberField
-          v-model="quantityRef"
-          :max="cartItem.payload.maxPurchase ?? maxQuantityConfig"
-          :min="cartItem.payload.minPurchase ?? 1"
-          :step="cartItem.payload.purchaseSteps"
-          :disabled="!cartItem.stackable || isDigital"
-          :default-value="itemQuantity"
-          @update:model-value="changeCartItemQuantity"
-      >
-        <UiNumberFieldContent>
-          <UiNumberFieldDecrement/>
-          <UiNumberFieldInput/>
-          <UiNumberFieldIncrement/>
-        </UiNumberFieldContent>
-      </UiNumberField>
-    </div>
-  </slot>
+    <slot name="quantityLabel">
+        <label class="flex font-bold">{{ $t('checkout.quantity') }}</label>
+    </slot>
+    <slot name="quantityContainer">
+        <div class="w-1/3">
+            <UiNumberField
+                v-model="quantityRef"
+                :max="cartItem.payload.maxPurchase ?? maxQuantityConfig"
+                :min="cartItem.payload.minPurchase ?? 1"
+                :step="cartItem.payload.purchaseSteps"
+                :disabled="!cartItem.stackable || isDigital"
+                :default-value="itemQuantity"
+                @update:model-value="changeCartItemQuantity"
+            >
+                <UiNumberFieldContent>
+                    <UiNumberFieldDecrement />
+                    <UiNumberFieldInput />
+                    <UiNumberFieldIncrement />
+                </UiNumberFieldContent>
+            </UiNumberField>
+        </div>
+    </slot>
 </template>

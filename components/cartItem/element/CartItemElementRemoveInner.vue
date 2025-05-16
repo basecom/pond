@@ -7,7 +7,7 @@ const emits = defineEmits<{
 }>();
 
 const removeCartItem = async () => {
-  emits('removeCartItem');
+    emits('removeCartItem');
 };
 </script>
 <template>

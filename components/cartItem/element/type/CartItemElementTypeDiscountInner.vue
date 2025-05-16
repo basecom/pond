@@ -8,7 +8,7 @@ const props = withDefaults(
     }>(),
     {
         cartItem: undefined,
-        itemTotalPrice: 0
+        itemTotalPrice: 0,
     },
 );
 const {getFormattedPrice} = usePrice();

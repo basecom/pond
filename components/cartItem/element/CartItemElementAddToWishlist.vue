@@ -18,18 +18,19 @@ const emits = defineEmits<{
 }>();
 
 const removeProductFromWishlist = async () => {
-  emits('removeProductFromWishlist');
+    emits('removeProductFromWishlist');
 };
 
 const addProductToWishlist= async () => {
-  emits('addProductToWishlist');
+    emits('addProductToWishlist');
 };
 </script>
 <template>
-    <CartItemElementAddToWishlistInner :is-in-wishlist="isInWishlist"
-                                       :is-loading="isLoading"
-                                       @remove-product-from-wishlist="removeProductFromWishlist"
-                                       @add-product-to-wishlist="addProductToWishlist"
+    <CartItemElementAddToWishlistInner
+        :is-in-wishlist="isInWishlist"
+        :is-loading="isLoading"
+        @remove-product-from-wishlist="removeProductFromWishlist"
+        @add-product-to-wishlist="addProductToWishlist"
     />
 
 </template>

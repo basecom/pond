@@ -6,11 +6,14 @@ const props = withDefaults(
       cartDeliveryPosition?: Schemas['CartDeliveryPosition'];
       itemTotalPrice: number;
       itemRegularPrice: number;
-      itemOptions?: Schemas["LineItem"]["payload"]["options"];
+      itemOptions?: Schemas['LineItem']['payload']['options'];
       quantity: number;
       itemQuantity: number;
       isInWishlist: boolean;
-      isLoading: boolean;
+      isLoading: {
+        wishlist: boolean,
+        container: boolean
+      };
     }>(),
     {
         cartItem: undefined,
@@ -19,7 +22,7 @@ const props = withDefaults(
         itemRegularPrice: 0,
         itemOptions: undefined,
         quantity: 0,
-        itemQuantity: 0
+        itemQuantity: 0,
     },
 );
 const {cartItem, quantity} = toRefs(props);
@@ -82,7 +85,7 @@ const emits = defineEmits<{
                     <slot name="wishlist">
                         <CartItemElementAddToWishlist
                             :is-in-wishlist="isInWishlist"
-                            :is-loading="isLoading"
+                            :is-loading="isLoading.wishlist"
                             @remove-product-from-wishlist="emits('removeProductFromWishlist')"
                             @add-product-to-wishlist="emits('addProductToWishlist')"
                         />

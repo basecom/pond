@@ -8,16 +8,18 @@ const props = withDefaults(
       cartDeliveryPosition?: Schemas['CartDeliveryPosition'];
       itemTotalPrice: number;
       itemRegularPrice: number;
-      itemOptions?: Schemas["LineItem"]["payload"]["options"];
+      itemOptions?: Schemas['LineItem']['payload']['options'];
       quantity: number;
       itemQuantity: number;
-      isLoading: boolean;
+      isLoading: {
+        wishlist: boolean,
+        container: boolean
+      };
       isInWishlist: boolean;
     }>(),
     {
         cartItem: undefined,
         cartDeliveryPosition: undefined,
-      isLoading: false
     },
 );
 const { cartItem, isLoading } = toRefs(props);
@@ -31,12 +33,13 @@ const emits = defineEmits<{
   removeProductFromWishlist: [],
   addProductToWishlist: [],
 }>();
+
 </script>
 <template>
     <slot name="wrapper">
-        <div :class="isLoading ? 'pointer-events-none opacity-50':''">
+        <div :class="isLoading.container ? 'pointer-events-none opacity-50':''">
             <div class="relative">
-                <div v-if="isLoading" class="absolute flex size-full items-center justify-center pb-4">
+                <div v-if="isLoading.container" class="absolute flex size-full items-center justify-center pb-4">
                     <slot name="loadingSpinner">
                         <Loader2 class="size-12 animate-spin" />
                     </slot>
@@ -74,8 +77,7 @@ const emits = defineEmits<{
                     <template v-else-if="isDiscount">
                         <slot name="discountWrapper">
                             <slot name="discount">
-                                <CartItemElementTypeDiscount :cart-item="cartItem"
-                                />
+                                <CartItemElementTypeDiscount :cart-item="cartItem" />
                             </slot>
                             <div class="order-2 flex w-1/6 justify-end">
                                 <slot name="discountRemove">
@@ -90,17 +92,18 @@ const emits = defineEmits<{
                     <template v-else>
                         <slot name="genericWrapper">
                             <slot name="generic">
-                                <CartItemElementTypeProduct :cart-item="cartItem"
-                                                            :cart-delivery-position="cartDeliveryPosition"
-                                                            :item-total-price="itemTotalPrice"
-                                                            :item-regular-price="itemRegularPrice"
-                                                            :item-options="itemOptions"
-                                                            :quantity="quantity"
-                                                            :item-quantity="itemQuantity"
-                                                            @is-loading="(isLoadingEmit: boolean) => emits('isLoading', isLoadingEmit)"
-                                                            @change-cart-item-quantity="(quantityInput: number)=> emits('changeCartItemQuantity', quantityInput)"
-                                                            @remove-product-from-wishlist="emits('removeProductFromWishlist')"
-                                                            @add-product-to-wishlist="emits('addProductToWishlist')"
+                                <CartItemElementTypeProduct
+                                    :cart-item="cartItem"
+                                    :cart-delivery-position="cartDeliveryPosition"
+                                    :item-total-price="itemTotalPrice"
+                                    :item-regular-price="itemRegularPrice"
+                                    :item-options="itemOptions"
+                                    :quantity="quantity"
+                                    :item-quantity="itemQuantity"
+                                    @is-loading="(isLoadingEmit: boolean) => emits('isLoading', isLoadingEmit)"
+                                    @change-cart-item-quantity="(quantityInput: number)=> emits('changeCartItemQuantity', quantityInput)"
+                                    @remove-product-from-wishlist="emits('removeProductFromWishlist')"
+                                    @add-product-to-wishlist="emits('addProductToWishlist')"
                                 />
                             </slot>
                             <div class="order-2 flex w-1/6 justify-end">
