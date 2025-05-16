@@ -14,6 +14,7 @@ withDefaults(
         promo: boolean,
         select: boolean
       };
+      isLoggedIn?: boolean
     }>(),
     {
         cart: undefined,
@@ -26,6 +27,7 @@ withDefaults(
             promo: false,
             select: false,
         }),
+        isLoggedIn: false,
     },
 );
 
@@ -52,6 +54,7 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
         :shipping-cost="shippingCost"
         :subtotal="subtotal"
         :is-loading="isLoading"
+        :is-logged-in="isLoggedIn"
         @add-selected-promotion-code="(promotionCode: string) => addSelectedPromotionCode(promotionCode)"
         @set-selected-shipping-method="(shippingMethodId: AcceptableValue) => setSelectedShippingMethod(shippingMethodId)"
     />

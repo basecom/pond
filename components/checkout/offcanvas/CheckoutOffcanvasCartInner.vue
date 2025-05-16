@@ -15,8 +15,10 @@ const props = withDefaults(
         promo: boolean,
         select: boolean
       };
+      isLoggedIn: boolean
     }>(),
     {
+        isLoggedIn: false,
         cartItems: undefined,
         cartDeliveries: undefined,
         cart: undefined,
@@ -83,6 +85,7 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
             <slot name="cartSummary">
                 <CheckoutOffcanvasCartSummary
                     :cart="cart"
+                    :is-logged-in="isLoggedIn"
                     :cart-deliveries="cartDeliveries"
                     :shipping-methods="shippingMethods"
                     :selected-shipping-method="selectedShippingMethod"

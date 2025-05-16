@@ -18,6 +18,7 @@ withDefaults(
         promo: boolean,
         select: boolean
       };
+      isLoggedIn: boolean
     }>(),
     {
         cart: undefined,
@@ -30,6 +31,7 @@ withDefaults(
             promo: false,
             select: false,
         }),
+        isLoggedIn: false,
     },
 );
 const inputPromotionCode = ref('');
@@ -49,87 +51,88 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
 
 </script>
 <template>
-    <div>
-        <slot name="subTotal">
-            <div class="flex justify-between">
-                <div class="font-bold">
-                    {{ $t("checkout.subTotal") }}
-                </div>
-                <div>
-                    {{ getFormattedPrice(subtotal) }}*
-                </div>
-            </div>
-        </slot>
-        <slot name="shipping">
-            <div class="mb-4">
-                <template v-if="!isLoading.select">
-                    <div class="flex justify-between">
-                        <div>
-                            <span>{{ $t('checkout.summaryShipping') }}</span>
-                            <UiButton variant="ghost" class="p-1" @click="showSelectionSelect = !showSelectionSelect">({{
-                                selectedShippingMethod.translated.name
-                            }})
-                            </UiButton>
-                        </div>
-                        <div class="flex items-center">
-                            <template v-if="shippingCost.shippingCosts?.totalPrice">
-                                <strong>{{ shippingCost.shippingCosts?.totalPrice < 0 ? '-' : '+' }} {{
-                                    getFormattedPrice(shippingCost.shippingCosts.totalPrice)
-                                }}*</strong>
-                            </template>
-                        </div>
+    <template v-if="isLoggedIn">
+        <div>
+            <slot name="subTotal">
+                <div class="flex justify-between">
+                    <div class="font-bold">
+                        {{ $t("checkout.subTotal") }}
                     </div>
-                    <template v-if="showSelectionSelect">
-                        <UiSelect
-                            :model-value="selectedShippingMethod.id"
-                            @update:model-value="setSelectedShippingMethod"
-                        >
-                            <UiSelectTrigger>
-                                <UiSelectValue />
-                            </UiSelectTrigger>
-                            <UiSelectContent>
-                                <UiSelectGroup>
-                                    <template v-for="(shippingMethod) in shippingMethods" :key="shippingMethod.id">
-                                        <UiSelectItem :value="shippingMethod.id">
-                                            {{ shippingMethod.translated.name }}
-                                        </UiSelectItem>
-                                    </template>
-                                </UiSelectGroup>
-                            </UiSelectContent>
-                        </UiSelect>
+                    <div>
+                        {{ getFormattedPrice(subtotal) }}*
+                    </div>
+                </div>
+            </slot>
+            <slot name="shipping">
+                <div class="mb-4">
+                    <template v-if="!isLoading.select">
+                        <div class="flex justify-between">
+                            <div>
+                                <span>{{ $t('checkout.summaryShipping') }}</span>
+                                <UiButton variant="ghost" class="p-1" @click="showSelectionSelect = !showSelectionSelect">({{
+                                    selectedShippingMethod.translated.name
+                                }})
+                                </UiButton>
+                            </div>
+                            <div class="flex items-center">
+                                <template v-if="shippingCost.shippingCosts">
+                                    <strong>{{ shippingCost.shippingCosts?.totalPrice < 0 ? '-' : '+' }} {{
+                                        getFormattedPrice(shippingCost.shippingCosts?.totalPrice || 0)
+                                    }}*</strong>
+                                </template>
+                            </div>
+                        </div>
+                        <template v-if="showSelectionSelect">
+                            <UiSelect
+                                :model-value="selectedShippingMethod.id"
+                                @update:model-value="setSelectedShippingMethod"
+                            >
+                                <UiSelectTrigger>
+                                    <UiSelectValue />
+                                </UiSelectTrigger>
+                                <UiSelectContent>
+                                    <UiSelectGroup>
+                                        <template v-for="(shippingMethod) in shippingMethods" :key="shippingMethod.id">
+                                            <UiSelectItem :value="shippingMethod.id">
+                                                {{ shippingMethod.translated.name }}
+                                            </UiSelectItem>
+                                        </template>
+                                    </UiSelectGroup>
+                                </UiSelectContent>
+                            </UiSelect>
+                        </template>
                     </template>
+                    <template v-else>
+                        <Loader2 class="mr-2 size-4 animate-spin" />
+                    </template>
+                </div>
+            </slot>
+        </div>
+        <div class="mb-4 text-xs">
+            <slot name="tax-information">
+                <template v-if="cart.price?.taxStatus === 'net'">
+                    *{{ $t('general.netTaxInformation') }}
                 </template>
                 <template v-else>
-                    <Loader2 class="mr-2 size-4 animate-spin" />
+                    *{{ $t('general.grossTaxInformation') }}
                 </template>
-            </div>
-        </slot>
-    </div>
-    <div class="mb-4 text-xs">
-        <slot name="tax-information">
-            <template v-if="cart.price?.taxStatus === 'net'">
-                *{{ $t('general.netTaxInformation') }}
-            </template>
-            <template v-else>
-                *{{ $t('general.grossTaxInformation') }}
-            </template>
-        </slot>
-    </div>
-    <slot name="promotion">
-        <div class="mb-4">
-            <UiLabel>{{ $t('checkout.label') }}</UiLabel>
-            <div class="flex w-full max-w-sm">
-                <UiInput
-                    v-model="inputPromotionCode"
-                    class="w-full"
-                    type="text"
-                    :placeholder="$t('checkout.addPromotionPlaceholder')"
-                />
-                <UiButton :is-loading="isLoading.promo" @click="addSelectedPromotionCode(inputPromotionCode)">
-                    <Icon name="mdi:check" class="size-4" />
-                </UiButton>
-            </div>
+            </slot>
         </div>
-    </slot>
-
+        <slot name="promotion">
+            <div class="mb-4">
+                <UiLabel>{{ $t('checkout.label') }}</UiLabel>
+                <div class="flex w-full max-w-sm">
+                    <UiInput
+                        v-model="inputPromotionCode"
+                        class="w-full"
+                        type="text"
+                        :placeholder="$t('checkout.addPromotionPlaceholder')"
+                    />
+                    <UiButton :is-loading="isLoading.promo" @click="addSelectedPromotionCode(inputPromotionCode)">
+                        <Icon name="mdi:check" class="size-4" />
+                    </UiButton>
+                </div>
+            </div>
+        </slot>
+    </template>
 </template>

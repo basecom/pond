@@ -17,6 +17,7 @@ withDefaults(
 
 const {t} = useI18n();
 const {subtotal, shippingCosts, addPromotionCode, cart} = useCart();
+const {isLoggedIn} = useUser();
 const {getShippingMethods, setShippingMethod, selectedShippingMethod} = useCheckout();
 const shippingCost = ref(shippingCosts.value.find((shippingCost) => shippingCost.shippingMethod.id === selectedShippingMethod.value.id));
 const isLoading = ref({
@@ -51,16 +52,21 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
     try {
         isLoading.value.promo = true;
         const result = await addPromotionCode(promotionCode);
-        if (result.errors) {
+       const errorKeys = Object.keys(result.errors);
+        if (errorKeys.length > 0) {
+          const error = errorKeys[0]?.split("-").slice(0, -1).join('_');
+          if(error !== 'promotion_discount_added') {
             toast({
                 title: t('error.generalHeadline'),
-                description: t(`error.${Object.keys(result.errors)[0] ?? 'DEFAULT'}`),
+                description: t(`error.${errorKeys[0]?.replaceAll('-', '_')?.toUpperCase() ?? 'DEFAULT'}`),
                 variant: 'destructive',
             });
-        } else {
+          }
+          else {
             toast({
-                description: t('checkout.success'),
+              description: t('checkout.success'),
             });
+          }
         }
 
     } catch (error) {
@@ -86,6 +92,7 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
         :shipping-cost="shippingCost"
         :subtotal="subtotal"
         :is-loading="isLoading"
+        :is-logged-in="isLoggedIn"
         @add-selected-promotion-code="(promotionCode: string) => addSelectedPromotionCode(promotionCode)"
         @set-selected-shipping-method="(shippingMethodId: AcceptableValue) => setSelectedShippingMethod(shippingMethodId)"
     />

@@ -34,7 +34,7 @@ const hasLineItems = (cartItems?: Schemas['LineItem'][]) => cartItems && cartIte
             <UiSheetHeader>
                 <UiSheetTitle>
                     <slot name="offcanvasHeader">
-                        <div class="mt-4 flex items-center justify-between">
+                        <div class="mt-4 flex w-full items-center justify-between">
                             <slot name="cartTitle">
                                 <span>{{ $t('checkout.cart') }}</span>
                                 <span>{{ cartItems.length }} {{ $t('checkout.items') }}</span>
