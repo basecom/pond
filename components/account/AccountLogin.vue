@@ -2,9 +2,14 @@
 import { ApiClientError } from '@shopware/api-client';
 import type { LoginData } from './AccountLoginInner.vue';
 
-const { redirectTo = '' } = defineProps<{
-    redirectTo?: string;
-}>();
+const props = withDefaults(
+    defineProps<{
+        redirectTo?: string;
+    }>(),
+    {
+        redirectTo: '',
+    },
+);
 
 const isLoading = ref(false);
 const errorMessage: Ref<string|undefined> = ref(undefined);
@@ -19,8 +24,8 @@ const login = async (loginData: LoginData) => {
 
     try {
         await customerStore.login(loginData);
-        if (redirectTo !== '') {
-            navigateTo(formatLink(redirectTo));
+        if (props.redirectTo !== '') {
+            navigateTo(formatLink(props.redirectTo));
         }
     } catch (error) {
         if (error instanceof ApiClientError) {
