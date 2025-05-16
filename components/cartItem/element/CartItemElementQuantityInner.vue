@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import type {Schemas} from '@shopware/api-client/api-types';
-
-const {t} = useI18n();
-
 const props = withDefaults(
     defineProps<{
       cartItem?: Schemas['LineItem'],
-      itemQuantity: number,
-      quantity: number,
+      itemQuantity?: number,
+      quantity?: number,
 
     }>(),
     {

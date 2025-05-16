@@ -4,11 +4,11 @@ const props = withDefaults(
     defineProps<{
       cartItem?: Schemas['LineItem'];
       cartDeliveryPosition?: Schemas['CartDeliveryPosition'];
-      itemTotalPrice: number;
-      itemRegularPrice: number;
+      itemTotalPrice?: number;
+      itemRegularPrice?: number;
       itemOptions?: Schemas['LineItem']['payload']['options'];
-      quantity: number;
-      itemQuantity: number;
+      quantity?: number;
+      itemQuantity?: number;
       isInWishlist: boolean;
       isLoading: {
         wishlist: boolean,

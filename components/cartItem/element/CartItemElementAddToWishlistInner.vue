@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import {toast} from '../../ui/toast';
-import {ApiClientError} from '@shopware/api-client';
-const { t } = useI18n();
-const props = withDefaults(
+withDefaults(
     defineProps<{
       isInWishlist?: boolean;
-      isLoading: boolean;
+      isLoading?: boolean;
     }>(),
     {
         isInWishlist: false,

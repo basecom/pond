@@ -21,6 +21,7 @@ const {addToWishlist, isInWishlist, removeFromWishlist } = useProductWishlist(ca
 
 const {removeItem} = useCartItem(cartItem);
 const { t } = useI18n();
+
 const isLoading = ref({
     wishlist: false,
     container: false,
@@ -35,11 +36,6 @@ const {
     itemTotalPrice,
     itemRegularPrice,
 } = useCartItem(cartItem);
-
-
-const emits = defineEmits<{
-  isLoading: [boolean]
-}>();
 
 const {
     itemQuantity,

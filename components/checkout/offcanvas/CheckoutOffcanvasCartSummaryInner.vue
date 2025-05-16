@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type {Schemas} from '@shopware/api-client/api-types';
 import {Loader2} from 'lucide-vue-next';
-import {toast} from '../../ui/toast';
-import {ApiClientError} from '@shopware/api-client';
 import type {AcceptableValue} from 'reka-ui';
 
 const {getFormattedPrice} = usePrice();
@@ -16,7 +14,7 @@ withDefaults(
       selectedShippingMethod?: Schemas['ShippingMethod'];
       shippingCost?: Schemas['CartDelivery'];
       subtotal?: number;
-      isLoading: {
+      isLoading?: {
         promo: boolean,
         select: boolean
       };
@@ -37,11 +35,11 @@ withDefaults(
 const inputPromotionCode = ref('');
 
 const emits = defineEmits<{
-  setSelectedShippingMethod: [shippingMethodId: string];
+  setSelectedShippingMethod: [shippingMethodId: AcceptableValue];
   addSelectedPromotionCode: [promotionCode: string];
 }>();
 
-const setSelectedShippingMethod = async (shippingMethodId: string) => {
+const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
     emits('setSelectedShippingMethod', shippingMethodId);
 };
 
@@ -74,8 +72,8 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
                             </UiButton>
                         </div>
                         <div class="flex items-center">
-                            <template v-if="shippingCost">
-                                <strong>{{ shippingCost.shippingCosts.totalPrice < 0 ? '-' : '+' }} {{
+                            <template v-if="shippingCost.shippingCosts?.totalPrice">
+                                <strong>{{ shippingCost.shippingCosts?.totalPrice < 0 ? '-' : '+' }} {{
                                     getFormattedPrice(shippingCost.shippingCosts.totalPrice)
                                 }}*</strong>
                             </template>
@@ -109,11 +107,11 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
     </div>
     <div class="mb-4 text-xs">
         <slot name="tax-information">
-            <template v-if="cart.price?.taxStatus === 'gross'">
-                *{{ $t('general.grossTaxInformation') }}
+            <template v-if="cart.price?.taxStatus === 'net'">
+                *{{ $t('general.netTaxInformation') }}
             </template>
             <template v-else>
-                *{{ $t('general.netTaxInformation') }}
+                *{{ $t('general.grossTaxInformation') }}
             </template>
         </slot>
     </div>

@@ -11,7 +11,7 @@ const props = withDefaults(
       selectedShippingMethod?: Schemas['ShippingMethod'];
       shippingCost?: Schemas['CartDelivery'];
       subtotal?: number;
-      isLoading: {
+      isLoading?: {
         promo: boolean,
         select: boolean
       };
@@ -20,7 +20,6 @@ const props = withDefaults(
         cartItems: undefined,
         cartDeliveries: undefined,
         cart: undefined,
-        cartDeliveries: undefined,
         shippingMethods: undefined,
         selectedShippingMethod: undefined,
         shippingCost: undefined,

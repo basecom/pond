@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import {toast} from '../../ui/toast';
-import {ApiClientError} from '@shopware/api-client';
-
-const props = withDefaults(
+withDefaults(
     defineProps<{
-      isInWishlist: boolean,
-      isLoading: boolean
+      isInWishlist?: boolean,
+      isLoading?: boolean
     }>(),
     {
+        isInWishlist: false,
+        isLoading: false,
     },
 );
-const { t } = useI18n();
 
 const emits = defineEmits<{
   removeProductFromWishlist: [];

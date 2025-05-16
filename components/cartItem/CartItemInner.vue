@@ -6,20 +6,30 @@ const props = withDefaults(
     defineProps<{
       cartItem?: Schemas['LineItem'];
       cartDeliveryPosition?: Schemas['CartDeliveryPosition'];
-      itemTotalPrice: number;
-      itemRegularPrice: number;
+      itemTotalPrice?: number;
+      itemRegularPrice?: number;
       itemOptions?: Schemas['LineItem']['payload']['options'];
-      quantity: number;
-      itemQuantity: number;
-      isLoading: {
+      quantity?: number;
+      itemQuantity?: number;
+      isLoading?: {
         wishlist: boolean,
         container: boolean
       };
-      isInWishlist: boolean;
+      isInWishlist?: boolean;
     }>(),
     {
         cartItem: undefined,
         cartDeliveryPosition: undefined,
+        itemOptions: undefined,
+        itemTotalPrice: 0,
+        itemRegularPrice: 0,
+        quantity: 0,
+        itemQuantity: 0,
+        isInWishlist: false,
+        isLoading: () => ({
+            wishlist: false,
+            container: false,
+        }),
     },
 );
 const { cartItem, isLoading } = toRefs(props);

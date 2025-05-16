@@ -10,7 +10,7 @@ withDefaults(
       selectedShippingMethod?: Schemas['ShippingMethod'];
       shippingCost?: Schemas['CartDelivery'];
       subtotal?: number;
-      isLoading: {
+      isLoading?: {
         promo: boolean,
         select: boolean
       };
