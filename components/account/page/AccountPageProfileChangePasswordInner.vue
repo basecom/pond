@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import * as z from 'zod';
 
+withDefaults(
+    defineProps<{
+        isLoading?: boolean
+    }>(),
+    {
+        isLoading: false,
+    },
+);
+
 const emits = defineEmits<{
   'update-password': [passwordForm: ChangePasswordForm];
 }>();
@@ -43,7 +52,8 @@ const changePassword = async (passwordForm: ChangePasswordForm) => {
                 <UiAccordionTrigger class="text-base">
                     {{ $t('account.personalProfile.changePassword.headline') }}
                 </UiAccordionTrigger>
-                <UiAccordionContent class="text-base">
+
+                <UiAccordionContent class="px-px text-base">
                     <slot name="change-password-form">
                         <UiAutoForm
                             v-auto-animate
@@ -81,7 +91,7 @@ const changePassword = async (passwordForm: ChangePasswordForm) => {
                             </template>
 
                             <slot name="submit-button">
-                                <UiButton type="submit" class="md:col-span-2">
+                                <UiButton type="submit" class="md:col-span-2" :is-loading="isLoading">
                                     {{ $t('general.save') }}
                                 </UiButton>
                             </slot>

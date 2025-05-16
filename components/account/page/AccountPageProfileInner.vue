@@ -5,9 +5,23 @@ import type { ChangeMailForm } from '~/components/account/page/AccountPageProfil
 import type * as z from 'zod';
 import { getTranslatedProperty } from '@shopware/helpers';
 
-const props = defineProps<{
-    customer: Schemas['Customer'];
-}>();
+const props = withDefaults(
+    defineProps<{
+        customer: Schemas['Customer'];
+        isLoading?: {
+            personalData: boolean,
+            mail: boolean,
+            password: boolean,
+        }
+    }>(),
+    {
+        isLoading: () => ({
+            personalData: false,
+            mail: false,
+            password: false,
+        }),
+    },
+);
 
 const emits = defineEmits<{
     'update-personal-data': [personalDataForm: PersonalDataForm];
@@ -69,7 +83,7 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
                 firstName: { label: $t('account.customer.firstName') },
                 lastName: { label: $t('account.customer.lastName') },
                 company: { label: $t('account.customer.companyName') },
-                vatIds: { label: $t('account.customer.vat') },
+                'vatIds[]': { label: $t('account.customer.vat') },
                 birthdayDay: { label: $t('account.customer.birthday') },
             }"
             @submit="changePersonalData"
@@ -134,7 +148,7 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
                 </div>
             </template>
 
-            <template #vatIds="slotProps">
+            <template #vatIds[]="slotProps">
                 <div class="col-span-12 md:col-span-6">
                     <UiAutoFormField v-bind="slotProps" />
                 </div>
@@ -229,7 +243,7 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
             </template>
 
             <slot name="submit-button">
-                <UiButton type="submit" class="col-span-12">
+                <UiButton type="submit" class="col-span-12" :is-loading="isLoading.personalData">
                     {{ $t('general.save') }}
                 </UiButton>
             </slot>

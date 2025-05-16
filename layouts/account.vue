@@ -24,4 +24,6 @@ await rerouteIfLoggedOut();
             </div>
         </div>
     </main>
+
+    <LayoutFooter />
 </template>

@@ -11,4 +11,6 @@
     <main>
         <NuxtPage />
     </main>
+
+    <LayoutFooter />
 </template>
