@@ -1,6 +1,12 @@
 {
     "general": {
+        "save": "Speichern",
         "close": "Schließen",
+        "homepage": "Startseite",
+        "copyright": "© 2025 {companyName}",
+        "back": "Zurück",
+        "showAll": "Alle anzeigen",
+        "categories": "Kategorien",
         "grossTaxInformation": "Prices incl. VAT plus shipping costs",
         "netTaxInformation": " Prices incl. VAT plus shipping costs"
     }

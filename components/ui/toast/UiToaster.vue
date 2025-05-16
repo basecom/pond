@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { isVNode } from 'vue';
-import { UiToast, UiToastClose, UiToastDescription, UiToastProvider, UiToastTitle, UiToastViewport } from '.';
 import { useToast } from './use-toast';
 
 const { toasts } = useToast();
@@ -23,7 +22,7 @@ const { toasts } = useToast();
                 </template>
                 <UiToastClose />
             </div>
-            <component :is="toast.action" />
+            <component :is="toast.action" v-if="toast.action" />
         </UiToast>
         <UiToastViewport />
     </UiToastProvider>
