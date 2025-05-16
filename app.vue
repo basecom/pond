@@ -14,8 +14,9 @@ await updateSessionWithLanguage();
 
 const { refreshCart } = useCart();
 const { getWishlistProducts } = useWishlist();
-const { refreshContext } = useCustomerStore();
 const { fetchSalutations } = useSalutations();
+const { refreshContext } = useCustomerStore();
+
 const configStore = useConfigStore();
 await configStore.loadConfig();
 await refreshContext();
