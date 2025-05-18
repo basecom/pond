@@ -16,16 +16,19 @@ withDefaults(
 );
 
 const {t} = useI18n();
-const {subtotal, shippingCosts, addPromotionCode, cart} = useCart();
+const {subtotal, shippingCosts, addPromotionCode, cart, refreshCart} = useCart();
 const {isLoggedIn} = useUser();
 const {getShippingMethods, setShippingMethod, selectedShippingMethod} = useCheckout();
-const shippingCost = ref(shippingCosts.value.find((shippingCost) => shippingCost.shippingMethod.id === selectedShippingMethod.value.id));
+
 const isLoading = ref({
     promo: false,
     select: false,
 });
 const shippingMethods = await getShippingMethods();
 
+const findSelectedShippingCost = (shippingCosts: Schemas['CartDelivery'][]) => shippingCosts.find((shippingCost) => shippingCost?.shippingMethod?.id === selectedShippingMethod.value.id);
+
+const shippingCost = ref(findSelectedShippingCost(shippingCosts.value));
 const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
     isLoading.value.select = true;
     try {
@@ -45,7 +48,8 @@ const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
             });
         }
     }
-
+    await refreshCart();
+    shippingCost.value = findSelectedShippingCost(shippingCosts.value);
     isLoading.value.select = false;
 };
 const addSelectedPromotionCode = async (promotionCode: string) => {
