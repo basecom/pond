@@ -19,7 +19,7 @@ withDefaults(
                 <div class="w-20 text-center">
                     <slot name="link">
                         <NuxtLinkLocale :to=productUrl>
-                            <slot name="cartImage">
+                            <slot name="cart-image">
                                 <img :src="cartItemImage" alt="image" class="w-100 h-20 border object-contain p-1">
                             </slot>
                         </NuxtLinkLocale>
@@ -28,11 +28,11 @@ withDefaults(
             </template>
 
             <template v-else>
-                <slot name="fallbackContainer">
+                <slot name="fallback-container">
                     <div class="flex size-20 items-center justify-center border text-center">
-                        <slot name="fallbackLink">
+                        <slot name="fallback-link">
                             <NuxtLinkLocale :to=productUrl>
-                                <slot name="fallbackIcon">
+                                <slot name="fallback-icon">
                                     <Icon :name="fallback" class="size-8" />
                                 </slot>
                             </NuxtLinkLocale>

@@ -58,7 +58,7 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
 
 </script>
 <template>
-    <slot name="offcanvasContent">
+    <slot name="offcanvas-content">
         <div class="mb-4">
             <template v-if="hasLineItems(cartItems)">
                 <template v-for="cartItem in cartItems">
@@ -72,7 +72,7 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
             </template>
 
             <template v-else>
-                <slot name="noLineItemsLabel">
+                <slot name="no-line-items-label">
                     <div class="w-full">
                         <UiAlert>
                             <UiAlertDescription>{{ $t('checkout.noLineItems') }}</UiAlertDescription>
@@ -81,7 +81,7 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
                 </slot>
             </template>
         </div>
-        <slot name="cartSummary">
+        <slot name="cart-summary">
             <div>
                 <CheckoutOffcanvasCartSummary
                     :cart="cart"
@@ -99,14 +99,14 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
         </slot>
         <div class="flex w-full flex-col gap-1">
             <div class="w-full text-center">
-                <slot name="proceedToCheckoutButton">
+                <slot name="proceed-to-checkout-button">
                     <NuxtLinkLocale to="/checkout/confirm">
                         <UiButton :class="'w-full'">{{ $t('checkout.proceedToCheckout') }}</UiButton>
                     </NuxtLinkLocale>
                 </slot>
             </div>
             <div class="w-full text-center">
-                <slot name="proceedToCartButton">
+                <slot name="proceed-to-cart-button">
                     <NuxtLinkLocale to="/checkout/cart">
                         <UiButton variant="link">{{ $t('checkout.proceedToCart') }}</UiButton>
                     </NuxtLinkLocale>

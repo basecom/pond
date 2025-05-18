@@ -19,7 +19,7 @@ const {getFormattedPrice} = usePrice();
 </script>
 <template>
     <slot name="discount-content">
-        <slot name="imageContainer">
+        <slot name="image-container">
             <div class="order-1 mb-4 flex w-5/6 flex-col">
                 <div class="mb-2 w-auto">
                     <slot name="image">
@@ -35,9 +35,9 @@ const {getFormattedPrice} = usePrice();
                 </div>
             </div>
         </slot>
-        <slot name="totalPriceWrapper">
+        <slot name="total-price-wrapper">
             <div class="order-4 flex w-full justify-end">
-                <slot name="totalPrice">
+                <slot name="total-price">
                     <CartItemElementPriceTotal :cart-item-total-price="getFormattedPrice(itemTotalPrice)" />
                 </slot>
             </div>

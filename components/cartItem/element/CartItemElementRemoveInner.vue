@@ -8,9 +8,9 @@ const removeCartItem = async () => {
 };
 </script>
 <template>
-    <slot name="removeButton">
+    <slot name="remove-button">
         <UiButton variant="outline" size="icon" @click="removeCartItem">
-            <slot name="removeIcon">
+            <slot name="remove-icon">
                 <Icon name="mdi-close" class="size-4" />
             </slot>
         </UiButton>

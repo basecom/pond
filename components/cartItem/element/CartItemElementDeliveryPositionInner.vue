@@ -21,7 +21,7 @@ withDefaults(
                     {{ $t('checkout.deliveryPeriod') }}:
                 </span>
             </slot>
-            <slot name="deliveryDates">
+            <slot name="delivery-dates">
                 <span>
                     {{ useDateFormat(cartItemDeliveryPosition.deliveryDate.earliest, 'DD/MM/YYYY') }}
                     -

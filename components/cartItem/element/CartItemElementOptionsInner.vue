@@ -11,7 +11,7 @@ withDefaults(
 );
 </script>
 <template>
-    <slot name="cartItemOptions">
+    <slot name="cartItem-options">
         <span v-for="(property, index) in cartItemOptions" :key="index">
             <slot name="cartItemOptionContent">
                 {{ property.group }}: <span class="font-bold">{{ property.option }}</span>

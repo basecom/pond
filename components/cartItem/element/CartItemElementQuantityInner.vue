@@ -31,10 +31,10 @@ watch(quantity, () => {
 });
 </script>
 <template>
-    <slot name="quantityLabel">
+    <slot name="quantity-label">
         <label class="flex font-bold">{{ $t('checkout.quantity') }}</label>
     </slot>
-    <slot name="quantityContainer">
+    <slot name="quantity-container">
         <div class="w-1/3">
             <UiNumberField
                 v-model="quantityRef"

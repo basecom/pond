@@ -9,12 +9,12 @@ withDefaults(
 );
 </script>
 <template>
-    <slot name="unitPrice">
+    <slot name="unit-price">
         <span>
             {{ cartItemUnitPrice }}*
         </span>
     </slot>
-    <slot name="unitPriceDescriptor">
+    <slot name="unit-price-descriptor">
         <span> / {{ $t('checkout.lineItemUnitPriceDescriptor') }}</span>
     </slot>
 </template>

@@ -53,13 +53,13 @@ const emits = defineEmits<{
         <div :class="isLoading.container ? 'pointer-events-none opacity-50':''">
             <div class="relative">
                 <div v-if="isLoading.container" class="absolute flex size-full items-center justify-center pb-4">
-                    <slot name="loadingSpinner">
+                    <slot name="loading-spinner">
                         <Loader2 class="size-12 animate-spin" />
                     </slot>
                 </div>
                 <div class="flex flex-wrap border-b py-4">
                     <template v-if="isProduct">
-                        <slot name="productWrapper">
+                        <slot name="product-wrapper">
                             <slot name="product">
                                 <CartItemElementTypeProduct
                                     :cart-item="cartItem"
@@ -79,7 +79,7 @@ const emits = defineEmits<{
                                 />
                             </slot>
                             <div class="order-2 flex w-1/6 justify-end">
-                                <slot name="promotionRemove">
+                                <slot name="promotion-remove">
                                     <CartItemElementRemove
                                         :cart-item="cartItem"
                                         @remove-cart-item="emits('removeCartItem')"
@@ -89,12 +89,12 @@ const emits = defineEmits<{
                         </slot>
                     </template>
                     <template v-else-if="isDiscount">
-                        <slot name="discountWrapper">
+                        <slot name="discount-wrapper">
                             <slot name="discount">
                                 <CartItemElementTypeDiscount :cart-item="cartItem" />
                             </slot>
                             <div class="order-2 flex w-1/6 justify-end">
-                                <slot name="discountRemove">
+                                <slot name="discount-remove">
                                     <CartItemElementRemove
                                         :cart-item="cartItem"
                                         @remove-cart-item="emits('removeCartItem')"
@@ -104,7 +104,8 @@ const emits = defineEmits<{
                         </slot>
                     </template>
                     <template v-else>
-                        <slot name="genericWrapper">
+                        <slot name="additional-type-wrapper" />
+                        <slot name="generic-type-wrapper">
                             <slot name="generic">
                                 <CartItemElementTypeProduct
                                     :cart-item="cartItem"
@@ -122,7 +123,7 @@ const emits = defineEmits<{
                                 />
                             </slot>
                             <div class="order-2 flex w-1/6 justify-end">
-                                <slot name="genericRemove">
+                                <slot name="generic-remove">
                                     <CartItemElementRemove
                                         :cart-item="cartItem"
                                         @remove-cart-item="emits('removeCartItem')"

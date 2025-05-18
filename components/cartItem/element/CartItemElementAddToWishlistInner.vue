@@ -27,11 +27,11 @@ const addProductToWishlist= async () => {
 <template>
     <slot name="wishlist-content">
         <template v-if="isInWishlist">
-            <slot name="addWishlistWrapper">
+            <slot name="add-wishlist-wrapper">
                 <div class="flex" @click="removeProductFromWishlist">
-                    <slot name="removeFromWishlistButton">
+                    <slot name="remove-from-wishlist-button">
                         <UiButton variant="ghost" size="icon" class="pl-0 pr-2">
-                            <slot name="iconInWishlist">
+                            <slot name="icon-in-wishlist">
                                 <Icon name="mdi:heart" class="size-5" />
                             </slot>
                         </UiButton>
@@ -43,11 +43,11 @@ const addProductToWishlist= async () => {
             </slot>
         </template>
         <template v-else>
-            <slot name="removeWishlistWrapper">
+            <slot name="remove-wishlist-wrapper">
                 <div class="flex" @click="addProductToWishlist">
-                    <slot name="removeFromWishlistButton">
+                    <slot name="remove-from-wishlist-button">
                         <UiButton variant="ghost" size="icon" class="pl-0 pr-2">
-                            <slot name="iconNotInWishlist">
+                            <slot name="icon-not-in-wishlist">
                                 <Icon name="mdi:heart-outline" class="size-5" />
                             </slot>
                         </UiButton>

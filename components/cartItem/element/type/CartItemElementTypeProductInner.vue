@@ -55,7 +55,7 @@ const emits = defineEmits<{
                         <CartItemElementImage :cart-item-image="getMainImageUrl(cartItem)" fallback="mdi:image" :product-url="productUrl" />
                     </slot>
                 </div>
-                <slot name="labelWrapper">
+                <slot name="label-wrapper">
                     <div class="font-bold">
                         <NuxtLinkLocale :to="productUrl">
                             <slot name="label">
@@ -64,28 +64,28 @@ const emits = defineEmits<{
                         </NuxtLinkLocale>
                     </div>
                 </slot>
-                <slot name="optionsWrapper">
+                <slot name="options-wrapper">
                     <div class="my-2 text-xs">
                         <slot name="options">
                             <CartItemElementOptions :cart-item-options="itemOptions" />
                         </slot>
                     </div>
                 </slot>
-                <slot name="productNumberWrapper">
+                <slot name="product-number-wrapper">
                     <div class="mb-2 text-xs">
-                        <slot name="productNumber">
+                        <slot name="product-number">
                             {{ $t('checkout.cartItemInfoId') }}: {{ cartItem.payload.productNumber }}
                         </slot>
                     </div>
                 </slot>
-                <slot name="deliveryPositionWrapper">
+                <slot name="delivery-position-wrapper">
                     <div v-if="showDeliveryTime" class="text-xs">
                         <slot name="deliveryPosition">
                             <CartItemElementDeliveryPosition :cart-item-delivery-position="cartDeliveryPosition" />
                         </slot>
                     </div>
                 </slot>
-                <slot name="wishlistWrapper">
+                <slot name="wishlist-wrapper">
                     <div class="mt-2 text-xs">
                         <slot name="wishlist">
                             <CartItemElementAddToWishlist
@@ -99,7 +99,7 @@ const emits = defineEmits<{
                 </slot>
             </div>
         </slot>
-        <slot name="quantityWrapper">
+        <slot name="quantity-wrapper">
             <div class="order-3 mb-4 flex w-full items-center justify-between">
                 <slot name="quantity">
                     <CartItemElementQuantity
@@ -111,16 +111,16 @@ const emits = defineEmits<{
                 </slot>
             </div>
         </slot>
-        <slot name="unitPriceWrapper">
+        <slot name="unit-price-wrapper">
             <div class="order-5 flex w-full justify-end text-xs">
                 <slot name="unitPrice">
                     <CartItemElementPriceUnit :cart-item-unit-price="getFormattedPrice(itemRegularPrice)" />
                 </slot>
             </div>
         </slot>
-        <slot name="totalPriceWrapper">
+        <slot name="total-price-wrapper">
             <div class="order-4 flex w-full justify-end">
-                <slot name="totalPrice">
+                <slot name="total-price">
                     <CartItemElementPriceTotal :cart-item-total-price="getFormattedPrice(itemTotalPrice)" />
                 </slot>
             </div>
