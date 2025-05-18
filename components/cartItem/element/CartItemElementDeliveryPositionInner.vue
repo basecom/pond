@@ -14,18 +14,20 @@ withDefaults(
 
 </script>
 <template>
-    <template v-if="cartItemDeliveryPosition && cartItemDeliveryPosition.deliveryDate">
-        <slot name="deliveryLabel">
-            <span>
-                {{ $t('checkout.deliveryPeriod') }}:
-            </span>
-        </slot>
-        <slot name="deliveryDates">
-            <span>
-                {{ useDateFormat(cartItemDeliveryPosition.deliveryDate.earliest, 'DD/MM/YYYY') }}
-                -
-                {{ useDateFormat(cartItemDeliveryPosition.deliveryDate.latest, 'DD/MM/YYYY') }}
-            </span>
-        </slot>
-    </template>
+    <slot name="delivery-container">
+        <template v-if="cartItemDeliveryPosition && cartItemDeliveryPosition.deliveryDate">
+            <slot name="deliveryLabel">
+                <span>
+                    {{ $t('checkout.deliveryPeriod') }}:
+                </span>
+            </slot>
+            <slot name="deliveryDates">
+                <span>
+                    {{ useDateFormat(cartItemDeliveryPosition.deliveryDate.earliest, 'DD/MM/YYYY') }}
+                    -
+                    {{ useDateFormat(cartItemDeliveryPosition.deliveryDate.latest, 'DD/MM/YYYY') }}
+                </span>
+            </slot>
+        </template>
+    </slot>
 </template>

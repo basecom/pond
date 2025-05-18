@@ -11,11 +11,12 @@ const props = withDefaults(
       itemOptions?: Schemas['LineItem']['payload']['options'];
       quantity?: number;
       itemQuantity?: number;
+      productUrl?: string
+      isInWishlist?: boolean;
       isLoading?: {
         wishlist: boolean,
         container: boolean
       };
-      isInWishlist?: boolean;
     }>(),
     {
         cartItem: undefined,
@@ -25,6 +26,7 @@ const props = withDefaults(
         itemRegularPrice: 0,
         quantity: 0,
         itemQuantity: 0,
+        productUrl: undefined,
         isInWishlist: false,
         isLoading: () => ({
             wishlist: false,
@@ -47,6 +49,7 @@ const emits = defineEmits<{
 </script>
 <template>
     <slot name="wrapper">
+
         <div :class="isLoading.container ? 'pointer-events-none opacity-50':''">
             <div class="relative">
                 <div v-if="isLoading.container" class="absolute flex size-full items-center justify-center pb-4">
@@ -64,6 +67,7 @@ const emits = defineEmits<{
                                     :item-total-price="itemTotalPrice"
                                     :item-regular-price="itemRegularPrice"
                                     :item-options="itemOptions"
+                                    :product-url="productUrl"
                                     :quantity="quantity"
                                     :item-quantity="itemQuantity"
                                     :is-in-wishlist="isInWishlist"
@@ -110,6 +114,7 @@ const emits = defineEmits<{
                                     :item-options="itemOptions"
                                     :quantity="quantity"
                                     :item-quantity="itemQuantity"
+                                    :product-url="productUrl"
                                     @is-loading="(isLoadingEmit: boolean) => emits('isLoading', isLoadingEmit)"
                                     @change-cart-item-quantity="(quantityInput: number)=> emits('changeCartItemQuantity', quantityInput)"
                                     @remove-product-from-wishlist="emits('removeProductFromWishlist')"

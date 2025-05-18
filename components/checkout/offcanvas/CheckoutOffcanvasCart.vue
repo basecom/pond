@@ -52,21 +52,20 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
     try {
         isLoading.value.promo = true;
         const result = await addPromotionCode(promotionCode);
-       const errorKeys = Object.keys(result.errors);
+        const errorKeys = Object.keys(result.errors);
         if (errorKeys.length > 0) {
-          const error = errorKeys[0]?.split("-").slice(0, -1).join('_');
-          if(error !== 'promotion_discount_added') {
-            toast({
-                title: t('error.generalHeadline'),
-                description: t(`error.${errorKeys[0]?.replaceAll('-', '_')?.toUpperCase() ?? 'DEFAULT'}`),
-                variant: 'destructive',
-            });
-          }
-          else {
-            toast({
-              description: t('checkout.success'),
-            });
-          }
+            const error = errorKeys[0]?.split('-').slice(0, -1).join('_');
+            if(error !== 'promotion_discount_added') {
+                toast({
+                    title: t('error.generalHeadline'),
+                    description: t(`error.${errorKeys[0]?.replaceAll('-', '_')?.toUpperCase() ?? 'DEFAULT'}`),
+                    variant: 'destructive',
+                });
+            } else {
+                toast({
+                    description: t('checkout.success'),
+                });
+            }
         }
 
     } catch (error) {

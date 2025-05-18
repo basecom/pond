@@ -2,6 +2,7 @@
 import type { Schemas } from '@shopware/api-client/api-types';
 import {toast} from '../ui/toast';
 import {ApiClientError} from '@shopware/api-client';
+import {getProductUrl} from '@shopware-pwa/helpers-next';
 
 const props = withDefaults(
     defineProps<{
@@ -45,6 +46,8 @@ const {
 const {refreshCart} = useCart();
 
 const quantity = ref();
+
+const productUrl = cartItem?.value?.referencedId? getProductUrl({id: cartItem?.value?.referencedId}) : '/todo';
 
 syncRefs(itemQuantity, quantity);
 const {getWishlistProducts} = useWishlist();
@@ -138,6 +141,7 @@ const removeProductFromWishlist = async () => {
         :item-regular-price="itemRegularPrice"
         :item-total-price="itemTotalPrice"
         :item-options="itemOptions"
+        :product-url="productUrl"
         :is-loading="isLoading"
         :is-in-wishlist="isInWishlist"
         @remove-cart-item="removeCartItem"

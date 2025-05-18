@@ -15,7 +15,7 @@ const props = withDefaults(
         promo: boolean,
         select: boolean
       };
-      isLoggedIn: boolean
+      isLoggedIn?: boolean
     }>(),
     {
         isLoggedIn: false,
@@ -72,17 +72,17 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
             </template>
 
             <template v-else>
-                <div class="w-full">
-                    <slot name="noLineItemsLabel">
+                <slot name="noLineItemsLabel">
+                    <div class="w-full">
                         <UiAlert>
                             <UiAlertDescription>{{ $t('checkout.noLineItems') }}</UiAlertDescription>
                         </UiAlert>
-                    </slot>
-                </div>
+                    </div>
+                </slot>
             </template>
         </div>
-        <div>
-            <slot name="cartSummary">
+        <slot name="cartSummary">
+            <div>
                 <CheckoutOffcanvasCartSummary
                     :cart="cart"
                     :is-logged-in="isLoggedIn"
@@ -95,8 +95,8 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
                     @add-selected-promotion-code="(promotionCode: string) => addSelectedPromotionCode(promotionCode)"
                     @set-selected-shipping-method="(shippingMethodId: AcceptableValue) => setSelectedShippingMethod(shippingMethodId)"
                 />
-            </slot>
-        </div>
+            </div>
+        </slot>
         <div class="flex w-full flex-col gap-1">
             <div class="w-full text-center">
                 <slot name="proceedToCheckoutButton">

@@ -37,7 +37,7 @@ const hasLineItems = (cartItems?: Schemas['LineItem'][]) => cartItems && cartIte
                         <div class="mt-4 flex w-full items-center justify-between">
                             <slot name="cartTitle">
                                 <span>{{ $t('checkout.cart') }}</span>
-                                <span>{{ cartItems.length }} {{ $t('checkout.items') }}</span>
+                                <span class="pr-1">{{ cartItems.length }} {{ $t('checkout.items') }}</span>
                             </slot>
                         </div>
                     </slot>
