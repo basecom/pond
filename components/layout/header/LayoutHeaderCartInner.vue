@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import type { Schemas } from '@shopware/api-client/api-types';
+import type {Schemas} from '@shopware/api-client/api-types';
 
 withDefaults(
     defineProps<{
       cartItems?: Schemas['LineItem'][];
+      cartDeliveries?: Schemas['CartDelivery'][];
     }>(),
     {
         cartItems: undefined,
+        cartDeliveries: undefined,
     },
 );
+const hasLineItems = (cartItems?: Schemas['LineItem'][]) => cartItems && cartItems.length > 0;
 </script>
 
 <template>
@@ -20,18 +23,29 @@ withDefaults(
                 </slot>
 
                 <slot name="cart-badge">
-                    <UiBadge v-if="cartItems?.length > 0" class="absolute -right-2 -top-1.5 px-1 py-0 text-xs font-normal">
+                    <UiBadge v-if="hasLineItems(cartItems)" class="absolute -top-1 px-1 py-0 text-xs font-normal">
                         {{ cartItems.length }}
                     </UiBadge>
                 </slot>
             </UiSheetTrigger>
         </slot>
 
-        <UiSheetContent>
+        <UiSheetContent class="overflow-y-scroll">
             <UiSheetHeader>
-                <UiSheetTitle>Cart</UiSheetTitle>
+                <UiSheetTitle>
+                    <slot name="offcanvasHeader">
+                        <div class="mt-4 flex w-full items-center justify-between">
+                            <slot name="cartTitle">
+                                <span>{{ $t('checkout.cart') }}</span>
+                                <span class="pr-2">{{ cartItems.length }} {{ $t('checkout.items') }}</span>
+                            </slot>
+                        </div>
+                    </slot>
+                </UiSheetTitle>
                 <UiSheetDescription>
-                    products
+                    <slot name="offcanvasContent">
+                        <CheckoutOffcanvasCart :cart-deliveries="cartDeliveries" :cart-items="cartItems" />
+                    </slot>
                 </UiSheetDescription>
             </UiSheetHeader>
         </UiSheetContent>
