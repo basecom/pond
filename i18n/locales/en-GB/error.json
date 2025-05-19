@@ -10,6 +10,8 @@
         "CHECKOUT__CUSTOMER_AUTH_BAD_CREDENTIALS": "No account could be found with the provided credentials.",
         "VIOLATION::CUSTOMER_EMAIL_NOT_UNIQUE": "Please use another e-mail address",
         "VIOLATION::CUSTOMER_PASSWORD_NOT_CORRECT": "Please enter the correct password",
-        "VIOLATION::IS_BLANK_ERROR": "Please fill in all required fields"
+        "VIOLATION::IS_BLANK_ERROR": "Please fill in all required fields",
+        "PROMOTION_NOt_FOUND": "Promotioncode could not be found.",
+        "DEFAULT": "An error has occured."
     }
 }

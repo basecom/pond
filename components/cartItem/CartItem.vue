@@ -43,6 +43,8 @@ const {
     changeItemQuantity,
 } = useCartItem(cartItem);
 
+const {getWishlistProducts} = useWishlist();
+
 const {refreshCart} = useCart();
 
 const quantity = ref();
@@ -50,7 +52,7 @@ const quantity = ref();
 const productUrl = cartItem?.value?.referencedId? getProductUrl({id: cartItem?.value?.referencedId}) : '/todo';
 
 syncRefs(itemQuantity, quantity);
-const {getWishlistProducts} = useWishlist();
+
 getWishlistProducts();
 
 const removeCartItem = async () => {

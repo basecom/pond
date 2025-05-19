@@ -8,6 +8,6 @@
         "showAll": "Show all",
         "categories": "Categories",
         "grossTaxInformation": "Prices incl. VAT plus shipping costs",
-        "netTaxInformation": " Prices incl. VAT plus shipping costs"
+        "netTaxInformation": "Prices excl. VAT plus shipping costs"
     }
 }

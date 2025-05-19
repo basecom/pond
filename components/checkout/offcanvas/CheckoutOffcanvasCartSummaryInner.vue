@@ -130,7 +130,7 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
         </slot>
         <slot name="promotion">
             <div class="mb-4">
-                <slot name="promotion-label"><UiLabel>{{ $t('checkout.label') }}</UiLabel></slot>
+                <slot name="promotion-label"><UiLabel>{{ $t('checkout.promoLabel') }}</UiLabel></slot>
                 <slot name="promotion-input-button">
                     <div class="flex w-full max-w-sm">
                         <UiInput

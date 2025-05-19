@@ -7,7 +7,7 @@
         "back": "Zurück",
         "showAll": "Alle anzeigen",
         "categories": "Kategorien",
-        "grossTaxInformation": "Prices incl. VAT plus shipping costs",
-        "netTaxInformation": " Prices incl. VAT plus shipping costs"
+        "grossTaxInformation": "Preise inkl. MwSt. zzgl. Versandkosten",
+        "netTaxInformation": "Preise exkl. MwSt. zzgl. Versandkosten"
     }
 }
