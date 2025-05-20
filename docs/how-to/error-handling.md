@@ -19,7 +19,7 @@ By default, the ErrorLayout component includes the following:
 
 ```vue
 <template>
-  <LayoutError>
+  <ErrorLayout>
     <template #title>
       Page Not Found
     </template>
@@ -31,6 +31,6 @@ By default, the ErrorLayout component includes the following:
         <UiButton>Back to homepage</UiButton>
       </a></div>
     </template>
-  </LayoutError>
+  </ErrorLayout>
 </template>
 ```
