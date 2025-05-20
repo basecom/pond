@@ -26,7 +26,6 @@ export const usePondRegisterForm = () => {
 
         // Placeholder for the generalField header. Will be overridden in autoForm template.
         registerForm = registerForm.extend({
-            headerMain: z.void(),
             headerGeneral: z.void(),
         });
 
@@ -703,10 +702,7 @@ export const usePondRegisterForm = () => {
             }
         },
         addressCountryState: {
-            label: t('account.register.state.label'),
-            inputProps: {
-                placeholder: t('account.register.state.placeholder'),
-            }
+            hideLabel: true
         },
         addressPhoneNumber: {
             label: t('account.register.phone.label'),

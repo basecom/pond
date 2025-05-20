@@ -60,6 +60,7 @@ const register = async (registerData: any) => {
 
 // Updates current states if selected country has any
 watch(form.values, (values) => {
+    // TODO: Multiple calls on setting states, this watcher cant use old-state before change event
     if (values.countryId) {
         states.value = getStatesForCountry(values.countryId);
     }
@@ -95,20 +96,18 @@ onBeforeMount(async () => {
         </slot>
     </div>
 
+    <slot name="registerHeader">
+        <h1 class="text-3xl font-semibold mb-6">{{ $t('account.register.header.main') }}</h1>
+    </slot>
+
     <UiAutoForm
         class="space-y-6"
         :schema="schema"
+        :form="form"
         :field-config="fieldConfig"
         :dependencies="dependencies"
         @submit="register"
     >
-        <template #headerMain>
-            <slot name="registerHeader">
-                <div>
-                    <h1 class="text-xl font-semibold">{{ $t('account.register.header.main') }}</h1>
-                </div>
-            </slot>
-        </template>
         <template #headerGeneral>
             <slot name="registerGeneralFieldsHeader">
                 <div>
@@ -186,7 +185,7 @@ onBeforeMount(async () => {
                         <UiSelect v-bind="componentField">
                             <UiFormControl>
                                 <UiSelectTrigger>
-                                    <UiSelectValue :placeholder="$t('account.register.birthdate.year')"/>
+                                    <UiSelectValue :placeholder="$t('account.register.birthdate.day')"/>
                                 </UiSelectTrigger>
                             </UiFormControl>
 
@@ -311,6 +310,7 @@ onBeforeMount(async () => {
                     </UiFormItem>
                 </FormField>
             </div>
+            <div v-else></div>
         </template>
         <!-- TODO: Re-Evaluate current implementation. Best way: nested schema. Current way: prefix for address-schema. -->
         <!-- TODO: Add hidden-Input field for storefrontUrl (maybe. discuss with Jordan or Nele) -->
@@ -431,6 +431,7 @@ onBeforeMount(async () => {
                         </UiFormItem>
                     </FormField>
                 </div>
+                <div v-else></div>
             </UiAutoFormField>
         </template>
         <template #acceptedDataProtection="slotProps">
