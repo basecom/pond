@@ -52,7 +52,7 @@ const possibleBirthdayYears = computed(() => {
     return years;
 });
 
-const register = async (registerData: any) => {
+const register = (registerData: any) => {
     // TODO: Emit wont fire with a nested schema which is also put into hidden state with autoFrom dependencies, remove console.log
     console.log(form.values);
     emits('register', registerData);
@@ -106,7 +106,7 @@ onBeforeMount(async () => {
         :form="form"
         :field-config="fieldConfig"
         :dependencies="dependencies"
-        @submit="register"
+        @submit="(data) => console.log(data)"
     >
         <template #headerGeneral>
             <slot name="registerGeneralFieldsHeader">
@@ -153,7 +153,7 @@ onBeforeMount(async () => {
             </FormField>
         </template>
         <template #salutation>
-            <FormField v-slot="{ componentField }" name="salutationId">
+            <FormField v-if="salutations" v-slot="{ componentField }" name="salutationId">
                 <UiFormItem>
                     <UiAutoFormLabel required>{{ $t('account.register.salutations.label') }}</UiAutoFormLabel>
                     <UiSelect v-bind="componentField">
