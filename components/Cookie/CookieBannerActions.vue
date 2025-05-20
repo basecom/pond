@@ -6,7 +6,9 @@ const { isAcceptAllEnabled } = storeToRefs(cookieBannerStore);
 <template>
     <div class="flex flex-wrap justify-center gap-2 [&>button]:w-full [&>button]:sm:w-fit">
         <FormKit
+            id="denyAll"
             type="button"
+            name="denyAll"
             :classes="{
                 outer: 'w-full sm:w-fit',
                 input: 'max-w-full sm:max-w-fit',
@@ -19,7 +21,9 @@ const { isAcceptAllEnabled } = storeToRefs(cookieBannerStore);
         <CookieBannerModal>
             <template #trigger>
                 <FormKit
+                    id="configure"
                     type="button"
+                    name="configure"
                     :classes="{
                         input: 'max-w-full sm:max-w-fit',
                     }"
