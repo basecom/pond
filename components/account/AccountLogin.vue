@@ -4,10 +4,10 @@ import type { LoginData } from './AccountLoginInner.vue';
 
 const props = withDefaults(
     defineProps<{
-        redirectTo?: string;
+        redirectTo?: string | null;
     }>(),
     {
-        redirectTo: '',
+        redirectTo: '/account',
     },
 );
 
@@ -24,7 +24,7 @@ const login = async (loginData: LoginData) => {
 
     try {
         await customerStore.login(loginData);
-        if (props.redirectTo !== '') {
+        if (props.redirectTo !== null) {
             navigateTo(formatLink(props.redirectTo));
         }
     } catch (error) {
