@@ -64,7 +64,9 @@ const handleClick = () => {
 
     <div
         v-else
-        :class="[classes, 'flex cursor-pointer items-center']"
+        :class="[classes, {
+            'flex cursor-pointer items-center': showIcon,
+        }]"
         @click="$emit('click', navigationElement, undefined)"
     >
         <slot name="item-name">

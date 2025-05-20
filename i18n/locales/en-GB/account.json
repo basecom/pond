@@ -3,8 +3,8 @@
         "myAccount": "My Account",
         "account": "Overview",
         "profile": "Personal Profile",
-        "address": "Addresses",
-        "payment": "Payment Methods",
+        "addresses": "Addresses",
+        "paymentMethods": "Payment Methods",
         "orders": "Orders",
         "wishlist": "Wishlist",
         "welcome": "Hello {name}",
@@ -24,16 +24,22 @@
                 "placeholder": "••••••••",
                 "forgotten": "Password forgotten",
                 "errorGeneral": "Please enter a password",
-                "errorLength": "Your password must be at least {length} characters long."
+                "errorLength": "Your password must be at least {length} characters long"
             }
         },
         "customer": {
+            "accountType": "Account type",
             "salutation": "Salutation",
+            "firstName": "First name",
+            "lastName": "Last name",
             "name": "Name",
             "mail": "Email",
             "title": "Title",
             "companyName": "Company",
-            "vat": "VAT ID"
+            "vat": "VAT ID",
+            "birthday": "Birthday",
+            "birthdayMonth": "Month of birth",
+            "birthdayYear": "Year of birth"
         },
         "overview": {
             "label": "Overview",
@@ -192,6 +198,43 @@
                 "header": "Privacy",
                 "label": "By selecting continue you confirm that you have read our data protection information and accepted our general terms and conditions.",
                 "errorGeneral": "You need to accept the privacy policy."
+            }
+        },
+        "personalProfile": {
+            "currentMailAddress": "Current e-mail address",
+            "changeMailAddress": {
+                "headline": "Change e-mail address",
+                "confirmation": "Confirm e-mail address"
+            },
+            "changePassword": {
+                "headline": "Change password",
+                "newPassword": "New password",
+                "confirmation": "Confirm new password",
+                "oldPassword": "Current password"
+            },
+            "passwordLabel": "Password",
+            "status": {
+                "changePersonalDataSuccessfully": {
+                    "title": "Successfully changed",
+                    "description": "Your personal data has been successfully changed"
+                },
+                "changeMailSuccessfully": {
+                    "title": "Successfully changed",
+                    "description": "Your e-mail address has been successfully changed"
+                },
+                "changePasswordSuccessfully": {
+                    "title": "Successfully changed",
+                    "description": "Your password has been successfully changed"
+                }
+            }
+        },
+        "defaultPaymentMethod": {
+            "description": "What is your default payment method?",
+            "status": {
+                "changeSuccessfully": {
+                    "title": "Changed successfully",
+                    "description": "Your default payment method has been successfully changed"
+                }
             }
         }
     }
