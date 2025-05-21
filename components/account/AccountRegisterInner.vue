@@ -5,7 +5,7 @@ import {toTypedSchema} from '@vee-validate/zod';
 import {useForm} from 'vee-validate';
 
 // Composable
-const {getSalutations, fetchSalutations} = useSalutations();
+const {getSalutations} = useSalutations();
 const {getCountries, fetchCountries, getStatesForCountry} = useCountries();
 const configStore = useConfigStore();
 const pondRegisterForm = usePondRegisterForm();
@@ -72,7 +72,6 @@ watch(form.values, (values) => {
 // API fetches
 onBeforeMount(async () => {
     await configStore.loadConfig();
-    await fetchSalutations();
     salutations.value = getSalutations.value;
     await fetchCountries();
     countries.value = getCountries.value;
@@ -152,30 +151,32 @@ onBeforeMount(async () => {
                 </UiFormItem>
             </FormField>
         </template>
-        <template #salutation>
-            <FormField v-if="salutations" v-slot="{ componentField }" name="salutationId">
-                <UiFormItem>
-                    <UiAutoFormLabel required>{{ $t('account.register.salutations.label') }}</UiAutoFormLabel>
-                    <UiSelect v-bind="componentField">
-                        <UiFormControl>
-                            <UiSelectTrigger>
-                                <UiSelectValue :placeholder="$t('account.register.salutations.placeholder')"/>
-                            </UiSelectTrigger>
-                        </UiFormControl>
-                        <UiSelectContent>
-                            <UiSelectGroup>
-                                <UiSelectItem
-                                    v-for="salutation in salutations"
-                                    :value="salutation.id"
-                                >
-                                    {{ salutation.translated.displayName }}
-                                </UiSelectItem>
-                            </UiSelectGroup>
-                        </UiSelectContent>
-                    </UiSelect>
-                    <UiFormMessage/>
-                </UiFormItem>
-            </FormField>
+        <template #salutationId>
+            <div v-if="salutations">
+                <FormField v-slot="{ componentField }" name="salutationId">
+                    <UiFormItem>
+                        <UiAutoFormLabel required>{{ $t('account.register.salutations.label') }}</UiAutoFormLabel>
+                        <UiSelect v-bind="componentField">
+                            <UiFormControl>
+                                <UiSelectTrigger>
+                                    <UiSelectValue :placeholder="$t('account.register.salutations.placeholder')"/>
+                                </UiSelectTrigger>
+                            </UiFormControl>
+                            <UiSelectContent>
+                                <UiSelectGroup>
+                                    <UiSelectItem
+                                        v-for="salutation in salutations"
+                                        :value="salutation.id"
+                                    >
+                                        {{ salutation.translated.displayName }}
+                                    </UiSelectItem>
+                                </UiSelectGroup>
+                            </UiSelectContent>
+                        </UiSelect>
+                        <UiFormMessage/>
+                    </UiFormItem>
+                </FormField>
+            </div>
         </template>
         <template #birthdateDay="slotProps">
             <div class="inline-block w-[25%] max-w-24 mr-2">

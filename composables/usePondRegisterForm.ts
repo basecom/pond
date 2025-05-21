@@ -47,11 +47,10 @@ export const usePondRegisterForm = () => {
                 })
             })
         }
-        // TODO: Will block submit event somehow
         registerForm = registerForm.extend({
-            salutation: z.string({
+            salutationId: z.string({
                 required_error: t('account.register.salutations.errorGeneral'),
-            }).default(''),
+            }),
         });
         if (adminConfig.showTitleField) {
             registerForm = registerForm.extend({
@@ -102,17 +101,15 @@ export const usePondRegisterForm = () => {
             }
         }
         // TODO: Even if this is hiding, it will be validated due submit and therefore form submit will never be executed
-        // if (adminConfig.showAccountTypeSelection) {
-        //     registerForm = registerForm.extend({
-        //         company: z.string({
-        //             required_error: t('account.register.company.errorGeneral'),
-        //         }).optional(),
-        //         department: z.string({
-        //             required_error: t('account.register.department.errorGeneral'),
-        //         }),
-        //         vatNumber: z.string()
-        //     })
-        // }
+        if (adminConfig.showAccountTypeSelection) {
+            registerForm = registerForm.extend({
+                company: z.string({
+                    required_error: t('account.register.company.errorGeneral'),
+                }).optional(),
+                department: z.string().optional(),
+                vatNumber: z.string().optional()
+            })
+        }
         registerForm = registerForm.extend({
             password: z
                 .string({
@@ -225,21 +222,18 @@ export const usePondRegisterForm = () => {
             addressHeader: z.string().default('')
         })
 
-        if (configStore.get('core.loginRegistration.showAccountTypeSelection')) {
+        if (adminConfig.showAccountTypeSelection) {
             addressForm = addressForm.extend({
                 addressAccountType: z.string({
                     required_error: t('account.register.accountTypes.errorGeneral')
                 }).default('')
             })
         }
-        // TODO: Will block submit event somehow
-        // if (salutations.value) {
-        //     addressForm = addressForm.extend({
-        //         addressSalutationId: z.string({
-        //             required_error: t('account.register.salutations.errorGeneral'),
-        //         }),
-        //     })
-        // }
+        addressForm = addressForm.extend({
+            addressSalutationId: z.string({
+                required_error: t('account.register.salutations.errorGeneral'),
+            }),
+        })
         if (adminConfig.showTitleField) {
             addressForm = addressForm.extend({
                 addressTitle: z.string().optional()
@@ -259,9 +253,7 @@ export const usePondRegisterForm = () => {
         //         addressCompany: z.string({
         //             required_error: t('account.register.company.errorGeneral'),
         //         }),
-        //         addressDepartment: z.string({
-        //             required_error: t('account.register.department.errorGeneral'),
-        //         })
+        //         addressDepartment: z.string().optional()
         //     })
         // }
         // addressForm = addressForm.extend({
@@ -383,6 +375,13 @@ export const usePondRegisterForm = () => {
         {
             sourceField: 'accountType',
             type: DependencyType.HIDES,
+            targetField: 'company',
+            when: (accountType: string) =>
+                accountType !== accountTypes.business.value
+        },
+        {
+            sourceField: 'accountType',
+            type: DependencyType.REQUIRES,
             targetField: 'company',
             when: (accountType: string) =>
                 accountType !== accountTypes.business.value
@@ -634,12 +633,6 @@ export const usePondRegisterForm = () => {
         },
         addressHeader: {
             hideLabel: true
-        },
-        addressAccountType: {
-            label: t('account.register.accountTypes.label'),
-            inputProps: {
-                placeholder: t('account.register.accountTypes.placeholder'),
-            }
         },
         addressSalutationId: {
             label: t('account.register.salutations.label'),
