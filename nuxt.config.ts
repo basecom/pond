@@ -73,6 +73,17 @@ export default defineNuxtConfig({
         dirs: [join(currentDir, 'composables/**'), join(currentDir, 'utils')],
     },
 
+    vite: {
+        optimizeDeps: {
+            include: [
+                'scule',
+                '@formkit/i18n',
+                '@formkit/addons',
+                'entities',
+            ],
+        },
+    },
+
     formkit: {
         autoImport: true,
     },
