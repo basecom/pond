@@ -59,7 +59,7 @@ const listingStore = useListingStore(route.path === '/search' ? 'search' : 'cate
         :format="!isExternalLink"
         class="block transition-all hover:text-brand-primary"
         :class="[classes, isActive(navigationElement.seoUrls, activeWithExactMatch) ? activeClasses : '']"
-        @click="trackNavigation(navigationElement.level ? navigationElement.level - 1 : 0, getTranslatedProperty(navigationElement, 'name')); listingStore.isLoading = true;"
+        @click="trackNavigation(navigationElement.level ? navigationElement.level - 1 : 0, getTranslatedProperty(navigationElement, 'name')); listingStore.isLoading = !isActive(navigationElement.seoUrls, true);"
     >
         <template v-if="asAllItemsLink">
             {{ $t('navigation.sidebar.allItems') }}
