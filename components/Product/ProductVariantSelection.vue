@@ -87,11 +87,8 @@ const onVariantChange = async (groupName: string, optionId: string) => {
                     outer: {
                         'max-w-full min-w-32 w-full sm:w-fit': true,
                     },
-                    inner: {
-                        'pr-4': true,
-                    },
                     input: {
-                        'w-fit': true,
+                        'w-fit mr-2 text-ellipsis': true,
                     },
                 }"
                 :options="entityArrayToOptions<Schemas['PropertyGroupOption']>(group.options.sort((a: Schemas['PropertyGroupOption'], b: Schemas['PropertyGroupOption']) => (a.position ?? 999) - (b.position ?? 999)), 'name', false) ?? []"
