@@ -124,51 +124,23 @@ onBeforeMount(async () => {
             </slot>
         </template>
         <template #accountType>
-            <FormField
-                v-slot="{ componentField }"
-                name="accountType"
-            >
-                <UiFormItem v-if="configStore.get('core.loginRegistration.showAccountTypeSelection')">
-                    <UiAutoFormLabel required>{{ $t('account.register.accountTypes.label') }}</UiAutoFormLabel>
-                    <UiSelect v-bind="componentField">
-                        <UiFormControl>
-                            <UiSelectTrigger>
-                                <UiSelectValue :placeholder="$t('account.register.accountTypes.placeholder')"/>
-                            </UiSelectTrigger>
-                        </UiFormControl>
-                        <UiSelectContent>
-                            <UiSelectGroup>
-                                <UiSelectItem
-                                    v-for="accountType in pondRegisterForm.accountTypes"
-                                    :value="accountType.value"
-                                >
-                                    {{ accountType.label }}
-                                </UiSelectItem>
-                            </UiSelectGroup>
-                        </UiSelectContent>
-                    </UiSelect>
-                    <UiFormMessage/>
-                </UiFormItem>
-            </FormField>
-        </template>
-        <template #salutationId>
-            <div v-if="salutations">
-                <FormField v-slot="{ componentField }" name="salutationId">
+            <div v-if="configStore.get('core.loginRegistration.showAccountTypeSelection')">
+                <FormField v-slot="{ componentField }" name="accountType">
                     <UiFormItem>
-                        <UiAutoFormLabel required>{{ $t('account.register.salutations.label') }}</UiAutoFormLabel>
+                        <UiAutoFormLabel required>{{ $t('account.register.accountTypes.label') }}</UiAutoFormLabel>
                         <UiSelect v-bind="componentField">
                             <UiFormControl>
                                 <UiSelectTrigger>
-                                    <UiSelectValue :placeholder="$t('account.register.salutations.placeholder')"/>
+                                    <UiSelectValue :placeholder="$t('account.register.accountTypes.placeholder')"/>
                                 </UiSelectTrigger>
                             </UiFormControl>
                             <UiSelectContent>
                                 <UiSelectGroup>
                                     <UiSelectItem
-                                        v-for="salutation in salutations"
-                                        :value="salutation.id"
+                                        v-for="accountType in pondRegisterForm.accountTypes"
+                                        :value="accountType.value"
                                     >
-                                        {{ salutation.translated.displayName }}
+                                        {{ accountType.label }}
                                     </UiSelectItem>
                                 </UiSelectGroup>
                             </UiSelectContent>
@@ -176,6 +148,34 @@ onBeforeMount(async () => {
                         <UiFormMessage/>
                     </UiFormItem>
                 </FormField>
+            </div>
+        </template>
+        <template #salutationId="slotProps">
+            <div v-if="salutations">
+                <UiAutoFormField v-bind="slotProps">
+                    <FormField v-slot="{ componentField }" name="salutationId">
+                        <UiFormItem>
+                            <UiAutoFormLabel required>{{ $t('account.register.salutations.label') }}</UiAutoFormLabel>
+                            <UiSelect v-bind="componentField">
+                                <UiFormControl>
+                                    <UiSelectTrigger>
+                                        <UiSelectValue :placeholder="$t('account.register.salutations.placeholder')"/>
+                                    </UiSelectTrigger>
+                                </UiFormControl>
+                                <UiSelectContent>
+                                    <UiSelectGroup>
+                                        <UiSelectItem
+                                            v-for="salutation in salutations"
+                                            :value="salutation.id"
+                                        >
+                                            {{ salutation.translated.displayName }}
+                                        </UiSelectItem>
+                                    </UiSelectGroup>
+                                </UiSelectContent>
+                            </UiSelect>
+                        </UiFormItem>
+                    </FormField>
+                </UiAutoFormField>
             </div>
         </template>
         <template #birthdateDay="slotProps">
@@ -354,7 +354,7 @@ onBeforeMount(async () => {
                 </FormField>
             </UiAutoFormField>
         </template>
-        <template #addressSalutation="slotProps">
+        <template #addressSalutationId="slotProps">
             <UiAutoFormField v-bind="slotProps">
                 <FormField v-slot="{ componentField }" name="addressSalutationId">
                     <UiFormItem>

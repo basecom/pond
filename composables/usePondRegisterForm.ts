@@ -384,7 +384,7 @@ export const usePondRegisterForm = () => {
             type: DependencyType.REQUIRES,
             targetField: 'company',
             when: (accountType: string) =>
-                accountType !== accountTypes.business.value
+                accountType === accountTypes.business.value
         },
         {
             sourceField: 'accountType',
@@ -529,6 +529,9 @@ export const usePondRegisterForm = () => {
     ];
 
     const getRegisterFieldConfig = {
+        salutationId: {
+            hideLabel: true
+        },
         title: {
             label: t('account.register.title.label'),
             inputProps: {
