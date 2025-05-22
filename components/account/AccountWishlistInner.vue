@@ -35,13 +35,13 @@ withDefaults(
             <template v-if="!isLoading && wishlistItems.length > 0">
                 <div class="grid-cols mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <template v-for="item in wishlistItems" :key="item.id">
-                        <slot name="product-card">
+                        <slot name="product-card" :item="item">
                             <!-- TODO: Dummy product card, replace with product listing box later -->
                             <div class="flex-column flex size-full flex-wrap rounded-lg border border-gray-200 px-4 py-3">
                                 <h2 class="text-xs text-gray-300">
                                     {{ item.productNumber }}
                                 </h2>
-                                <img src="/fallback-product-cover.svg"  alt="sdfghj">
+                                <img src="/fallback-product-cover.svg"  alt="fallback-image">
                                 <h2 class="text-lg text-gray-900">
                                     {{ item.translated.name }}
                                 </h2>
