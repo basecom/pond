@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import type {Schemas} from '@shopware/api-client/api-types';
+
 withDefaults(
     defineProps<{
-        wishlistItems?: array;
+        wishlistItems?: Schemas['Product'][];
         isLoading?: boolean;
     }>(),
     {
-        wishlistItems: [],
+        wishlistItems: () => [],
         isLoading: false,
     },
 );

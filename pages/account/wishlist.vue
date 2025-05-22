@@ -8,7 +8,7 @@ const isWishlistEnabled = get('core.cart.wishlistEnabled');
 
 if (!isWishlistEnabled) {
     throw createError({
-        statusCode: '404',
+        statusCode: 404,
     });
 }
 </script>
