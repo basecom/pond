@@ -13,3 +13,6 @@
     }
 }
 
+#__nuxt {
+    @apply flex flex-col min-h-screen;
+}
