@@ -7,12 +7,14 @@ withDefaults(
         wishlistItemsCount: 0,
     },
 );
+
+const { formatLink } = useInternationalization();
 </script>
 
 <template>
     <slot name="wrapper">
         <NuxtLinkLocale
-            to="/wishlist"
+            :to="formatLink('/account/wishlist')"
             class="relative h-5"
         >
             <slot name="wishlist-icon">
