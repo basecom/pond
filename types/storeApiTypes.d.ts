@@ -4,10 +4,6 @@ type ExtendedOperations = coreOperations & {
     'imitateCustomerLogin post /account/login/imitate-customer': {
         contentType?: 'application/json';
         accept?: 'application/json';
-        headers?: {
-            /** Instructs Shopware to return the response in the given language. */
-            'sw-language-id'?: string;
-        };
         body?: {
             customerId: components['schemas']['Customer']['id'],
             token: string,
