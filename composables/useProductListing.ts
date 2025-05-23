@@ -28,7 +28,7 @@ export function useProductListing() {
         pagination: {
             page: 1,
             limit: 24,
-            total: 0,
+            total: undefined,
         },
         criteria: null,
         defaultCriteria: {},
