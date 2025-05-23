@@ -1,7 +1,7 @@
 import { createAPIClient } from '@shopware/api-client';
 
 /**
- * This file is based con the Shopware Frontends Demo Shop:
+ * This file is based on the Shopware Frontends Demo Shop:
  * https://github.com/shopware/frontends/blob/main/templates/vue-demo-store/server/routes/account/login/imitate-customer.ts
  *
  * These things are customized:
@@ -30,6 +30,7 @@ export default defineEventHandler(async event => {
         await sendRedirect(event, '/', 500);
         return;
     }
+
     const shopwareEndpoint =
         `${runtimeConfig.public?.pond?.shopwareEndpoint  }/store-api/`;
     const shopwareAccessToken = runtimeConfig.public?.pond?.accessToken;
