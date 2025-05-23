@@ -26,7 +26,7 @@ const listingStore = useListingStore(route.path === '/search' ? 'search' : 'cate
                 :to="getCategoryRoute(item)"
                 class="text-lg"
                 :class="{ 'font-bold': isActive(item.seoUrls) }"
-                @click="listingStore.isLoading = true;"
+                @click="listingStore.isLoading = !isActive(item.seoUrls, true);"
             >
                 {{ getTranslatedProperty(item, 'name') }}
             </LocaleLink>
@@ -40,7 +40,7 @@ const listingStore = useListingStore(route.path === '/search' ? 'search' : 'cate
                     <LocaleLink
                         :to="getCategoryRoute(child)"
                         :class="{ 'font-bold': isActive(child.seoUrls) }"
-                        @click="listingStore.isLoading = true;"
+                        @click="listingStore.isLoading = !isActive(child.seoUrls, true);"
                     >
                         {{ getTranslatedProperty(child, 'name') }}
                     </LocaleLink>
