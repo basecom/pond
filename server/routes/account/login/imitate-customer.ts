@@ -13,13 +13,23 @@ import { createAPIClient } from '@shopware/api-client';
  */
 export default defineEventHandler(async event => {
     const body = await readBody(event);
-    if (!body.customerId || !body.token || !body.userId) {
+    if (!body.customerId || !body.token || !body.userId ||
+        typeof body.customerId !== 'string' ||
+        typeof body.token !== 'string' ||
+        typeof body.userId !== 'string') {
         await sendRedirect(event, '/', 400);
         return;
     }
 
     const runtimeConfig = useRuntimeConfig();
 
+    if (
+        !runtimeConfig.public?.pond?.shopwareEndpoint ||
+        !runtimeConfig.public?.pond?.accessToken
+    ) {
+        await sendRedirect(event, '/', 500);
+        return;
+    }
     const shopwareEndpoint =
         `${runtimeConfig.public?.pond?.shopwareEndpoint  }/store-api/`;
     const shopwareAccessToken = runtimeConfig.public?.pond?.accessToken;
@@ -29,16 +39,21 @@ export default defineEventHandler(async event => {
         baseURL: shopwareEndpoint,
     });
 
-    await apiClient.invoke(
-        'imitateCustomerLogin post /account/login/imitate-customer',
-        {
-            body: {
-                customerId: body.customerId,
-                token: body.token,
-                userId: body.userId,
+    try {
+        await apiClient.invoke(
+            'imitateCustomerLogin post /account/login/imitate-customer',
+            {
+                body: {
+                    customerId: body.customerId,
+                    token: body.token,
+                    userId: body.userId,
+                },
             },
-        },
-    );
+        );
+    } catch (error) {
+        await sendRedirect(event, '/', 400);
+        return;
+    }
 
     if (!apiClient.defaultHeaders['sw-context-token']) {
         await sendRedirect(event, '/', 400);
