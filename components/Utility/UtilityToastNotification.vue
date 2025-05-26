@@ -1,15 +1,9 @@
 <script setup lang="ts">
 import type { Notification } from '@shopware-pwa/composables-next';
 
-const props = withDefaults(
-    defineProps<{
-      notification: Notification;
-      persistent?: boolean;
-    }>(),
-    {
-        persistent: false,
-    },
-);
+const props = defineProps<{
+    notification: Notification;
+}>();
 
 const { t } = useI18n();
 
