@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Overrides node_modules/@shopware/cms-base-layer/components/public/cms/section/CmsSectionDefault.vue
-import type { CmsSectionDefault } from "@shopware/composables";
-import { getCmsLayoutConfiguration } from "@shopware/helpers";
+import type { CmsSectionDefault } from '@shopware/composables';
+import { getCmsLayoutConfiguration } from '@shopware/helpers';
 
 const props = defineProps<{
     content: CmsSectionDefault;

@@ -72,7 +72,7 @@ export default {
                             marginBottom: '0.5rem',
                         },
                         maxWidth: 'none',
-                    }
+                    },
                 },
             },
         },
