@@ -1,4 +1,5 @@
 import tailwindcssAnimate from 'tailwindcss-animate';
+import typography from '@tailwindcss/typography';
 
 export default {
     darkMode: ['class'],
@@ -63,6 +64,17 @@ export default {
                 'accordion-down': 'accordion-down 0.2s ease-out',
                 'accordion-up': 'accordion-up 0.2s ease-out',
             },
+            typography: {
+                DEFAULT: {
+                    css: {
+                        hr: {
+                            marginTop: '0.5rem',
+                            marginBottom: '0.5rem',
+                        },
+                        maxWidth: 'none',
+                    }
+                },
+            },
         },
         container: {
             center: true,
@@ -75,6 +87,9 @@ export default {
             },
         },
     },
-    plugins: [tailwindcssAnimate],
+    plugins: [
+        tailwindcssAnimate,
+        typography,
+    ],
     content: ['stories/**/*.vue'],
 };
