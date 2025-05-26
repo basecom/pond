@@ -25,7 +25,7 @@ const page = ref(route.query.page ? Number(route.query.page) : defaultPage);
 const limit = ref(route.query.limit ? Number(route.query.limit) : defaultLimit);
 
 const { pushSuccess, pushError } = useNotifications();
-const { items: wishlistItems, clearWishlist, getWishlistProducts, currentPage, totalPagesCount, canSyncWishlist } = useWishlist();
+const { items: wishlistItems, clearWishlist, getWishlistProducts, count, currentPage, canSyncWishlist } = useWishlist();
 const { apiClient } = useShopwareContext();
 
 const clearWishlistHandler = async () => {
@@ -151,9 +151,10 @@ await getWishlistProducts({
             >
                 <div class="place-self-center text-center">
                     <LayoutPagination
-                        :total="totalPagesCount"
+                        :total="count"
                         :items-per-page="limit"
                         :default-page="Number(currentPage)"
+                        :page="route.query.page ? Number(route.query.page) : Number(currentPage)"
                         @update-page="page => changePage(page)"
                     />
                 </div>
