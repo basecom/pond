@@ -15,6 +15,10 @@ withDefaults(
 </script>
 <template>
 
-    <CartItemElementImageInner :cart-item-image="cartItemImage" :product-url="productUrl" />
+    <CartItemElementImageInner
+        :cart-item-image="cartItemImage"
+        :product-url="productUrl"
+        :fallback="fallback"
+    />
 
 </template>

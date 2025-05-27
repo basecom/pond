@@ -38,6 +38,12 @@ const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
             toast({
                 description: t('checkout.success'),
             });
+        } else {
+            toast({
+                title: t('error.generalHeadline'),
+                description: t('error.INVALID_SHIPPING_METHOD'),
+                variant: 'destructive',
+            });
         }
     } catch (error) {
         if(error instanceof ApiClientError) {
@@ -53,22 +59,22 @@ const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
     isLoading.value.select = false;
 };
 const addSelectedPromotionCode = async (promotionCode: string) => {
+    isLoading.value.promo = true;
     try {
-        isLoading.value.promo = true;
         const result = await addPromotionCode(promotionCode);
         const errorKeys = Object.keys(result.errors);
         if (errorKeys.length > 0) {
-            const error = errorKeys[0]?.split('-').slice(0, -1).join('_');
-            if(error !== 'promotion_discount_added') {
-                toast({
-                    title: t('error.generalHeadline'),
-                    description: t(`error.${errorKeys[0]?.replaceAll('-', '_')?.toUpperCase() ?? 'DEFAULT'}`),
-                    variant: 'destructive',
-                });
+            const isSuccess = errorKeys[0]?.includes('promotion-discount-added');
+            if(isSuccess) {
+              toast({
+                description: t('checkout.promotionSuccess'),
+              });
             } else {
-                toast({
-                    description: t('checkout.success'),
-                });
+              toast({
+                title: t('error.generalHeadline'),
+                description: t(`error.${errorKeys[0]?.replaceAll('-', '_')?.toUpperCase() ?? 'DEFAULT'}`),
+                variant: 'destructive',
+              });
             }
         }
 
@@ -80,8 +86,9 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
                 variant: 'destructive',
             });
         }
+    } finally {
+        isLoading.value.promo = false;
     }
-    isLoading.value.promo = false;
 };
 
 </script>

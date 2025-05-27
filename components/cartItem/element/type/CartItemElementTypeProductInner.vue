@@ -59,7 +59,7 @@ const emits = defineEmits<{
                     <div class="font-bold">
                         <NuxtLinkLocale :to="productUrl">
                             <slot name="label">
-                                {{ cartItem.label }}
+                                {{ cartItem?.label }}
                             </slot>
                         </NuxtLinkLocale>
                     </div>

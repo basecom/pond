@@ -47,6 +47,7 @@ const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
 
 const addSelectedPromotionCode = async (promotionCode: string) => {
     emits('addSelectedPromotionCode', promotionCode);
+    inputPromotionCode.value = '';
 };
 
 </script>

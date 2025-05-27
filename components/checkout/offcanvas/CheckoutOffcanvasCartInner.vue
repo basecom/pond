@@ -33,16 +33,19 @@ const props = withDefaults(
     },
 );
 
+const {cartDeliveries, cartItems} = toRefs(props);
+const hasLineItems = (items?: Schemas['LineItem'][]): boolean => !!items && items.length > 0;
+const getCartDeliveryPositions = (deliveries?: Schemas['CartDelivery'][]): Schemas['CartDeliveryPosition'][] | undefined => {
+    if (!deliveries || deliveries.length === 0) return undefined;
+    return deliveries[0]?.positions;
+};
 
-const {cartDeliveries} = toRefs(props);
-const hasLineItems = (cartItems?: Schemas['LineItem'][]) => cartItems && cartItems.length > 0;
-const getCartDeliveryPositions = (cartDeliveries?: Schemas['CartDelivery'][]) => cartDeliveries?.find(() => true)?.positions;
-
-const getCartDeliveryPosition = (id: string, cartDeliveryPositions?: Schemas['CartDeliveryPosition'][]) =>
-    cartDeliveryPositions?.find(
+const getCartDeliveryPosition = (id: string, cartDeliveryPositions?: Schemas['CartDeliveryPosition'][]): Schemas['CartDeliveryPosition'] | undefined => {
+    if (!id || !cartDeliveryPositions) return undefined;
+    return cartDeliveryPositions.find(
         (cartDeliveryPosition) => cartDeliveryPosition.lineItem?.id === id,
     );
-
+};
 const emits = defineEmits<{
   setSelectedShippingMethod: [shippingMethodId: AcceptableValue];
   addSelectedPromotionCode: [promotionCode: string];

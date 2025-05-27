@@ -106,7 +106,7 @@ const addProductToWishlist = async () => {
         if(error instanceof ApiClientError) {
             toast({
                 title: t('error.generalHeadline'),
-                description: t(`error.${ error.details.errors[0]?.code}`),
+                description: t(`error.${ error.details.errors[0]?.code ?? 'DEFAULT'}`),
                 variant: 'destructive',
             });
 
@@ -125,7 +125,7 @@ const removeProductFromWishlist = async () => {
         if(error instanceof ApiClientError) {
             toast({
                 title: t('error.generalHeadline'),
-                description: t(`error.${error.details.errors[0]?.code} ?? 'DEFAULT'`),
+                description: t(`error.${error.details.errors[0]?.code ?? 'DEFAULT'}`),
                 variant: 'destructive',
             });
         }

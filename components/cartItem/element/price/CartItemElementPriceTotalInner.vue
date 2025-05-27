@@ -4,7 +4,7 @@ withDefaults(
       cartItemTotalPrice?: string
     }>(),
     {
-        cartItemTotalPrice: undefined,
+        cartItemTotalPrice: '',
     },
 );
 </script>

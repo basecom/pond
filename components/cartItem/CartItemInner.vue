@@ -37,7 +37,12 @@ const props = withDefaults(
 const { cartItem, isLoading } = toRefs(props);
 
 const isProduct = computed(() => cartItem.value?.type === 'product');
-const isDiscount = computed(() => ((!cartItem.value?.good && ((cartItem.value?.price?.totalPrice ?? 0) <= 0)) || cartItem.value?.type === 'discount'));
+const isDiscount = computed(() => {
+    const isNotGood = !cartItem.value?.good;
+    const hasNegativeOrZeroPrice = (cartItem.value?.price?.totalPrice ?? 0) <= 0;
+    const isDiscountType = cartItem.value?.type === 'discount';
+    return (isNotGood && hasNegativeOrZeroPrice) || isDiscountType;
+});
 const emits = defineEmits<{
   removeCartItem: [],
   changeCartItemQuantity: [number],

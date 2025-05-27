@@ -18,7 +18,8 @@ const {cartItem, quantity} = toRefs(props);
 const configStore = useConfigStore();
 const maxQuantityConfig = configStore.get('core.cart.maxQuantity') as number;
 
-const isDigital = (computed(() => cartItem.value?.states && cartItem.value?.states.includes('is-download') && (cartItem.value?.states.includes('is-download') || cartItem.value.payload.maxPurchase === 1)));
+const isDigital = computed(() => cartItem.value?.states?.includes('is-download') ||
+      (cartItem.value?.payload?.maxPurchase === 1));
 const emits = defineEmits<{
   changeCartItemQuantity: [quantityInput: number]
 }>();
@@ -38,10 +39,10 @@ watch(quantity, () => {
         <div class="w-1/3">
             <UiNumberField
                 v-model="quantityRef"
-                :max="cartItem.payload.maxPurchase ?? maxQuantityConfig"
-                :min="cartItem.payload.minPurchase ?? 1"
-                :step="cartItem.payload.purchaseSteps"
-                :disabled="!cartItem.stackable || isDigital"
+                :max="cartItem?.payload?.maxPurchase ?? maxQuantityConfig"
+                :min="cartItem?.payload?.minPurchase ?? 1"
+                :step="cartItem?.payload?.purchaseSteps"
+                :disabled="!cartItem?.stackable || isDigital"
                 :default-value="itemQuantity"
                 @update:model-value="changeCartItemQuantity"
             >

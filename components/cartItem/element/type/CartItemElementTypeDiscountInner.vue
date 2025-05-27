@@ -6,12 +6,10 @@ withDefaults(
     defineProps<{
       cartItem?: Schemas['LineItem'];
       itemTotalPrice?: number,
-      productUrl?: string
     }>(),
     {
         cartItem: undefined,
         itemTotalPrice: 0,
-        productUrl: undefined,
     },
 );
 const {getFormattedPrice} = usePrice();
@@ -23,15 +21,13 @@ const {getFormattedPrice} = usePrice();
             <div class="order-1 mb-4 flex w-5/6 flex-col">
                 <div class="mb-2 w-auto">
                     <slot name="image">
-                        <CartItemElementImage :cart-item-image="getMainImageUrl(cartItem)" />
+                        <CartItemElementImage :cart-item-image="cartItem ? getMainImageUrl(cartItem) : undefined" />
                     </slot>
                 </div>
                 <div class="font-bold">
-                    <NuxtLinkLocale to="/">
-                        <slot name="label">
-                            {{ cartItem.label }}
-                        </slot>
-                    </NuxtLinkLocale>
+                    <slot name="label">
+                        {{ cartItem?.label }}
+                    </slot>
                 </div>
             </div>
         </slot>
