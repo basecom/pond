@@ -19,16 +19,30 @@ const {t} = useI18n();
 const {subtotal, shippingCosts, addPromotionCode, cart, refreshCart} = useCart();
 const {isLoggedIn} = useUser();
 const {getShippingMethods, setShippingMethod, selectedShippingMethod} = useCheckout();
+const {handleError} = usePondHandleError();
 
 const isLoading = ref({
     promo: false,
     select: false,
 });
-const shippingMethods = await getShippingMethods();
+const shippingMethods = ref<Schemas['ShippingMethod'][]>([]);
+
+onMounted(async () => {
+    isLoading.value.select = true;
+    try {
+        const result = await getShippingMethods();
+        shippingMethods.value = result.value;
+    } catch (error) {
+        handleError(error);
+    } finally {
+        isLoading.value.select = false;
+    }
+});
+
 
 const findSelectedShippingCost = (shippingCosts: Schemas['CartDelivery'][]) => shippingCosts.find((shippingCost) => shippingCost?.shippingMethod?.id === selectedShippingMethod.value.id);
-
 const shippingCost = ref(findSelectedShippingCost(shippingCosts.value));
+
 const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
     isLoading.value.select = true;
     try {
