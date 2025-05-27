@@ -15,11 +15,11 @@ const emits = defineEmits<{
   addProductToWishlist: [];
 }>();
 
-const removeProductFromWishlist = async () => {
+const removeProductFromWishlist = () => {
     emits('removeProductFromWishlist');
 };
 
-const addProductToWishlist= async () => {
+const addProductToWishlist = () => {
     emits('addProductToWishlist');
 };
 </script>

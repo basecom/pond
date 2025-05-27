@@ -23,7 +23,7 @@ const isDigital = computed(() => cartItem.value?.states?.includes('is-download')
 const emits = defineEmits<{
   changeCartItemQuantity: [quantityInput: number]
 }>();
-const changeCartItemQuantity = async (quantityInput: number) => {
+const changeCartItemQuantity = (quantityInput: number) => {
     emits('changeCartItemQuantity', quantityInput);
 };
 const quantityRef = ref();

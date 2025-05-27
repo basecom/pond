@@ -18,7 +18,7 @@
     "success": "Action was successful",
     "promoLabel": "Promo Code",
     "addToWishlistSuccess": "Product was successfully added to wishlist.",
-    "removeFromWishlistSuccess": "Product was successfully removed to wishlist.",
+    "removeFromWishlistSuccess": "Product was successfully removed from wishlist.",
     "removeSuccess": "Product was successfully removed.",
     "promotionSuccess": "Promotion was successfully added."
   }

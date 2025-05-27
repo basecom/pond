@@ -17,8 +17,6 @@ const {cartItem, quantity} = toRefs(props);
 const emits = defineEmits<{
   changeCartItemQuantity: [number]
 }>();
-
-
 </script>
 <template>
     <CartItemElementQuantityInner

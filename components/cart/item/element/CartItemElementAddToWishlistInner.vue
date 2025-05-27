@@ -14,11 +14,11 @@ const emits = defineEmits<{
   addProductToWishlist: [];
 }>();
 
-const removeProductFromWishlist = async () => {
+const removeProductFromWishlist = () => {
     emits('removeProductFromWishlist');
 };
 
-const addProductToWishlist= async () => {
+const addProductToWishlist = () => {
     emits('addProductToWishlist');
 };
 
@@ -26,37 +26,19 @@ const addProductToWishlist= async () => {
 
 <template>
     <slot name="wishlist-content">
-        <template v-if="isInWishlist">
-            <slot name="remove-wishlist-wrapper">
-                <div class="flex" @click="removeProductFromWishlist">
-                    <slot name="remove-from-wishlist-button">
-                        <UiButton variant="ghost" size="icon" class="pl-0 pr-2">
-                            <slot name="icon-in-wishlist">
-                                <Icon name="mdi:heart" class="size-5" />
-                            </slot>
-                        </UiButton>
-                        <UiButton variant="link" class="pl-0 text-xs" :is-loading="isLoading">
-                            {{ $t('checkout.removeFromWishlist') }}
-                        </UiButton>
-                    </slot>
-                </div>
-            </slot>
-        </template>
-        <template v-else>
-            <slot name="add-wishlist-wrapper">
-                <div class="flex" @click="addProductToWishlist">
-                    <slot name="add-to-wishlist-button">
-                        <UiButton variant="ghost" size="icon" class="pl-0 pr-2">
-                            <slot name="icon-not-in-wishlist">
-                                <Icon name="mdi:heart-outline" class="size-5" />
-                            </slot>
-                        </UiButton>
-                        <UiButton variant="link" class="pl-0 text-xs" :is-loading="isLoading">
-                            {{ $t('checkout.addToWishlist') }}
-                        </UiButton>
-                    </slot>
-                </div>
-            </slot>
-        </template>
+        <slot name="wishlist-wrapper">
+            <div class="flex" @click="isInWishlist ? removeProductFromWishlist() : addProductToWishlist()">
+                <slot name="wishlist-button">
+                    <UiButton variant="ghost" size="icon" class="pl-0 pr-2">
+                        <slot :name="isInWishlist ? 'icon-in-wishlist' : 'icon-not-in-wishlist'">
+                            <Icon :name="isInWishlist ? 'mdi:heart' : 'mdi:heart-outline'" class="size-5" />
+                        </slot>
+                    </UiButton>
+                    <UiButton variant="link" class="pl-0 text-xs" :is-loading="isLoading">
+                        {{ $t(isInWishlist ? 'checkout.removeFromWishlist' : 'checkout.addToWishlist') }}
+                    </UiButton>
+                </slot>
+            </div>
+        </slot>
     </slot>
 </template>

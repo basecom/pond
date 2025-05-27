@@ -36,11 +36,11 @@ const emits = defineEmits<{
   addSelectedPromotionCode: [promotionCode: string];
 }>();
 
-const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
+const setSelectedShippingMethod = (shippingMethodId: AcceptableValue) => {
     emits('setSelectedShippingMethod', shippingMethodId);
 };
 
-const addSelectedPromotionCode = async (promotionCode: string) => {
+const addSelectedPromotionCode = (promotionCode: string) => {
     emits('addSelectedPromotionCode', promotionCode);
 };
 

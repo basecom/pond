@@ -16,7 +16,7 @@ withDefaults(
             <span v-for="(property, index) in cartItemOptions" :key="`${property.group}-${property.option}`">
                 <slot name="cartItemOptionContent">
                     {{ property.group }}: <span class="font-bold">{{ property.option }}</span>
-                    <template v-if="index+1 < cartItemOptions.length"> | </template>
+                    <template v-if="index + 1 < cartItemOptions.length"> | </template>
                 </slot>
             </span>
         </template>

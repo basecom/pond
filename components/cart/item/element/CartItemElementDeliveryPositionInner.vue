@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
 import { useDateFormat } from '@vueuse/core';
-
+const formatDate = (date: string | undefined) => useDateFormat(date, 'DD/MM/YYYY');
 
 withDefaults(
     defineProps<{
@@ -23,9 +23,9 @@ withDefaults(
             </slot>
             <slot name="delivery-dates">
                 <span>
-                    {{ useDateFormat(cartItemDeliveryPosition.deliveryDate.earliest, 'DD/MM/YYYY') }}
+                    {{ formatDate(cartItemDeliveryPosition.deliveryDate.earliest) }}
                     -
-                    {{ useDateFormat(cartItemDeliveryPosition.deliveryDate.latest, 'DD/MM/YYYY') }}
+                    {{ formatDate(cartItemDeliveryPosition.deliveryDate.latest) }}
                 </span>
             </slot>
         </template>

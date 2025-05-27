@@ -3,7 +3,7 @@ const emits = defineEmits<{
   removeCartItem: [];
 }>();
 
-const removeCartItem = async () => {
+const removeCartItem = () => {
     emits('removeCartItem');
 };
 </script>
