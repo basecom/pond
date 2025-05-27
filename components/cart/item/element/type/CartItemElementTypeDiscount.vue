@@ -1,13 +1,7 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-const props = withDefaults(
-    defineProps<{
-      cartItem?: Schemas['LineItem'];
-    }>(),
-    {
-        cartItem: undefined,
-    },
-);
+const props = defineProps<{
+      cartItem: Schemas['LineItem']; }>();
 const {cartItem} = toRefs(props);
 const {
     itemTotalPrice,

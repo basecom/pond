@@ -4,7 +4,7 @@ import {getMainImageUrl} from '@shopware-pwa/helpers-next';
 
 const props = withDefaults(
     defineProps<{
-      cartItem?: Schemas['LineItem'];
+      cartItem: Schemas['LineItem'];
       cartDeliveryPosition?: Schemas['CartDeliveryPosition'];
       itemTotalPrice?: number;
       itemRegularPrice?: number;
@@ -19,7 +19,6 @@ const props = withDefaults(
       productUrl?: string
     }>(),
     {
-        cartItem: undefined,
         cartDeliveryPosition: undefined,
         itemTotalPrice: 0,
         itemRegularPrice: 0,

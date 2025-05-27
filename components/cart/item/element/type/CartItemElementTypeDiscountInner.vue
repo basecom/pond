@@ -4,11 +4,10 @@ import {getMainImageUrl} from '@shopware-pwa/helpers-next';
 
 withDefaults(
     defineProps<{
-      cartItem?: Schemas['LineItem'];
+      cartItem: Schemas['LineItem'];
       itemTotalPrice?: number,
     }>(),
     {
-        cartItem: undefined,
         itemTotalPrice: 0,
     },
 );

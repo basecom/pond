@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import {toast} from '../ui/toast';
+import {toast} from '../../ui/toast';
 import {ApiClientError} from '@shopware/api-client';
 import {getProductUrl} from '@shopware-pwa/helpers-next';
 
 const props = withDefaults(
     defineProps<{
-      cartItem?: Schemas['LineItem'];
+      cartItem: Schemas['LineItem'];
       cartDeliveryPosition?: Schemas['CartDeliveryPosition']
     }>(),
     {
-        cartItem: undefined,
         cartDeliveryPosition: undefined,
     },
 );

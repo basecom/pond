@@ -4,7 +4,7 @@ import {Loader2} from 'lucide-vue-next';
 
 const props = withDefaults(
     defineProps<{
-      cartItem?: Schemas['LineItem'];
+      cartItem: Schemas['LineItem'];
       cartDeliveryPosition?: Schemas['CartDeliveryPosition'];
       itemTotalPrice?: number;
       itemRegularPrice?: number;
@@ -19,7 +19,6 @@ const props = withDefaults(
       };
     }>(),
     {
-        cartItem: undefined,
         cartDeliveryPosition: undefined,
         itemOptions: undefined,
         itemTotalPrice: 0,
