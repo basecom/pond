@@ -44,7 +44,7 @@ const { t } = useI18n();
                     'size-8': size === 'normal',
                     'size-5': size === 'small',
                 }"
-            >
+            />
             <span class="sr-only">{{ $t('utility.loadingSpinnerLabel') }}</span>
         </div>
     </template>
