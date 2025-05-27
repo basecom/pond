@@ -50,7 +50,7 @@ const handleAddToCart = async () => {
                 form: 'w-full flex gap-4',
                 outer: 'w-20',
             }"
-            :submit-label="props.label ? $t('product.addToCart.submitLabel') : ' '"
+            @keydown.enter.prevent
             @submit="handleAddToCart"
         >
             <SharedQuantityInput
