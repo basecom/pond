@@ -19,6 +19,7 @@ export const usePondRegisterForm = () => {
         'business': {label: t('account.register.accountTypes.business'), value: 'business'},
     };
 
+    // Helper. Config object, used for several if-conditions later on
     const adminConfig = {
         showAccountTypeSelection: configStore.get('core.loginRegistration.showAccountTypeSelection'),
         showTitleField: configStore.get('core.loginRegistration.showTitleField'),
@@ -32,6 +33,7 @@ export const usePondRegisterForm = () => {
         requirePhoneNumberField: configStore.get('core.loginRegistration.phoneNumberFieldRequired')
     }
 
+    // Helper. Build dynamic zod-schema for all general-fields
     const getGeneralFieldSchema = (): z.ZodObject<any, any> => {
         let registerForm = z.object({});
 
@@ -213,20 +215,21 @@ export const usePondRegisterForm = () => {
         return registerForm;
     }
 
-    // TODO: Duplicated Schemas due non customization of nested zod fields in autoForm. Is there a better way?
-    // AddressSchemas required fields need default-values to prevent auto-validation if those fields are hidden
+    // TODO: Duplicated Schemas due non customization via named slots of nested zod fields in autoForm. Is there a better way?
+    // TODO: Hidden fields will still be validate. Dependency.REQUIRE seems to have no effect.
+    // Build dynamic zod-schema for all general-fields
     const getAddressSchema = () => {
         let addressForm = z.object({});
 
         addressForm = addressForm.extend({
-            addressHeader: z.string().default('')
+            addressHeader: z.string()
         })
 
         if (adminConfig.showAccountTypeSelection) {
             addressForm = addressForm.extend({
                 addressAccountType: z.string({
                     required_error: t('account.register.accountTypes.errorGeneral')
-                }).default('')
+                })
             })
         }
         addressForm = addressForm.extend({
@@ -242,47 +245,46 @@ export const usePondRegisterForm = () => {
         addressForm = addressForm.extend({
             addressFirstName: z.string({
                 required_error: t('account.register.firstName.errorGeneral'),
-            }).default(''),
+            }),
             addressLastName: z.string({
                 required_error: t('account.register.lastName.errorGeneral'),
-            }).default('')
+            })
         })
-        // TODO: Even if this is hiding, it will be validated due submit and therefore form submit will never be executed
-        // if (adminConfig.showAccountTypeSelection) {
-        //     addressForm = addressForm.extend({
-        //         addressCompany: z.string({
-        //             required_error: t('account.register.company.errorGeneral'),
-        //         }),
-        //         addressDepartment: z.string().optional()
-        //     })
-        // }
-        // addressForm = addressForm.extend({
-        //     addressStreet: z
-        //         .string({
-        //             required_error: t('account.register.address.error.required')
-        //         })
-        //         .min(3, t('account.register.address.error.general'))
-        //         .regex(
-        //             /^(\d+[a-zA-Z]?(?:-\d+[a-zA-Z]?)?\s[A-Za-zÄÖÜäöüß\s-]+|\b[A-Za-zÄÖÜäöüß\s-]+\s\d+[a-zA-Z]?(?:-\d+[a-zA-Z]?)?\b)$/,
-        //             t('account.register.address.error.general')
-        //         ),
-        //     addressZipcode: z
-        //         .string({
-        //             required_error: t('account.register.postalCode.error.required'),
-        //         })
-        //         .regex(/^\d{5}$/, t('account.register.postalCode.error.general')),
-        //     addressCity: z
-        //         .string({
-        //             required_error: t('account.register.city.error.required'),
-        //         })
-        //         .regex(/^[a-zA-ZäöüÄÖÜß\s-]+$/, t('account.register.city.error.general')),
-        // })
+        if (adminConfig.showAccountTypeSelection) {
+            addressForm = addressForm.extend({
+                addressCompany: z.string({
+                    required_error: t('account.register.company.errorGeneral'),
+                }),
+                addressDepartment: z.string().optional()
+            })
+        }
+        addressForm = addressForm.extend({
+            addressStreet: z
+                .string({
+                    required_error: t('account.register.address.error.required')
+                })
+                .min(3, t('account.register.address.error.general'))
+                .regex(
+                    /^(\d+[a-zA-Z]?(?:-\d+[a-zA-Z]?)?\s[A-Za-zÄÖÜäöüß\s-]+|\b[A-Za-zÄÖÜäöüß\s-]+\s\d+[a-zA-Z]?(?:-\d+[a-zA-Z]?)?\b)$/,
+                    t('account.register.address.error.general')
+                ),
+            addressZipcode: z
+                .string({
+                    required_error: t('account.register.postalCode.error.required'),
+                })
+                .regex(/^\d{5}$/, t('account.register.postalCode.error.general')),
+            addressCity: z
+                .string({
+                    required_error: t('account.register.city.error.required'),
+                })
+                .regex(/^[a-zA-ZäöüÄÖÜß\s-]+$/, t('account.register.city.error.general')),
+        })
         if (adminConfig.showAdditionalAddressField1) {
             if (adminConfig.requireAdditionalAddressField1) {
                 addressForm = addressForm.extend({
                     addressAdditionalAddressLine1: z.string({
                         required_error: t('account.register.additionalAddressLine1.error.required'),
-                    }).default('')
+                    })
                 })
             } else {
                 addressForm = addressForm.extend({
@@ -295,7 +297,7 @@ export const usePondRegisterForm = () => {
                 addressForm = addressForm.extend({
                     addressAdditionalAddressLine2: z.string({
                         required_error: t('account.register.additionalAddressLine2.error.required'),
-                    }).default('')
+                    })
                 })
             } else {
                 addressForm = addressForm.extend({
@@ -306,7 +308,7 @@ export const usePondRegisterForm = () => {
         addressForm = addressForm.extend({
             addressCountryId: z.string({
                 required_error: t('account.register.country.error.required'),
-            }).default(''),
+            }),
             addressCountryState: z.string().optional(),
         })
         if (adminConfig.showPhoneNumberField) {
@@ -336,16 +338,17 @@ export const usePondRegisterForm = () => {
         return addressForm;
     }
 
+    // Build final register schema used by AutoForm
     const getRegisterSchema = (): ZodObjectOrWrapped => {
         let schema = getGeneralFieldSchema()
-            //.merge(getAddressSchema())
+            .merge(getAddressSchema())
             .merge(z.object({
                 acceptedDataProtection: z.boolean({
                     required_error: t('account.register.tos.errorGeneral')
                 })
             }))
 
-        // TODO: SuperRefine/refine wont work. Sometimes it does.
+        // TODO: SuperRefine/refine wont work. Sometimes it does. Seems to be a known issue according to shadcn docs.
         return schema.superRefine((data, context) => {
             if (configStore.get('core.loginRegistration.requirePasswordConfirmation')) {
                 if (!data.confirmPassword || data.confirmPassword === '' || data.password !== data.confirmPassword) {
@@ -379,6 +382,7 @@ export const usePondRegisterForm = () => {
             when: (accountType: string) =>
                 accountType !== accountTypes.business.value
         },
+        // NOTE: Dependency.REQUIRES doesnt work. also doesnt work on shadcn doc in example section for AutoForm.
         {
             sourceField: 'accountType',
             type: DependencyType.REQUIRES,

@@ -2,24 +2,24 @@
 import {ApiClientError} from '@shopware/api-client';
 import type {RegisterData} from "./AccountRegisterInner.vue";
 import {useToast} from '@/components/ui/toast/use-toast'
-import {useCustomerStore} from "#imports";
+import {useCustomerStore, useShopwareContext} from "#imports";
 
 const isLoading = ref(false);
 const errorMessage: Ref<string | undefined> = ref(undefined);
 
 const customerStore = useCustomerStore();
+const {devStorefrontUrl} = useShopwareContext();
 const {t} = useI18n();
 const router = useRouter();
 const customer = useCustomerStore();
 const {toast} = useToast();
 
-// TODO: storefrontUrl seems fishy. Is there a better approach?
 /**
  * Helper function to parse the autoForm data into required shopware register API format
  * @param registerData - generated from autoForm
  */
 function buildRegisterForm(registerData: RegisterData) {
-    // In case of optional input: Make sure that birthdate is always complete
+    // In case of optional input: Make sure that birthdate is always complete (day, month, year)
     const isBirthdateComplete = registerData.birthdateDay && registerData.birthdateMonth && registerData.birthdateYear;
     const address = {
         countryId: registerData.countryId,
@@ -38,7 +38,7 @@ function buildRegisterForm(registerData: RegisterData) {
         additionalAddressLine2: registerData.additionalAddressLine2 ?? null,
     };
 
-    // Calculate shippingAddress depending on form inputs
+    // Calculate shippingAddress depending on form inputs. Use address if shippingadress wont differ.
     let shippingAddress = address;
 
     if (registerData.deliveryAddressVaries) {
@@ -75,7 +75,7 @@ function buildRegisterForm(registerData: RegisterData) {
         accountType: registerData.accountType ?? null,
         vatIds: registerData.vatNumber ?? null,
         acceptedDataProtection: registerData.acceptedDataProtection ?? true,
-        storefrontUrl: customerStore.sessionContext.salesChannel.domains[0].url,
+        storefrontUrl: devStorefrontUrl,
     }
 }
 
@@ -90,9 +90,11 @@ const register = async (registerData: RegisterData) => {
             title: t('account.register.toast.title'),
             description: t('account.register.toast.description'),
         });
+        // TODO: Placeholder-solution. Couldnt test redirect yet.
         router.push('/');
     } catch (error) {
         if (error instanceof ApiClientError) {
+            // TODO: Due branch merging, the toast implementation changed. Double check, if toast will be displayed correctly.
             toast({
                 title: t('error.generalHeadline'),
                 description: t(`error.${error.details.errors[0]?.code}`),
@@ -106,6 +108,7 @@ const register = async (registerData: RegisterData) => {
 
 onMounted(() => {
     // Ensure that a signed in user will not be able to go to the registration page
+    // TODO: This seems to not redirect, when user calls /register when logged in.
     if (customer.signedIn) {
         router.push('/');
     }

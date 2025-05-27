@@ -39,10 +39,12 @@ const countries = ref<Array<Schemas['Country']> | null>();
 const states = ref<Array<Schemas['CountryState']> | null>();
 const shippingAddressStates = ref<Array<Schemas['CountryState']> | null>();
 
+// form variable for controlled AutoForm (pls refer to the shadcn docs)
 const form = useForm({
     validationSchema: toTypedSchema(schema),
 })
 
+// Calculate year-array with current year until currentYear - 120 years
 const possibleBirthdayYears = computed(() => {
     const years = [];
     const today = new Date();
@@ -52,15 +54,15 @@ const possibleBirthdayYears = computed(() => {
     return years;
 });
 
+
+// Called on autoForm submit
 const register = (registerData: any) => {
-    // TODO: Emit wont fire with a nested schema which is also put into hidden state with autoFrom dependencies, remove console.log
-    console.log(form.values);
     emits('register', registerData);
 };
 
-// Updates current states if selected country has any
+// Updates current countryStates if selected country has any
 watch(form.values, (values) => {
-    // TODO: Multiple calls on setting states, this watcher cant use old-state before change event
+    // TODO: watcher will trigger multiple times at times. Might be worth double checking
     if (values.countryId) {
         states.value = getStatesForCountry(values.countryId);
     }
@@ -69,7 +71,7 @@ watch(form.values, (values) => {
     }
 });
 
-// API fetches
+// API fetches and setting values
 onBeforeMount(async () => {
     await configStore.loadConfig();
     salutations.value = getSalutations.value;
@@ -105,7 +107,7 @@ onBeforeMount(async () => {
         :form="form"
         :field-config="fieldConfig"
         :dependencies="dependencies"
-        @submit="(data) => console.log(data)"
+        @submit="register"
     >
         <template #headerGeneral>
             <slot name="registerGeneralFieldsHeader">
@@ -313,8 +315,7 @@ onBeforeMount(async () => {
             </div>
             <div v-else></div>
         </template>
-        <!-- TODO: Re-Evaluate current implementation. Best way: nested schema. Current way: prefix for address-schema. -->
-        <!-- TODO: Add hidden-Input field for storefrontUrl (maybe. discuss with Jordan or Nele) -->
+        <!-- TODO: Re-Evaluate current implementation. nested Schemas wont work. Current way: prefix for address-schema. -->
         <template #addressHeader="slotProps">
             <UiAutoFormField v-bind="slotProps">
                 <slot name="registerShippingAddressHeader">
