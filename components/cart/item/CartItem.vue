@@ -30,14 +30,8 @@ const isLoading = ref({
 
 const {
     itemOptions,
-} = useCartItem(cartItem);
-
-const {
     itemTotalPrice,
     itemRegularPrice,
-} = useCartItem(cartItem);
-
-const {
     itemQuantity,
     changeItemQuantity,
 } = useCartItem(cartItem);
@@ -48,7 +42,8 @@ const {refreshCart} = useCart();
 
 const quantity = ref();
 
-const productUrl = cartItem?.value?.referencedId? getProductUrl({id: cartItem?.value?.referencedId}) : '/todo';
+const productUrl = cartItem?.value?.referencedId && cartItem?.value?.type === 'product' ?
+    getProductUrl({id: cartItem?.value?.referencedId}) : '';
 
 syncRefs(itemQuantity, quantity);
 

@@ -66,15 +66,15 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
         if (errorKeys.length > 0) {
             const isSuccess = errorKeys[0]?.includes('promotion-discount-added');
             if(isSuccess) {
-              toast({
-                description: t('checkout.promotionSuccess'),
-              });
+                toast({
+                    description: t('checkout.promotionSuccess'),
+                });
             } else {
-              toast({
-                title: t('error.generalHeadline'),
-                description: t(`error.${errorKeys[0]?.replaceAll('-', '_')?.toUpperCase() ?? 'DEFAULT'}`),
-                variant: 'destructive',
-              });
+                toast({
+                    title: t('error.generalHeadline'),
+                    description: t(`error.${errorKeys[0]?.replaceAll('-', '_')?.toUpperCase() ?? 'DEFAULT'}`),
+                    variant: 'destructive',
+                });
             }
         }
 
