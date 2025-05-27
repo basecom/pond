@@ -27,7 +27,7 @@ await navigationStore.loadNavigation('main-navigation', 2);
                 :to="getCategoryRoute(item)"
                 class="text-lg"
                 :class="{ 'font-bold': isActive(item.seoUrls) }"
-                @click="listingStore.isLoading = true;"
+                @click="listingStore.isLoading = !isActive(item.seoUrls, true);"
             >
                 {{ getTranslatedProperty(item, 'name') }}
             </LocaleLink>
@@ -41,7 +41,7 @@ await navigationStore.loadNavigation('main-navigation', 2);
                     <LocaleLink
                         :to="getCategoryRoute(child)"
                         :class="{ 'font-bold': isActive(child.seoUrls) }"
-                        @click="listingStore.isLoading = true;"
+                        @click="listingStore.isLoading = !isActive(child.seoUrls, true);"
                     >
                         {{ getTranslatedProperty(child, 'name') }}
                     </LocaleLink>
