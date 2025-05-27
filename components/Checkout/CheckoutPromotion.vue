@@ -39,26 +39,28 @@ const addPromotion = async (promotionCodeForm: PromotionCodeForm) => {
         </li>
     </ul>
 
-    <FormKit
-        type="form"
-        :submit-label="$t('checkout.promotion.submitLabel')"
-        :submit-attrs="{
-            wrapperClass: 'min-w-max',
-        }"
-        :classes="{
-            form: 'w-full flex flex-row gap-4',
-        }"
-        name="promotion"
-        @submit="addPromotion"
-    >
+    <ClientOnly>
         <FormKit
-            type="text"
-            :label="$t('checkout.promotion.code.label')"
-            name="promotionCode"
-            required="true"
-            :classes="{
-                outer: 'flex-grow',
+            type="form"
+            :submit-label="$t('checkout.promotion.submitLabel')"
+            :submit-attrs="{
+                wrapperClass: 'min-w-max',
             }"
-        />
-    </FormKit>
+            :classes="{
+                form: 'w-full flex flex-row gap-4',
+            }"
+            name="promotion"
+            @submit="addPromotion"
+        >
+            <FormKit
+                type="text"
+                :label="$t('checkout.promotion.code.label')"
+                name="promotionCode"
+                required="true"
+                :classes="{
+                    outer: 'flex-grow',
+                }"
+            />
+        </FormKit>
+    </ClientOnly>
 </template>

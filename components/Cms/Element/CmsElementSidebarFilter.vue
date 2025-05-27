@@ -15,7 +15,7 @@ const props = withDefaults(
 );
 
 const route = useRoute();
-const { getCurrentListing, search } = useCategoryListing();
+const { getCurrentListing, search, getAvailableFilters } = useCategoryListing();
 
 const listingStore = useListingStore(props.productListingStoreKey);
 const { listingState } = storeToRefs(listingStore);
@@ -53,7 +53,7 @@ watch(
     </template>
 
     <ProductListingSidebar
-        v-else-if="listingState.filters.all"
+        v-else-if="listingState.filters.all ?? getAvailableFilters"
         :filters="listingState.filters.all"
         :selected-filters="listingState.filters.applied"
         :show-reset-button="listingState.filters.modified"

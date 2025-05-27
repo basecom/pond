@@ -42,13 +42,15 @@ const handleAddToCart = async () => {
     <div class="p-4 pt-0">
         <FormKit
             v-if="product.availableStock > 0"
+            id="addToCartForm"
+            name="addToCartForm"
             type="form"
             :actions="false"
             :classes="{
                 form: 'w-full flex gap-4',
                 outer: 'w-20',
             }"
-            @keydown.enter.prevent
+            :submit-label="props.label ? $t('product.addToCart.submitLabel') : ' '"
             @submit="handleAddToCart"
         >
             <SharedQuantityInput
@@ -60,15 +62,32 @@ const handleAddToCart = async () => {
                 @on-enter="handleAddToCart"
             />
 
-            <FormKit
-                type="submit"
-                :classes="{
-                    outer: 'w-full',
-                }"
-                :label="props.label ? $t('product.addToCart.submitLabel') : ' '"
-                :prefix-icon="props.icon ? 'cart-shopping' : ''"
-                :title="props.icon ? t('product.addToCart.submitLabel') : ''"
-            />
+            <ClientOnly>
+                <FormKit
+                    id="addToCart"
+                    name="addToCart"
+                    type="submit"
+                    :classes="{
+                        outer: 'w-full',
+                    }"
+                    :label="props.label ? $t('product.addToCart.submitLabel') : ' '"
+                    :prefix-icon="props.icon ? 'cart-shopping' : ''"
+                    :title="props.icon ? t('product.addToCart.submitLabel') : ''"
+                />
+
+                <template #fallback>
+                    <FormKit
+                        id="addToCart"
+                        name="addToCart"
+                        type="submit"
+                        :classes="{
+                            outer: 'w-full',
+                        }"
+                        :label="props.label ? $t('product.addToCart.submitLabel') : ' '"
+                        :title="props.icon ? t('product.addToCart.submitLabel') : ''"
+                    />
+                </template>
+            </ClientOnly>
         </FormKit>
 
         <div
