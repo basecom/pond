@@ -26,6 +26,10 @@ const hash = route.query.hash as string | null;
 
 onMounted(async () => {
     if (!emailHash || !hash) {
+        notification.value.message = t('cms.element.form.newsletter.noRegisterData');
+        notification.value.type = 'danger';
+
+        isLoading.value = false;
         return;
     }
 
