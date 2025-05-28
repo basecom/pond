@@ -2,6 +2,8 @@ import { ApiClientError } from '@shopware/api-client';
 import {toast} from '../components/ui/toast';
 
 export function usePondHandleError() {
+    const { $i18n } = useNuxtApp();
+    const t = $i18n.t;
     const handleError = (error: unknown | string, showAsError: boolean = true, toastMessage:
         { show?: boolean, title?: string, description?: string } = {show: false, description: undefined, title: ''}) => {
         if (process.env.NODE_ENV !== 'development') return;
@@ -11,6 +13,7 @@ export function usePondHandleError() {
             showError(error.details, showAsError);
             return;
         }
+
         showToastError(toastMessage);
         showError(error, showAsError);
     };
@@ -38,8 +41,7 @@ export function usePondHandleError() {
         if(!mergedToastMessage.show) {
             return;
         }
-        const { $i18n } = useNuxtApp();
-        const t = $i18n.t;
+
         const description = mergedToastMessage.description ?? code ?? 'DEFAULT';
 
         toast({
