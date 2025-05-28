@@ -18,17 +18,19 @@ useBreadcrumbs(checkoutBreadcrumbs({ index: 0 }));
         >
             <div class="w-full lg:w-2/3">
                 <ul class="divide-y divide-gray-medium border-t border-gray-medium">
-                    <li
-                        v-for="item in cartItemsWithProduct"
-                        :key="item.cartItem.id"
-                        class="flex py-6"
-                    >
-                        <CheckoutLineItem
-                            v-if="item.product"
-                            :line-item="item.cartItem"
-                            :product="item.product"
-                        />
-                    </li>
+                    <ClientOnly>
+                        <li
+                            v-for="item in cartItemsWithProduct"
+                            :key="item.cartItem.id"
+                            class="flex py-6"
+                        >
+                            <CheckoutLineItem
+                                v-if="item.product"
+                                :line-item="item.cartItem"
+                                :product="item.product"
+                            />
+                        </li>
+                    </ClientOnly>
                 </ul>
             </div>
             <div class="flex w-full flex-col gap-4 lg:w-1/3">

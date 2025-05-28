@@ -112,6 +112,10 @@ await getWishlistProducts({
     limit: limit.value,
     page: page.value,
 });
+
+if (wishlistItems.value?.length){
+    await loadProductsByItemIds(wishlistItems.value);
+}
 </script>
 
 <template>

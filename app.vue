@@ -21,8 +21,12 @@ useHead(() => ({
         },
     ],
 }));
+
+const ssrId = () => useId();
 </script>
 
 <template>
-    <NuxtLayout />
+    <config-provider :use-id="ssrId">
+        <NuxtLayout />
+    </config-provider>
 </template>

@@ -40,16 +40,18 @@ const emit = defineEmits<{
             />
         </div>
 
-        <ProductListingFilters
-            :filters="filters"
-            :selected-filters="selectedFilters"
-            :show-reset-button="showResetButton"
-            :product-listing-store-key="productListingStoreKey"
-            @filter-changed="
-                (filters: Schemas['ProductListingResult']['currentFilters']) => $emit('filter-changed', filters)
-            "
-            @reset-filters="$emit('reset-filters')"
-            @remove-filter="(event: RemoveFilterEvent) => $emit('remove-filter', event)"
-        />
+        <ClientOnly>
+            <ProductListingFilters
+                :filters="filters"
+                :selected-filters="selectedFilters"
+                :show-reset-button="showResetButton"
+                :product-listing-store-key="productListingStoreKey"
+                @filter-changed="
+                    (filters: Schemas['ProductListingResult']['currentFilters']) => $emit('filter-changed', filters)
+                "
+                @reset-filters="$emit('reset-filters')"
+                @remove-filter="(event: RemoveFilterEvent) => $emit('remove-filter', event)"
+            />
+        </ClientOnly>
     </div>
 </template>

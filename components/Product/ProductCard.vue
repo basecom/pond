@@ -93,9 +93,9 @@ const { stop } = useIntersectionObserver(productCard, ([entry]: IntersectionObse
                             {{ getTranslatedProperty(product, 'description') }}
                         </p>
 
-                        <p class="text-lg font-medium">
+                        <div class="text-lg font-medium">
                             <ProductPrice :product="product" />
-                        </p>
+                        </div>
                     </div>
                 </div>
             </div>

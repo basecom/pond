@@ -8,7 +8,7 @@ const props = withDefaults(
         showHeader?: boolean;
     }>(),
     {
-        controller: useModal(false),
+        controller: () => useModal(false),
         withCloseButton: false,
         withActionsButton: false,
         size: 'md',
@@ -32,7 +32,7 @@ const onUpdatedOpen = (value: boolean) => {
         v-model:open="controller.isOpen.value"
         @update:open="onUpdatedOpen"
     >
-        <DialogTrigger>
+        <DialogTrigger as-child>
             <slot name="trigger" />
         </DialogTrigger>
         <DialogPortal>

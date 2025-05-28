@@ -79,11 +79,13 @@ const { t } = useI18n();
             <PaginationNext
                 class="ml-4 flex size-4 items-center justify-center rounded focus-within:outline focus-within:outline-1 focus-within:outline-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
             >
-                <FormKitIcon
-                    icon="chevron-right"
-                    :title="t('icon.nextPage')"
-                    class="size-4"
-                />
+                <ClientOnly>
+                    <FormKitIcon
+                        icon="chevron-right"
+                        :title="t('icon.nextPage')"
+                        class="size-4"
+                    />
+                </ClientOnly>
             </PaginationNext>
 
             <PaginationLast

@@ -35,8 +35,9 @@ const { t } = useI18n();
             role="status"
             class="absolute top-0 flex size-full place-content-center items-center"
         >
-            <FormKitIcon
-                icon="spinner"
+            <img
+                src="/spinner.svg"
+                :alt="t('icon.loading')"
                 :title="t('icon.loading')"
                 class="animate-spin fill-status-important text-brand-primary"
                 :class="{
