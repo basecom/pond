@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
 import {toast} from '../../ui/toast';
-import {ApiClientError} from '@shopware/api-client';
 import {getProductUrl} from '@shopware-pwa/helpers-next';
 
 const props = withDefaults(
@@ -49,6 +48,8 @@ syncRefs(itemQuantity, quantity);
 
 getWishlistProducts();
 
+const {handleError} = usePondHandleError();
+
 const removeCartItem = async () => {
     try {
         isLoading.value.container = true;
@@ -58,13 +59,7 @@ const removeCartItem = async () => {
         });
 
     } catch (error) {
-        if(error instanceof ApiClientError) {
-            toast({
-                title: t('error.generalHeadline'),
-                description: t(`error.${error.details.errors[0]?.code ?? 'DEFAULT'}`),
-                variant: 'destructive',
-            });
-        }
+        handleError(error, true, {show: true});
     }
     isLoading.value.container = false;
 };
@@ -78,13 +73,7 @@ const changeCartItemQuantity = async (quantityInput: number) => {
             description: t('checkout.success'),
         });
     } catch (error) {
-        if (error instanceof ApiClientError) {
-            toast({
-                title: t('error.generalHeadline'),
-                description: t(`error.${error.details.errors[0]?.code ?? 'DEFAULT'}`),
-                variant: 'destructive',
-            });
-        }
+        handleError(error, true, {show: true, description: 'DEFAULT'});
     }
     isLoading.value.container = false;
     quantity.value = itemQuantity.value;
@@ -97,14 +86,7 @@ const addProductToWishlist = async () => {
             description: t('checkout.addToWishlistSuccess'),
         });
     } catch(error) {
-        if(error instanceof ApiClientError) {
-            toast({
-                title: t('error.generalHeadline'),
-                description: t(`error.${ error.details.errors[0]?.code ?? 'DEFAULT'}`),
-                variant: 'destructive',
-            });
-
-        }
+        handleError(error, true, {show: true});
     }
     isLoading.value.wishlist = false;
 };
@@ -116,13 +98,7 @@ const removeProductFromWishlist = async () => {
             description: t('checkout.removeFromWishlistSuccess'),
         });
     } catch(error) {
-        if(error instanceof ApiClientError) {
-            toast({
-                title: t('error.generalHeadline'),
-                description: t(`error.${error.details.errors[0]?.code ?? 'DEFAULT'}`),
-                variant: 'destructive',
-            });
-        }
+        handleError(error, true, {show: true});
     }
     isLoading.value.wishlist = false;
 };

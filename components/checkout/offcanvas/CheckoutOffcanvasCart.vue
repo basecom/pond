@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type {Schemas} from '@shopware/api-client/api-types';
 import {toast} from '../../ui/toast';
-import {ApiClientError} from '@shopware/api-client';
 import type {AcceptableValue} from 'reka-ui';
 
 withDefaults(
@@ -60,13 +59,7 @@ const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
             });
         }
     } catch (error) {
-        if(error instanceof ApiClientError) {
-            toast({
-                title: t('error.generalHeadline'),
-                description: t(`error.${error.details.errors[0]?.code ?? 'DEFAULT'}`),
-                variant: 'destructive',
-            });
-        }
+        handleError(error,true, {show: true});
     }
     await refreshCart();
     shippingCost.value = findSelectedShippingCost(shippingCosts.value);
@@ -93,13 +86,7 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
         }
 
     } catch (error) {
-        if(error instanceof ApiClientError) {
-            toast({
-                title: t('error.generalHeadline'),
-                description: t(`error.${error.details.errors[0]?.code ?? 'DEFAULT'}`),
-                variant: 'destructive',
-            });
-        }
+        handleError(error,true, {show: true});
     } finally {
         isLoading.value.promo = false;
     }

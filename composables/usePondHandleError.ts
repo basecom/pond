@@ -1,14 +1,17 @@
 import { ApiClientError } from '@shopware/api-client';
+import {toast} from '../components/ui/toast';
 
 export function usePondHandleError() {
-    const handleError = (error: unknown | string, showAsError: boolean = true) => {
+    const handleError = (error: unknown | string, showAsError: boolean = true, toastMessage:
+        { show?: boolean, title?: string, description?: string } = {show: false, description: undefined, title: ''}) => {
         if (process.env.NODE_ENV !== 'development') return;
 
         if (error instanceof ApiClientError) {
+            showToastError(toastMessage, error.details.errors[0]?.code);
             showError(error.details, showAsError);
             return;
         }
-
+        showToastError(toastMessage);
         showError(error, showAsError);
     };
 
@@ -19,6 +22,31 @@ export function usePondHandleError() {
         }
 
         console.warn(errorMessage);
+    };
+
+    const showToastError = (toastMessage: {
+        show?: boolean, title?: string, description?: string } = {},
+    code: string = '') => {
+
+        const mergedToastMessage = {
+            show: false,
+            title: 'error.generalHeadline',
+            description: undefined,
+            ...toastMessage,
+        };
+
+        if(!mergedToastMessage.show) {
+            return;
+        }
+        const { $i18n } = useNuxtApp();
+        const t = $i18n.t;
+        const description = mergedToastMessage.description ?? code ?? 'DEFAULT';
+
+        toast({
+            title: t(mergedToastMessage.title || ''),
+            description: t(`error.${description}`),
+            variant: 'destructive',
+        });
     };
 
     return { handleError };
