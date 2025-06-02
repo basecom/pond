@@ -46,23 +46,29 @@ watch(
 </script>
 
 <template>
-    <template v-if="listingStore.isLoading || listingStore.displayFilterSkeleton">
-        <ClientOnly>
+    <ClientOnly>
+        <template v-if="listingStore.isLoading || listingStore.displayFilterSkeleton">
             <LayoutSkeletonCmsElementSidebarFilter />
-        </ClientOnly>
-    </template>
+        </template>
 
-    <ProductListingSidebar
-        v-else-if="listingState.filters.all"
-        :filters="listingState.filters.all"
-        :selected-filters="listingState.filters.applied"
-        :show-reset-button="listingState.filters.modified"
-        :sorting-options="listingState.sorting.options"
-        :selected-sorting="listingState.sorting.current"
-        :product-listing-store-key="productListingStoreKey"
-        @sorting-changed="(sortingOption: Schemas['ProductListingResult']['sorting']) => listingStore.setSorting(sortingOption)"
-        @filter-changed="(filters: Schemas['ProductListingResult']['currentFilters']) => listingStore.setFilters(filters)"
-        @reset-filters="onResetFilters"
-        @remove-filter="(event: RemoveFilterEvent) => onRemoveFilter(event)"
-    />
+        <template v-else>
+            <ProductListingSidebar
+                v-if="listingState.filters.all"
+                :filters="listingState.filters.all"
+                :selected-filters="listingState.filters.applied"
+                :show-reset-button="listingState.filters.modified"
+                :sorting-options="listingState.sorting.options"
+                :selected-sorting="listingState.sorting.current"
+                :product-listing-store-key="productListingStoreKey"
+                @sorting-changed="(sortingOption: Schemas['ProductListingResult']['sorting']) => listingStore.setSorting(sortingOption)"
+                @filter-changed="(filters: Schemas['ProductListingResult']['currentFilters']) => listingStore.setFilters(filters)"
+                @reset-filters="onResetFilters"
+                @remove-filter="(event: RemoveFilterEvent) => onRemoveFilter(event)"
+            />
+        </template>
+
+        <template #fallback>
+            <LayoutSkeletonCmsElementSidebarFilter />
+        </template>
+    </ClientOnly>
 </template>

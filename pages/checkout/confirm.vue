@@ -50,8 +50,6 @@ onMounted(async () => {
 
         <template v-if="!isEmpty">
             <FormKit
-                id="checkoutForm"
-                name="checkoutForm"
                 type="form"
                 :actions="false"
                 :incomplete-message="false"
@@ -60,17 +58,7 @@ onMounted(async () => {
             >
                 <div class="my-6 grid gap-6 lg:grid-cols-2">
                     <div class="divide-y divide-gray-medium rounded-md p-4 shadow">
-                        <ClientOnly>
-                            <CheckoutConfirmPersonal />
-
-                            <template #fallback>
-                                <CheckoutConfirmCard :title="$t('checkout.confirm.personal.cardTitle')">
-                                    <div class="relative h-32 w-full">
-                                        <UtilityLoadingSpinner />
-                                    </div>
-                                </CheckoutConfirmCard>
-                            </template>
-                        </ClientOnly>
+                        <CheckoutConfirmPersonal />
                         <CheckoutConfirmShipping />
                         <CheckoutConfirmPayment />
                         <CheckoutConfirmAddress v-if="customerStore.customer" />
@@ -82,19 +70,17 @@ onMounted(async () => {
                         <div class="font-bold">{{ $t('checkout.lineItemsHeading') }}</div>
 
                         <ul class="divide-y divide-gray-medium">
-                            <ClientOnly>
-                                <li
-                                    v-for="item in cartItemsWithProduct"
-                                    :key="item.cartItem.id"
-                                    class="flex py-6"
-                                >
-                                    <CheckoutLineItem
-                                        v-if="item.product"
-                                        :line-item="item.cartItem"
-                                        :product="item.product"
-                                    />
-                                </li>
-                            </ClientOnly>
+                            <li
+                                v-for="item in cartItemsWithProduct"
+                                :key="item.cartItem.id"
+                                class="flex py-6"
+                            >
+                                <CheckoutLineItem
+                                    v-if="item.product"
+                                    :line-item="item.cartItem"
+                                    :product="item.product"
+                                />
+                            </li>
                         </ul>
 
                         <CheckoutSummary />

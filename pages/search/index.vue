@@ -140,19 +140,21 @@ const cardSkeletons = computed(() => {
 
         <div class="flex flex-wrap gap-4">
             <div class="w-full">
-                <ProductListingSidebar
-                    v-if="listingState.filters.all"
-                    :filters="listingState.filters.all"
-                    :selected-filters="listingState.filters.applied"
-                    :show-reset-button="listingState.filters.modified"
-                    :sorting-options="listingState.sorting.options"
-                    :selected-sorting="listingState.sorting.current ?? 'name-asc'"
-                    product-listing-store-key="search"
-                    @sorting-changed="onSortChange"
-                    @filter-changed="onFilterChange"
-                    @reset-filters="onResetFilters"
-                    @remove-filter="(event: RemoveFilterEvent) => onRemoveFilter(event)"
-                />
+                <ClientOnly>
+                    <ProductListingSidebar
+                        v-if="listingState.filters.all"
+                        :filters="listingState.filters.all"
+                        :selected-filters="listingState.filters.applied"
+                        :show-reset-button="listingState.filters.modified"
+                        :sorting-options="listingState.sorting.options"
+                        :selected-sorting="listingState.sorting.current ?? 'name-asc'"
+                        product-listing-store-key="search"
+                        @sorting-changed="onSortChange"
+                        @filter-changed="onFilterChange"
+                        @reset-filters="onResetFilters"
+                        @remove-filter="(event: RemoveFilterEvent) => onRemoveFilter(event)"
+                    />
+                </ClientOnly>
             </div>
 
             <div class="grid w-full grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">

@@ -26,7 +26,7 @@ const ssrId = () => useId();
 </script>
 
 <template>
-    <config-provider :use-id="ssrId">
+    <ConfigProvider :use-id="ssrId">
         <NuxtLayout />
-    </config-provider>
+    </ConfigProvider>
 </template>

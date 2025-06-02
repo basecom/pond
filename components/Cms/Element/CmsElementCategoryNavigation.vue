@@ -13,7 +13,7 @@ const { isActive } = useActivePath();
 
 const route = useRoute();
 const listingStore = useListingStore(route.path === '/search' ? 'search' : 'category');
-await navigationStore.loadNavigation('main-navigation', 2);
+
 </script>
 
 <template>
