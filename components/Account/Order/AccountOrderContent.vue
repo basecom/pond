@@ -91,6 +91,7 @@ onMounted(async () => {
                 :total="totalPages * limit"
                 :items-per-page="limit"
                 :default-page="Number(currentPage)"
+                :page="route.query.page ? Number(route.query.page) : Number(currentPage)"
                 @update-page="page => changePage(page)"
             />
         </ul>

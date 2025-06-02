@@ -1,17 +1,10 @@
 <script setup lang="ts">
 import type { Notification } from '@shopware-pwa/composables-next';
 
-const props = withDefaults(
-    defineProps<{
-      notification: Notification;
-      persistent?: boolean;
-    }>(),
-    {
-        persistent: false,
-    },
-);
+const props = defineProps<{
+    notification: Notification;
+}>();
 
-const { removeOne } = useNotifications();
 const { t } = useI18n();
 
 const iconMap = {
@@ -51,22 +44,5 @@ const icon = computed(() => iconMap[props.notification.type] || 'information');
         <div class="leading-4">
             {{ notification.message }}
         </div>
-
-        <template v-if="persistent">
-            <button
-                type="button"
-                class="ml-auto hover:rounded-md hover:bg-gray-medium hover:ring-4 hover:ring-gray-medium"
-                :data-dismiss-target="`toast-${notification.id}`"
-                :aria-label="$t('utility.toast.closeButtonAriaLabel')"
-                :title="t('icon.close')"
-                @click="removeOne(notification.id)"
-            >
-                <FormKitIcon
-                    icon="xmark"
-                    :title="t('icon.close')"
-                    class="block size-4 text-gray-dark"
-                />
-            </button>
-        </template>
     </div>
 </template>
