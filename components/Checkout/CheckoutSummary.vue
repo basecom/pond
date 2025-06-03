@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Schemas } from '@shopware/api-client/api-types';
+
 withDefaults(
     defineProps<{
         reducedDisplay?: boolean;
@@ -22,7 +24,7 @@ watch(cart, async () => {
         if (key.includes('promotion-discount-added')) {
             const error = cart.value.errors[key];
 
-            const lineItem = cart.value.lineItems.find(item => item.id === error.parameters?.discountLineItemId);
+            const lineItem = cart.value.lineItems.find((item: Schemas['LineItem']) => item.id === error.parameters?.discountLineItemId);
 
             if (lineItem) {
                 pushSuccess(t('checkout.promotion.promotionApplied', { promotionText: lineItem.payload?.code?.length ? lineItem.payload.code : lineItem.description }));

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { PromotionCodeForm } from '~/types/form/CheckoutForm';
 import type { CartErrors } from '~/types/checkout/CartErrors';
+import type { Schemas } from '@shopware/api-client/api-types';
 
 const { addPromotionCode, consumeCartErrors, cart } = useCart();
 const { pushError, pushSuccess, pushInfo } = useNotifications();
@@ -21,7 +22,9 @@ const addPromotion = async (promotionCodeForm: PromotionCodeForm) => {
             return;
         }
 
-        const cartPromotion = cart.value.lineItems.find(item => item.payload?.code === promotionCodeForm.promotionCode);
+        // eslint-disable-next-line
+        // @ts-ignore
+        const cartPromotion = cart.value.lineItems.find((item: Schemas['LineItem']) => item.payload?.code === promotionCodeForm.promotionCode);
 
         if (cartPromotion) {
             pushSuccess(t('checkout.promotion.successMessage', { promotionCode: promotionCodeForm.promotionCode }));
