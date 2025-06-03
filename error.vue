@@ -49,4 +49,6 @@ const pageNotFound = computed(() => props.error?.statusCode === 404);
             </ErrorLayout>
         </template>
     </main>
+
+    <LayoutFooter />
 </template>
