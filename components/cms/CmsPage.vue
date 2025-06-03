@@ -42,7 +42,7 @@ const DynamicRender = () => {
             content: componentObject.section,
             class: {
                 ...cssClasses,
-                // change: replace max-w-screen-2xl with container
+                // change: replace max-w-(--breakpoint-2xl) with container
                 'container mx-auto': layoutStyles?.sizingMode === 'boxed',
             },
             style: {

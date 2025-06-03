@@ -4,7 +4,7 @@ await rerouteIfLoggedOut();
 </script>
 
 <template>
-    <NuxtLoadingIndicator class="!bg-brand-primary !bg-none" />
+    <NuxtLoadingIndicator class="!bg-brand-primary bg-none!" />
     <NuxtRouteAnnouncer />
 
     <ClientOnly>

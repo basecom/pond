@@ -1,10 +1,11 @@
+import tailwindcss from "@tailwindcss/vite";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     devtools: { enabled: true },
 
     modules: [
         '@pinia/nuxt',
-        '@nuxtjs/tailwindcss',
         '@formkit/auto-animate/nuxt', 
         '@vueuse/nuxt',
         '@nuxt/eslint',
@@ -13,7 +14,7 @@ export default defineNuxtConfig({
         '@nuxt/icon',
         'shadcn-nuxt',
         '@shopware/nuxt-module',
-        '@therealironduck/ducktory',
+        //'@therealironduck/ducktory',
     ],
 
     experimental: {
@@ -32,10 +33,13 @@ export default defineNuxtConfig({
     },
 
     vite: {
+        plugins: [tailwindcss()],
         optimizeDeps: {
             include: ['@shopware/cms-base-layer', '@shopware-pwa/helpers-next', 'scule'],
         },
     },
+
+    css: ['~/assets/css/main.css'],
 
     nitro: {
         preset: 'bun',
