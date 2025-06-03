@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     modules: [
         '@pinia/nuxt',
         '@nuxtjs/tailwindcss',
-        '@formkit/auto-animate/nuxt',
+        '@formkit/auto-animate/nuxt', 
         '@vueuse/nuxt',
         '@nuxt/eslint',
         '@nuxt/fonts',
@@ -20,6 +20,7 @@ export default defineNuxtConfig({
         asyncContext: true,
         sharedPrerenderData: true,
         viewTransition: true,
+        enforceModuleCompatibility: true,
     },
 
     features: {
@@ -28,6 +29,12 @@ export default defineNuxtConfig({
 
     future: {
         compatibilityVersion: 4,
+    },
+
+    vite: {
+        optimizeDeps: {
+            include: ['@shopware/cms-base-layer', '@shopware-pwa/helpers-next', 'scule'],
+        },
     },
 
     nitro: {
@@ -68,6 +75,9 @@ export default defineNuxtConfig({
             },
         ],
         lazy: true,
+        bundle: {
+            optimizeTranslationDirective: false,
+        }
     },
 
     compatibilityDate: '2025-02-24',
