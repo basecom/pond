@@ -1,23 +1,69 @@
 @import 'tailwindcss';
-@config "../../tailwind.config.js";
+@import "tw-animate-css";
+@source "../../stories";
+
+@theme inline {
+  --font-main: "PT Sans", sans-serif;
+  
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-brand-primary: #0099FF;
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f4f4f5;
+  --color-gray-200: #e4e4e7;
+  --color-gray-300: #d4d4d8;
+  --color-gray-400: #9f9fa9;
+  --color-gray-500: #71717b;
+  --color-gray-600: #52525c;
+  --color-gray-700: #3f3f46;
+  --color-gray-800: #27272a;
+  --color-gray-900: #18181b;
+  --color-gray-950: #09090b;
+  
+  --color-red-500: #fb2c36;
+  --color-yellow-500: #f0b100;
+  --color-green-500: #00c950;
+  --color-blue-500: #00a6f4;
+  
+  --radius: 0.5rem;
+}
 
 @layer utilities {
   * {
     @apply font-main antialiased hyphens-auto [hyphenate-limit-chars:6_3_3] [hyphenate-limit-lines:2] [hyphenate-limit-last:always] [hyphenate-limit-zone:8%];
   }
-
 }
 
-  @utility container {
-    margin-inline: auto;
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  
+  @media (width >= 640px) {
+    padding-inline: 1rem;
+  }
+  
+  @media (width >= 1024px) {
     padding-inline: 2rem;
   }
+  
+  @media (width >= 1280px) {
+    padding-inline: 5rem;
+  }
+  
+  @media (width >= 1536px) {
+    padding-inline: 6rem;
+  }
+}
+
 @layer base {
   :root {
-        --radius: 0.5rem
-    }
+    --radius: 0.5rem;
+  }
 }
 
 #__nuxt {
-    @apply flex flex-col min-h-screen;
+  @apply flex flex-col min-h-screen;
 }
