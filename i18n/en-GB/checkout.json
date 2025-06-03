@@ -71,6 +71,8 @@
             "digitalProduct": "Digital Product"
         },
         "promotion": {
+            "promotionApplied": "The promotion {promotionText} was applied.",
+            "criteriaNotMet": "The promotion code {promotionCode} was saved and will be applied automatically once the required conditions are met.",
             "successMessage": "Promotion code {promotionCode} was added",
             "errorMessage": "Something went wrong!",
             "code": {

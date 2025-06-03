@@ -2,8 +2,8 @@
 import type { PromotionCodeForm } from '~/types/form/CheckoutForm';
 import type { CartErrors } from '~/types/checkout/CartErrors';
 
-const { addPromotionCode, consumeCartErrors } = useCart();
-const { pushError, pushSuccess } = useNotifications();
+const { addPromotionCode, consumeCartErrors, cart } = useCart();
+const { pushError, pushSuccess, pushInfo } = useNotifications();
 const { handleError } = useHandleError();
 const { t } = useI18n();
 
@@ -21,7 +21,13 @@ const addPromotion = async (promotionCodeForm: PromotionCodeForm) => {
             return;
         }
 
-        pushSuccess(t('checkout.promotion.successMessage', { promotionCode: promotionCodeForm.promotionCode }));
+        const cartPromotion = cart.value.lineItems.find(item => item.payload?.code === promotionCodeForm.promotionCode);
+
+        if (cartPromotion) {
+            pushSuccess(t('checkout.promotion.successMessage', { promotionCode: promotionCodeForm.promotionCode }));
+        } else {
+            pushInfo(t('checkout.promotion.criteriaNotMet', { promotionCode: promotionCodeForm.promotionCode }), { timeout: 4000 });
+        }
     } catch (error) {
         handleError(error);
         pushError(t('checkout.promotion.errorMessage'));
