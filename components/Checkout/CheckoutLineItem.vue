@@ -53,13 +53,13 @@ const updateQuantity = async (quantityInput: number | undefined) => {
     isLoading.value = true;
 
     try {
-        const response = await changeItemQuantity(Number(quantityInput));
+        await changeItemQuantity(Number(quantityInput));
 
         if (product.value) {
             addedProductsNumbers > 0 ? trackAddToCart(product.value, addedProductsNumbers) : trackRemoveFromCart(product.value, Math.abs(addedProductsNumbers));
         }
         // Refresh cart after quantity update
-        await refreshCart(response);
+        await refreshCart();
 
         pushSuccess(t('checkout.lineItem.updateQuantity.successMessage', { lineItemName: lineItem.value.label }));
     } catch (error) {
