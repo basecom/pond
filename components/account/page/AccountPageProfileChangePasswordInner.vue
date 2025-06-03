@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import * as z from 'zod';
+import { useForm } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/zod';
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
-        isLoading?: boolean
+        isLoading?: boolean,
+        resetForm?: boolean
     }>(),
     {
         isLoading: false,
+        resetForm: false,
     },
 );
 
@@ -34,9 +38,36 @@ const schema = z.object({
 });
 export type ChangePasswordForm = z.infer<typeof schema>;
 
+const initialValues = {
+    newPassword: '',
+    newPasswordConfirm: '',
+    password: '',
+};
+
+const form = useForm({
+    validationSchema: toTypedSchema(schema),
+    initialValues,
+});
+
 const changePassword = async (passwordForm: ChangePasswordForm) => {
     emits('update-password', passwordForm);
 };
+
+// clear form
+watch(() => props.resetForm, (newValue) => {
+    if (newValue) {
+        form.resetForm({
+            values: initialValues,
+            errors: {},
+            touched: {},
+        });
+
+        // remove focus
+        if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+        }
+    }
+});
 </script>
 
 <template>
@@ -58,6 +89,7 @@ const changePassword = async (passwordForm: ChangePasswordForm) => {
                         <UiAutoForm
                             v-auto-animate
                             class="grid gap-4 md:grid-cols-2"
+                            :form="form"
                             :schema="schema"
                             :field-config="{
                                 newPassword: {

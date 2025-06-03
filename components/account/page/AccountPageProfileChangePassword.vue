@@ -3,10 +3,12 @@ import type { ChangePasswordForm } from '~/components/account/page/AccountPagePr
 
 withDefaults(
     defineProps<{
-        isLoading?: boolean
+        isLoading?: boolean,
+        resetForm?: boolean
     }>(),
     {
         isLoading: false,
+        resetForm: false,
     },
 );
 
@@ -16,5 +18,5 @@ defineEmits<{
 </script>
 
 <template>
-    <AccountPageProfileChangePasswordInner :is-loading="isLoading" @update-password="(passwordForm: ChangePasswordForm) => $emit('update-password', passwordForm)" />
+    <AccountPageProfileChangePasswordInner :is-loading="isLoading" :reset-form="resetForm" @update-password="(passwordForm: ChangePasswordForm) => $emit('update-password', passwordForm)" />
 </template>

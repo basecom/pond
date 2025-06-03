@@ -12,11 +12,19 @@ const props = withDefaults(
             personalData: boolean,
             mail: boolean,
             password: boolean,
+        },
+        resetForm?: {
+            mail: boolean,
+            password: boolean,
         }
     }>(),
     {
         isLoading: () => ({
             personalData: false,
+            mail: false,
+            password: false,
+        }),
+        resetForm: () => ({
             mail: false,
             password: false,
         }),
@@ -253,12 +261,14 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
     <slot name="change-mail">
         <AccountPageProfileChangeMail
             :customer="customer"
+            :reset-form="resetForm.mail"
             @update-mail="(mailForm: ChangeMailForm) => $emit('update-mail', mailForm)"
         />
     </slot>
 
     <slot name="change-password">
         <AccountPageProfileChangePassword
+            :reset-form="resetForm.password"
             @update-password="(passwordForm: ChangePasswordForm) => $emit('update-password', passwordForm)"
         />
     </slot>
