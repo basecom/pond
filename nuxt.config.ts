@@ -1,4 +1,4 @@
-import tailwindcss from "@tailwindcss/vite";
+import tailwindcss from '@tailwindcss/vite';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -14,7 +14,7 @@ export default defineNuxtConfig({
         '@nuxt/icon',
         'shadcn-nuxt',
         '@shopware/nuxt-module',
-        //'@therealironduck/ducktory',
+        '@therealironduck/ducktory',
     ],
 
     experimental: {
@@ -81,7 +81,7 @@ export default defineNuxtConfig({
         lazy: true,
         bundle: {
             optimizeTranslationDirective: false,
-        }
+        },
     },
 
     compatibilityDate: '2025-02-24',
