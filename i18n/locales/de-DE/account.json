@@ -85,6 +85,7 @@
                     "description": "Ihre Standard-Zahlungsart wurde erfolgreich geändert"
                 }
             }
-        }
+        },
+      "wishlistNoProducts": "Sie haben noch keine Produkte auf Ihrem Merkzettel"
     }
 }

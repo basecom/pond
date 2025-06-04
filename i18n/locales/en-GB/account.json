@@ -86,6 +86,7 @@
                     "description": "Your default payment method has been successfully changed"
                 }
             }
-        }
+        },
+      "wishlistNoProducts": "There are no products in your wishlist yet"
     }
 }
