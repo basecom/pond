@@ -58,12 +58,6 @@
   }
 }
 
-@layer base {
-  :root {
-    --radius: 0.5rem;
-  }
-}
-
 #__nuxt {
   @apply flex flex-col min-h-screen;
 }

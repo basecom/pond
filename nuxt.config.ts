@@ -1,4 +1,5 @@
 import tailwindcss from '@tailwindcss/vite';
+import { autoInjectTWTheme } from './vite/autoInjectTWTheme';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -33,7 +34,7 @@ export default defineNuxtConfig({
     },
 
     vite: {
-        plugins: [tailwindcss()],
+        plugins: [autoInjectTWTheme(), tailwindcss()],
         optimizeDeps: {
             include: ['@shopware/cms-base-layer', '@shopware-pwa/helpers-next', 'scule'],
         },
