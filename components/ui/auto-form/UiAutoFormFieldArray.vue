@@ -70,7 +70,7 @@ provide(FieldContextKey, fieldContext);
                                         :config="config as ConfigItem"
                                     />
 
-                                    <div class="!my-4 flex justify-end">
+                                    <div class="my-4! flex justify-end">
                                         <UiButton
                                             type="button"
                                             size="icon"

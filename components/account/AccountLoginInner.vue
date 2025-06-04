@@ -60,7 +60,7 @@ const login = async (loginData: LoginData) => {
         }"
         @submit="login"
     >
-        <div class="!mt-0 grid">
+        <div class="mt-0! grid">
             <slot name="password-forgotten">
                 <NuxtLinkLocale to="/account/todo" class="mb-6 justify-self-start py-2 text-sm underline underline-offset-4">
                     {{ $t('account.login.password.forgotten') }}

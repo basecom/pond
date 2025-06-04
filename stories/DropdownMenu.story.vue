@@ -29,25 +29,6 @@
                     <span>Animal of the Month</span>
                 </UiDropdownMenuItem>
 
-                <UiDropdownMenuSub>
-                    <UiDropdownMenuSubTrigger>
-                        <span>Favorite Animals</span>
-                    </UiDropdownMenuSubTrigger>
-                    <UiDropdownMenuPortal>
-                        <UiDropdownMenuSubContent>
-                            <UiDropdownMenuItem>
-                                <span>Frog</span>
-                            </UiDropdownMenuItem>
-                            <UiDropdownMenuItem>
-                                <span>Snail</span>
-                            </UiDropdownMenuItem>
-                            <UiDropdownMenuItem>
-                                <span>Fish</span>
-                            </UiDropdownMenuItem>
-                        </UiDropdownMenuSubContent>
-                    </UiDropdownMenuPortal>
-                </UiDropdownMenuSub>
-
                 <UiDropdownMenuItem>
                     <span>Add Animal</span>
                     <UiDropdownMenuShortcut>⌘+A</UiDropdownMenuShortcut>
