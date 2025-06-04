@@ -44,6 +44,10 @@ export default defineNuxtConfig({
 
     nitro: {
         preset: 'bun',
+        moduleSideEffects: ['vue'],
+        externals: {
+            inline: ['vue', '@vue/runtime-core', '@vue/runtime-dom', '@vue/reactivity']
+        }
     },
 
     fonts: {
