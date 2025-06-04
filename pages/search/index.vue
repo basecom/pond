@@ -73,6 +73,13 @@ listingStore.initializeCriteria(
     route.query,
 );
 
+useBreadcrumbs([
+    {
+        name: t('search.resultPage.breadcrumbName'),
+        path: `/search?search=${route.query.search}`,
+    },
+]);
+
 const productSearch = await loadProducts(cacheKey.value);
 setInitialListing(productSearch.value as Schemas['ProductListingResult']);
 listingStore.setSearchResult(productSearch.value as Schemas['ProductListingResult'], true);
@@ -104,13 +111,6 @@ watch(
     },
 );
 
-useBreadcrumbs([
-    {
-        name: t('search.resultPage.breadcrumbName'),
-        path: `/search?search=${route.query.search}`,
-    },
-]);
-
 const cardSkeletons = computed(() => {
     if (!listingState.value.pagination.total || !listingState.value.pagination.limit) {
         return 24;
@@ -140,21 +140,19 @@ const cardSkeletons = computed(() => {
 
         <div class="flex flex-wrap gap-4">
             <div class="w-full">
-                <ClientOnly>
-                    <ProductListingSidebar
-                        v-if="listingState.filters.all"
-                        :filters="listingState.filters.all"
-                        :selected-filters="listingState.filters.applied"
-                        :show-reset-button="listingState.filters.modified"
-                        :sorting-options="listingState.sorting.options"
-                        :selected-sorting="listingState.sorting.current ?? 'name-asc'"
-                        product-listing-store-key="search"
-                        @sorting-changed="onSortChange"
-                        @filter-changed="onFilterChange"
-                        @reset-filters="onResetFilters"
-                        @remove-filter="(event: RemoveFilterEvent) => onRemoveFilter(event)"
-                    />
-                </ClientOnly>
+                <ProductListingSidebar
+                    v-if="listingState.filters.all"
+                    :filters="listingState.filters.all"
+                    :selected-filters="listingState.filters.applied"
+                    :show-reset-button="listingState.filters.modified"
+                    :sorting-options="listingState.sorting.options"
+                    :selected-sorting="listingState.sorting.current ?? 'name-asc'"
+                    product-listing-store-key="search"
+                    @sorting-changed="onSortChange"
+                    @filter-changed="onFilterChange"
+                    @reset-filters="onResetFilters"
+                    @remove-filter="(event: RemoveFilterEvent) => onRemoveFilter(event)"
+                />
             </div>
 
             <div class="grid w-full grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">

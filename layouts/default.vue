@@ -27,9 +27,6 @@ useBreadcrumbs();
 
 await customerStore.refreshContext();
 
-const navigationStore = useNavigationStore();
-await navigationStore.loadNavigation('main-navigation', 2);
-
 const route = useRoute();
 
 if (route.path.includes('/checkout')) {

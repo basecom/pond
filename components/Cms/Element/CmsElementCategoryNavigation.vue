@@ -13,7 +13,6 @@ const { isActive } = useActivePath();
 
 const route = useRoute();
 const listingStore = useListingStore(route.path === '/search' ? 'search' : 'category');
-
 </script>
 
 <template>
