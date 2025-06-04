@@ -5,10 +5,12 @@ import type { ChangeMailForm } from '~/components/account/page/AccountPageProfil
 withDefaults(
     defineProps<{
         customer: Schemas['Customer'];
-        isLoading?: boolean
+        isLoading?: boolean,
+        resetForm?: boolean
     }>(),
     {
         isLoading: false,
+        resetForm: false,
     },
 );
 
@@ -21,6 +23,7 @@ defineEmits<{
     <AccountPageProfileChangeMailInner
         :customer="customer"
         :is-loading="isLoading"
+        :reset-form="resetForm"
         @update-mail="(mailForm: ChangeMailForm) => $emit('update-mail', mailForm)"
     />
 </template>

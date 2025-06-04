@@ -3,8 +3,8 @@ import * as z from 'zod';
 
 withDefaults(
     defineProps<{
-      isLoading?: boolean;
-      errorMessage?: string;
+        isLoading?: boolean;
+        errorMessage?: string;
     }>(),
     {
         isLoading: false,
@@ -13,7 +13,7 @@ withDefaults(
 );
 
 const emits = defineEmits<{
-  login: [loginData: LoginData];
+    login: [loginData: LoginData];
 }>();
 
 const { t } = useI18n();
@@ -38,6 +38,7 @@ const login = async (loginData: LoginData) => {
 </script>
 
 <template>
+    <slot name="headline" />
     <UiAutoForm
         class="space-y-6"
         :schema="schema"
