@@ -1,0 +1,25 @@
+{
+  "checkout": {
+    "proceedToCheckout": "Go to checkout",
+    "proceedToCart": "Display shopping cart",
+    "deliveryPeriod": "Delivery period",
+    "quantity": "Quantity",
+    "lineItemUnitPriceDescriptor": "Unit",
+    "removeFromWishlist": "Remove from wishlist",
+    "addToWishlist": "Add to wishlist",
+    "addPromotionPlaceholder": "Enter promo code...",
+    "addPromotionLabel": "Promo code",
+    "subTotal": "Subtotal",
+    "summaryShipping": "Shipping",
+    "cartItemInfoId": "Product number",
+    "noLineItems": "Your shopping cart is empty.",
+    "cart": "Shopping cart",
+    "items": "items",
+    "success": "Action was successful",
+    "promoLabel": "Promo Code",
+    "addToWishlistSuccess": "Product was successfully added to wishlist.",
+    "removeFromWishlistSuccess": "Product was successfully removed from wishlist.",
+    "removeSuccess": "Product was successfully removed.",
+    "promotionSuccess": "Promotion was successfully added."
+  }
+}
