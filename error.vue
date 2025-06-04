@@ -36,4 +36,6 @@ useHead(() => ({
         <h1>{{ error?.statusCode }}</h1>
         <p>{{ error?.message }}</p>
     </main>
+
+    <LayoutFooter />
 </template>
