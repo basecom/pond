@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import * as z from 'zod';
 import type { Schemas } from '@shopware/api-client/api-types';
+import { useForm } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/zod';
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
         customer: Schemas['Customer'];
-        isLoading?: boolean
+        isLoading?: boolean,
+        resetForm?: boolean
     }>(),
     {
         isLoading: false,
+        resetForm: false,
     },
 );
 
@@ -38,9 +42,36 @@ const schema = z.object({
 });
 export type ChangeMailForm = z.infer<typeof schema>;
 
+const initialValues = {
+    email: '',
+    emailConfirmation: '',
+    password: '',
+};
+
+const form = useForm({
+    validationSchema: toTypedSchema(schema),
+    initialValues,
+});
+
 const changeMail = async (mailData: ChangeMailForm) => {
     emits('update-mail', mailData);
 };
+
+// clear form
+watch(() => props.resetForm, (newValue) => {
+    if (newValue) {
+        form.resetForm({
+            values: initialValues,
+            errors: {},
+            touched: {},
+        });
+
+        // remove focus
+        if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+        }
+    }
+});
 </script>
 
 <template>
@@ -66,6 +97,7 @@ const changeMail = async (mailData: ChangeMailForm) => {
                         <UiAutoForm
                             v-auto-animate
                             class="grid gap-4 md:grid-cols-2"
+                            :form="form"
                             :schema="schema"
                             :field-config="{
                                 email: {
