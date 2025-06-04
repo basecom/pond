@@ -5,6 +5,7 @@
             "detail": "The requested page could not be found."
         },
         "generalHeadline": "Something went wrong, unfortunately.",
+        "generalButton": "Back to homepage",
         "null": "An unknown error occurred.",
         "CHECKOUT__CUSTOMER_NOT_FOUND": "No account could be found with the provided credentials.",
         "CHECKOUT__CUSTOMER_AUTH_BAD_CREDENTIALS": "No account could be found with the provided credentials.",
