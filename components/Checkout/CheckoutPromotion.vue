@@ -22,6 +22,7 @@ const addPromotion = async (promotionCodeForm: PromotionCodeForm) => {
             return;
         }
 
+        // Ignore because the code field specific for promotions is missing in the type definition of LineItem
         // eslint-disable-next-line
         // @ts-ignore
         const cartPromotion = cart.value.lineItems.find((item: Schemas['LineItem']) => item.payload?.code === promotionCodeForm.promotionCode);
