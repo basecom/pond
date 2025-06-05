@@ -40,7 +40,7 @@ hr {
 }
 
 .cms_html a:not(.btn) {
-    @apply text-brand-secondary hover:text-brand-primary text-lg relative underline;
+    @apply text-brand-secondary hover:text-brand-primary relative underline;
 }
 
 .cms_html a:not(.btn)::before {
