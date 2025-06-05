@@ -71,6 +71,8 @@
             "digitalProduct": "Digitales Produkt"
         },
         "promotion": {
+            "promotionApplied": "Die Aktion {promotionText} wurde angewendet.",
+            "criteriaNotMet": "Der Aktionscode {promotionCode} wurde gespeichert und wird automatisch angewendet, sobald die erforderlichen Bedingungen erfüllt sind.",
             "successMessage": "Der Rabattcode {promotionCode} wurde hinzugefügt",
             "errorMessage": "Etwas ist schiefgegangen!",
             "code": {

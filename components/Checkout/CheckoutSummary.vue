@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Schemas } from '@shopware/api-client/api-types';
+
 withDefaults(
     defineProps<{
         reducedDisplay?: boolean;
@@ -7,7 +9,8 @@ withDefaults(
         reducedDisplay: false,
     },
 );
-
+const { t } = useI18n();
+const { pushSuccess } = useNotifications();
 const { preselectShippingMethodFallback } = useShippingMethod();
 await preselectShippingMethodFallback();
 
@@ -15,6 +18,20 @@ const { totalPrice, shippingTotal, cart } = useCart();
 
 const netPrice = computed(() => cart.value?.price?.netPrice || 0);
 const calculatedTaxes = computed(() => cart.value?.price?.calculatedTaxes || []);
+
+watch(cart, async () => {
+    for (const key in cart.value.errors) {
+        if (key.includes('promotion-discount-added')) {
+            const error = cart.value.errors[key];
+
+            const lineItem = cart.value.lineItems.find((item: Schemas['LineItem']) => item.id === error.parameters?.discountLineItemId);
+
+            if (lineItem) {
+                pushSuccess(t('checkout.promotion.promotionApplied', { promotionText: lineItem.payload?.code?.length ? lineItem.payload.code : lineItem.description }));
+            }
+        }
+    }
+});
 </script>
 
 <template>
