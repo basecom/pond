@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import type {Schemas} from "#shopware";
-import type {BoxLayout, DisplayMode} from "@shopware/composables";
-import {buildUrlPrefix, getProductName, getProductRoute, getSmallestThumbnailUrl} from "@shopware/helpers";
-import {useUrlResolver} from "#imports";
-import {RouterLink} from "vue-router";
-import {computed, toRefs} from "vue";
+import type {Schemas} from '#shopware';
+import type {BoxLayout, DisplayMode} from '@shopware/composables';
+import {buildUrlPrefix, getProductName, getProductRoute, getSmallestThumbnailUrl} from '@shopware/helpers';
+import {useUrlResolver} from '#imports';
+import {RouterLink} from 'vue-router';
+import {computed, toRefs} from 'vue';
 
 const props = withDefaults(
     defineProps<{
-        product: Schemas["Product"];
+        product: Schemas['Product'];
         layoutType?: BoxLayout;
         isProductListing?: boolean;
         displayMode?: DisplayMode;
@@ -16,8 +16,8 @@ const props = withDefaults(
         autoPlayVideoInListing?: boolean;
     }>(),
     {
-        layoutType: "standard",
-        displayMode: "standard",
+        layoutType: 'standard',
+        displayMode: 'standard',
         isProductListing: false,
         allowBuyInListing: false,
         autoPlayVideoInListing: false,
@@ -31,7 +31,7 @@ const emit = defineEmits<{
 const { product } = toRefs(props);
 const addToCart = () => {
     emit('addToCart');
-}
+};
 
 const { getUrlPrefix } = useUrlResolver();
 
@@ -49,17 +49,17 @@ const srcPath = computed(() => {
 <template>
     <slot name="wrapper">
         <div
-            class="sw-product-card group relative max-w-full bg-white border border-gray-200 rounded-lg transform transition duration-300 hover:scale-101"
+            class="sw-product-card hover:scale-101 group relative max-w-full rounded-lg border border-gray-200 bg-white transition duration-300"
             data-testid="product-box"
         >
             <slot name="product-image">
                 <RouterLink
                     :to="buildUrlPrefix(getProductRoute(product), getUrlPrefix())"
                     :class="[
-                    'relative group w-full inline-block overflow-hidden rounded-t-lg',
-                    layoutType === 'image' ? 'h-80' : 'h-60',
-                    mediaType === 'image' ? 'hover:opacity-75' : '',
-                ]"
+                        'group relative inline-block w-full overflow-hidden rounded-t-lg',
+                        layoutType === 'image' ? 'h-80' : 'h-60',
+                        mediaType === 'image' ? 'hover:opacity-75' : '',
+                    ]"
                 >
                     <template v-if="mediaType === 'image'">
                         <slot name="product-cover-image">
@@ -67,33 +67,33 @@ const srcPath = computed(() => {
                                 loading="lazy"
                                 :src="srcPath"
                                 :alt="getProductName({ product }) || ''"
-                                class="absolute inset-0 w-full h-full rounded-t-lg"
+                                class="absolute inset-0 size-full rounded-t-lg"
                                 :class="{
                                     'object-cover':
-                                      displayMode === 'cover' ||
-                                      (displayMode === 'standard' && layoutType === 'image'),
+                                        displayMode === 'cover' ||
+                                        (displayMode === 'standard' && layoutType === 'image'),
                                     'object-contain': displayMode === 'contain',
                                     'object-scale-down':
-                                      displayMode === 'standard' && layoutType !== 'image',
+                                        displayMode === 'standard' && layoutType !== 'image',
                                 }"
                                 data-testid="product-box-img"
-                            />
+                            >
                         </slot>
                     </template>
                     <template v-else-if="mediaType === 'video'">
                         <slot name="product-cover-video">
                             <video
                                 :src="srcPath"
-                                class="absolute inset-0 w-full h-full object-cover rounded-t-lg"
+                                class="absolute inset-0 size-full rounded-t-lg object-cover"
                                 data-testid="product-box-video"
                                 :autoplay="autoPlayVideoInListing"
                                 loop
                                 muted
                                 playsinline
+                                :controls="showControls"
                                 @mouseenter="showControls = true"
                                 @mouseleave="showControls = false"
-                                :controls="showControls"
-                            ></video>
+                            />
                         </slot>
                     </template>
                     <template v-else>
@@ -101,7 +101,7 @@ const srcPath = computed(() => {
                             <img
                                 src="/fallback-product-cover.svg"
                                 :alt="getProductName({ product }) || ''"
-                                class="mx-auto my-auto p-8 h-full object-contain filter invert brightness-[0.6] contrast-[0.7]"
+                                class="m-auto h-full object-contain p-8 brightness-[0.6] contrast-[0.7] invert"
                             >
                         </slot>
                     </template>
@@ -109,14 +109,14 @@ const srcPath = computed(() => {
             </slot>
 
             <slot name="product-info">
-                <div class="p-4 mt-auto">
+                <div class="mt-auto p-4">
                     <slot name="variant-characteristics">
-                        <p class="text-xs text-gray-600 mt-4">Size: XS</p>
+                        <p class="mt-4 text-xs text-gray-600">Size: XS</p>
                     </slot>
 
                     <slot name="title">
                         <RouterLink
-                            class="line-clamp-2 mt-4"
+                            class="mt-4 line-clamp-2"
                             :to="buildUrlPrefix(getProductRoute(product), getUrlPrefix())"
                             data-testid="product-box-product-name-link"
                         >
@@ -127,7 +127,7 @@ const srcPath = computed(() => {
                     </slot>
 
                     <slot name="product-description">
-                        <p class="text-sm text-gray-600 mt-6">{{ product.translated.description }}</p>
+                        <p class="mt-6 text-sm text-gray-600">{{ product.translated.description }}</p>
                     </slot>
 
                     <slot name="price">
@@ -142,7 +142,7 @@ const srcPath = computed(() => {
                             <UiButton
                                 class="w-full"
                                 @click="addToCart"
-                                >
+                            >
                                 <!-- TODO: snippet -->
                                 Add to Cart
                             </UiButton>

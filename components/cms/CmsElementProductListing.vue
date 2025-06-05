@@ -163,7 +163,7 @@ compareRouteQueryWithInitialListing();
             :key="product.id"
             :product="product"
             :is-product-listing="isProductListing"
-            class="p-4 border rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 ease-in-out w-full lg:w-3/7 2xl:w-7/24"
+            class="lg:w-3/7 2xl:w-7/24 w-full rounded-lg border p-4 shadow-md transition-shadow duration-200 ease-in-out hover:shadow-lg"
         />
     </div>
     <div

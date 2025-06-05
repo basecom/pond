@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import ProductCardInner from "~/components/product/ProductCardInner.vue";
-import type {Schemas} from "#shopware";
-import type {BoxLayout, DisplayMode} from "@shopware/composables";
-import {toRefs} from "vue";
+import ProductCardInner from '~/components/product/ProductCardInner.vue';
+import type {Schemas} from '#shopware';
+import type {BoxLayout, DisplayMode} from '@shopware/composables';
+import {toRefs} from 'vue';
 
 const props = withDefaults(
     defineProps<{
-        product: Schemas["Product"];
+        product: Schemas['Product'];
         layoutType?: BoxLayout;
         isProductListing?: boolean;
         displayMode?: DisplayMode;
     }>(),
     {
-        layoutType: "standard",
-        displayMode: "standard",
+        layoutType: 'standard',
+        displayMode: 'standard',
         isProductListing: false,
     },
 );
@@ -27,17 +27,17 @@ const autoPlayVideoInListing = configStore.get('core.listing.autoplayVideoInList
 const addProductToCart = () => {
     //TODO:Add to cart
     console.log('added product to cart');
-}
+};
 </script>
 
 <template>
     <ProductCardInner
-        @add-to-cart="addProductToCart"
         :product="product"
         :layout-type="layoutType"
         :is-product-listing="isProductListing"
         :display-mode="displayMode"
         :allow-buy-in-listing="allowBuyInListing"
         :auto-play-video-in-listing="autoPlayVideoInListing"
+        @add-to-cart="addProductToCart"
     />
 </template>
