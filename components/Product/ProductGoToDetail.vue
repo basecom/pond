@@ -10,6 +10,8 @@ defineProps<{
 <template>
     <LocaleLink :to="getProductRoute(product)">
         <FormKit
+            id="productGoToDetailSubmit"
+            name="productGoToDetailSubmit"
             type="submit"
             :classes="{
                 input: 'bg-gray hover:bg-gray-dark border-none',

@@ -2,7 +2,6 @@
 const { languageIdChain } = useSessionContext();
 
 const navigationStore = useNavigationStore();
-await navigationStore.loadNavigation('main-navigation', 2);
 const { mainNavigation } = storeToRefs(navigationStore);
 
 watch(

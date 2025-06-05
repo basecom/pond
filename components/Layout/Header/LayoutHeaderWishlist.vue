@@ -14,9 +14,11 @@ const { t } = useI18n();
             icon="heart"
             :title="t('icon.wishlist')"
         />
-        <UtilityPill
-            :number="wishlistCount"
-            class="absolute bottom-2.5 left-3"
-        />
+        <ClientOnly>
+            <UtilityPill
+                :number="wishlistCount"
+                class="absolute bottom-2.5 left-3"
+            />
+        </ClientOnly>
     </LocaleLink>
 </template>

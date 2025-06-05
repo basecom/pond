@@ -73,6 +73,13 @@ listingStore.initializeCriteria(
     route.query,
 );
 
+useBreadcrumbs([
+    {
+        name: t('search.resultPage.breadcrumbName'),
+        path: `/search?search=${route.query.search}`,
+    },
+]);
+
 const productSearch = await loadProducts(cacheKey.value);
 setInitialListing(productSearch.value as Schemas['ProductListingResult']);
 listingStore.setSearchResult(productSearch.value as Schemas['ProductListingResult'], true);
@@ -103,13 +110,6 @@ watch(
         listingStore.updateCriteria(newQuery, pageNotChanged);
     },
 );
-
-useBreadcrumbs([
-    {
-        name: t('search.resultPage.breadcrumbName'),
-        path: `/search?search=${route.query.search}`,
-    },
-]);
 
 const cardSkeletons = computed(() => {
     if (!listingState.value.pagination.total || !listingState.value.pagination.limit) {

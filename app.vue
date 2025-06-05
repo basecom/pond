@@ -2,6 +2,14 @@
 const { locale } = useI18n();
 const url = useRequestURL();
 const route = useRoute();
+const { handleError } = useHandleError();
+
+try {
+    const navigationStore = useNavigationStore();
+    await navigationStore.loadNavigation('main-navigation', 2);
+} catch (error) {
+    handleError(error, false);
+}
 
 useCrossTabState();
 
@@ -21,8 +29,12 @@ useHead(() => ({
         },
     ],
 }));
+
+const ssrId = () => useId();
 </script>
 
 <template>
-    <NuxtLayout />
+    <ConfigProvider :use-id="ssrId">
+        <NuxtLayout />
+    </ConfigProvider>
 </template>

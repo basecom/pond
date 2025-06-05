@@ -42,6 +42,8 @@ const handleAddToCart = async () => {
     <div class="p-4 pt-0">
         <FormKit
             v-if="product.availableStock > 0"
+            id="productAddToCartForm"
+            name="productAddToCartForm"
             type="form"
             :actions="false"
             :classes="{
@@ -60,15 +62,32 @@ const handleAddToCart = async () => {
                 @on-enter="handleAddToCart"
             />
 
-            <FormKit
-                type="submit"
-                :classes="{
-                    outer: 'w-full',
-                }"
-                :label="props.label ? $t('product.addToCart.submitLabel') : ' '"
-                :prefix-icon="props.icon ? 'cart-shopping' : ''"
-                :title="props.icon ? t('product.addToCart.submitLabel') : ''"
-            />
+            <ClientOnly>
+                <FormKit
+                    id="addToCart"
+                    name="addToCart"
+                    type="submit"
+                    :classes="{
+                        outer: 'w-full',
+                    }"
+                    :label="props.label ? $t('product.addToCart.submitLabel') : ' '"
+                    :prefix-icon="props.icon ? 'cart-shopping' : ''"
+                    :title="props.icon ? t('product.addToCart.submitLabel') : ''"
+                />
+
+                <template #fallback>
+                    <FormKit
+                        id="addToCart"
+                        name="addToCart"
+                        type="submit"
+                        :classes="{
+                            outer: 'w-full',
+                        }"
+                        :label="props.label ? $t('product.addToCart.submitLabel') : ' '"
+                        :title="props.icon ? t('product.addToCart.submitLabel') : ''"
+                    />
+                </template>
+            </ClientOnly>
         </FormKit>
 
         <div

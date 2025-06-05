@@ -32,7 +32,7 @@ const onUpdatedOpen = (value: boolean) => {
         v-model:open="controller.isOpen.value"
         @update:open="onUpdatedOpen"
     >
-        <DialogTrigger>
+        <DialogTrigger as-child>
             <slot name="trigger" />
         </DialogTrigger>
         <DialogPortal>

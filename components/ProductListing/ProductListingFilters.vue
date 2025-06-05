@@ -48,99 +48,101 @@ const { t } = useI18n();
 </script>
 
 <template>
-    <div
-        v-if="isDesktop.value && filters.length"
-        class="flex flex-col gap-4"
-    >
+    <ClientOnly>
         <div
-            class="h-11 overflow-hidden transition-all duration-300"
-            :class="{
-                'h-full': displayFullPopoverContainer,
-            }"
+            v-if="isDesktop.value && filters.length"
+            class="flex flex-col gap-4"
         >
-            <div class="relative z-10 flex flex-col gap-2">
-                <div
-                    ref="filterPopoverContainer"
-                    class="flex flex-row flex-wrap gap-2"
-                >
-                    <template
-                        v-for="filter in props.filters"
-                        :key="filter.code"
+            <div
+                class="h-11 overflow-hidden transition-all duration-300"
+                :class="{
+                    'h-full': displayFullPopoverContainer,
+                }"
+            >
+                <div class="relative z-10 flex flex-col gap-2">
+                    <div
+                        ref="filterPopoverContainer"
+                        class="flex flex-row flex-wrap gap-2"
                     >
-                        <component
-                            :is="componentsMapping[filter.code]"
-                            :filter="filter"
-                            :selected-values="props.selectedFilters"
-                            :product-listing-store-key="productListingStoreKey"
-                            @filter-changed="onFilterChanged"
-                        />
-                    </template>
+                        <template
+                            v-for="filter in props.filters"
+                            :key="filter.code"
+                        >
+                            <component
+                                :is="componentsMapping[filter.code]"
+                                :filter="filter"
+                                :selected-values="props.selectedFilters"
+                                :product-listing-store-key="productListingStoreKey"
+                                @filter-changed="onFilterChanged"
+                            />
+                        </template>
+                    </div>
+
+                    <button
+                        v-if="containerMultipleLined"
+                        ref="expandPopoverContainerButton"
+                        class="flex h-fit items-center gap-2 whitespace-nowrap rounded border border-gray px-4 py-2"
+                        :title="displayFullPopoverContainer ? t('icon.showLess') : t('icon.showMore')"
+                        @click="() => (displayFullPopoverContainer = !displayFullPopoverContainer)"
+                    >
+                        <template v-if="displayFullPopoverContainer">
+                            <span>
+                                {{ $t('listing.sidebar.filter.showLess') }}
+                            </span>
+
+                            <FormKitIcon
+                                icon="minus"
+                                :title="t('icon.showLess')"
+                                class="size-3"
+                            />
+                        </template>
+
+                        <template v-else>
+                            <span>
+                                {{ $t('listing.sidebar.filter.showMore') }}
+                            </span>
+
+                            <FormKitIcon
+                                icon="plus"
+                                :title="t('icon.showMore')"
+                                class="size-3"
+                            />
+                        </template>
+                    </button>
                 </div>
+            </div>
 
-                <button
-                    v-if="containerMultipleLined"
-                    ref="expandPopoverContainerButton"
-                    class="flex h-fit items-center gap-2 whitespace-nowrap rounded border border-gray px-4 py-2"
-                    :title="displayFullPopoverContainer ? t('icon.showLess') : t('icon.showMore')"
-                    @click="() => (displayFullPopoverContainer = !displayFullPopoverContainer)"
+            <div v-if="selectedFilters" class="mb-4 flex flex-wrap gap-3">
+                <template
+                    v-for="(filter, key) in selectedFilters"
+                    :key="key"
                 >
-                    <template v-if="displayFullPopoverContainer">
-                        <span>
-                            {{ $t('listing.sidebar.filter.showLess') }}
-                        </span>
+                    <component
+                        :is="componentsMappingBadge[key]"
+                        :filter="filter"
+                        :product-listing-store-key="productListingStoreKey"
+                        @remove-filter="(event: RemoveFilterEvent) => $emit('remove-filter', event)"
+                    />
+                </template>
 
-                        <FormKitIcon
-                            icon="minus"
-                            :title="t('icon.showLess')"
-                            class="size-3"
-                        />
-                    </template>
-
-                    <template v-else>
-                        <span>
-                            {{ $t('listing.sidebar.filter.showMore') }}
-                        </span>
-
-                        <FormKitIcon
-                            icon="plus"
-                            :title="t('icon.showMore')"
-                            class="size-3"
-                        />
-                    </template>
-                </button>
+                <UtilityBadge
+                    v-if="props.showResetButton"
+                    :content="$t('listing.sidebar.filter.reset')"
+                    size="md"
+                    type="danger"
+                    suffix-icon="x"
+                    class="cursor-pointer"
+                    @click="$emit('reset-filters')"
+                />
             </div>
         </div>
 
-        <div v-if="selectedFilters" class="mb-4 flex flex-wrap gap-3">
-            <template
-                v-for="(filter, key) in selectedFilters"
-                :key="key"
-            >
-                <component
-                    :is="componentsMappingBadge[key]"
-                    :filter="filter"
-                    :product-listing-store-key="productListingStoreKey"
-                    @remove-filter="(event: RemoveFilterEvent) => $emit('remove-filter', event)"
-                />
-            </template>
-
-            <UtilityBadge
-                v-if="props.showResetButton"
-                :content="$t('listing.sidebar.filter.reset')"
-                size="md"
-                type="danger"
-                suffix-icon="x"
-                class="cursor-pointer"
-                @click="$emit('reset-filters')"
-            />
-        </div>
-    </div>
-
-    <ProductListingOffcanvasFilter
-        v-else
-        :filters="filters"
-        :selected-filters="selectedFilters"
-        :product-listing-store-key="productListingStoreKey"
-        @filter-changed="onFilterChanged"
-    />
+        <ProductListingOffcanvasFilter
+            v-else
+            :filters="filters"
+            :selected-filters="selectedFilters"
+            :product-listing-store-key="productListingStoreKey"
+            @filter-changed="onFilterChanged"
+        />
+    </ClientOnly>
 </template>

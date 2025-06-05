@@ -20,7 +20,6 @@ const icon = computed(() => iconMap[props.notification.type] || 'information');
 <template>
     <div
         v-if="notification.message.length > 0"
-        :id="`toast-${notification.id}`"
         class="flex items-center gap-x-4 rounded-md border bg-white p-3 shadow-lg"
         :class="{
             'border-status-info': notification.type === 'info',

@@ -16,10 +16,12 @@ const { t } = useI18n();
             icon="cart-shopping"
             class="block size-6"
         />
-        <UtilityPill
-            :number="cartItemsCount"
-            class="absolute bottom-2.5 left-3"
-        />
+        <ClientOnly>
+            <UtilityPill
+                :number="cartItemsCount"
+                class="absolute bottom-2.5 left-3"
+            />
+        </ClientOnly>
     </button>
 
     <LazyLayoutSidebar

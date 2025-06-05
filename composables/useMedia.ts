@@ -19,7 +19,7 @@ export function useMedia() {
         const srcPath = computed(() => {
             const biggestParam =
                 width.value > height.value ? `width=${roundUp(width.value)}` : `height=${roundUp(height.value)}`;
-            return `${imageAttrs.value.src}?${biggestParam}&fit=crop,smart`;
+            return imageAttrs.value.src ? `${imageAttrs.value.src}?${biggestParam}&fit=crop,smart` : undefined;
         });
 
         return {

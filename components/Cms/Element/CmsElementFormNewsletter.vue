@@ -127,6 +127,8 @@ watch(customer, async newCustomer => {
     </div>
 
     <FormKit
+        :id="`newsletterForm-${element.id}`"
+        :name="`newsletterForm-${element.id}`"
         type="form"
         :actions="false"
         :classes="{
@@ -136,18 +138,20 @@ watch(customer, async newCustomer => {
     >
         <FormKit
             v-if="!isSubscriber"
+            :id="`newsletterRadioButton-${element.id}`"
             v-model="newsletterAction"
-            name="action"
+            :name="`newsletterRadioButton-${element.id}`"
             type="radio"
             :options="newsletterOptions"
             validation="required"
         />
 
         <FormKit
+            :id="`newsletterEmail-${element.id}`"
             v-model="customerMail"
             type="email"
             :label="$t('account.login.email.label')"
-            name="email"
+            :name="`newsletterEmail-${element.id}`"
             :placeholder="$t('account.login.email.placeholder')"
             validation="required"
             :classes="{
@@ -157,8 +161,9 @@ watch(customer, async newCustomer => {
 
         <template v-if="newsletterAction === $t('cms.element.form.newsletter.subscribe')">
             <FormKit
+                :id="`newsletterSalutationId-${element.id}`"
                 type="select"
-                name="salutationId"
+                :name="`newsletterSalutationId-${element.id}`"
                 :placeholder="$t('account.register.salutation.placeholder')"
                 :options="salutationOptions"
                 :classes="{
@@ -167,9 +172,10 @@ watch(customer, async newCustomer => {
             />
 
             <FormKit
+                :id="`newsletterFirstName-${element.id}`"
                 type="text"
                 :label="$t('account.register.firstname.label')"
-                name="firstName"
+                :name="`newsletterFirstName-${element.id}`"
                 :placeholder="$t('account.register.firstname.placeholder')"
                 :classes="{
                     outer: 'col-span-1',
@@ -177,9 +183,10 @@ watch(customer, async newCustomer => {
             />
 
             <FormKit
+                :id="`newsletterLastName-${element.id}`"
                 type="text"
                 :label="$t('account.register.lastname.label')"
-                name="lastName"
+                :name="`newsletterLastName-${element.id}`"
                 :placeholder="$t('account.register.lastname.placeholder')"
                 :classes="{
                     outer: 'col-span-1',
@@ -187,25 +194,30 @@ watch(customer, async newCustomer => {
             />
         </template>
 
-        <FormKit
-            type="checkbox"
-            :label="$t('cms.element.form.newsletter.privacy.label')"
-            :help="$t('cms.element.form.newsletter.privacy.help')"
-            name="privacy"
-            decorator-icon="check"
-            validation="accepted"
-            validation-visibility="submit"
-            :classes="{
-                outer: 'col-span-3',
-            }"
-        />
+        <ClientOnly>
+            <FormKit
+                :id="`newsletterPrivacy-${element.id}`"
+                type="checkbox"
+                :label="$t('cms.element.form.newsletter.privacy.label')"
+                :help="$t('cms.element.form.newsletter.privacy.help')"
+                :name="`newsletterPrivacy-${element.id}`"
+                decorator-icon="check"
+                validation="accepted"
+                validation-visibility="submit"
+                :classes="{
+                    outer: 'col-span-3',
+                }"
+            />
+        </ClientOnly>
 
         <FormKit
+            :id="`newsletterSubmitButton-${element.id}`"
             type="submit"
             :label="newsletterAction"
             :classes="{
                 outer: 'col-span-3 md:col-span-2',
             }"
+            :name="`newsletterSubmitButton-${element.id}`"
             prefix-icon="envelope"
             :title="newsletterAction"
         />
