@@ -8,7 +8,7 @@ const props = withDefaults(
         showHeader?: boolean;
     }>(),
     {
-        controller: useModal(false),
+        controller: () => useModal(false),
         withCloseButton: false,
         withActionsButton: false,
         size: 'md',
