@@ -113,8 +113,8 @@ const showBackButton = computed(() => navigationPath.value.length > 0);
 
                 <!-- display the child categories -->
                 <NavigationLink
-                    v-for="navigationElement in shownNavigationItems"
-                    :key="navigationElement.id"
+                    v-for="(navigationElement, index) in shownNavigationItems"
+                    :key="index"
                     :navigation-element="navigationElement"
                     classes="border-b-2 border-gray-light py-2"
                     active-classes="font-bold md:border-b-2 md:border-brand-primary"
