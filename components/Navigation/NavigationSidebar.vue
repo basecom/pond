@@ -112,6 +112,7 @@ const showBackButton = computed(() => navigationPath.value.length > 0);
                 />
 
                 <!-- display the child categories -->
+                <!-- using smth other than the index as the key renders the navigationElements in the wrong order -->
                 <NavigationLink
                     v-for="(navigationElement, index) in shownNavigationItems"
                     :key="index"
