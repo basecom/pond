@@ -64,20 +64,6 @@ const currentComponent = computed(() => {
 });
 
 const currentProps = computed(() => {
-    if (isProduct.value) {
-        return {
-            'cart-item': cartItem,
-            'cart-delivery-position': props.cartDeliveryPosition,
-            'item-total-price': props.itemTotalPrice,
-            'item-regular-price': props.itemRegularPrice,
-            'item-options': props.itemOptions,
-            'product-url': props.productUrl,
-            'quantity': props.quantity,
-            'item-quantity': props.itemQuantity,
-            'is-in-wishlist': props.isInWishlist,
-            'is-loading': props.isLoading,
-        };
-    }
     if (isDiscount.value) {
         return {
             'cart-item': cartItem,
