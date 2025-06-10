@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 import type { Swiper } from 'swiper';
+import type { PaginationOptions } from 'swiper/types';
 
 withDefaults(
     defineProps<{
@@ -54,6 +55,7 @@ defineEmits(['slides-change']);
 const swiperContainer: Ref<Swiper|null> = ref(null);
 const prevSlide = ref(null);
 const nextSlide = ref(null);
+const paginationEl = ref(null);
 const { t } = useI18n();
 
 // swiperContainer?.value has the type swiper but cant be found here
@@ -74,6 +76,18 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
   };
 
   Object.assign(swiperContainer.value, swiperParams);
+  const paginationParams = {
+    pagination:
+        {el: '.swiper-pagination', clickable: true, renderBullet(index: number, className:string)
+          {return `<span class="${className} block w-3 h-3 bg-gray-400 rounded-full mx-1 opacity-100 transition-all bg-black"></span>`}
+        }     as PaginationOptions,
+
+    navigation: true
+
+  }
+
+  Object.assign(swiperContainer.value, paginationParams);
+
   // swiperContainer?.value has the method initialize
   // eslint-disable-next-line  @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -132,6 +146,7 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
         next
       </div>
 
+
       <swiper-container
           ref="swiperContainer"
           class="grid size-full"
@@ -151,7 +166,19 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
           @swiperslideslengthchange="$emit('slides-change')"
       >
         <slot />
+
       </swiper-container>
+      <div class="swiper swiper-horizontal flex">
+      <div ref="paginationEl" class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal flex">
+
+      </div>
+        </div>
     </div>
   </ClientOnly>
 </template>
+<style>
+  .swiper-pagination-bullet-active {
+    background-color: black;
+    opacity: 100;
+  }
+</style>

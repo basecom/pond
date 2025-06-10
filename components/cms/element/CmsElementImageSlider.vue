@@ -51,6 +51,9 @@ const slidesRef = ref([]);
 
 </script>
 <template>
+  <div>
+    {{props.content.translated}}
+  </div>
   <div
       v-if="slides?.length"
       :style="{ minHeight: minHeight }"
