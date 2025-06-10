@@ -2,7 +2,7 @@
 withDefaults(
     defineProps<{
       cartItemImage?: string,
-      fallback? :string,
+      fallback?: string,
       productUrl?: string
     }>(),
     {

@@ -10,7 +10,7 @@ withDefaults(
 </script>
 <template>
     <slot name="unit-price">
-        <span>
+        <span v-if="cartItemUnitPrice">
             {{ cartItemUnitPrice }}*
         </span>
     </slot>

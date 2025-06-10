@@ -5,10 +5,12 @@ withDefaults(
     defineProps<{
       cartItems?: Schemas['LineItem'][];
       cartDeliveries?: Schemas['CartDelivery'][];
+      cartPriceTotal?: string
     }>(),
     {
         cartItems: undefined,
         cartDeliveries: undefined,
+        cartPriceTotal: '',
     },
 );
 const hasLineItems = (cartItems?: Schemas['LineItem'][]) => cartItems && cartItems.length > 0;
@@ -18,14 +20,23 @@ const hasLineItems = (cartItems?: Schemas['LineItem'][]) => cartItems && cartIte
     <UiSheet>
         <slot name="cart-trigger">
             <UiSheetTrigger class="size-5">
-                <slot name="cart-icon">
-                    <Icon name="mdi:cart-outline" class="size-5" />
-                </slot>
+                <div class="relative">
+                    <slot name="cart-icon">
+                        <Icon name="mdi:cart-outline" class="size-5" />
+                    </slot>
 
-                <slot name="cart-badge">
-                    <UiBadge v-if="hasLineItems(cartItems)" class="absolute -top-1 px-1 py-0 text-xs font-normal">
-                        {{ cartItems.length }}
-                    </UiBadge>
+                    <slot name="cart-badge">
+                        <UiBadge v-if="hasLineItems(cartItems)" class="absolute -right-2 -top-1.5 px-1 py-0 text-xs font-normal">
+                            {{ cartItems.length }}
+                        </UiBadge>
+                    </slot>
+                </div>
+            </UiSheetTrigger>
+            <UiSheetTrigger>
+                <slot name="cart-amount">
+                    <span v-if="cartPriceTotal" class="text-gray-900 underline underline-offset-4">
+                        {{ cartPriceTotal }}*
+                    </span>
                 </slot>
             </UiSheetTrigger>
         </slot>

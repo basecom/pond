@@ -85,10 +85,9 @@ const addSelectedPromotionCode = (promotionCode: string) => {
             </template>
         </div>
         <slot name="cart-summary">
-            <div>
+            <div v-if="hasLineItems(cartItems)">
                 <CheckoutOffcanvasCartSummary
                     :cart="cart"
-                    :is-logged-in="isLoggedIn"
                     :cart-deliveries="cartDeliveries"
                     :shipping-methods="shippingMethods"
                     :selected-shipping-method="selectedShippingMethod"

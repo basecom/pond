@@ -51,17 +51,17 @@ getWishlistProducts();
 const {handleError} = usePondHandleError();
 
 const removeCartItem = async () => {
+    isLoading.value.container = true;
     try {
-        isLoading.value.container = true;
         await removeItem();
         toast({
             description: t('checkout.removeSuccess'),
         });
-
     } catch (error) {
         handleError(error, true, {show: true});
+    } finally {
+        isLoading.value.container = false;
     }
-    isLoading.value.container = false;
 };
 
 const changeCartItemQuantity = async (quantityInput: number) => {

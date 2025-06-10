@@ -52,7 +52,7 @@ const addSelectedPromotionCode = (promotionCode: string) => {
 
 </script>
 <template>
-    <template v-if="isLoggedIn">
+    <template v-if="true">
         <slot name="wrapper">
             <div>
                 <slot name="subTotal">
@@ -80,7 +80,7 @@ const addSelectedPromotionCode = (promotionCode: string) => {
                                 </slot>
                                 <slot name="shipping-cost">
                                     <div class="flex items-center">
-                                        <template v-if="shippingCost.shippingCosts">
+                                        <template v-if="shippingCost?.shippingCosts">
                                             <strong>{{ shippingCost.shippingCosts?.totalPrice < 0 ? '-' : '+' }} {{
                                                 getFormattedPrice(shippingCost.shippingCosts?.totalPrice || 0)
                                             }}*</strong>

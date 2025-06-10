@@ -42,6 +42,7 @@ const isDiscount = computed(() => {
     const isDiscountType = cartItem.value?.type === 'discount';
     return (isNotGood && hasNegativeOrZeroPrice) || isDiscountType;
 });
+
 const emits = defineEmits<{
   removeCartItem: [],
   changeCartItemQuantity: [number],
@@ -50,10 +51,65 @@ const emits = defineEmits<{
   addProductToWishlist: [],
 }>();
 
+const componentMap = {
+    product: 'CartItemElementTypeProduct',
+    generic: 'CartItemElementTypeProduct',
+    discount: 'CartItemElementTypeDiscount',
+};
+
+const currentComponent = computed(() => {
+    if (isProduct.value) return componentMap.product;
+    if (isDiscount.value) return componentMap.discount;
+    return componentMap.generic;
+});
+
+const currentProps = computed(() => {
+    if (isProduct.value) {
+        return {
+            'cart-item': cartItem,
+            'cart-delivery-position': props.cartDeliveryPosition,
+            'item-total-price': props.itemTotalPrice,
+            'item-regular-price': props.itemRegularPrice,
+            'item-options': props.itemOptions,
+            'product-url': props.productUrl,
+            'quantity': props.quantity,
+            'item-quantity': props.itemQuantity,
+            'is-in-wishlist': props.isInWishlist,
+            'is-loading': props.isLoading,
+        };
+    }
+    if (isDiscount.value) {
+        return {
+            'cart-item': cartItem,
+        };
+    }
+    return {
+        'cart-item': cartItem,
+        'cart-delivery-position': props.cartDeliveryPosition,
+        'item-total-price': props.itemTotalPrice,
+        'item-regular-price': props.itemRegularPrice,
+        'item-options': props.itemOptions,
+        'product-url': props.productUrl,
+        'quantity': props.quantity,
+        'item-quantity': props.itemQuantity,
+        'is-in-wishlist': props.isInWishlist,
+        'is-loading': props.isLoading,
+    };
+});
+
+const eventHandlers = computed(() => {
+    if(!isDiscount.value) return {
+        'isLoading': (isLoadingEmit: boolean) => emits('isLoading', isLoadingEmit),
+        'changeCartItemQuantity': (quantityInput: number) => emits('changeCartItemQuantity', quantityInput),
+        'removeProductFromWishlist': () => emits('removeProductFromWishlist'),
+        'addProductToWishlist': () => emits('addProductToWishlist'),
+    };
+    return {};
+});
+
 </script>
 <template>
     <slot name="wrapper">
-
         <div :class="isLoading.container ? 'pointer-events-none opacity-50':''">
             <div class="relative">
                 <div v-if="isLoading.container" class="absolute flex size-full items-center justify-center pb-4">
@@ -62,80 +118,23 @@ const emits = defineEmits<{
                     </slot>
                 </div>
                 <div class="flex flex-wrap border-b py-4">
-                    <template v-if="isProduct">
-                        <slot name="product-wrapper">
-                            <slot name="product">
-                                <CartItemElementTypeProduct
+                    <slot name="component-type-wrapper">
+                        <slot name="component-type">
+                            <component
+                                :is="currentComponent"
+                                v-bind="currentProps"
+                                v-on="eventHandlers"
+                            />
+                        </slot>
+                        <div class="order-2 flex w-1/6 justify-end">
+                            <slot name="generic-remove">
+                                <CartItemElementRemove
                                     :cart-item="cartItem"
-                                    :cart-delivery-position="cartDeliveryPosition"
-                                    :item-total-price="itemTotalPrice"
-                                    :item-regular-price="itemRegularPrice"
-                                    :item-options="itemOptions"
-                                    :product-url="productUrl"
-                                    :quantity="quantity"
-                                    :item-quantity="itemQuantity"
-                                    :is-in-wishlist="isInWishlist"
-                                    :is-loading="isLoading"
-                                    @is-loading="(isLoadingEmit: boolean) => emits('isLoading', isLoadingEmit)"
-                                    @change-cart-item-quantity="(quantityInput: number)=> emits('changeCartItemQuantity', quantityInput)"
-                                    @remove-product-from-wishlist="emits('removeProductFromWishlist')"
-                                    @add-product-to-wishlist="emits('addProductToWishlist')"
+                                    @remove-cart-item="emits('removeCartItem')"
                                 />
                             </slot>
-                            <div class="order-2 flex w-1/6 justify-end">
-                                <slot name="promotion-remove">
-                                    <CartItemElementRemove
-                                        :cart-item="cartItem"
-                                        @remove-cart-item="emits('removeCartItem')"
-                                    />
-                                </slot>
-                            </div>
-                        </slot>
-                    </template>
-                    <template v-else-if="isDiscount">
-                        <slot name="discount-wrapper">
-                            <slot name="discount">
-                                <CartItemElementTypeDiscount :cart-item="cartItem" />
-                            </slot>
-                            <div class="order-2 flex w-1/6 justify-end">
-                                <slot name="discount-remove">
-                                    <CartItemElementRemove
-                                        :cart-item="cartItem"
-                                        @remove-cart-item="emits('removeCartItem')"
-                                    />
-                                </slot>
-                            </div>
-                        </slot>
-                    </template>
-                    <template v-else>
-                        <slot name="additional-type-wrapper" />
-                        <slot name="generic-type-wrapper">
-                            <slot name="generic">
-                                <CartItemElementTypeProduct
-                                    :cart-item="cartItem"
-                                    :cart-delivery-position="cartDeliveryPosition"
-                                    :item-total-price="itemTotalPrice"
-                                    :item-regular-price="itemRegularPrice"
-                                    :item-options="itemOptions"
-                                    :quantity="quantity"
-                                    :item-quantity="itemQuantity"
-                                    :product-url="productUrl"
-                                    @is-loading="(isLoadingEmit: boolean) => emits('isLoading', isLoadingEmit)"
-                                    @change-cart-item-quantity="(quantityInput: number)=> emits('changeCartItemQuantity', quantityInput)"
-                                    @remove-product-from-wishlist="emits('removeProductFromWishlist')"
-                                    @add-product-to-wishlist="emits('addProductToWishlist')"
-                                />
-                            </slot>
-                            <div class="order-2 flex w-1/6 justify-end">
-                                <slot name="generic-remove">
-                                    <CartItemElementRemove
-                                        :cart-item="cartItem"
-                                        @remove-cart-item="emits('removeCartItem')"
-                                    />
-                                </slot>
-                            </div>
-                        </slot>
-                    </template>
+                        </div>
+                    </slot>
                 </div>
             </div>
         </div>
