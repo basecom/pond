@@ -65,8 +65,8 @@ const removeCartItem = async () => {
 };
 
 const changeCartItemQuantity = async (quantityInput: number) => {
+    isLoading.value.container = true;
     try {
-        isLoading.value.container = true;
         const response = await changeItemQuantity(Number(quantityInput));
         await refreshCart(response);
         toast({
@@ -75,8 +75,10 @@ const changeCartItemQuantity = async (quantityInput: number) => {
     } catch (error) {
         handleError(error, true, {show: true, description: 'DEFAULT'});
     }
-    isLoading.value.container = false;
-    quantity.value = itemQuantity.value;
+    finally {
+      isLoading.value.container = false;
+      quantity.value = itemQuantity.value;
+    }
 };
 const addProductToWishlist = async () => {
     try {
