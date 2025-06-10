@@ -179,24 +179,7 @@ onUnmounted(() => formErrorStore.$reset);
 
         <!-- If the current country is a valid option, preselect it -->
         <FormKit
-            v-if="currentAvailableCountry"
-            v-model="currentAvailableCountry.value"
-            type="select"
-            :label="$t('account.register.country.label')"
-            name="countryId"
-            :placeholder="$t('account.register.country.placeholder')"
-            validation="required"
-            :options="countryOptions"
-            :classes="{
-                outer: {
-                    'col-span-2 md:col-span-1 col-1': true,
-                },
-            }"
-        />
-
-        <!-- If the current country is not a valid option, do not preselect it -->
-        <FormKit
-            v-else
+            v-bind="currentAvailableCountry ? { modelValue: currentAvailableCountry.value } : {}"
             type="select"
             :label="$t('account.register.country.label')"
             name="countryId"
