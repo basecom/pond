@@ -8,17 +8,16 @@ defineProps<{
 </script>
 
 <template>
-    <!-- change: remove container class, because we have global paddings that we don't want here -->
-    <!-- change: insert correct basis class -->
-    <div class="mx-auto flex py-6">
+    <!-- change: remove container class, and fix responsivity, can be removed when fix in shopware is published -->
+    <div class="mx-auto grid gap-4 py-6 md:grid-cols-3">
         <CmsGenericElement
             v-for="(slot, i) in content.slots"
             :key="slot.id"
             :content="slot"
-            class="cms-block-text-teaser-section flex"
+            class="cms-block-text-teaser-section"
             :class="{
-                'basis-1/3 flex-col ': i == 0,
-                'basis-2/3 pl-4 ': i == 1,
+                'md:col-span-1': i === 0,
+                'md:col-span-2': i === 1,
             }"
         />
     </div>
