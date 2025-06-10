@@ -18,6 +18,11 @@ const isLoading = ref({
     password: false,
 });
 
+const resetForm = ref({
+    mail: false,
+    password: false,
+});
+
 const doUpdatePersonalData = async (personalDataForm: PersonalDataForm) => {
     isLoading.value.personalData = true;
 
@@ -52,6 +57,7 @@ const doUpdateEmail = async (mailForm: ChangeMailForm) => {
             title: t('account.personalProfile.status.changeMailSuccessfully.title'),
             description: t('account.personalProfile.status.changeMailSuccessfully.description'),
         });
+        resetForm.value.mail = true;
     } catch (error) {
         if (error instanceof ApiClientError) {
             toast({
@@ -74,6 +80,7 @@ const doUpdatePassword = async (passwordForm: ChangePasswordForm) => {
             title: t('account.personalProfile.status.changePasswordSuccessfully.title'),
             description: t('account.personalProfile.status.changePasswordSuccessfully.description'),
         });
+        resetForm.value.password = true;
     } catch (error) {
         if (error instanceof ApiClientError) {
             toast({
@@ -93,6 +100,7 @@ const doUpdatePassword = async (passwordForm: ChangePasswordForm) => {
         v-if="customer"
         :customer="customer"
         :is-loading="isLoading"
+        :reset-form="resetForm"
         @update-personal-data="(personalDataForm: PersonalDataForm) => doUpdatePersonalData(personalDataForm)"
         @update-mail="(mailForm: ChangeMailForm) => doUpdateEmail(mailForm)"
         @update-password="(passwordForm: ChangePasswordForm) => doUpdatePassword(passwordForm)"

@@ -122,7 +122,7 @@ const { formatLink } = useInternationalization();
                                 </UiDialogTitle>
                             </UiDialogHeader>
 
-                            <AccountLogin />
+                            <AccountLogin :redirect-to="null" />
                         </UiDialogContent>
                     </UiDialog>
 
