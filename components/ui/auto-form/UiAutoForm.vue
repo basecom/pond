@@ -13,6 +13,7 @@ const props = defineProps<{
   fieldConfig?: Config<z.infer<T>>
   dependencies?: Dependency<z.infer<T>>[]
 }>();
+console.log('fieldconif', props.fieldConfig);
 
 const emits = defineEmits<{
   submit: [event: z.infer<T>]

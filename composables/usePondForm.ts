@@ -88,8 +88,126 @@ export const usePondForm = () => {
         },
     ];
 
+    const getRegisterForm = (): ZodObjectOrWrapped => {
+        let registerForm = z.object({});
+
+        // TODO: Add error labels!
+        // TODO: outsource some config Store refs!
+        // add selection of account type
+        const showAccountType = configStore.get('core.loginRegistration.showAccountTypeSelection') as boolean;
+        if (showAccountType) {
+            registerForm = registerForm.extend({
+                accountType: z.enum(['business', 'private']).default('private'),
+            });
+        }
+
+        registerForm = registerForm.extend({
+            salutationId: z.string({
+                required_error: 'Error',
+            }),
+        });
+
+        // add title (if set in the admin)
+        const showTitle = configStore.get('core.loginRegistration.showTitleField') as boolean;
+        if (showTitle) {
+            registerForm = registerForm.extend({
+                title: z.string().optional(),
+            });
+        }
+
+        // add fields we always have (first name, last name)
+        registerForm = registerForm.extend({
+            firstName: z.string().default(''),
+            lastName: z.string().default(''),
+            email: z.string({
+                    required_error: 'ERROR',
+                })
+                .email(),
+        });
+
+        // Confirm e-mail address
+        const confirmEmail = configStore.get('core.loginRegistration.requireEmailConfirmation') as boolean;
+        if(confirmEmail) {
+            registerForm = registerForm.extend({
+                emailConfirmation: z
+                    .string({
+                        required_error: 'Error',
+                    })
+                    .email(),
+            });
+        }
+
+        // add birthday (if set in the admin)
+        const showBirthday = configStore.get('core.loginRegistration.showBirthdayField') as boolean;
+        if (showBirthday) {
+            registerForm = registerForm.extend({
+                birthdayDay: z.number().optional(),
+                birthdayMonth: z.number().optional(),
+                birthdayYear: z.number().optional(),
+            });
+        }
+
+        // add company and vat number (if we can select the account type)
+        if (showAccountType) {
+            registerForm = registerForm.extend({
+                company: z.string({
+                    required_error: 'Error',
+                }),
+                department: z.string().optional().default(''),
+                vatId: z.string().optional().default(''),
+            });
+        }
+
+        // password
+        registerForm = registerForm.extend({
+            password: z
+                .string({
+                    required_error: "error",
+                }),
+        });
+
+        // confirm password
+        const confirmPassword = configStore.get('core.loginRegistration.requirePasswordConfirmation') as boolean;
+        if(confirmPassword) {
+            registerForm = registerForm.extend({
+                confirmPassword: z
+                    .string({
+                        required_error: "error",
+                    }),
+            });
+        }
+
+        return registerForm;
+    };
+
+    // we exclude this one because the return type is defined by shadcn
+    // @ts-nocheck
+    /* eslint-disable */
+    const getRegisterDependencies = (): Dependency<{ [x: string]: any; }>[] => [
+        {
+            sourceField: 'accountType',
+            type: DependencyType.HIDES,
+            targetField: 'vatId',
+            when: (accountType: string) => accountType !== 'business',
+        },
+        {
+            sourceField: 'accountType',
+            type: DependencyType.HIDES,
+            targetField: 'company',
+            when: (accountType: string) => accountType !== 'business',
+        },
+        {
+            sourceField: 'accountType',
+            type: DependencyType.HIDES,
+            targetField: 'department',
+            when: (accountType: string) => accountType !== 'business',
+        },
+    ];
+
     return {
         getPersonalDataForm,
         getPersonalDataDependencies,
+        getRegisterForm,
+        getRegisterDependencies
     };
 };
