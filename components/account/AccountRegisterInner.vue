@@ -14,19 +14,21 @@ withDefaults(
 );
 
 const emits = defineEmits<{
-  login: [loginData: LoginData];
+  register: [registerData: LoginData];
 }>();
 
 const { t } = useI18n();
 const { getRegisterForm, getRegisterDependencies } = usePondForm();
 const { getSalutations: salutations } = useSalutations();
+const { getCountries: countries, getStatesForCountry} = useCountries();
 
 const schema = getRegisterForm();
 const dependencies = getRegisterDependencies();
 export type LoginData = z.infer<typeof schema>;
 
-const login = async (loginData: LoginData) => {
-  emits('login', loginData);
+const register = async (registerData: LoginData) => {
+  console.log('klick', registerData);
+  emits('register', registerData);
 };
 
 // TODO: Auslagern -> Wird auch in AccountPageProfileInner genutzt
@@ -43,7 +45,7 @@ const possibleBirthdayYears = computed(() => {
 <template>
   <slot name="headline" />
   <UiAutoForm
-      class="space-y-6"
+      class="gap-4 grid grid-cols-4"
       :dependencies="dependencies"
       :schema="schema"
       :field-config="{
@@ -72,6 +74,7 @@ const possibleBirthdayYears = computed(() => {
             inputProps: {
                 type: 'email',
                 placeholder: $t('account.customer.mail.placeholder'),
+                autocomplete: 'username'
             },
         },
         emailConfirmation: {
@@ -103,32 +106,34 @@ const possibleBirthdayYears = computed(() => {
             },
         },
         password: {
-            label: $t('account.login.password.label'),
+            label: $t('account.register.password.label'),
             inputProps: {
                 type: 'password',
-                placeholder: $t('account.login.password.placeholder'),
+                placeholder: $t('account.register.password.placeholder'),
+                autocomplete: 'current-password'
             },
         },
         confirmPassword: {
-            label: $t('account.login.password.confirm'),
+            label: $t('account.register.password.confirm'),
             inputProps: {
                 type: 'password',
-                placeholder: $t('account.login.password.placeholder'),
+                placeholder: $t('account.register.password.placeholder'),
+                autocomplete: 'current-password'
             },
         },
       }"
-      @submit="login"
+      @submit="register"
   >
     <!-- Account type -->
     <template #accountType="slotProps">
-      <div class="col-span-12">
+      <div class="col-span-1">
         <UiAutoFormField v-bind="slotProps" />
       </div>
     </template>
 
     <!-- Salutations -->
     <template #salutationId="slotProps">
-      <div class="col-span-12">
+      <div class="col-start-1 col-span-1">
         <FormField v-slot="{ componentField }" v-bind="slotProps" name="salutationId">
           <UiFormItem>
             <UiAutoFormLabel>{{ $t('account.customer.salutation') }}</UiAutoFormLabel>
@@ -160,42 +165,42 @@ const possibleBirthdayYears = computed(() => {
 
     <!-- Title -->
     <template #title="slotProps">
-      <div class="col-span-12">
+      <div class="col-span-1">
         <UiAutoFormField v-bind="slotProps" />
       </div>
     </template>
 
     <!-- First name -->
     <template #firstName="slotProps">
-      <div class="col-span-12 md:col-span-6">
+      <div class="col-start-1 col-span-2">
         <UiAutoFormField v-bind="slotProps" />
       </div>
     </template>
 
     <!-- Last name -->
     <template #lastName="slotProps">
-      <div class="col-span-12 md:col-span-6">
+      <div class="col-span-2">
         <UiAutoFormField v-bind="slotProps" />
       </div>
     </template>
 
     <!-- Email -->
     <template #email="slotProps">
-      <div class="col-span-12 md:col-span-6">
+      <div class="col-start-1 col-span-2">
         <UiAutoFormField v-bind="slotProps" />
       </div>
     </template>
 
     <!-- Email confirm -->
     <template #emailConfirmation="slotProps">
-      <div class="col-span-12 md:col-span-6">
+      <div class="col-span-2">
         <UiAutoFormField v-bind="slotProps" />
       </div>
     </template>
 
     <!-- Birthday -->
     <template #birthdayDay="slotProps">
-      <div class="col-span-4">
+      <div class="col-start-1 col-span-1">
         <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayDay">
           <UiFormItem>
             <UiAutoFormLabel>{{ $t('account.customer.birthday.label') }}</UiAutoFormLabel>
@@ -225,7 +230,7 @@ const possibleBirthdayYears = computed(() => {
     </template>
 
     <template #birthdayMonth="slotProps">
-      <div class="col-span-4 grid items-end">
+      <div class="col-span-1 grid items-end">
         <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayMonth">
           <UiFormItem>
             <UiAutoFormLabel class="sr-only">{{ $t('account.customer.birthdayMonth') }}</UiAutoFormLabel>
@@ -254,7 +259,7 @@ const possibleBirthdayYears = computed(() => {
     </template>
 
     <template #birthdayYear="slotProps">
-      <div class="col-span-4 grid items-end">
+      <div class="col-span-1 grid items-end">
         <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayYear">
           <UiFormItem>
             <UiAutoFormLabel class="sr-only">{{ $t('account.customer.birthdayYear') }}</UiAutoFormLabel>
@@ -284,44 +289,58 @@ const possibleBirthdayYears = computed(() => {
 
     <!-- Company -->
     <template #company="slotProps">
-      <div class="col-span-12 md:col-span-6">
+      <!-- TODO: Wie kann ich diesen Div entfernen, wenn das Feld hidden ist? -->
+      <div class="col-span-4">
         <UiAutoFormField v-bind="slotProps" />
       </div>
     </template>
 
     <!-- Department -->
     <template #department="slotProps">
-      <div class="col-span-12 md:col-span-6">
+      <div class="col-start-1 col-span-2">
         <UiAutoFormField v-bind="slotProps" />
       </div>
     </template>
 
     <!-- VAT id -->
     <template #vatId="slotProps">
-      <div class="col-span-12 md:col-span-6">
+      <div class="col-span-2">
         <UiAutoFormField v-bind="slotProps" />
       </div>
     </template>
 
     <!-- password -->
     <template #password="slotProps">
-      <div class="col-span-12 md:col-span-6">
+      <div class="col-start-1 col-span-2">
         <UiAutoFormField v-bind="slotProps" />
       </div>
     </template>
 
     <!-- confirm password -->
     <template #confirmPassword="slotProps">
-      <div class="col-span-12 md:col-span-6">
+      <div class="col-span-2">
         <UiAutoFormField v-bind="slotProps" />
       </div>
     </template>
 
 
-      <slot name="submit-button">
-        <UiButton type="submit" :is-loading="isLoading">
-          {{ $t('account.auth.register') }}
-        </UiButton>
-      </slot>
+    <!-- TODO: Auslagern, aber wie?-->
+    <AddressFormFields>
+      <template #headline>
+        Deine Adresse
+      </template>
+    </AddressFormFields>
+
+    <template #street="slotProps">
+      <div class="col-span-2">
+        <UiAutoFormField v-bind="slotProps" />
+      </div>
+    </template>
+
+    <slot name="submit-button">
+      <UiButton type="submit" :is-loading="isLoading" class="col-span-4">
+        {{ $t('account.auth.register') }}
+      </UiButton>
+    </slot>
   </UiAutoForm>
 </template>

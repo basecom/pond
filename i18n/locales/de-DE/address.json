@@ -1,0 +1,39 @@
+{
+  "address": {
+    "street": {
+      "label": "",
+      "placeholder": "",
+      "error": ""
+    },
+    "additionalLine1": {
+      "label": "",
+      "placeholder": "",
+      "error": ""
+    },
+    "additionalLine2": {
+      "label": "",
+      "placeholder": "",
+      "error": ""
+    },
+    "zipCode": {
+      "label": "",
+      "placeholder": "",
+      "error": ""
+    },
+    "city": {
+      "label": "",
+      "placeholder": "",
+      "error": ""
+    },
+    "country": {
+      "label": "",
+      "placeholder": "",
+      "error": ""
+    },
+    "state": {
+      "label": "",
+      "placeholder": "",
+      "error": ""
+    }
+  }
+}

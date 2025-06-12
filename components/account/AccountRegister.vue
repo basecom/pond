@@ -18,15 +18,13 @@ const customerStore = useCustomerStore();
 const { t } = useI18n();
 const { formatLink } = useInternationalization();
 
-const login = async (loginData: LoginData) => {
+const register = async (registerData: LoginData) => {
   isLoading.value = true;
   errorMessage.value = undefined;
 
   try {
-    await customerStore.login(loginData);
-    if (props.redirectTo !== null) {
-      navigateTo(formatLink(props.redirectTo));
-    }
+    console.log('data', registerData);
+
   } catch (error) {
     if (error instanceof ApiClientError) {
       errorMessage.value = t(`error.${ error.details.errors[0]?.code}`);
@@ -42,7 +40,7 @@ const login = async (loginData: LoginData) => {
   <AccountRegisterInner
       :is-loading="isLoading"
       :error-message="errorMessage"
-      @login="(loginData: LoginData) => login(loginData)"
+      @register="(registerData: LoginData) => register(registerData)"
   >
     <template #headline><slot name="headline" /></template>
   </AccountRegisterInner>

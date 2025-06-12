@@ -33,14 +33,14 @@ const showAdditionalAddressField2 = configStore.get('core.loginRegistration.show
                         <span>{{ customer.salutation?.displayName }}</span>
 
                         <template v-if="showTitle && customer.title">
-                            <span class="font-semibold">{{ $t('account.customer.title') }}</span>
+                            <span class="font-semibold">{{ $t('account.customer.title.label') }}</span>
                             <span>{{ customer.title }}</span>
                         </template>
 
                         <span class="font-semibold">{{ $t('account.customer.name') }}</span>
                         <span>{{ customer.firstName }} {{ customer.lastName }}</span>
 
-                        <span class="font-semibold">{{ $t('account.customer.mail') }}</span>
+                        <span class="font-semibold">{{ $t('account.customer.mail.label') }}</span>
                         <span>{{ customer.email }}</span>
 
                         <template v-if="customer.accountType === 'business'">
