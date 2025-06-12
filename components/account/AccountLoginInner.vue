@@ -16,6 +16,8 @@ const emits = defineEmits<{
     login: [loginData: LoginData];
 }>();
 
+const closeDialog = inject('closeDialog');
+
 const { t } = useI18n();
 
 const schema = z.object({
@@ -62,7 +64,11 @@ const login = async (loginData: LoginData) => {
     >
         <div class="!mt-0 grid">
             <slot name="password-forgotten">
-                <NuxtLinkLocale to="/account/recover" class="mb-6 justify-self-start py-2 text-sm underline underline-offset-4">
+                <NuxtLinkLocale
+                    to="/account/recover"
+                    class="mb-6 justify-self-start py-2 text-sm underline underline-offset-4"
+                    @click="closeDialog?.()"
+                >
                     {{ $t('account.password.forgotten') }}
                 </NuxtLinkLocale>
             </slot>
