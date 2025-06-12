@@ -81,9 +81,7 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
         {el: '.swiper-pagination', clickable: true, renderBullet(index: number, className:string)
           {return `<span class="${className} block w-3 h-3 bg-gray-400 rounded-full mx-1 opacity-100 transition-all bg-black"></span>`}
         }     as PaginationOptions,
-
     navigation: true
-
   }
 
   Object.assign(swiperContainer.value, paginationParams);
@@ -168,7 +166,7 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
         <slot />
 
       </swiper-container>
-      <div class="swiper swiper-horizontal flex">
+      <div class="swiper swiper-horizontal flex w-full justify-center">
       <div ref="paginationEl" class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal flex">
 
       </div>
