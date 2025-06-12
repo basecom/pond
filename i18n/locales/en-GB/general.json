@@ -6,6 +6,8 @@
         "copyright": "© 2025 {companyName}",
         "back": "Back",
         "showAll": "Show all",
-        "categories": "Categories"
+        "categories": "Categories",
+        "grossTaxInformation": "Prices incl. VAT plus shipping costs",
+        "netTaxInformation": "Prices excl. VAT plus shipping costs"
     }
 }
