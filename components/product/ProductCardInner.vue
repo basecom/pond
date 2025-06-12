@@ -39,7 +39,7 @@ const mediaType = product.value?.cover?.media?.mimeType?.split('/')[0];
 const showControls = ref(false);
 
 const srcPath = computed(() => {
-    console.log(product.value.cover);
+    console.log(product.value);
     return getSmallestThumbnailUrl(
         product.value?.cover?.media,
     ) ?? product.value?.cover?.media?.url;
@@ -49,7 +49,7 @@ const srcPath = computed(() => {
 <template>
     <slot name="wrapper">
         <div
-            class="sw-product-card hover:scale-101 group relative max-w-full rounded-lg border border-gray-200 bg-white transition duration-300"
+            class="sw-product-card hover:scale-101 group relative flex max-w-full flex-col justify-between rounded-lg border border-gray-200 bg-white transition duration-300"
             data-testid="product-box"
         >
             <slot name="product-image">
@@ -84,7 +84,15 @@ const srcPath = computed(() => {
                         <slot name="product-cover-video">
                             <video
                                 :src="srcPath"
-                                class="absolute inset-0 size-full rounded-t-lg object-cover"
+                                class="absolute inset-0 size-full rounded-t-lg"
+                                :class="{
+                                    'object-cover':
+                                        displayMode === 'cover' ||
+                                        (displayMode === 'standard' && layoutType === 'image'),
+                                    'object-contain': displayMode === 'contain',
+                                    'object-scale-down':
+                                        displayMode === 'standard' && layoutType !== 'image',
+                                }"
                                 data-testid="product-box-video"
                                 :autoplay="autoPlayVideoInListing"
                                 loop
@@ -109,9 +117,16 @@ const srcPath = computed(() => {
             </slot>
 
             <slot name="product-info">
-                <div class="mt-auto p-4">
+                <div class="p-4">
                     <slot name="variant-characteristics">
-                        <p class="mt-4 text-xs text-gray-600">Size: XS</p>
+                        <p
+                            v-for="option in product?.options"
+                            :key="option.id"
+                            class="mt-4 text-xs text-gray-600"
+                        >
+                            {{ option.group.name }}:
+                            <span class="font-bold">{{ option.name }} </span>
+                        </p>
                     </slot>
 
                     <slot name="title">
