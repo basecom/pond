@@ -25,7 +25,7 @@ if (route.path === '/search') {
     >
         <FormKitIcon
             class="pointer-events-none block size-6"
-            icon="search"
+            icon="magnifying-glass"
         />
     </button>
 

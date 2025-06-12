@@ -39,25 +39,21 @@ const { t } = useI18n();
             <PaginationFirst
                 class="flex size-4 items-center justify-center rounded focus-within:outline focus-within:outline-1 focus-within:outline-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
             >
-                <ClientOnly>
-                    <FormKitIcon
-                        icon="angles-left"
-                        :title="t('icon.firstPage')"
-                        class="size-4"
-                    />
-                </ClientOnly>
+                <FormKitIcon
+                    icon="angles-left"
+                    :title="t('icon.firstPage')"
+                    class="size-4"
+                />
             </PaginationFirst>
 
             <PaginationPrev
                 class="mr-4 flex size-4 items-center justify-center rounded focus-within:outline focus-within:outline-1 focus-within:outline-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
             >
-                <ClientOnly>
-                    <FormKitIcon
-                        icon="chevron-left"
-                        :title="t('icon.previousPage')"
-                        class="size-4"
-                    />
-                </ClientOnly>
+                <FormKitIcon
+                    icon="angle-left"
+                    :title="t('icon.previousPage')"
+                    class="size-4"
+                />
             </PaginationPrev>
 
             <template v-for="(page, index) in items">
@@ -83,25 +79,21 @@ const { t } = useI18n();
             <PaginationNext
                 class="ml-4 flex size-4 items-center justify-center rounded focus-within:outline focus-within:outline-1 focus-within:outline-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
             >
-                <ClientOnly>
-                    <FormKitIcon
-                        icon="chevron-right"
-                        :title="t('icon.nextPage')"
-                        class="size-4"
-                    />
-                </ClientOnly>
+                <FormKitIcon
+                    icon="angle-right"
+                    :title="t('icon.nextPage')"
+                    class="size-4"
+                />
             </PaginationNext>
 
             <PaginationLast
                 class="flex size-4 items-center justify-center rounded focus-within:outline focus-within:outline-1 focus-within:outline-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
             >
-                <ClientOnly>
-                    <FormKitIcon
-                        icon="angles-right"
-                        :title="t('icon.lastPage')"
-                        class="size-4"
-                    />
-                </ClientOnly>
+                <FormKitIcon
+                    icon="angles-right"
+                    :title="t('icon.lastPage')"
+                    class="size-4"
+                />
             </PaginationLast>
         </PaginationList>
     </PaginationRoot>

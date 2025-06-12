@@ -16,6 +16,7 @@ const { t } = useI18n();
             icon="cart-shopping"
             class="block size-6"
         />
+
         <ClientOnly>
             <UtilityPill
                 :number="cartItemsCount"
@@ -44,8 +45,10 @@ const { t } = useI18n();
                         />
                     </li>
                 </ul>
+
                 <CheckoutSummary :reduced-display="true" />
             </div>
+
             <template v-else>
                 <UtilityStaticNotification
                     type="info"
@@ -68,6 +71,7 @@ const { t } = useI18n();
                     {{ $t('checkout.offcanvasCart.toCartButtonLabel') }}
                 </FormKit>
             </LocaleLink>
+
             <FormKit
                 v-else
                 type="submit"

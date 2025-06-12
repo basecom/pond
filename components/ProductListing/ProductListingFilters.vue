@@ -130,7 +130,7 @@ const { t } = useI18n();
                     :content="$t('listing.sidebar.filter.reset')"
                     size="md"
                     type="danger"
-                    suffix-icon="x"
+                    suffix-icon="xmark"
                     class="cursor-pointer"
                     @click="$emit('reset-filters')"
                 />
