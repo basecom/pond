@@ -62,7 +62,7 @@ const login = async (loginData: LoginData) => {
         }"
         @submit="login"
     >
-        <div class="!mt-0 grid">
+        <div class="mt-0! grid">
             <slot name="password-forgotten">
                 <NuxtLinkLocale
                     to="/account/recover"
