@@ -1,5 +1,5 @@
 import type { Schemas } from '@shopware/api-client/api-types';
-import type { CmsElementConfig, CmsPageConfig } from '../../types/cms/cmsVisibility';
+import type { CmsElementConfig, CmsPageConfig } from '~/types/cms/cmsVisibility';
 
 /**
  * On server:

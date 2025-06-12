@@ -1,5 +1,4 @@
 import type { Schemas } from '@shopware/api-client/api-types';
-import type { TrackingLineItemList } from '../../composables/tracking/useItemTracking';
 import type { PromotionInfo } from './Promotion';
 
 export type UseAnalyticsConfig = {

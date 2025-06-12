@@ -1,4 +1,4 @@
-import type { CmsElementLazyLoadConfig, CmsPageConfig, LazyLoadTypes } from '../../types/cms/cmsVisibility';
+import type { CmsElementLazyLoadConfig, CmsPageConfig, LazyLoadTypes } from '~/types/cms/cmsVisibility';
 
 /**
  * On server:
