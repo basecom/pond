@@ -102,36 +102,14 @@ export const usePondForm = () => {
     const getRegisterForm = (): ZodObjectOrWrapped => {
         let registerForm = z.object({});
 
-        // add selection of account type
-        if (showAccountType.value) {
-            registerForm = registerForm.extend({
-                accountType: z.enum(['business', 'private']).default('private'),
-            });
-        }
+        registerForm = getPersonalFormFields(registerForm);
 
+        // General data
         registerForm = registerForm.extend({
-            salutationId: z.string(),
-        });
-
-        // add title (if set in the admin)
-        if (showTitle.value) {
-            registerForm = registerForm.extend({
-                title: z.string().optional(),
-            });
-        }
-
-        // add fields we always have (first name, last name, email)
-        registerForm = registerForm.extend({
-            firstName: z.string({
-                required_error: t('account.customer.firstName.errorGeneral'),
-            }),
-            lastName: z.string({
-                required_error: t('account.customer.lastName.errorGeneral'),
-            }),
             email: z.string({
-                        required_error: t('account.customer.mail.error'),
-                    },
-                )
+                    required_error: t('account.customer.mail.error'),
+                },
+            )
                 .email(),
         });
 
@@ -143,6 +121,24 @@ export const usePondForm = () => {
                         required_error: t('account.customer.mail.error'),
                     })
                     .email(),
+            });
+        }
+
+        // password
+        registerForm = registerForm.extend({
+            password: z
+                .string({
+                    required_error: t('account.register.password.errorGeneral'),
+                }),
+        });
+
+        // confirm password
+        if(confirmPassword.value) {
+            registerForm = registerForm.extend({
+                confirmPassword: z
+                    .string({
+                        required_error: t('account.register.password.errorGeneral'),
+                    }),
             });
         }
 
@@ -169,52 +165,187 @@ export const usePondForm = () => {
             });
         }
 
-        // add company and vat number (if we can select the account type)
-        if (showAccountType.value) {
-            // Refine ist notwendig, damit das requires-dependencies funktioniert
-            registerForm = registerForm.extend({
-                company: z.string().optional(),
-                department: z.string().optional().default(''),
-                vatId: z.string().optional().default(''),
-            });
-        }
-
-        // password
+        // Address data
+        const billingAddressFields = getAddressFormFields(false, t('address.headline'));
         registerForm = registerForm.extend({
-            password: z
-                .string({
-                    required_error: t('account.register.password.errorGeneral'),
-                }),
+            billingAddress: billingAddressFields
         });
 
-        // confirm password
-        if(confirmPassword.value) {
-            registerForm = registerForm.extend({
-                confirmPassword: z
-                    .string({
-                        required_error: t('account.register.password.errorGeneral'),
-                    }),
-            });
-        }
-
+        // Checkbox für alternative Lieferadresse
         registerForm = registerForm.extend({
-            street: z
-                .string({
-                    required_error: t('account.register.password.errorGeneral'),
-                }),
+            differentShippingAddress: z.boolean().optional().default(false)
         });
 
-        // Nest register form with address form fields
-
-        //registerForm = registerForm.extend({addresses: getAddressFormFields()});
+        // Shipping address data
+        const shippingAddressFields = getAddressFormFields(true, t('address.differentShippingAddress.headline'));
+        registerForm = registerForm.extend({
+            shippingAddress: shippingAddressFields
+        });
 
         return registerForm;
     };
+
+    const getAddressFormFields = (includeGeneralFields: boolean, label?: string | null) => {
+        let addressForm = z.object({}).describe(label);
+
+        if(includeGeneralFields) {
+            addressForm = getPersonalFormFields(addressForm);
+        }
+
+        // Address fields
+        addressForm = addressForm.extend({
+            street: z
+                .string().optional(),
+            zipcode: z
+                .string().optional(),
+            city: z
+                .string().optional(),
+        });
+
+        // Additional data, depending on admin config -> Additional address line 1 & 2
+        if(showAdditionalAddress1Field.value) {
+            addressForm = addressForm.extend({
+                additionalAddressLine1: z
+                    .string().optional(),
+            });
+        }
+
+        if(showAdditionalAddress2Field.value) {
+            addressForm = addressForm.extend({
+                additionalAddressLine2: z
+                    .string().optional(),
+            });
+        }
+
+        // Always country
+        addressForm = addressForm.extend({
+            countryId: z
+                .string().optional(),
+        });
+
+        // Todo: Research how to solve states
+
+        // Depending on admin config: Phone number
+        if(showPhoneNumber.value) {
+            addressForm = addressForm.extend({
+                phoneNumber: z
+                    .string().optional(),
+            });
+        }
+
+        return addressForm;
+    }
+
+    const getPersonalFormFields = (form) => {
+        // add selection of account type
+        if (showAccountType.value) {
+            form = form.extend({
+                accountType: z.enum(['business', 'private']).default('private'),
+            });
+        }
+
+        form = form.extend({
+            salutationId: z.string().optional(),
+        });
+
+        // add title (if set in the admin)
+        if (showTitle.value) {
+            form = form.extend({
+                title: z.string().optional(),
+            });
+        }
+
+        // add fields we always have (first name, last name, email)
+        form = form.extend({
+            firstName: z.string().optional(),
+            lastName: z.string().optional(),
+        });
+
+        // add company and vat number (if we can select the account type)
+        if (showAccountType.value) {
+            form = form.extend({
+                company: z.string().optional(),
+                department: z.string().optional(),
+                vatId: z.string().optional(),
+            });
+        }
+
+        return form;
+    }
 
     // we exclude this one because the return type is defined by shadcn
     // @ts-nocheck
     /* eslint-disable */
     const getRegisterDependencies = (): Dependency<{ [x: string]: any; }>[] => [
+        // Ich require alle Felder, welche initial angezeigt werden -> Von gerneral personal data und billing adresse
+        {
+            sourceField: 'firstName',
+            type: DependencyType.REQUIRES,
+            targetField: 'firstName',
+            when: () => true,
+        },
+        {
+            sourceField: 'lastName',
+            type: DependencyType.REQUIRES,
+            targetField: 'lastName',
+            when: () => true,
+        },
+        {
+            sourceField: 'salutationId',
+            type: DependencyType.REQUIRES,
+            targetField: 'salutationId',
+            when: () => true,
+        },
+        {
+            sourceField: 'accountType',
+            type: DependencyType.REQUIRES,
+            targetField: 'company',
+            when: (accountType: string) => accountType === 'business',
+        },
+        {
+            sourceField: 'billingAddress.street',
+            type: DependencyType.REQUIRES,
+            targetField: 'billingAddress.street',
+            when: () => true,
+        },
+        {
+            sourceField: 'billingAddress.zipcode',
+            type: DependencyType.REQUIRES,
+            targetField: 'billingAddress.zipcode',
+            when: () => true,
+        },
+        {
+            sourceField: 'billingAddress.city',
+            type: DependencyType.REQUIRES,
+            targetField: 'billingAddress.city',
+            when: () => true,
+        },
+        {
+            sourceField: 'billingAddress.additionalAddressLine1',
+            type: DependencyType.REQUIRES,
+            targetField: 'billingAddress.additionalAddressLine1',
+            when: () => isAdditionalAddress1FieldRequired.value,
+        },
+        {
+            sourceField: 'billingAddress.additionalAddressLine2',
+            type: DependencyType.REQUIRES,
+            targetField: 'billingAddress.additionalAddressLine2',
+            when: () => isAdditionalAddress2FieldRequired.value,
+        },
+        {
+            sourceField: 'billingAddress.countryId',
+            type: DependencyType.REQUIRES,
+            targetField: 'billingAddress.country',
+            when: () => true,
+        },
+        {
+            sourceField: 'billingAddress.phoneNumber',
+            type: DependencyType.REQUIRES,
+            targetField: 'billingAddress.phoneNumber',
+            when: () => isPhoneNumberRequired.value,
+        },
+
+        // Verstecke Unternehmen etc., wenn account type business ist
         {
             sourceField: 'accountType',
             type: DependencyType.HIDES,
@@ -229,104 +360,97 @@ export const usePondForm = () => {
         },
         {
             sourceField: 'accountType',
-            type: DependencyType.REQUIRES,
-            targetField: 'company',
-            when: (accountType: string) => accountType === 'business',
-        },
-        {
-            sourceField: 'accountType',
             type: DependencyType.HIDES,
             targetField: 'department',
             when: (accountType: string) => accountType !== 'business',
         },
+        // Wenn die Adresse gleich bleibt, wird das Formular für abweichende Lieferadresse nicht angezeiegt TODO Naming andersrum
+        {
+            sourceField: 'differentShippingAddress',
+            type: DependencyType.HIDES,
+            targetField: 'shippingAddress',
+            when: (differentShippingAddress: boolean) => !differentShippingAddress,
+        },
+        // Abweichende Lieferadresse: Zeige company etc nur an, wenn account type = business ist
+        {
+            sourceField: 'shippingAddress.accountType',
+            type: DependencyType.HIDES,
+            targetField: 'shippingAddress.vatId',
+            when: (value) => value !== 'business',
+        },
+        {
+            sourceField: 'shippingAddress.accountType',
+            type: DependencyType.HIDES,
+            targetField: 'shippingAddress.company',
+            when: (value) => value !== 'business',
+        },
+        {
+            sourceField: 'shippingAddress.accountType',
+            type: DependencyType.HIDES,
+            targetField: 'shippingAddress.department',
+            when: (value) => value !== 'business',
+        },
+        // ToDo: Require alle Felder, welche required sein müssen, WENN checkbox aktiv ist (wenn man die direkt auf required & die Felder nur nicht sichtbar sinnd, setzt, wird das Formular nicht abgeschickt)
+        {
+            sourceField: 'differentShippingAddress',
+            type: DependencyType.REQUIRES,
+            targetField: 'shippingAddress.firstName',
+            when: (differentShippingAddress: boolean) => differentShippingAddress,
+        },
+        {
+            sourceField: 'differentShippingAddress',
+            type: DependencyType.REQUIRES,
+            targetField: 'shippingAddress.lastName',
+            when: (differentShippingAddress: boolean) => differentShippingAddress,
+        },
+        {
+            sourceField: 'differentShippingAddress',
+            type: DependencyType.REQUIRES,
+            targetField: 'shippingAddress.street',
+            when: (differentShippingAddress: boolean) => differentShippingAddress,
+        },
+        {
+            sourceField: 'differentShippingAddress',
+            type: DependencyType.REQUIRES,
+            targetField: 'shippingAddress.zipcode',
+            when: (differentShippingAddress: boolean) => differentShippingAddress,
+        },
+        {
+            sourceField: 'differentShippingAddress',
+            type: DependencyType.REQUIRES,
+            targetField: 'shippingAddress.city',
+            when: (differentShippingAddress: boolean) => differentShippingAddress,
+        },
+        {
+            sourceField: 'differentShippingAddress',
+            type: DependencyType.REQUIRES,
+            targetField: 'shippingAddress.countryId',
+            when: (differentShippingAddress: boolean) => differentShippingAddress,
+        },
+        {
+            sourceField: 'differentShippingAddress',
+            type: DependencyType.REQUIRES,
+            targetField: 'shippingAddress.additionalAddressLine1',
+            when: (differentShippingAddress: boolean) => differentShippingAddress && isAdditionalAddress1FieldRequired.value,
+        },
+        {
+            sourceField: 'differentShippingAddress',
+            type: DependencyType.REQUIRES,
+            targetField: 'shippingAddress.additionalAddressLine2',
+            when: (differentShippingAddress: boolean) => differentShippingAddress && isAdditionalAddress2FieldRequired.value,
+        },
+        {
+            sourceField: 'differentShippingAddress',
+            type: DependencyType.REQUIRES,
+            targetField: 'shippingAddress.phoneNumber',
+            when: (differentShippingAddress: boolean) => differentShippingAddress && isPhoneNumberRequired.value,
+        },
     ];
-
-    const getAddressFormFields = (): ZodObjectOrWrapped => {
-        let addressFormFields = z.object({});
-
-        addressFormFields = addressFormFields.extend({
-            street: z
-                .string({
-                    required_error: t('account.register.street.errorGeneral'),
-                }),
-            zipCode: z
-                .string({
-                    required_error: t('account.register.zipCode.errorGeneral'),
-                }),
-            city: z
-                .string({
-                    required_error: t('account.register.city.errorGeneral'),
-                }),
-        });
-
-        // Additional data, depending on admin config -> Additional address line 1 & 2
-        if(showAdditionalAddress1Field.value && !isAdditionalAddress1FieldRequired.value) {
-            addressFormFields = addressFormFields.extend({
-                additionalAddress1: z
-                    .string().optional(),
-            });
-        }
-
-        if(showAdditionalAddress1Field.value && isAdditionalAddress1FieldRequired.value) {
-            addressFormFields = addressFormFields.extend({
-                additionalAddress1: z
-                    .string({
-                        required_error: t('account.register.password.errorGeneral'),
-                    }),
-            });
-        }
-
-        if(showAdditionalAddress2Field.value && !isAdditionalAddress2FieldRequired.value) {
-            addressFormFields = addressFormFields.extend({
-                additionalAddress2: z
-                    .string().optional(),
-            });
-        }
-
-        if(showAdditionalAddress2Field.value && isAdditionalAddress2FieldRequired.value) {
-            addressFormFields = addressFormFields.extend({
-                additionalAddress2: z
-                    .string({
-                        required_error: t('account.register.password.errorGeneral'),
-                    }),
-            });
-        }
-
-        // Always country
-        addressFormFields = addressFormFields.extend({
-            country: z
-                .string({
-                    required_error: t('account.register.password.errorGeneral'),
-                }),
-        });
-
-        // Todo: Research how to solve states
-
-        // Depending on admin config: Phone number
-        if(showPhoneNumber.value && !isPhoneNumberRequired.value) {
-            addressFormFields = addressFormFields.extend({
-                phone: z
-                    .string().optional(),
-            });
-        }
-
-        if(showPhoneNumber.value && isPhoneNumberRequired.value) {
-            addressFormFields = addressFormFields.extend({
-                phone: z
-                    .string({
-                        required_error: t('account.register.password.errorGeneral'),
-                    }),
-            });
-        }
-
-        return addressFormFields;
-    }
 
     return {
         getPersonalDataForm,
         getPersonalDataDependencies,
         getRegisterForm,
         getRegisterDependencies,
-        getAddressFormFields
     };
 };

@@ -1,39 +1,48 @@
 {
   "address": {
+    "headline": "Ihre Adresse",
+    "differentShippingAddress": {
+      "headline": "Abweichende Lieferadresse",
+      "label": "Lieferadresse weicht von Rechnungsadresse ab."
+    },
     "street": {
-      "label": "",
-      "placeholder": "",
-      "error": ""
+      "label": "Straße",
+      "placeholder": "Straße eingeben ...",
+      "errorGeneral": "Bitte geben Sie eine Straße ein"
     },
-    "additionalLine1": {
-      "label": "",
-      "placeholder": "",
-      "error": ""
+    "additionalAddress1": {
+      "label": "Adresszusatz 1",
+      "placeholder": "Adresszusatz eingeben ...",
+      "errorGeneral": "Bitte geben Sie einen Adresszusatz ein"
     },
-    "additionalLine2": {
-      "label": "",
-      "placeholder": "",
-      "error": ""
+    "additionalAddress2": {
+      "label": "Adresszusatz 2",
+      "placeholder": "Adresszusatz eingeben ...",
+      "errorGeneral": "Bitte geben Sie einen Adresszusatz ein"
     },
     "zipCode": {
-      "label": "",
-      "placeholder": "",
-      "error": ""
+      "label": "PLZ",
+      "placeholder": "PLZ eingeben ...",
+      "errorGeneral": "Bitte geben Sie eine PLZ ein"
     },
     "city": {
-      "label": "",
-      "placeholder": "",
-      "error": ""
+      "label": "Ort",
+      "placeholder": "Ort eingeben ...",
+      "errorGeneral": "Bitte geben Sie einen Ort ein"
     },
     "country": {
-      "label": "",
-      "placeholder": "",
-      "error": ""
+      "label": "Land",
+      "placeholder": "Land auswählen ...",
+      "errorGeneral": "Bitte wählen Sie ein Land aus"
     },
     "state": {
-      "label": "",
-      "placeholder": "",
-      "error": ""
+      "label": "Bundesland",
+      "placeholder": "Bundesland auswählen ..."
+    },
+    "phone": {
+      "label": "Telefonnummer",
+      "placeholder": "Telefonnummer eingeben ...",
+      "errorGeneral": "Bitte geben Sie eine Telefonnummer an"
     }
   }
 }

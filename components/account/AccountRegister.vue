@@ -2,12 +2,12 @@
 import { ApiClientError } from '@shopware/api-client';
 import type { LoginData } from './AccountLoginInner.vue';
 
-const props = withDefaults(
+withDefaults(
     defineProps<{
       redirectTo?: string | null;
     }>(),
     {
-      redirectTo: '/',
+        redirectTo: '/',
     },
 );
 
@@ -16,32 +16,38 @@ const errorMessage: Ref<string|undefined> = ref(undefined);
 
 const customerStore = useCustomerStore();
 const { t } = useI18n();
-const { formatLink } = useInternationalization();
 
 const register = async (registerData: LoginData) => {
-  isLoading.value = true;
-  errorMessage.value = undefined;
+    isLoading.value = true;
+    errorMessage.value = undefined;
 
-  try {
-    console.log('data', registerData);
+    try {
+        console.log('data', registerData);
+        /**registerData = {
+            ...registerData,
+            storefrontUrl: 'http://localhost:3000/',
+            acceptedDataProtection: true,
+        };
+        delete registerData.shippingAddress;*/
+        await customerStore.register(registerData);
 
-  } catch (error) {
-    if (error instanceof ApiClientError) {
-      errorMessage.value = t(`error.${ error.details.errors[0]?.code}`);
-      return;
+    } catch (error) {
+        if (error instanceof ApiClientError) {
+            errorMessage.value = t(`error.${ error.details.errors[0]?.code}`);
+            return;
+        }
+    } finally {
+        isLoading.value = false;
     }
-  } finally {
-    isLoading.value = false;
-  }
 };
 </script>
 
 <template>
-  <AccountRegisterInner
-      :is-loading="isLoading"
-      :error-message="errorMessage"
-      @register="(registerData: LoginData) => register(registerData)"
-  >
-    <template #headline><slot name="headline" /></template>
-  </AccountRegisterInner>
+    <AccountRegisterInner
+        :is-loading="isLoading"
+        :error-message="errorMessage"
+        @register="(registerData: LoginData) => register(registerData)"
+    >
+        <template #headline><slot name="headline" /></template>
+    </AccountRegisterInner>
 </template>

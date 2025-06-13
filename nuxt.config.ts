@@ -60,7 +60,7 @@ export default defineNuxtConfig({
         locales: [
             {
                 code: 'de-DE',
-                files: ['de-DE/account.json', 'de-DE/error.json', 'de-DE/general.json'],
+                files: ['de-DE/account.json', 'de-DE/error.json', 'de-DE/general.json', 'de-DE/address.json'],
             },
             {
                 code: 'en-GB',

@@ -47,33 +47,19 @@ provide(FieldContextKey, fieldContext);
 <template>
     <section>
         <slot v-bind="props">
-            <UiAccordion
-                type="single"
-                as-child
-                class="w-full"
-                collapsible
-                :disabled="disabled"
-            >
-                <UiFormItem>
-                    <UiAccordionItem :value="fieldName" class="border-none">
-                        <UiAccordionTrigger>
-                            <UiAutoFormLabel class="text-base" :required="required">
-                                {{ schema?.description || beautifyObjectName(fieldName) }}
-                            </UiAutoFormLabel>
-                        </UiAccordionTrigger>
-                        <UiAccordionContent class="space-y-5 p-1">
-                            <template v-for="(shape, key) in shapes" :key="key">
-                                <UiAutoFormField
-                                    :config="config?.[key as keyof typeof config] as ConfigItem"
-                                    :field-name="`${fieldName}.${key.toString()}`"
-                                    :label="key.toString()"
-                                    :shape="shape"
-                                />
-                            </template>
-                        </UiAccordionContent>
-                    </UiAccordionItem>
-                </UiFormItem>
-            </UiAccordion>
+            <UiFormItem>
+                <UiAutoFormLabel class="text-base" :required="required">
+                    {{ schema?.description || beautifyObjectName(fieldName) }}
+                </UiAutoFormLabel>
+                <template v-for="(shape, key) in shapes" :key="key">
+                    <UiAutoFormField
+                        :config="config?.[key as keyof typeof config] as ConfigItem"
+                        :field-name="`${fieldName}.${key.toString()}`"
+                        :label="key.toString()"
+                        :shape="shape"
+                    />
+                </template>
+            </UiFormItem>
         </slot>
     </section>
 </template>
