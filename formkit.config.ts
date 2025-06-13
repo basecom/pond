@@ -38,7 +38,7 @@ const iconsFormatted = Object.keys(iconsImport).reduce((icons, key) => {
 
 export default {
     icons: iconsFormatted,
-    iconLoaderUrl: (iconName) =>
+    iconLoaderUrl: (iconName: string) =>
         `https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/${iconName}.svg`,
     locales: { de },
     config: {
