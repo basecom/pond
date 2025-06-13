@@ -38,4 +38,4 @@ COPY --from=build /app/.output /app/.output
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
 ENV HOST=0
-CMD [ "node", ".output/server/index.mjs" ]
+CMD [ "bun", "--bun", ".output/server/index.mjs" ]
