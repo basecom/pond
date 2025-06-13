@@ -25,6 +25,7 @@ export const usePondForm = () => {
 
         // add selection of account type
         if (showAccountType.value) {
+            // TODO: Rücksprache mit Nele: Kann man die Enums auch translatable machen? Evtl. Kann man Geburtstag, Country, State, Salutation auch mit Enums umsetzen?
             personalDataForm = personalDataForm.extend({
                 accountType: z.enum(['business', 'private']).optional().default(customer.accountType),
             });
@@ -278,6 +279,7 @@ export const usePondForm = () => {
     /* eslint-disable */
     const getRegisterDependencies = (): Dependency<{ [x: string]: any; }>[] => [
         // Ich require alle Felder, welche initial angezeigt werden -> Von gerneral personal data und billing adresse
+        // TODO: Rücksprache mit Nele halten: Das required-* wid damit zwar angezeigt, aber das Formular kann auch so abgeschickt werden + das Error Label wird nicht angezeigt
         {
             sourceField: 'firstName',
             type: DependencyType.REQUIRES,

@@ -22,7 +22,6 @@ defineProps<FieldProps>();
                         type="number"
                         v-bind="{ ...slotProps.componentField, ...config?.inputProps }"
                         :disabled="config?.inputProps?.disabled ?? disabled"
-                        :required="required"
                     />
                 </slot>
             </UiFormControl>

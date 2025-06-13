@@ -70,6 +70,7 @@ fieldConfig['shippingAddress'] = getAddressFieldConfig(true);
         </template>
 
         <!-- Salutations -->
+        <!-- ToDo: Auslagern; Mit Nele Rücksprache halten: Wie macht man das required? -->
         <template #salutationId="slotProps">
             <div class="col-span-3 col-start-1">
                 <FormField v-slot="{ componentField }" v-bind="slotProps" name="salutationId">
@@ -137,6 +138,7 @@ fieldConfig['shippingAddress'] = getAddressFieldConfig(true);
             </div>
         </template>
 
+        <!-- ToDo: Auslagern; Mit Nele Rücksprache halten: Wie macht man das required? -->
         <!-- Birthday -->
         <template #birthdayDay="slotProps">
             <div class="col-span-2 col-start-1">
@@ -262,6 +264,7 @@ fieldConfig['shippingAddress'] = getAddressFieldConfig(true);
             </div>
         </template>
 
+        <!-- ToDo: Mit Nele Rücksprache halten: Wie passe ich das Design an? -->
         <!-- Address fields -->
         <template #billingAddress="slotProps">
             <div class="col-span-12 col-start-1">
@@ -276,6 +279,7 @@ fieldConfig['shippingAddress'] = getAddressFieldConfig(true);
             </div>
         </template>
 
+        <!-- ToDo: Mit Nele Rücksprache halten: Wie passe ich das Design an? -->
         <!-- Different shipping address -->
         <template #shippingAddress="slotProps">
             <div class="col-span-12 col-start-1">
