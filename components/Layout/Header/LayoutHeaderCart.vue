@@ -39,7 +39,7 @@ const { t } = useI18n();
                         class="flex py-6"
                     >
                         <CheckoutLineItem
-                            v-if="item.cartItem"
+                            v-if="item.product"
                             :line-item="item.cartItem"
                             :product="item.product"
                         />
