@@ -194,21 +194,19 @@ watch(customer, async newCustomer => {
             />
         </template>
 
-        <ClientOnly>
-            <FormKit
-                :id="`newsletterPrivacy-${element.id}`"
-                type="checkbox"
-                :label="$t('cms.element.form.newsletter.privacy.label')"
-                :help="$t('cms.element.form.newsletter.privacy.help')"
-                :name="`newsletterPrivacy-${element.id}`"
-                decorator-icon="check"
-                validation="accepted"
-                validation-visibility="submit"
-                :classes="{
-                    outer: 'col-span-3',
-                }"
-            />
-        </ClientOnly>
+        <FormKit
+            :id="`newsletterPrivacy-${element.id}`"
+            type="checkbox"
+            :label="$t('cms.element.form.newsletter.privacy.label')"
+            :help="$t('cms.element.form.newsletter.privacy.help')"
+            :name="`newsletterPrivacy-${element.id}`"
+            decorator-icon="check"
+            validation="accepted"
+            validation-visibility="submit"
+            :classes="{
+                outer: 'col-span-3',
+            }"
+        />
 
         <FormKit
             :id="`newsletterSubmitButton-${element.id}`"

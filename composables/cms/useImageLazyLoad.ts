@@ -1,4 +1,4 @@
-import type { UseLazyLoad } from '../../types/cms/cmsVisibility';
+import type { UseLazyLoad } from '~/types/cms/cmsVisibility';
 
 export function useImageLazyLoad(): UseLazyLoad<HTMLImageElement> {
     const isElementLoaded = (element: HTMLImageElement) => element.complete;

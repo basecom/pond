@@ -55,6 +55,10 @@
                 "errorMessage": "Ein Fehler ist bei ihrer Bestellung aufgetreten. Bitte versuche es noch einmal.",
                 "buttonLabel": "Bestellen",
                 "buttonLabelNotLoggedIn": "Zum Bestellen einloggen"
+            },
+            "invalidCountry": {
+                "button": "Ungültige Adresse",
+                "notification": "Das Land Ihrer ausgewählten Lieferadresse wird von diesem Verkaufskanal nicht unterstützt. Bitte wählen Sie eine gültige Adresse."
             }
         },
         "lineItemsHeading": "Produkte",

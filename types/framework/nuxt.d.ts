@@ -1,4 +1,4 @@
-import type { PondAnalyticsType } from '../analytics/analytics';
+import type { PondAnalyticsType } from '~/types/analytics/analytics';
 
 export interface PondHooks {
     'pond:determine-access-token': (accessKey: AccessToken) => HookResult;

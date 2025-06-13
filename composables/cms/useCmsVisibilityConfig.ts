@@ -3,7 +3,7 @@ import type {
     CmsElementConfig,
     CmsElementLazyLoadConfig,
     CmsPageConfig,
-} from '../../types/cms/cmsVisibility';
+} from '~/types/cms/cmsVisibility';
 
 export function useCmsVisibilityConfig(pageConfig: Ref<CmsPageConfig | null>) {
     const visibleElements: ComputedRef<string[]> = computed(() => pageConfig.value?.elements

@@ -70,7 +70,7 @@ const navItems = ref([
         <li>
             <FormKit
                 type="submit"
-                prefix-icon="right-from-bracket"
+                prefix-icon="arrow-right-from-bracket"
                 :title="t('account.logout.buttonLabel')"
                 @click.prevent="handleLogout"
             >

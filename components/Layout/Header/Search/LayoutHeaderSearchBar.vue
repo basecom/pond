@@ -100,7 +100,7 @@ onMounted(() => {
                 id="searchInput"
                 v-model="typingQuery"
                 type="text"
-                prefix-icon="search"
+                prefix-icon="magnifying-glass"
                 :floating-label="false"
                 :classes="{
                     inner: 'focus-within:ring-[0] focus-within:border-0 shadow-none border-0 gap-4 p-[0]',

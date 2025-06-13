@@ -1,4 +1,3 @@
-import { type CookieEntry, type CookieGroup, useCookieGroupsHelper } from '../composables/useCookieGroupsHelper';
 import type { CaptchaConfiguration } from '~/types/CaptchaConfiguration';
 
 export const useCookieBannerStore = defineStore('cookie-banner', () => {

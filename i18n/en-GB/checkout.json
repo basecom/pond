@@ -55,6 +55,10 @@
                 "errorMessage": "An error occurred trying finish the order. Please try again.",
                 "buttonLabel": "Order",
                 "buttonLabelNotLoggedIn": "Log in to place order"
+            },
+            "invalidCountry": {
+                "button": "Invalid address",
+                "notification": "The country of your selected delivery address is not supported by this sales channel. Please select a valid address."
             }
         },
         "lineItemsHeading": "Products",

@@ -18,7 +18,9 @@ export const useCartItemsStore = defineStore('cart-items', () => {
 
         if (ids.length === 0) {
             // when there are no ids we should not fetch -> as this causes an error
-            return [];
+            return {
+                elements: [],
+            };
         }
 
         return await _search({
@@ -54,8 +56,7 @@ export const useCartItemsStore = defineStore('cart-items', () => {
         });
     });
 
-    const productSearch = data.value as Schemas['ProductListingResult'];
-    const products = computed((): Schemas['Product'][] => productSearch?.elements || []);
+    const products = computed((): Schemas['Product'][] => data?.value?.elements ?? []);
 
     const cartItemsWithProduct = computed(() => {
         if (!products.value.length) {

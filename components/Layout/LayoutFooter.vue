@@ -3,11 +3,6 @@ import { getTranslatedProperty, getCategoryRoute } from '@shopware-pwa/helpers-n
 
 const navigationStore = useNavigationStore();
 const { footerNavigation, serviceNavigation } = storeToRefs(navigationStore);
-
-onMounted(async () => {
-    await navigationStore.loadNavigation('footer-navigation', 1);
-    await navigationStore.loadNavigation('service-navigation', 1);
-});
 </script>
 
 <template>

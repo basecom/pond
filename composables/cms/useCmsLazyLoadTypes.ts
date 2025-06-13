@@ -1,4 +1,4 @@
-import type { LazyLoadTypes, UseLazyLoad } from '../../types/cms/cmsVisibility';
+import type { LazyLoadTypes, UseLazyLoad } from '~/types/cms/cmsVisibility';
 
 export function useCmsLazyLoadMappings() {
     const mapping: Record<LazyLoadTypes, () => UseLazyLoad> = {

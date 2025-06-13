@@ -1,4 +1,4 @@
-import type { PreloadImageConfig } from '../types/PreloadImageConfig';
+import type { PreloadImageConfig } from '~/types/PreloadImageConfig';
 
 export function useImagePreload(config: PreloadImageConfig) {
     const runtimeConfig = useRuntimeConfig();
