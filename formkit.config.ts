@@ -29,7 +29,7 @@ const iconsImport = import.meta.glob('/assets/icons/**/*.svg', {
 
 // Map the icons to a new object with correctly formatted icon names as keys
 const iconsFormatted = Object.keys(iconsImport).reduce((icons, key) => {
-    const iconName = key.replace('/assets/icons/', '').replace('.svg', '');
+    const iconName = key.substring(key.lastIndexOf('/') + 1).replace('.svg', '');
 
     icons[iconName] = iconsImport[key];
 
