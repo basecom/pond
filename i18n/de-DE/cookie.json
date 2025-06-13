@@ -42,7 +42,7 @@
             },
             "marketing": {
                 "name": "Marketing",
-                "description": "Erlaubt es personenbezogene Daten für Online-Werbung und Marketing zu sammeln.",
+                "description": "Erlaubt es, personenbezogene Daten für Online-Werbung und Marketing zu sammeln.",
                 "entries": {
                     "googleAds": "Google Werbung und Marketing"
                 }

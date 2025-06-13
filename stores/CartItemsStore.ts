@@ -56,7 +56,7 @@ export const useCartItemsStore = defineStore('cart-items', () => {
         });
     });
 
-    const products = computed((): Schemas['Product'][] => data?.value?.elements || []);
+    const products = computed((): Schemas['Product'][] => data?.value?.elements ?? []);
 
     const cartItemsWithProduct = computed(() => {
         if (!products.value.length) {
