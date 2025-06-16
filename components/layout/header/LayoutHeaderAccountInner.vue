@@ -24,7 +24,7 @@ provide('closeDialog', () => {
 <template>
     <UiDropdownMenu>
         <slot name="action-login-menu">
-            <UiDropdownMenuTrigger class="size-5">
+            <UiDropdownMenuTrigger class="size-5" id="header-account-action" aria-label="header-account-action">
                 <slot name="icon">
                     <Icon name="mdi:account-outline" class="size-5" />
                 </slot>

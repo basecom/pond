@@ -14,6 +14,8 @@ withDefaults(
         <NuxtLinkLocale
             to="/wishlist"
             class="relative h-5"
+            id="wishlist"
+            aria-label="wishlist"
         >
             <slot name="wishlist-icon">
                 <Icon name="mdi:cards-heart-outline" class="size-5" />
