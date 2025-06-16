@@ -91,7 +91,8 @@ const onProductSelect = (product: Schemas['Product'], index: string | number) =>
             <LayoutSliderSlide
                 v-for="(slide, index) in slides"
                 :key="slide.id"
-                :class="`min-w-[${minWidth}] py-2`"
+                class="py-2"
+                :style="minWidth ? { minWidth } : undefined"
             >
                 <ProductCard
                     :product="slide"
