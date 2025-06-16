@@ -37,7 +37,6 @@ const emits = defineEmits<{
 }>();
 
 const { getPersonalDataForm, getPersonalDataDependencies } = usePondForm();
-const { getSalutations: salutations } = useSalutations();
 const schema = getPersonalDataForm(props.customer);
 const dependencies = getPersonalDataDependencies();
 export type PersonalDataForm = z.infer<typeof schema>;
@@ -51,17 +50,8 @@ const birthday = computed(() => {
     return isNaN(date.getTime()) ? new Date() : date;
 });
 
-const possibleBirthdayYears = computed(() => {
-    const years = [];
-    const today = new Date();
-    // we can not use a foreach here
-    // eslint-disable-next-line no-restricted-syntax
-    for (let i = (today.getFullYear() - 120); i <= today.getFullYear(); i++) years.push(i);
-    return years;
-});
-
 const changePersonalData = async (personalDataForm: PersonalDataForm) => {
-  console.log('personal', personalDataForm);
+    console.log('personal', personalDataForm);
     emits('update-personal-data', personalDataForm);
 };
 </script>
@@ -105,11 +95,11 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
             <template #salutationId="slotProps">
                 <div class="col-span-12">
                     <FormField v-slot="{ componentField }" v-bind="slotProps" name="salutationId">
-                      <SharedFormFieldsSalutation :component-field="componentField" :defaultValue="customer.salutationId">
-                        <template #label>
-                          <UiAutoFormLabel>{{ $t('account.customer.salutation') }}</UiAutoFormLabel>
-                        </template>
-                      </SharedFormFieldsSalutation>
+                        <SharedFormFieldsSalutation :component-field="componentField" :default-value="customer.salutationId">
+                            <template #label>
+                                <UiAutoFormLabel>{{ $t('account.customer.salutation') }}</UiAutoFormLabel>
+                            </template>
+                        </SharedFormFieldsSalutation>
                     </FormField>
                 </div>
             </template>
@@ -147,11 +137,11 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
             <template #birthdayDay="slotProps">
                 <div class="col-span-4">
                     <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayDay">
-                      <SharedFormFieldsBirthdayDay :component-field="componentField" :default-value="birthday.getDate()">
-                        <template #label>
-                          <UiAutoFormLabel>{{ $t('account.customer.birthday.label') }}</UiAutoFormLabel>
-                        </template>
-                      </SharedFormFieldsBirthdayDay>
+                        <SharedFormFieldsBirthdayDay :component-field="componentField" :default-value="birthday.getDate()">
+                            <template #label>
+                                <UiAutoFormLabel>{{ $t('account.customer.birthday.label') }}</UiAutoFormLabel>
+                            </template>
+                        </SharedFormFieldsBirthdayDay>
                     </FormField>
                 </div>
             </template>
@@ -159,11 +149,11 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
             <template #birthdayMonth="slotProps">
                 <div class="col-span-4 grid items-end">
                     <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayMonth">
-                      <SharedFormFieldsBirthdayMonth :component-field="componentField" :default-value="birthday.getMonth() + 1">
-                        <template #label>
-                          <UiAutoFormLabel class="sr-only">{{ $t('account.customer.birthdayMonth') }}</UiAutoFormLabel>
-                        </template>
-                      </SharedFormFieldsBirthdayMonth>
+                        <SharedFormFieldsBirthdayMonth :component-field="componentField" :default-value="birthday.getMonth() + 1">
+                            <template #label>
+                                <UiAutoFormLabel class="sr-only">{{ $t('account.customer.birthdayMonth') }}</UiAutoFormLabel>
+                            </template>
+                        </SharedFormFieldsBirthdayMonth>
                     </FormField>
                 </div>
             </template>
@@ -171,11 +161,11 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
             <template #birthdayYear="slotProps">
                 <div class="col-span-4 grid items-end">
                     <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayYear">
-                      <SharedFormFieldsBirthdayYear :component-field="componentField" :default-value="birthday.getFullYear()">
-                        <template #label>
-                          <UiAutoFormLabel class="sr-only">{{ $t('account.customer.birthdayYear') }}</UiAutoFormLabel>
-                        </template>
-                      </SharedFormFieldsBirthdayYear>
+                        <SharedFormFieldsBirthdayYear :component-field="componentField" :default-value="birthday.getFullYear()">
+                            <template #label>
+                                <UiAutoFormLabel class="sr-only">{{ $t('account.customer.birthdayYear') }}</UiAutoFormLabel>
+                            </template>
+                        </SharedFormFieldsBirthdayYear>
                     </FormField>
                 </div>
             </template>

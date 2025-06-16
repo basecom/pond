@@ -25,6 +25,6 @@ export function usePondAuthentication() {
 
     return {
         rerouteIfLoggedOut,
-        rerouteIfLoggedIn
+        rerouteIfLoggedIn,
     };
 }

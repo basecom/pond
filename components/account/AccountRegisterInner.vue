@@ -16,9 +16,7 @@ const emits = defineEmits<{
   register: [registerData: LoginData];
 }>();
 
-const { t } = useI18n();
 const { getRegisterForm, getRegisterDependencies } = usePondForm();
-const { getSalutations: salutations } = useSalutations();
 //const { getCountries: countries, getStatesForCountry} = useCountries();
 const { getRegisterFormFieldConfig } = usePondFieldConfig();
 const configStore = useConfigStore();
@@ -57,11 +55,11 @@ const fieldConfig = getRegisterFormFieldConfig();
         <template #salutationId="slotProps">
             <div class="col-span-3 col-start-1">
                 <FormField v-slot="{ componentField }" v-bind="slotProps" name="salutationId">
-                  <SharedFormFieldsSalutation :componentField="componentField">
-                    <template #label>
-                      <UiAutoFormLabel :required="true">{{ $t('account.customer.salutation') }}</UiAutoFormLabel>
-                    </template>
-                  </SharedFormFieldsSalutation>
+                    <SharedFormFieldsSalutation :component-field="componentField">
+                        <template #label>
+                            <UiAutoFormLabel :required="true">{{ $t('account.customer.salutation') }}</UiAutoFormLabel>
+                        </template>
+                    </SharedFormFieldsSalutation>
                 </FormField>
             </div>
         </template>
@@ -101,16 +99,15 @@ const fieldConfig = getRegisterFormFieldConfig();
             </div>
         </template>
 
-        <!-- ToDo: Auslagern; Mit Nele Rücksprache halten: Wie macht man das required? -->
         <!-- Birthday -->
         <template #birthdayDay="slotProps">
             <div class="col-span-2 col-start-1">
                 <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayDay">
-                  <SharedFormFieldsBirthdayDay :component-field="componentField">
-                    <template #label>
-                      <UiAutoFormLabel :required="isBirthdayRequired">{{ $t('account.customer.birthday.label') }}</UiAutoFormLabel>
-                    </template>
-                  </SharedFormFieldsBirthdayDay>
+                    <SharedFormFieldsBirthdayDay :component-field="componentField">
+                        <template #label>
+                            <UiAutoFormLabel :required="isBirthdayRequired">{{ $t('account.customer.birthday.label') }}</UiAutoFormLabel>
+                        </template>
+                    </SharedFormFieldsBirthdayDay>
                 </FormField>
             </div>
         </template>
@@ -118,11 +115,11 @@ const fieldConfig = getRegisterFormFieldConfig();
         <template #birthdayMonth="slotProps">
             <div class="col-span-2 grid items-end">
                 <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayMonth">
-                  <SharedFormFieldsBirthdayMonth :component-field="componentField">
-                    <template #label>
-                      <UiAutoFormLabel :required="isBirthdayRequired" class="sr-only">{{ $t('account.customer.birthdayMonth') }}</UiAutoFormLabel>
-                    </template>
-                  </SharedFormFieldsBirthdayMonth>
+                    <SharedFormFieldsBirthdayMonth :component-field="componentField">
+                        <template #label>
+                            <UiAutoFormLabel :required="isBirthdayRequired" class="sr-only">{{ $t('account.customer.birthdayMonth') }}</UiAutoFormLabel>
+                        </template>
+                    </SharedFormFieldsBirthdayMonth>
                 </FormField>
             </div>
         </template>
@@ -130,11 +127,11 @@ const fieldConfig = getRegisterFormFieldConfig();
         <template #birthdayYear="slotProps">
             <div class="col-span-2 grid items-end">
                 <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayYear">
-                  <SharedFormFieldsBirthdayYear :component-field="componentField">
-                    <template #label>
-                      <UiAutoFormLabel :required="isBirthdayRequired" class="sr-only"> {{ $t('account.customer.birthdayYear') }} </UiAutoFormLabel>
-                    </template>
-                  </SharedFormFieldsBirthdayYear>
+                    <SharedFormFieldsBirthdayYear :component-field="componentField">
+                        <template #label>
+                            <UiAutoFormLabel :required="isBirthdayRequired" class="sr-only"> {{ $t('account.customer.birthdayYear') }} </UiAutoFormLabel>
+                        </template>
+                    </SharedFormFieldsBirthdayYear>
                 </FormField>
             </div>
         </template>
@@ -178,11 +175,7 @@ const fieldConfig = getRegisterFormFieldConfig();
         <!-- Address fields -->
         <template #billingAddress="slotProps">
             <div class="col-span-12 col-start-1">
-                <UiAutoFormField v-bind="slotProps">
-                  <template #test>
-                    Hallo
-                  </template>
-                </UiAutoFormField>
+                <UiAutoFormField v-bind="slotProps" />
             </div>
         </template>
 
@@ -193,7 +186,6 @@ const fieldConfig = getRegisterFormFieldConfig();
             </div>
         </template>
 
-        <!-- ToDo: Mit Nele Rücksprache halten: Wie passe ich das Design an? -->
         <!-- Different shipping address -->
         <template #shippingAddress="slotProps">
             <div class="col-span-12 col-start-1">
@@ -201,11 +193,26 @@ const fieldConfig = getRegisterFormFieldConfig();
             </div>
         </template>
 
-      <template #acceptedDataProtection="slotProps">
-        <div class="col-span-12 col-start-1">
-          <UiAutoFormField v-bind="slotProps" />
-        </div>
-      </template>
+        <template #acceptedDataProtection="slotProps">
+            <div class="col-span-12 col-start-1">
+                <UiAutoFormField v-bind="slotProps" />
+            </div>
+        </template>
+
+        <slot name="alert">
+            <UiAlert v-if="errorMessage" variant="destructive" class="col-span-12 mb-4 flex gap-4">
+                <slot name="alert-icon">
+                    <Icon name="mdi:alert-circle-outline" class="size-4 text-red-500" />
+                </slot>
+
+                <div>
+                    <UiAlertTitle>{{ $t('error.generalHeadline') }}</UiAlertTitle>
+                    <UiAlertDescription>
+                        {{ errorMessage }}
+                    </UiAlertDescription>
+                </div>
+            </UiAlert>
+        </slot>
 
         <slot name="submit-button">
             <UiButton type="submit" :is-loading="isLoading" class="col-span-12">

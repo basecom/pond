@@ -110,7 +110,7 @@ export const usePondForm = () => {
                     required_error: t('account.customer.mail.error'),
                 },
             )
-                .email(),
+                .email({message: t('account.customer.mail.error')}),
         });
 
         // Confirm e-mail address
@@ -118,9 +118,9 @@ export const usePondForm = () => {
             registerForm = registerForm.extend({
                 emailConfirmation: z
                     .string({
-                        required_error: t('account.customer.mail.error'),
+                        required_error: t('account.customer.mail.errorGeneral')
                     })
-                    .email(),
+                    .email({message: t('account.customer.mail.error')}),
             });
         }
 
@@ -184,11 +184,11 @@ export const usePondForm = () => {
 
         if (isDataProtectionCheckboxRequired.value) {
             registerForm = registerForm.extend({
-                acceptedDataProtection: z.boolean().optional().default(false)
+                acceptedDataProtection: z.boolean().default(false)
             });
         }
 
-        return registerForm;
+        return registerForm
     };
 
     const getAddressFormFields = (includeGeneralFields: boolean, label?: string | null) => {
@@ -284,7 +284,6 @@ export const usePondForm = () => {
     /* eslint-disable */
     const getRegisterDependencies = (): Dependency<{ [x: string]: any; }>[] => [
         // Ich require alle Felder, welche initial angezeigt werden -> Von gerneral personal data und billing adresse
-        // TODO: Rücksprache mit Nele halten: Das required-* wid damit zwar angezeigt, aber das Formular kann auch so abgeschickt werden + das Error Label wird nicht angezeigt
         {
             sourceField: 'firstName',
             type: DependencyType.REQUIRES,
@@ -371,7 +370,7 @@ export const usePondForm = () => {
             targetField: 'department',
             when: (accountType: string) => accountType !== 'business',
         },
-        // Wenn die Adresse gleich bleibt, wird das Formular für abweichende Lieferadresse nicht angezeiegt TODO Naming andersrum
+        // Wenn die Adresse gleich bleibt, wird das Formular für abweichende Lieferadresse nicht angezeiegt
         {
             sourceField: 'differentShippingAddress',
             type: DependencyType.HIDES,
