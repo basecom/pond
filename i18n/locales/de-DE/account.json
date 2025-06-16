@@ -130,6 +130,9 @@
                 "errorGeneral": "Bitte geben Sie ein Password ein",
                 "errorLength": "Ihr Passwort muss mind. {length} Zeichen lang sein",
                 "confirm": "Passwort bestätigen"
+            },
+            "acceptedDataProtection": {
+                "label": "Ich habe die Datenschutzbestimmungen zur Kenntnis genommen und die AGB gelesen und bin mit ihnen einverstanden."
             }
         }
     }

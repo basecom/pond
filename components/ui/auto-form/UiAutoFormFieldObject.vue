@@ -52,12 +52,14 @@ provide(FieldContextKey, fieldContext);
                     {{ schema?.description || beautifyObjectName(fieldName) }}
                 </UiAutoFormLabel>
                 <template v-for="(shape, key) in shapes" :key="key">
+                  <slot name="test">
                     <UiAutoFormField
                         :config="config?.[key as keyof typeof config] as ConfigItem"
                         :field-name="`${fieldName}.${key.toString()}`"
                         :label="key.toString()"
                         :shape="shape"
                     />
+                  </slot>
                 </template>
             </UiFormItem>
         </slot>

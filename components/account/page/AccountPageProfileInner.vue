@@ -3,7 +3,6 @@ import type { Schemas } from '@shopware/api-client/api-types';
 import type { ChangePasswordForm } from '~/components/account/page/AccountPageProfileChangePasswordInner.vue';
 import type { ChangeMailForm } from '~/components/account/page/AccountPageProfileChangeMailInner.vue';
 import type * as z from 'zod';
-import { getTranslatedProperty } from '@shopware/helpers';
 
 const props = withDefaults(
     defineProps<{
@@ -62,6 +61,7 @@ const possibleBirthdayYears = computed(() => {
 });
 
 const changePersonalData = async (personalDataForm: PersonalDataForm) => {
+  console.log('personal', personalDataForm);
     emits('update-personal-data', personalDataForm);
 };
 </script>
@@ -105,29 +105,11 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
             <template #salutationId="slotProps">
                 <div class="col-span-12">
                     <FormField v-slot="{ componentField }" v-bind="slotProps" name="salutationId">
-                        <UiFormItem>
-                            <UiAutoFormLabel>{{ $t('account.customer.salutation') }}</UiAutoFormLabel>
-                            <UiSelect v-bind="componentField" :default-value="customer.salutationId">
-                                <UiFormControl>
-                                    <UiSelectTrigger>
-                                        <UiSelectValue />
-                                    </UiSelectTrigger>
-                                </UiFormControl>
-
-                                <UiSelectContent>
-                                    <UiSelectGroup>
-                                        <UiSelectItem
-                                            v-for="salutation in salutations"
-                                            :key="salutation.id"
-                                            :value="salutation.id"
-                                        >
-                                            {{ getTranslatedProperty(salutation, 'displayName') }}
-                                        </UiSelectItem>
-                                    </UiSelectGroup>
-                                </UiSelectContent>
-                            </UiSelect>
-                            <UiFormMessage />
-                        </UiFormItem>
+                      <SharedFormFieldsSalutation :component-field="componentField" :defaultValue="customer.salutationId">
+                        <template #label>
+                          <UiAutoFormLabel>{{ $t('account.customer.salutation') }}</UiAutoFormLabel>
+                        </template>
+                      </SharedFormFieldsSalutation>
                     </FormField>
                 </div>
             </template>
@@ -165,29 +147,11 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
             <template #birthdayDay="slotProps">
                 <div class="col-span-4">
                     <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayDay">
-                        <UiFormItem>
-                            <UiAutoFormLabel>{{ $t('account.customer.birthday.label') }}</UiAutoFormLabel>
-                            <UiSelect v-bind="componentField" :default-value="birthday.getDate()">
-                                <UiFormControl>
-                                    <UiSelectTrigger>
-                                        <UiSelectValue />
-                                    </UiSelectTrigger>
-                                </UiFormControl>
-
-                                <UiSelectContent>
-                                    <UiSelectGroup>
-                                        <UiSelectItem
-                                            v-for="day in 31"
-                                            :key="day"
-                                            :value="day"
-                                        >
-                                            {{ day }}
-                                        </UiSelectItem>
-                                    </UiSelectGroup>
-                                </UiSelectContent>
-                            </UiSelect>
-                            <UiFormMessage />
-                        </UiFormItem>
+                      <SharedFormFieldsBirthdayDay :component-field="componentField" :default-value="birthday.getDate()">
+                        <template #label>
+                          <UiAutoFormLabel>{{ $t('account.customer.birthday.label') }}</UiAutoFormLabel>
+                        </template>
+                      </SharedFormFieldsBirthdayDay>
                     </FormField>
                 </div>
             </template>
@@ -195,28 +159,11 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
             <template #birthdayMonth="slotProps">
                 <div class="col-span-4 grid items-end">
                     <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayMonth">
-                        <UiFormItem>
-                            <UiAutoFormLabel class="sr-only">{{ $t('account.customer.birthdayMonth') }}</UiAutoFormLabel>
-                            <UiSelect v-bind="componentField" :default-value="birthday.getMonth() + 1">
-                                <UiFormControl>
-                                    <UiSelectTrigger>
-                                        <UiSelectValue />
-                                    </UiSelectTrigger>
-                                </UiFormControl>
-
-                                <UiSelectContent>
-                                    <UiSelectGroup>
-                                        <UiSelectItem
-                                            v-for="month in 12"
-                                            :key="month"
-                                            :value="month"
-                                        >
-                                            {{ month }}
-                                        </UiSelectItem>
-                                    </UiSelectGroup>
-                                </UiSelectContent>
-                            </UiSelect>
-                        </UiFormItem>
+                      <SharedFormFieldsBirthdayMonth :component-field="componentField" :default-value="birthday.getMonth() + 1">
+                        <template #label>
+                          <UiAutoFormLabel class="sr-only">{{ $t('account.customer.birthdayMonth') }}</UiAutoFormLabel>
+                        </template>
+                      </SharedFormFieldsBirthdayMonth>
                     </FormField>
                 </div>
             </template>
@@ -224,28 +171,11 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
             <template #birthdayYear="slotProps">
                 <div class="col-span-4 grid items-end">
                     <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayYear">
-                        <UiFormItem>
-                            <UiAutoFormLabel class="sr-only">{{ $t('account.customer.birthdayYear') }}</UiAutoFormLabel>
-                            <UiSelect v-bind="componentField" :default-value="birthday.getFullYear()">
-                                <UiFormControl>
-                                    <UiSelectTrigger>
-                                        <UiSelectValue />
-                                    </UiSelectTrigger>
-                                </UiFormControl>
-
-                                <UiSelectContent>
-                                    <UiSelectGroup>
-                                        <UiSelectItem
-                                            v-for="year in possibleBirthdayYears"
-                                            :key="year"
-                                            :value="year"
-                                        >
-                                            {{ year }}
-                                        </UiSelectItem>
-                                    </UiSelectGroup>
-                                </UiSelectContent>
-                            </UiSelect>
-                        </UiFormItem>
+                      <SharedFormFieldsBirthdayYear :component-field="componentField" :default-value="birthday.getFullYear()">
+                        <template #label>
+                          <UiAutoFormLabel class="sr-only">{{ $t('account.customer.birthdayYear') }}</UiAutoFormLabel>
+                        </template>
+                      </SharedFormFieldsBirthdayYear>
                     </FormField>
                 </div>
             </template>

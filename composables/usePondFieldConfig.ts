@@ -89,21 +89,21 @@ export const usePondFieldConfig = () => {
                     placeholder: t('address.street.placeholder'),
                 },
             },
-            additionalAddress1: {
-                label: t('address.additionalAddress1.label'),
+            additionalAddressLine1: {
+                label: t('address.additionalAddressLine1.label'),
                 inputProps: {
                     type: 'text',
-                    placeholder: t('address.additionalAddress1.placeholder'),
+                    placeholder: t('address.additionalAddressLine1.placeholder'),
                 },
             },
-            additionalAddress2: {
-                label: t('address.additionalAddress2.label'),
+            additionalAddressLine2: {
+                label: t('address.additionalAddressLine2.label'),
                 inputProps: {
                     type: 'text',
-                    placeholder: t('address.additionalAddress2.placeholder'),
+                    placeholder: t('address.additionalAddressLine2.placeholder'),
                 },
             },
-            zipCode: {
+            zipcode: {
                 label: t('address.zipCode.label'),
                 inputProps: {
                     type: 'text',
@@ -124,7 +124,7 @@ export const usePondFieldConfig = () => {
                     placeholder: t('address.country.placeholder'),
                 },
             },
-            phone: {
+            phoneNumber: {
                 label: t('address.phone.label'),
                 inputProps: {
                     type: 'text',
@@ -143,8 +143,31 @@ export const usePondFieldConfig = () => {
         return fieldConfig.value;
     };
 
+    const differentShippingAddressFieldConfig = ref({
+        label: t('address.differentShippingAddress.label'),
+    });
+
+    const acceptedDataProtectionFieldConfig = ref({
+        label: t('account.register.acceptedDataProtection.label'),
+    });
+
+    const getRegisterFormFieldConfig = () => {
+        const fieldConfig = getPersonalDataFieldConfig();
+
+        fieldConfig['billingAddress'] = getAddressFieldConfig(false);
+
+        fieldConfig['differentShippingAddress'] = differentShippingAddressFieldConfig.value;
+
+        fieldConfig['acceptedDataProtection'] = acceptedDataProtectionFieldConfig.value;
+
+        fieldConfig['shippingAddress'] = getAddressFieldConfig(true);
+
+        return fieldConfig;
+    };
+
     return {
         getPersonalDataFieldConfig,
         getAddressFieldConfig,
+        getRegisterFormFieldConfig,
     };
 };

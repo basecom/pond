@@ -10,12 +10,12 @@
       "placeholder": "Straße eingeben ...",
       "errorGeneral": "Bitte geben Sie eine Straße ein"
     },
-    "additionalAddress1": {
+    "additionalAddressLine1": {
       "label": "Adresszusatz 1",
       "placeholder": "Adresszusatz eingeben ...",
       "errorGeneral": "Bitte geben Sie einen Adresszusatz ein"
     },
-    "additionalAddress2": {
+    "additionalAddressLine2": {
       "label": "Adresszusatz 2",
       "placeholder": "Adresszusatz eingeben ...",
       "errorGeneral": "Bitte geben Sie einen Adresszusatz ein"

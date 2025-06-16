@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type * as z from 'zod';
-import { getTranslatedProperty } from '@shopware/helpers';
 
 withDefaults(
     defineProps<{
@@ -21,7 +20,10 @@ const { t } = useI18n();
 const { getRegisterForm, getRegisterDependencies } = usePondForm();
 const { getSalutations: salutations } = useSalutations();
 //const { getCountries: countries, getStatesForCountry} = useCountries();
-const { getPersonalDataFieldConfig, getAddressFieldConfig } = usePondFieldConfig();
+const { getRegisterFormFieldConfig } = usePondFieldConfig();
+const configStore = useConfigStore();
+
+const isBirthdayRequired = ref(configStore.get('core.loginRegistration.birthdayFieldRequired') as boolean);
 
 const schema = getRegisterForm();
 const dependencies = getRegisterDependencies();
@@ -31,26 +33,8 @@ const register = async (registerData: LoginData) => {
     emits('register', registerData);
 };
 
-// TODO: Auslagern -> Wird auch in AccountPageProfileInner genutzt
-const possibleBirthdayYears = computed(() => {
-    const years = [];
-    const today = new Date();
-    // we can not use a foreach here
-    // eslint-disable-next-line no-restricted-syntax
-    for (let i = (today.getFullYear() - 120); i <= today.getFullYear(); i++) years.push(i);
-    return years;
-});
-
 // Create fieldConfig
-const fieldConfig = getPersonalDataFieldConfig();
-
-fieldConfig['billingAddress'] = getAddressFieldConfig(false);
-
-fieldConfig['differentShippingAddress'] = {
-    label: t('address.differentShippingAddress.label'),
-};
-
-fieldConfig['shippingAddress'] = getAddressFieldConfig(true);
+const fieldConfig = getRegisterFormFieldConfig();
 </script>
 
 <template>
@@ -70,35 +54,14 @@ fieldConfig['shippingAddress'] = getAddressFieldConfig(true);
         </template>
 
         <!-- Salutations -->
-        <!-- ToDo: Auslagern; Mit Nele Rücksprache halten: Wie macht man das required? -->
         <template #salutationId="slotProps">
             <div class="col-span-3 col-start-1">
                 <FormField v-slot="{ componentField }" v-bind="slotProps" name="salutationId">
-                    <UiFormItem>
-                        <UiAutoFormLabel :required="true">{{ $t('account.customer.salutation') }}</UiAutoFormLabel>
-                        <UiSelect v-bind="componentField">
-                            <UiFormControl>
-                                <UiSelectTrigger>
-                                    <!-- TODO: Placeholder definieren -->
-                                    <UiSelectValue placeholder="Ihre Anrede" />
-                                </UiSelectTrigger>
-                            </UiFormControl>
-
-                            <UiSelectContent>
-
-                                <UiSelectGroup>
-                                    <UiSelectItem
-                                        v-for="salutation in salutations"
-                                        :key="salutation.id"
-                                        :value="salutation.id"
-                                    >
-                                        {{ getTranslatedProperty(salutation, 'displayName') }}
-                                    </UiSelectItem>
-                                </UiSelectGroup>
-                            </UiSelectContent>
-                        </UiSelect>
-                        <UiFormMessage />
-                    </UiFormItem>
+                  <SharedFormFieldsSalutation :componentField="componentField">
+                    <template #label>
+                      <UiAutoFormLabel :required="true">{{ $t('account.customer.salutation') }}</UiAutoFormLabel>
+                    </template>
+                  </SharedFormFieldsSalutation>
                 </FormField>
             </div>
         </template>
@@ -143,29 +106,11 @@ fieldConfig['shippingAddress'] = getAddressFieldConfig(true);
         <template #birthdayDay="slotProps">
             <div class="col-span-2 col-start-1">
                 <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayDay">
-                    <UiFormItem>
-                        <UiAutoFormLabel>{{ $t('account.customer.birthday.label') }}</UiAutoFormLabel>
-                        <UiSelect v-bind="componentField">
-                            <UiFormControl>
-                                <UiSelectTrigger>
-                                    <UiSelectValue :placeholder="$t('account.customer.birthday.dayPlaceholder')" />
-                                </UiSelectTrigger>
-                            </UiFormControl>
-
-                            <UiSelectContent>
-                                <UiSelectGroup>
-                                    <UiSelectItem
-                                        v-for="day in 31"
-                                        :key="day"
-                                        :value="day"
-                                    >
-                                        {{ day }}
-                                    </UiSelectItem>
-                                </UiSelectGroup>
-                            </UiSelectContent>
-                        </UiSelect>
-                        <UiFormMessage />
-                    </UiFormItem>
+                  <SharedFormFieldsBirthdayDay :component-field="componentField">
+                    <template #label>
+                      <UiAutoFormLabel :required="isBirthdayRequired">{{ $t('account.customer.birthday.label') }}</UiAutoFormLabel>
+                    </template>
+                  </SharedFormFieldsBirthdayDay>
                 </FormField>
             </div>
         </template>
@@ -173,28 +118,11 @@ fieldConfig['shippingAddress'] = getAddressFieldConfig(true);
         <template #birthdayMonth="slotProps">
             <div class="col-span-2 grid items-end">
                 <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayMonth">
-                    <UiFormItem>
-                        <UiAutoFormLabel class="sr-only">{{ $t('account.customer.birthdayMonth') }}</UiAutoFormLabel>
-                        <UiSelect v-bind="componentField">
-                            <UiFormControl>
-                                <UiSelectTrigger>
-                                    <UiSelectValue :placeholder="$t('account.customer.birthday.monthPlaceholder')" />
-                                </UiSelectTrigger>
-                            </UiFormControl>
-
-                            <UiSelectContent>
-                                <UiSelectGroup>
-                                    <UiSelectItem
-                                        v-for="month in 12"
-                                        :key="month"
-                                        :value="month"
-                                    >
-                                        {{ month }}
-                                    </UiSelectItem>
-                                </UiSelectGroup>
-                            </UiSelectContent>
-                        </UiSelect>
-                    </UiFormItem>
+                  <SharedFormFieldsBirthdayMonth :component-field="componentField">
+                    <template #label>
+                      <UiAutoFormLabel :required="isBirthdayRequired" class="sr-only">{{ $t('account.customer.birthdayMonth') }}</UiAutoFormLabel>
+                    </template>
+                  </SharedFormFieldsBirthdayMonth>
                 </FormField>
             </div>
         </template>
@@ -202,35 +130,17 @@ fieldConfig['shippingAddress'] = getAddressFieldConfig(true);
         <template #birthdayYear="slotProps">
             <div class="col-span-2 grid items-end">
                 <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayYear">
-                    <UiFormItem>
-                        <UiAutoFormLabel class="sr-only" :required="true"> {{ $t('account.customer.birthdayYear') }} </UiAutoFormLabel>
-                        <UiSelect v-bind="componentField">
-                            <UiFormControl>
-                                <UiSelectTrigger>
-                                    <UiSelectValue :placeholder="$t('account.customer.birthday.yearPlaceholder')" />
-                                </UiSelectTrigger>
-                            </UiFormControl>
-
-                            <UiSelectContent>
-                                <UiSelectGroup>
-                                    <UiSelectItem
-                                        v-for="year in possibleBirthdayYears"
-                                        :key="year"
-                                        :value="year"
-                                    >
-                                        {{ year }}
-                                    </UiSelectItem>
-                                </UiSelectGroup>
-                            </UiSelectContent>
-                        </UiSelect>
-                    </UiFormItem>
+                  <SharedFormFieldsBirthdayYear :component-field="componentField">
+                    <template #label>
+                      <UiAutoFormLabel :required="isBirthdayRequired" class="sr-only"> {{ $t('account.customer.birthdayYear') }} </UiAutoFormLabel>
+                    </template>
+                  </SharedFormFieldsBirthdayYear>
                 </FormField>
             </div>
         </template>
 
         <!-- Company -->
         <template #company="slotProps">
-            <!-- TODO: Wie kann ich diesen Div entfernen, wenn das Feld hidden ist? -->
             <div class="col-span-6">
                 <UiAutoFormField v-bind="slotProps" />
             </div>
@@ -268,7 +178,11 @@ fieldConfig['shippingAddress'] = getAddressFieldConfig(true);
         <!-- Address fields -->
         <template #billingAddress="slotProps">
             <div class="col-span-12 col-start-1">
-                <UiAutoFormField v-bind="slotProps" />
+                <UiAutoFormField v-bind="slotProps">
+                  <template #test>
+                    Hallo
+                  </template>
+                </UiAutoFormField>
             </div>
         </template>
 
@@ -286,6 +200,12 @@ fieldConfig['shippingAddress'] = getAddressFieldConfig(true);
                 <UiAutoFormField v-bind="slotProps" />
             </div>
         </template>
+
+      <template #acceptedDataProtection="slotProps">
+        <div class="col-span-12 col-start-1">
+          <UiAutoFormField v-bind="slotProps" />
+        </div>
+      </template>
 
         <slot name="submit-button">
             <UiButton type="submit" :is-loading="isLoading" class="col-span-12">

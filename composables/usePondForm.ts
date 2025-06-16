@@ -19,6 +19,7 @@ export const usePondForm = () => {
     const isAdditionalAddress2FieldRequired = ref(configStore.get('core.loginRegistration.additionalAddressField2Required') as boolean);
     const showPhoneNumber = ref(configStore.get('core.loginRegistration.showAdditionalAddressField2') as boolean);
     const isPhoneNumberRequired = ref(configStore.get('core.loginRegistration.additionalAddressField2Required') as boolean);
+    const isDataProtectionCheckboxRequired = ref(configStore.get('core.loginRegistration.requireDataProtectionCheckbox') as boolean);
 
     const getPersonalDataForm = (customer: Schemas['Customer']): ZodObjectOrWrapped => {
         let personalDataForm = z.object({});
@@ -60,23 +61,21 @@ export const usePondForm = () => {
 
         // add birthday (if set in the admin)
         if (showBirthday.value) {
-            if (customer.birthday) {
-                const birthday = new Date(customer.birthday);
-                const day = birthday.getDate();
-                const month = birthday.getMonth() + 1;
-                const year = birthday.getFullYear();
-                personalDataForm = personalDataForm.extend({
-                    birthdayDay: z.number().optional().default(day),
-                    birthdayMonth: z.number().optional().default(month),
-                    birthdayYear: z.number().optional().default(year),
-                });
+            const birthday = ref(undefined);
+            if(customer.birthday) {
+                birthday.value = new Date(customer.birthday);
             } else {
-                personalDataForm = personalDataForm.extend({
-                    birthdayDay: z.number().optional(),
-                    birthdayMonth: z.number().optional(),
-                    birthdayYear: z.number().optional(),
-                });
+                birthday.value = new Date(); // current date as fallback or use another default
             }
+
+            const day = birthday.value.getDate();
+            const month = birthday.value.getMonth() + 1;
+            const year = birthday.value.getFullYear();
+            personalDataForm = personalDataForm.extend({
+                birthdayDay: z.number().optional().default(day),
+                birthdayMonth: z.number().optional().default(month),
+                birthdayYear: z.number().optional().default(year),
+            });
         }
 
         return personalDataForm;
@@ -182,6 +181,12 @@ export const usePondForm = () => {
         registerForm = registerForm.extend({
             shippingAddress: shippingAddressFields
         });
+
+        if (isDataProtectionCheckboxRequired.value) {
+            registerForm = registerForm.extend({
+                acceptedDataProtection: z.boolean().optional().default(false)
+            });
+        }
 
         return registerForm;
     };

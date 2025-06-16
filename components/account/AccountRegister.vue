@@ -23,11 +23,10 @@ const register = async (registerData: LoginData) => {
 
     try {
         console.log('data', registerData);
-        // TODO Nochmal nachgucken: Aufbau des Formulars (Hide shippingData -> Ist dann trotzdem in registerData; Warum? Nur AccountType)
+        // TODO Nochmal nachgucken: Aufbau des Formulars (Hide shippingData -> Ist dann trotzdem in registerData; Warum? Nur AccountType -> enums)
         // TODO Accepted Data Protection in Formular inkludieren mit Todo Verweis auf Ticket, damit registerData hier nicht geändert werden muss
         /**registerData = {
             ...registerData,
-            acceptedDataProtection: true,
         };
         delete registerData.shippingAddress;*/
         await customerStore.register(registerData);
