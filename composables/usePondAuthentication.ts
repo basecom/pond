@@ -14,13 +14,16 @@ export function usePondAuthentication() {
         await sessionContextLoaded();
 
         // The customer can log in via modal and be on the login page at the same time. The watcher is required to handle the case.
-        watch(() => signedIn.value, (newValue) => {
-            if (newValue) {
-                if (signedIn.value) {
-                    navigateTo(formatLink(targetRoute));
-                }
-            }
-        }, { immediate: true });
+        const stop = watch(
+            () => signedIn.value,
+            (isSignedIn) => {
+                if (!isSignedIn) return;
+                navigateTo(formatLink(targetRoute));
+                // prevent duplicate redirects & memory leaks
+                stop();
+            },
+            { immediate: true },
+        );
     };
 
     const sessionContextLoaded = async () => {
