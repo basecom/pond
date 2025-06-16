@@ -1,14 +1,6 @@
 <script setup lang="ts">
 const { rerouteIfLoggedIn } = usePondAuthentication();
-const customerStore = useCustomerStore();
-const { signedIn } = storeToRefs(customerStore);
-
-// Logged-in users should not access the login page. The watcher is necessary, because a user can also log in via the modal
-watch(() => signedIn.value, (newValue) => {
-    if (newValue) {
-        rerouteIfLoggedIn();
-    }
-}, { immediate: true });
+await rerouteIfLoggedIn();
 </script>
 <template>
     <div class="container relative flex justify-center py-4">

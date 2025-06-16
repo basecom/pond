@@ -12,9 +12,15 @@ export function usePondAuthentication() {
 
     const rerouteIfLoggedIn = async (targetRoute: string = '/account') => {
         await sessionContextLoaded();
-        if (signedIn.value) {
-            navigateTo(formatLink(targetRoute));
-        }
+
+        // The customer can log in via modal and be on the login page at the same time. The watcher is required to handle the case.
+        watch(() => signedIn.value, (newValue) => {
+            if (newValue) {
+                if (signedIn.value) {
+                    navigateTo(formatLink(targetRoute));
+                }
+            }
+        }, { immediate: true });
     };
 
     const sessionContextLoaded = async () => {
