@@ -42,6 +42,7 @@ const handleAddToCart = async () => {
     <div class="p-4 pt-0">
         <FormKit
             v-if="product.availableStock > 0"
+            id="productAddToCartForm"
             name="productAddToCartForm"
             type="form"
             :actions="false"
@@ -62,6 +63,7 @@ const handleAddToCart = async () => {
             />
 
             <FormKit
+                id="addToCart"
                 name="addToCart"
                 type="submit"
                 :classes="{

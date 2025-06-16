@@ -63,6 +63,8 @@ const { t } = useI18n();
                 @click="offcanvasCartController.close()"
             >
                 <FormKit
+                    id="offcanvasToCartButton"
+                    name="offcanvasToCartButton"
                     type="submit"
                     :classes="{
                         outer: 'mt-4',
@@ -74,6 +76,8 @@ const { t } = useI18n();
 
             <FormKit
                 v-else
+                id="offcanvasContinueShoppingButton"
+                name="offcanvasContinueShoppingButton"
                 type="submit"
                 ignore
                 :classes="{

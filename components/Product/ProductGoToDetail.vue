@@ -10,6 +10,7 @@ defineProps<{
 <template>
     <LocaleLink :to="getProductRoute(product)">
         <FormKit
+            id="productGoToDetailSubmit"
             name="productGoToDetailSubmit"
             type="submit"
             :classes="{
