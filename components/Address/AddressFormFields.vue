@@ -26,9 +26,12 @@ const accountTypeValue = ref(props.initialAddress?.company ? 'business' : 'priva
 
 const countryOptions = computed(() => entityArrayToOptions<Schemas['Country']>(getCountries.value, 'name', true) ?? []);
 
-const currentCountry = computed(() =>
-    props.initialAddress ? props.initialAddress?.countryId : sessionContext.countryId.value,
-);
+const currentAvailableCountry = computed(() => {
+    const initialCountry = countryOptions.value.find(country => country.value === props.initialAddress?.countryId);
+    const fallbackCountry = countryOptions.value.find(country => country.value === sessionContext.sessionContext.value?.salesChannel?.countryId);
+
+    return initialCountry ?? fallbackCountry;
+});
 
 const salutationOptions = computed(
     () => entityArrayToOptions<Schemas['Salutation']>(getSalutations.value, 'displayName', true) ?? [],
@@ -174,15 +177,15 @@ onUnmounted(() => formErrorStore.$reset);
             }"
         />
 
+        <!-- If the current country is a valid option, preselect it -->
         <FormKit
-            v-if="currentCountry"
+            v-bind="currentAvailableCountry ? { modelValue: currentAvailableCountry.value } : {}"
             type="select"
             :label="$t('account.register.country.label')"
             name="countryId"
             :placeholder="$t('account.register.country.placeholder')"
             validation="required"
             :options="countryOptions"
-            :value="currentCountry"
             :classes="{
                 outer: {
                     'col-span-2 md:col-span-1 col-1': true,

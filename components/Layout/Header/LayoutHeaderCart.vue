@@ -16,6 +16,7 @@ const { t } = useI18n();
             icon="cart-shopping"
             class="block size-6"
         />
+
         <ClientOnly>
             <UtilityPill
                 :number="cartItemsCount"
@@ -38,14 +39,16 @@ const { t } = useI18n();
                         class="flex py-6"
                     >
                         <CheckoutLineItem
-                            v-if="item.cartItem"
+                            v-if="item.product"
                             :line-item="item.cartItem"
                             :product="item.product"
                         />
                     </li>
                 </ul>
+
                 <CheckoutSummary :reduced-display="true" />
             </div>
+
             <template v-else>
                 <UtilityStaticNotification
                     type="info"
@@ -60,6 +63,8 @@ const { t } = useI18n();
                 @click="offcanvasCartController.close()"
             >
                 <FormKit
+                    id="offcanvasToCartButton"
+                    name="offcanvasToCartButton"
                     type="submit"
                     :classes="{
                         outer: 'mt-4',
@@ -68,8 +73,11 @@ const { t } = useI18n();
                     {{ $t('checkout.offcanvasCart.toCartButtonLabel') }}
                 </FormKit>
             </LocaleLink>
+
             <FormKit
                 v-else
+                id="offcanvasContinueShoppingButton"
+                name="offcanvasContinueShoppingButton"
                 type="submit"
                 ignore
                 :classes="{

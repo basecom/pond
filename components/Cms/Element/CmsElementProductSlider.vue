@@ -32,12 +32,6 @@ const breakpoints = {
         slidesPerView: 4,
     },
 };
-const breakpointsClasses: Record<number, string> = {
-    0: '',
-    1: 'hidden sm:block',
-    2: 'hidden md:block',
-    3: 'hidden lg:block',
-};
 
 const slides = computed(() => products);
 const { showNavigationArrows, shouldAutoSlide } = useComputeSliderConfig({
@@ -49,7 +43,6 @@ const { showNavigationArrows, shouldAutoSlide } = useComputeSliderConfig({
 });
 
 const isSliderLoaded = ref(false);
-const placeholderClasses = computed(() => isSliderLoaded.value ? 'hidden' : '');
 
 const getPromotion = (product: Schemas['Product']): PromotionInfo => ({
     creative_name: product.cover?.media.fileName ?? '',
@@ -84,44 +77,31 @@ const onProductSelect = (product: Schemas['Product'], index: string | number) =>
             {{ title }}
         </h3>
 
-        <ClientOnly>
-            <LayoutSlider
-                :slides-counter="slides.length"
-                class="w-full"
-                :auto-slide="shouldAutoSlide"
-                :navigation-arrows="showNavigationArrows"
-                :navigation-dots="false"
-                :slides-per-view="slidesPerView"
-                :space-between="spaceBetween"
-                :breakpoints="breakpoints"
-                @slides-change="isSliderLoaded = true"
+        <LayoutSlider
+            :slides-counter="slides.length"
+            class="w-full"
+            :auto-slide="shouldAutoSlide"
+            :navigation-arrows="showNavigationArrows"
+            :navigation-dots="false"
+            :slides-per-view="slidesPerView"
+            :space-between="spaceBetween"
+            :breakpoints="breakpoints"
+            @slides-change="isSliderLoaded = true"
+        >
+            <LayoutSliderSlide
+                v-for="(slide, index) in slides"
+                :key="slide.id"
+                class="py-2"
+                :style="minWidth ? { minWidth } : undefined"
             >
-                <LayoutSliderSlide
-                    v-for="(slide, index) in slides"
-                    :key="slide.id"
-                    :class="`min-w-[${minWidth}] py-2`"
-                >
-                    <ProductCard
-                        :product="slide"
-                        :layout="boxLayout"
-                        :display-mode="displayMode"
-                        @view-product="onProductView(slide, index)"
-                        @select-product="onProductSelect(slide, index)"
-                    />
-                </LayoutSliderSlide>
-            </LayoutSlider>
-        </ClientOnly>
-
-        <div class="flex overflow-hidden" :class="placeholderClasses">
-            <template v-for="(slide, index) in slides" :key="slide.id">
-                <div class="pr-6" :class="breakpointsClasses[index] ?? 'hidden'">
-                    <ProductCard
-                        :product="slide"
-                        :layout="boxLayout"
-                        :display-mode="displayMode"
-                    />
-                </div>
-            </template>
-        </div>
+                <ProductCard
+                    :product="slide"
+                    :layout="boxLayout"
+                    :display-mode="displayMode"
+                    @view-product="onProductView(slide, index)"
+                    @select-product="onProductSelect(slide, index)"
+                />
+            </LayoutSliderSlide>
+        </LayoutSlider>
     </div>
 </template>

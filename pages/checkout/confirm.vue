@@ -39,6 +39,17 @@ const placeOrder = async (formData: OrderForm) => {
 
 useBreadcrumbs(checkoutBreadcrumbs({ index: 1 }));
 
+const { activeShippingAddress } = useSessionContext();
+const { getCountries } = useCountries();
+
+const addressCountryIsAllowed = computed(() => {
+    const countryIsAvailable = getCountries.value.some(country => country.id === activeShippingAddress.value?.countryId);
+    const countryIsActive = activeShippingAddress.value?.country?.active;
+    const countryHasShippingAvailable = activeShippingAddress.value?.country?.shippingAvailable;
+
+    return countryIsAvailable && countryIsActive && countryHasShippingAvailable;
+});
+
 onMounted(async () => {
     await customerStore.refreshContext();
 });
@@ -47,6 +58,15 @@ onMounted(async () => {
 <template>
     <div class="container">
         <h1>{{ $t('checkout.confirm.heading') }}</h1>
+
+        <template v-if="!addressCountryIsAllowed && getCountries.length && activeShippingAddress">
+            <div class="mt-4">
+                <UtilityStaticNotification
+                    type="warning"
+                    :message="$t('checkout.confirm.invalidCountry.notification')"
+                />
+            </div>
+        </template>
 
         <template v-if="!isEmpty">
             <FormKit
@@ -88,17 +108,7 @@ onMounted(async () => {
                         <CheckoutPromotion />
 
                         <FormKit
-                            v-if="customerStore.customer"
-                            type="submit"
-                            :classes="{
-                                outer: 'mt-4',
-                            }"
-                        >
-                            {{ $t('checkout.confirm.order.buttonLabel') }}
-                        </FormKit>
-
-                        <FormKit
-                            v-else
+                            v-if="!customerStore.customer"
                             type="submit"
                             :disabled="true"
                             :classes="{
@@ -106,6 +116,27 @@ onMounted(async () => {
                             }"
                         >
                             {{ $t('checkout.confirm.order.buttonLabelNotLoggedIn') }}
+                        </FormKit>
+
+                        <FormKit
+                            v-else-if="!addressCountryIsAllowed && activeShippingAddress"
+                            type="submit"
+                            :disabled="true"
+                            :classes="{
+                                outer: 'mt-4',
+                            }"
+                        >
+                            {{ $t('checkout.confirm.invalidCountry.button') }}
+                        </FormKit>
+
+                        <FormKit
+                            v-else
+                            type="submit"
+                            :classes="{
+                                outer: 'mt-4',
+                            }"
+                        >
+                            {{ $t('checkout.confirm.order.buttonLabel') }}
                         </FormKit>
                     </div>
                 </div>

@@ -6,7 +6,11 @@ const { handleError } = useHandleError();
 
 try {
     const navigationStore = useNavigationStore();
-    await navigationStore.loadNavigation('main-navigation', 2);
+    await Promise.all([
+        navigationStore.loadNavigation('main-navigation', 2),
+        navigationStore.loadNavigation('footer-navigation', 1),
+        navigationStore.loadNavigation('service-navigation', 1),
+    ]);
 } catch (error) {
     handleError(error, false);
 }

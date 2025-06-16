@@ -62,32 +62,17 @@ const handleAddToCart = async () => {
                 @on-enter="handleAddToCart"
             />
 
-            <ClientOnly>
-                <FormKit
-                    id="addToCart"
-                    name="addToCart"
-                    type="submit"
-                    :classes="{
-                        outer: 'w-full',
-                    }"
-                    :label="props.label ? $t('product.addToCart.submitLabel') : ' '"
-                    :prefix-icon="props.icon ? 'cart-shopping' : ''"
-                    :title="props.icon ? t('product.addToCart.submitLabel') : ''"
-                />
-
-                <template #fallback>
-                    <FormKit
-                        id="addToCart"
-                        name="addToCart"
-                        type="submit"
-                        :classes="{
-                            outer: 'w-full',
-                        }"
-                        :label="props.label ? $t('product.addToCart.submitLabel') : ' '"
-                        :title="props.icon ? t('product.addToCart.submitLabel') : ''"
-                    />
-                </template>
-            </ClientOnly>
+            <FormKit
+                id="addToCart"
+                name="addToCart"
+                type="submit"
+                :classes="{
+                    outer: 'w-full',
+                }"
+                :label="props.label ? $t('product.addToCart.submitLabel') : ' '"
+                :prefix-icon="props.icon ? 'cart-shopping' : ''"
+                :title="props.icon ? t('product.addToCart.submitLabel') : ''"
+            />
         </FormKit>
 
         <div
