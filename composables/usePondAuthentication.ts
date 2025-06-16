@@ -10,6 +10,13 @@ export function usePondAuthentication() {
         }
     };
 
+    const rerouteIfLoggedIn = async (targetRoute: string = '/account') => {
+        await sessionContextLoaded();
+        if (signedIn.value) {
+            navigateTo(formatLink(targetRoute));
+        }
+    };
+
     const sessionContextLoaded = async () => {
         if (loading.value) {
             await until(loading).toBe(false);
@@ -18,5 +25,6 @@ export function usePondAuthentication() {
 
     return {
         rerouteIfLoggedOut,
+        rerouteIfLoggedIn,
     };
 }

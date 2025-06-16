@@ -50,6 +50,7 @@ const login = async (loginData: LoginData) => {
                 inputProps: {
                     type: 'email',
                     placeholder: $t('account.email.placeholder'),
+                    autocomplete: 'username'
                 },
             },
             password: {
@@ -57,6 +58,7 @@ const login = async (loginData: LoginData) => {
                 inputProps: {
                     type: 'password',
                     placeholder: $t('account.password.placeholder'),
+                    autocomplete: 'current-password',
                 },
             },
         }"
