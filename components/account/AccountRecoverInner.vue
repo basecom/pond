@@ -22,7 +22,9 @@ const schema = z.object({
         .string({
             required_error: t('account.email.error'),
         })
-        .email(),
+        .email({
+            message: t('account.email.error'),
+        }),
 });
 
 export type RecoverData = z.infer<typeof schema>;

@@ -25,8 +25,9 @@ const schema = z.object({
         .string({
             required_error: t('account.email.error'),
         })
-        .email(),
-
+        .email({
+            message: t('account.email.error'),
+        }),
     password: z
         .string({
             required_error: t('account.password.errorGeneral'),
