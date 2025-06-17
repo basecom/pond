@@ -1,14 +1,8 @@
 import withNuxt from './.nuxt/eslint.config.mjs';
-import tailwindcss from 'eslint-plugin-tailwindcss';
 
 export default withNuxt({
     files: ['**/*.js', '**/*.ts', '**/*.tsx', '**/*.mjs', '**/*.vue'],
-    plugins: {
-        tailwindcss,
-    },
     rules: {
-        ...tailwindcss.configs.recommended.rules,
-        'tailwindcss/no-custom-classname': 'off',
         '@typescript-eslint/array-type': [
             'error',
             {

@@ -27,7 +27,7 @@ defineEmits<{
             </slot>
 
             <LazyUiSheetContent side="left">
-                <LazyUiSheetHeader class="!text-left">
+                <LazyUiSheetHeader class="text-left!">
                     <LazyUiSheetTitle>
                         <slot name="mobile-menu-title">
                             <template v-if="lastPreviousItem">
