@@ -26,9 +26,9 @@ provide('closeDialog', () => {
 
 <template>
     <UiSheet :open="open" @update:open="(value: boolean) => $emit('open', value)">
-        <slot name="cart-trigger">
+        <slot name="mobile-account-trigger">
             <UiSheetTrigger id="open-account-menu-mobile" class="size-5" aria-label="open-account-menu">
-                <slot name="cart-icon">
+                <slot name="account-icon">
                     <Icon name="mdi:account-outline" class="size-5" />
                 </slot>
             </UiSheetTrigger>
@@ -136,7 +136,7 @@ provide('closeDialog', () => {
                             </UiDialog>
 
                             <slot name="action-register">
-                                <NuxtLinkLocale to="/account/register" @click="() => $emit('click')">
+                                <NuxtLinkLocale :to="formatLink('/account/register')" @click="() => $emit('click')">
                                     <slot name="register">
                                         <div class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3">
                                             {{ $t('account.auth.register') }}

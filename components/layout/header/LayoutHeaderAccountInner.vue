@@ -134,7 +134,7 @@ provide('closeDialog', () => {
 
                     <UiDropdownMenuItem>
                         <slot name="action-register">
-                            <NuxtLinkLocale to="/account/register">
+                            <NuxtLinkLocale :to="formatLink('/account/register')">
                                 <slot name="register">
                                     {{ $t('account.auth.register') }}
                                 </slot>
