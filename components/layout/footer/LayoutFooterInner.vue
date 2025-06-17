@@ -53,6 +53,10 @@ defineProps<{
                     <slot name="footer-service-navigation">
                         <LayoutFooterSericeNavigation :navigation-elements="serviceNavigationElements" />
                     </slot>
+
+                    <slot name="language-switcher">
+                        <LanguageSwitcher />
+                    </slot>
                 </div>
             </slot>
         </div>
