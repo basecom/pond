@@ -56,7 +56,6 @@ const recover = (recoverData: RecoverData) => {
 
             <slot name="header">
                 <h1 class="text-lg font-semibold">{{ $t('account.recover.header') }}</h1>
-                <hr>
             </slot>
 
             <slot name="info-text">
