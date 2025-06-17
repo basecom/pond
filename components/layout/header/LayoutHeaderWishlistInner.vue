@@ -12,9 +12,9 @@ withDefaults(
 <template>
     <slot name="wrapper">
         <NuxtLinkLocale
+            id="wishlist"
             to="/wishlist"
             class="relative h-5"
-            id="wishlist"
             aria-label="wishlist"
         >
             <slot name="wishlist-icon">
