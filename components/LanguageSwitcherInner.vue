@@ -5,6 +5,7 @@ import type { AcceptableValue } from 'reka-ui';
 const { languages, changeLanguage, replaceToDevStorefront, getAvailableLanguages } =
     useInternationalization();
 const { languageIdChain } = useSessionContext();
+const { handleError } = usePondHandleError();
 
 onMounted(async () => {
     await getAvailableLanguages();
@@ -18,8 +19,8 @@ const onUpdate = async (selectedLanguageId: AcceptableValue): Promise<void> =>  
             const response = await changeLanguage(selectedLanguageId);
             const redirectUrl = response.redirectUrl;
             window.location.replace(replaceToDevStorefront(redirectUrl));
-        } catch(err) {
-            console.error('Language switch failed', err);
+        } catch {
+            handleError('Language switch failed');
         }
     }
 };
