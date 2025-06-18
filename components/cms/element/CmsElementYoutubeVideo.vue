@@ -2,7 +2,6 @@
 // Overrides node_modules/@shopware/cms-base-layer/components/public/cms/element/CmsElementYoutubeVideo.vue
 import type { CmsElementYoutubeVideo } from '@shopware/composables';
 import { computed, ref } from 'vue';
-import CmsElementVideoConfirmation from './CmsElementVideoConfirmation.vue';
 
 const props = defineProps<{
   content: CmsElementYoutubeVideo;
@@ -49,16 +48,16 @@ const videoUrl = `${videoDomain}\
 const confirmed = ref(false);
 </script>
 <template>
-  <!--change: add needsConfirmation logic-->
-  <CmsElementVideoConfirmation
-    v-if="config.needsConfirmation && !confirmed"
-    :preview-url="content.data.media.url"
-    :alt="'Video preview'"
-    v-model="confirmed"
-  />
-  <template v-else>
-    <div class="cms-element-youtube-video">
-      <iframe class="inset-0 aspect-video w-full" :src="videoUrl" />
-    </div>
-  </template>
+    <!--change: add needsConfirmation logic-->
+    <CmsElementVideoConfirmation
+        v-if="config.needsConfirmation && !confirmed"
+        v-model="confirmed"
+        :preview-url="content.data.media.url"
+        :alt="'Video preview'"
+    />
+    <template v-else>
+        <div class="cms-element-youtube-video">
+            <iframe class="inset-0 aspect-video w-full" :src="videoUrl" />
+        </div>
+    </template>
 </template>

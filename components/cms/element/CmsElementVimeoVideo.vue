@@ -4,7 +4,6 @@ import type { CmsElementVimeoVideo } from '@shopware/composables';
 import { ref } from 'vue';
 import type { Ref } from 'vue';
 import { useCmsElementConfig } from '#imports';
-import CmsElementVideoConfirmation from './CmsElementVideoConfirmation.vue';
 
 const props = defineProps<{
   content: CmsElementVimeoVideo;
@@ -25,7 +24,6 @@ const vimeoConfigMapping = {
     videoID: 'videoID',
     autoplay: 'autoplay',
     previewMedia: 'previewMedia',
-    needsConfirmation: 'needsConfirmation',
 };
 
 const videoUrl: Ref = ref(
@@ -37,10 +35,8 @@ const convertAttr = (
     configKey: CmsElementVimeoVideoConfigKey,
 ) => {
     if (configKey === 'color')
-        return value
-            ? `${vimeoConfigMapping[configKey]}=${value}&`.replace('#', '')
-            : '';
-
+        return value ? `${vimeoConfigMapping[configKey]}=${value}&`.replace('#', '') : '';
+    // @ts-expect-error - This is copied from the original code
     return value ? `${vimeoConfigMapping[configKey]}=${value}&` : '';
 };
 
@@ -53,13 +49,13 @@ for (const key in props.content.config) {
         );
     }
 }
-
+const needsConfirmation = getConfigValue('needsConfirmation');
 const confirmed = ref(false);
 </script>
 <template>
     <!--change: add needsConfirmation logic-->
     <CmsElementVideoConfirmation
-        v-if="getConfigValue('needsConfirmation') && !confirmed"
+        v-if="needsConfirmation && !confirmed"
         v-model="confirmed"
         :preview-url="content.data.media.url"
         :alt="'Video preview'"
