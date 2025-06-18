@@ -2,10 +2,11 @@
 withDefaults(
     defineProps<{
       signedIn?: boolean;
-      open: boolean;
+      open?: boolean;
     }>(),
     {
         signedIn: false,
+        open: false,
     },
 );
 
