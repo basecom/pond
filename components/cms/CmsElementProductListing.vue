@@ -1,21 +1,21 @@
 <script setup lang="ts">
 // Overrides node_modules/@shopware/cms-base-layer/components/public/cms/elements/CmsElementProductListing.vue
-import type { CmsElementProductListing } from "@shopware/composables";
-import { useCmsTranslations } from "@shopware/composables";
-import { defu } from "defu";
-import { computed, ref, useTemplateRef, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useCategoryListing } from "#imports";
-import type { Schemas, operations } from "#shopware";
+import type { CmsElementProductListing } from '@shopware/composables';
+import { useCmsTranslations } from '@shopware/composables';
+import { defu } from 'defu';
+import { computed, ref, useTemplateRef, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useCategoryListing } from '#imports';
+import type { Schemas, operations } from '#shopware';
 
 const props = defineProps<{
     content: CmsElementProductListing;
 }>();
-
+const { t } = useI18n();
 const defaultLimit = 15;
 const defaultPage = 1;
-const defaultOrder = "name-asc";
-const productListElement = useTemplateRef("productListElement");
+const defaultOrder = 'name-asc';
+const productListElement = useTemplateRef('productListElement');
 
 type Translations = {
     listing: {
@@ -25,12 +25,20 @@ type Translations = {
         products: string;
     };
 };
+/*let translations: Translations = {
+    listing: {
+        noProducts: t('cms.listing.noProducts'),
+        perPage: t('cms.listing.perPage'),
+        product: t('cms.listing.product'),
+        products: t('cms.listing.products'),
+    },
+};*/
 let translations: Translations = {
     listing: {
-        noProducts: "No products found 😔",
-        perPage: "Per Page:",
-        product: "Product",
-        products: "Products",
+        noProducts: 'fallback',
+        perPage: 'fallback',
+        product: 'fallback',
+        products: 'fallback',
     },
 };
 translations = defu(useCmsTranslations(), translations) as Translations;
@@ -68,7 +76,7 @@ watch(
             limit: defaultLimit,
             p: defaultPage,
             order: defaultOrder,
-        } as unknown as operations["searchPage post /search"]["body"]);
+        } as unknown as operations['searchPage post /search']['body']);
     },
     { deep: true },
 );
@@ -83,9 +91,9 @@ const changePage = async (page: number) => {
     });
     await changeCurrentPage(
         page,
-        route.query as unknown as operations["searchPage post /search"]["body"],
+        route.query as unknown as operations['searchPage post /search']['body'],
     );
-    productListElement.value?.scrollIntoView({ behavior: "smooth" });
+    productListElement.value?.scrollIntoView({ behavior: 'smooth' });
 };
 
 const changeLimit = async (limit: Event) => {
@@ -100,13 +108,13 @@ const changeLimit = async (limit: Event) => {
     });
     await changeCurrentPage(
         defaultPage,
-        route.query as unknown as operations["searchPage post /search"]["body"],
+        route.query as unknown as operations['searchPage post /search']['body'],
     );
-    productListElement.value?.scrollIntoView({ behavior: "smooth" });
+    productListElement.value?.scrollIntoView({ behavior: 'smooth' });
 };
 
 const isProductListing = computed(
-    () => props.content?.type === "product-listing",
+    () => props.content?.type === 'product-listing',
 );
 // This is a workaround because vercel caching with the nuxt preset does not support query params at the moment
 // @see https://github.com/shopware/frontends/issues/687#issuecomment-1988392091
@@ -134,18 +142,18 @@ const compareRouteQueryWithInitialListing = async () => {
             order: orderQuery,
         };
         console.warn(
-            "The current route does not match the initial listing. Changing the route to match the initial listing.",
+            'The current route does not match the initial listing. Changing the route to match the initial listing.',
         );
         limit.value = limitQuery;
         await changeCurrentPage(
             pageQuery,
-            newQuery as unknown as operations["searchPage post /search"]["body"],
+            newQuery as unknown as operations['searchPage post /search']['body'],
         );
     }
 };
 
 setInitialListing(
-    props?.content?.data?.listing as Schemas["ProductListingResult"],
+    props?.content?.data?.listing as Schemas['ProductListingResult'],
 );
 
 compareRouteQueryWithInitialListing();
@@ -163,6 +171,7 @@ compareRouteQueryWithInitialListing();
             :key="product.id"
             :product="product"
             :is-product-listing="isProductListing"
+            :layout-type="content.config.boxLayout.value"
             class="lg:w-3/7 2xl:w-7/24 w-full rounded-lg border p-4 shadow-md transition-shadow duration-200 ease-in-out hover:shadow-lg"
         />
     </div>
@@ -196,8 +205,7 @@ compareRouteQueryWithInitialListing();
                     for="limit"
                     class="inline mr-4"
                     data-testid="listing-pagination-limit-label"
-                >{{ translations.listing.perPage }}</label
-                >
+                >{{ translations.listing.perPage }}</label>
                 <select
                     id="limit"
                     v-model="limit"

@@ -76,11 +76,11 @@ export default defineNuxtConfig({
         locales: [
             {
                 code: 'de-DE',
-                files: ['de-DE/account.json', 'de-DE/error.json', 'de-DE/general.json'],
+                files: ['de-DE/account.json', 'de-DE/error.json', 'de-DE/general.json', 'de-DE/product.json', 'de-DE/listing.json'],
             },
             {
                 code: 'en-GB',
-                files: ['en-GB/account.json', 'en-GB/error.json', 'en-GB/general.json'],
+                files: ['en-GB/account.json', 'en-GB/error.json', 'en-GB/general.json', 'en-GB/product.json', 'en-GB/listing.json'],
             },
         ],
         lazy: true,
