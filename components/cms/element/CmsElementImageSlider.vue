@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type {
-  CmsElementImage,
-  CmsElementImageSlider,
-} from "@shopware/composables";
-import { computed } from "vue";
+    CmsElementImage,
+    CmsElementImageSlider,
+} from '@shopware/composables';
+import { computed, ref } from 'vue';
 import type { Schemas } from '@shopware/api-client/api-types';
 import { getTranslatedProperty } from '@shopware-pwa/helpers-next';
-
+import { useSwiper } from 'swiper/vue';
 export type CmsImageSliderItem = {
   url: string;
   newTab: boolean;
@@ -30,7 +30,6 @@ const autoplayTimeout = config.getConfigValue('autoplayTimeout');
 const minHeight = config.getConfigValue('minHeight');
 const speed = config.getConfigValue('speed');
 
-
 const sliderRef = ref(null);
 
 if (slides.value?.length) {
@@ -40,8 +39,8 @@ if (slides.value?.length) {
 const autoplayConfig = computed(() =>
     autoSlide
         ? {
-          delay: autoplayTimeout,
-          disableOnInteraction: false,
+            delay: autoplayTimeout,
+            disableOnInteraction: false,
         }
         : false,
 );
@@ -51,50 +50,48 @@ const slidesRef = ref([]);
 
 </script>
 <template>
-  <div>
-    {{props.content.translated}}
-  </div>
-  <div
-      v-if="slides?.length"
-      :style="{ minHeight: minHeight }"
-  >
-    <ClientOnly>
-      <LayoutSlider
-          :ref="sliderRef"
-          :slides-counter="slides.length"
-          class="w-full"
-          :style="{ minHeight: minHeight }"
-          :autoplay="autoplayConfig"
-          :speed="speedConfig"
-          :pagination="navigationDots !== 'None'"
-          :navigation="navigationArrows !== 'None'"
-          :loop="true"
-      >
-        <LayoutSliderSlide
-            v-for="slide in slides"
-            :key="slide.media.id"
-            :class="`min-h-[${minHeight}]`"
-        >
-          <img
-              ref="slidesRef"
-              :src="slide.media.url"
-              :alt="getTranslatedProperty(slide.media, 'alt') || $t('cms.element.imageAlt')"
-              :title="getTranslatedProperty(slide.media, 'title') || $t('cms.element.imageAlt')"
-              class="size-full object-center"
-              :class="'object-' + displayMode"
-          >
-        </LayoutSliderSlide>
-      </LayoutSlider>
+    <div
+        v-if="slides?.length"
+        :style="{ minHeight: minHeight }"
+    >
+        <ClientOnly>
+            <LayoutSlider
+                :ref="sliderRef"
+                :slides-counter="slides.length"
+                class="w-full"
+                :style="{ minHeight: minHeight }"
+                :autoplay="autoplayConfig"
+                :speed="speedConfig"
+                :pagination="navigationDots !== 'None'"
+                :navigation="navigationArrows !== 'None'"
+                :is-outside="navigationArrows === 'outside'"
+                :loop="true"
+            >
+                <LayoutSliderSlide
+                    v-for="slide in slides"
+                    :key="slide.media.id"
+                    :class="`min-h-[${minHeight}]`"
+                >
+                    <img
+                        ref="slidesRef"
+                        :src="slide.media.url"
+                        :alt="getTranslatedProperty(slide.media, 'alt') || $t('cms.element.imageAlt')"
+                        :title="getTranslatedProperty(slide.media, 'title') || $t('cms.element.imageAlt')"
+                        class="size-full object-center"
+                        :class="'object-' + displayMode"
+                    >
+                </LayoutSliderSlide>
+            </LayoutSlider>
 
-      <template #fallback>
-        fallback
-      </template>
-    </ClientOnly>
-  </div>
-
-  <template v-else>
-    <div class="w-full bg-gray-light">
-      fall back in v-else
+            <template #fallback>
+                fallback
+            </template>
+        </ClientOnly>
     </div>
-  </template>
+
+    <template v-else>
+        <div class="w-full bg-gray-light">
+            fall back in v-else
+        </div>
+    </template>
 </template>

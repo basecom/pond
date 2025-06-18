@@ -25,28 +25,29 @@ withDefaults(
       thumbRef?: string;
       initialSlide?: number;
       isZoomEnabled?: boolean;
+      isOutside?: boolean;
     }>(),
     {
-      autoSlide: false,
-      autoplayTimeout: 3000,
-      speed: 300,
-      navigationDots: true,
-      navigationArrows: true,
-      displayMode: 'cover',
-      minHeight: '300',
-      classes: undefined,
-      loop: true,
-      direction: 'horizontal',
-      spaceBetween: 0,
-      slidesPerView: 1,
-      slidesCounter: 1,
-      thumbsSwiper: undefined,
-      breakpoints: undefined,
-      init: false,
-      verticalNavigation: false,
-      thumbRef: undefined,
-      initialSlide: 0,
-      isZoomEnabled: false,
+        autoSlide: false,
+        autoplayTimeout: 3000,
+        speed: 300,
+        navigationDots: true,
+        navigationArrows: true,
+        displayMode: 'cover',
+        minHeight: '300',
+        classes: undefined,
+        loop: true,
+        direction: 'horizontal',
+        spaceBetween: 0,
+        slidesPerView: 1,
+        slidesCounter: 1,
+        thumbsSwiper: undefined,
+        breakpoints: undefined,
+        init: false,
+        verticalNavigation: false,
+        thumbRef: undefined,
+        initialSlide: 0,
+        isZoomEnabled: false,
     },
 );
 
@@ -64,115 +65,114 @@ const { t } = useI18n();
 const computedSwiperContainer = computed(() => swiperContainer?.value?.swiper ?? null);
 
 watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]) => {
-  if (!swiperContainer?.value) {
-    return;
-  }
+    if (!swiperContainer?.value) {
+        return;
+    }
 
-  const swiperParams = {
-    navigation: {
-      prevEl: prevSlideValue,
-      nextEl: nextSlideValue,
-    },
-  };
+    const swiperParams = {
+        navigation: {
+            prevEl: prevSlideValue,
+            nextEl: nextSlideValue,
+        },
+    };
 
-  Object.assign(swiperContainer.value, swiperParams);
-  const paginationParams = {
-    pagination:
-        {el: '.swiper-pagination', clickable: true, renderBullet(index: number, className:string)
-          {return `<span class="${className} block w-3 h-3 bg-gray-400 rounded-full mx-1 opacity-100 transition-all bg-black"></span>`}
+    Object.assign(swiperContainer.value, swiperParams);
+    const paginationParams = {
+        pagination:
+        {el: '.swiper-pagination', clickable: true, renderBullet(index: number, className:string) { return `<span class="${className} block w-3 h-3 bg-gray-400 rounded-full mx-1 opacity-100 transition-all bg-black"></span>`; },
         }     as PaginationOptions,
-    navigation: true
-  }
+        navigation: true,
+    };
 
-  Object.assign(swiperContainer.value, paginationParams);
+    Object.assign(swiperContainer.value, paginationParams);
 
-  // swiperContainer?.value has the method initialize
-  // eslint-disable-next-line  @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  swiperContainer.value?.initialize();
+    // swiperContainer?.value has the method initialize
+    // eslint-disable-next-line  @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    swiperContainer.value?.initialize();
 });
 </script>
 
 <template>
-  <ClientOnly>
-    <div
-        class="relative"
-        :class="[classes, {
+    <ClientOnly>
+        <div
+            class="relative"
+            :class="[classes, {
                 'cursor-grab': slidesCounter > 1
             }]"
-    >
-      <div
-          v-if="isZoomEnabled"
-          class="flex"
-      >
-        <!-- Zoom in button -->
-        <button
-            class="mr-2 flex"
-            :title="t('icon.zoomIn')"
-            @click="computedSwiperContainer.zoom.in()"
         >
-          button zoom
-        </button>
+            <div
+                v-if="isZoomEnabled"
+                class="flex"
+            >
+                <!-- Zoom in button -->
+                <button
+                    class="mr-2 flex"
+                    :title="t('icon.zoomIn')"
+                    @click="computedSwiperContainer.zoom.in()"
+                >
+                    button zoom
+                </button>
 
-        <!-- Zoom out button -->
-        <button
-            class="flex"
-            :title="t('icon.zoomOut')"
-            @click="computedSwiperContainer.zoom.out()"
-        >
-          button zoom out
-        </button>
-      </div>
+                <!-- Zoom out button -->
+                <button
+                    class="flex"
+                    :title="t('icon.zoomOut')"
+                    @click="computedSwiperContainer.zoom.out()"
+                >
+                    button zoom out
+                </button>
+            </div>
 
-      <div
-          ref="prevSlide"
-          class="absolute z-10 bg-gray-light/50"
-          :class="[!navigationArrows ? 'hidden' : '', verticalNavigation
+            <div
+                ref="prevSlide"
+                class="absolute z-10 bg-gray-light/50"
+                :class="[!navigationArrows ? 'hidden' : '', verticalNavigation
                     ? 'left-1/2 top-0 flex w-full -translate-x-1/2 justify-center py-1 lg:py-2'
                     : 'left-5 top-1/2 -translate-y-1/2 px-1 py-6 sm:left-0 lg:px-2 lg:py-12']"
-      >
-        prev
-      </div>
+            >
+              asdasdsa
+            </div>
 
-      <div
-          ref="nextSlide"
-          class="absolute z-10 bg-gray-light/50"
-          :class="[!navigationArrows ? 'hidden' : '', verticalNavigation
+            <div
+                ref="nextSlide"
+                class="absolute z-10 bg-gray-light/50"
+                :class="[!navigationArrows ? 'hidden' : '', verticalNavigation
                     ? 'bottom-0 left-1/2 flex w-full -translate-x-1/2 justify-center py-1 lg:py-2'
                     : 'right-5 top-1/2 -translate-y-1/2 px-1 py-6 sm:right-0 lg:px-2 lg:py-12']"
-      >
-        next
-      </div>
+            >
+               asdsadadas
+            </div>
 
 
-      <swiper-container
-          ref="swiperContainer"
-          class="grid size-full"
-          :class="thumbRef ? thumbRef : `min-h-[${minHeight}px]`"
-          :autoplay="autoSlide"
-          :speed="speed"
-          :pagination="navigationDots"
-          :navigation="false"
-          :loop="loop"
-          :direction="direction"
-          :space-between="spaceBetween"
-          :slides-per-view="slidesPerView"
-          :thumbs-swiper="thumbsSwiper"
-          :init="init"
-          :initial-slide="initialSlide"
-          :zoom="isZoomEnabled"
-          @swiperslideslengthchange="$emit('slides-change')"
-      >
-        <slot />
+            <swiper-container
+                ref="swiperContainer"
+                class="grid size-full"
+                :class="thumbRef ? thumbRef : `min-h-[${minHeight}px]`"
+                :autoplay="autoSlide"
+                :speed="speed"
+                :pagination="navigationDots"
+                :navigation="false"
+                :loop="loop"
+                :direction="direction"
+                :space-between="spaceBetween"
+                :slides-per-view="slidesPerView"
+                :thumbs-swiper="thumbsSwiper"
+                :init="init"
+                :initial-slide="initialSlide"
+                :zoom="isZoomEnabled"
+                @swiperslideslengthchange="$emit('slides-change')"
+            >
+                <slot />
 
-      </swiper-container>
-      <div class="swiper swiper-horizontal flex w-full justify-center">
-      <div ref="paginationEl" class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal flex">
-
-      </div>
+            </swiper-container>
+            <template v-if="isOutside">
+              <div class="swiper swiper-horizontal flex w-full justify-center mt-4">
+                <div ref="paginationEl" class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal flex" />
+              </div>
+            </template>
         </div>
-    </div>
-  </ClientOnly>
+    </ClientOnly>
 </template>
 <style>
   .swiper-pagination-bullet-active {
