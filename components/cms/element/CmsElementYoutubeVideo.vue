@@ -49,15 +49,15 @@ const videoUrl = `${videoDomain}\
 const confirmed = ref(false);
 </script>
 <template>
-  <CmsElementVideoConfirmation
-    v-if="config.needsConfirmation && !confirmed"
-    :preview-url="content.data.media.url"
-    :alt="'Video preview'"
-    v-model="confirmed"
-  />
-  <template v-else>
-    <div class="cms-element-youtube-video">
-      <iframe class="inset-0 aspect-video w-full" :src="videoUrl" />
-    </div>
-  </template>
+    <CmsElementVideoConfirmation
+        v-if="config.needsConfirmation && !confirmed"
+        v-model="confirmed"
+        :preview-url="content.data.media.url"
+        :alt="'Video preview'"
+    />
+    <template v-else>
+        <div class="cms-element-youtube-video">
+            <iframe class="inset-0 aspect-video w-full" :src="videoUrl" />
+        </div>
+    </template>
 </template>
