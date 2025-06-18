@@ -3,7 +3,7 @@ defineProps<{
   previewUrl: string;
   alt?: string;
 }>();
-const modelValue = defineModel<boolean>();
+const emit = defineEmits(['confirm']);
 </script>
 
 <template>
@@ -28,7 +28,7 @@ const modelValue = defineModel<boolean>();
             <UiButton
                 class="w-full mb-4 px-6 py-3 mt-4"
                 color="primary"
-                @click="modelValue = true"
+                @click="emit('confirm', true)"
             >
                 {{  $t('cms.video.acceptButtonLabel') }}
             </UiButton>

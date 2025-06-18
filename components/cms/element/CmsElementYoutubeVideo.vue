@@ -46,14 +46,19 @@ const videoUrl = `${videoDomain}\
             ${config.value.disableKeyboard}`.replace(/ /g, '');
 
 const confirmed = ref(false);
+
+const handleConfirmation = (value: boolean) => {
+    confirmed.value = value;
+};
+
 </script>
 <template>
     <!--change: add needsConfirmation logic-->
     <CmsElementVideoConfirmation
         v-if="config.needsConfirmation && !confirmed"
-        v-model="confirmed"
         :preview-url="content.data.media.url"
         :alt="'Video preview'"
+        @confirm="handleConfirmation"
     />
     <template v-else>
         <div class="cms-element-youtube-video">

@@ -51,12 +51,15 @@ for (const key in props.content.config) {
 }
 const needsConfirmation = getConfigValue('needsConfirmation');
 const confirmed = ref(false);
+const handleConfirmation = (value: boolean) => {
+    confirmed.value = value;
+};
 </script>
 <template>
     <!--change: add needsConfirmation logic-->
     <CmsElementVideoConfirmation
         v-if="needsConfirmation && !confirmed"
-        v-model="confirmed"
+        @confirm="handleConfirmation"
         :preview-url="content.data.media.url"
         :alt="'Video preview'"
     />
