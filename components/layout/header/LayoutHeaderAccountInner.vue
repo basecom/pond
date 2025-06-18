@@ -13,6 +13,12 @@ defineEmits<{
 }>();
 
 const { formatLink } = useInternationalization();
+
+const dialogOpen = ref(true);
+
+provide('closeDialog', () => {
+    dialogOpen.value = false;
+});
 </script>
 
 <template>
@@ -104,7 +110,7 @@ const { formatLink } = useInternationalization();
             <!-- guest view -->
             <template v-else>
                 <slot name="guest">
-                    <UiDialog>
+                    <UiDialog v-model:open="dialogOpen">
                         <UiDialogTrigger class="w-full">
                             <slot name="action-login">
                                 <UiDropdownMenuItem class="cursor-pointer" @select.prevent="">
