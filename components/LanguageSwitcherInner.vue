@@ -2,14 +2,13 @@
 import languageEmojis from '~/assets/json/languages.json';
 import type { AcceptableValue } from 'reka-ui';
 
-const { languages, changeLanguage, replaceToDevStorefront, getAvailableLanguages } =
+const localeStore = useLocaleStore();
+await localeStore.loadAvailableLanguages();
+
+const { languages, changeLanguage, replaceToDevStorefront } =
     useInternationalization();
 const { languageIdChain } = useSessionContext();
 const { handleError } = usePondHandleError();
-
-onMounted(async () => {
-    await getAvailableLanguages();
-});
 
 const selectedLanguage = ref(languageIdChain);
 
