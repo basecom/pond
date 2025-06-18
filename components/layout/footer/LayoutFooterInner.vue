@@ -49,6 +49,10 @@ defineProps<{
                         </div>
                     </slot>
 
+                  <slot name="currency-switcher">
+                    <CurrencySwitcher />
+                  </slot>
+
                     <!-- footer service navigation -->
                     <slot name="footer-service-navigation">
                         <LayoutFooterSericeNavigation :navigation-elements="serviceNavigationElements" />
