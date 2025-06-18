@@ -15,9 +15,9 @@ const { $i18n } = useNuxtApp();
 const { locale } = useI18n();
 const defaultLocale = $i18n.defaultLocale;
 const routePath =
-    locale.value !== defaultLocale
+    (locale.value !== defaultLocale
         ? route.path.replace(/^\/[^/]+/, '')
-        : route.path;
+        : route.path) || '/';
 
 const { data: seoResult } = await usePondCacheAsyncData(`seoPath-${routePath}`, async () => {
     // For client links if the history state contains seo url information we can omit the api call
