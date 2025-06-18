@@ -45,7 +45,7 @@ provide('closeDialog', () => {
                 <slot name="signed-in">
                     <UiDropdownMenuItem>
                         <slot name="action-overview">
-                            <NuxtLinkLocale :to="formatLink('/account')">
+                            <NuxtLinkLocale to="/account">
                                 <slot name="overview">
                                     {{ $t('account.account') }}
                                 </slot>
@@ -54,7 +54,7 @@ provide('closeDialog', () => {
                     </UiDropdownMenuItem>
                     <UiDropdownMenuItem>
                         <slot name="action-personal-profile">
-                            <NuxtLinkLocale :to="formatLink('/account/profile')">
+                            <NuxtLinkLocale to="/account/profile">
                                 <slot name="personal-profile">
                                     {{ $t('account.profile') }}
                                 </slot>
@@ -63,7 +63,7 @@ provide('closeDialog', () => {
                     </UiDropdownMenuItem>
                     <UiDropdownMenuItem>
                         <slot name="action-addresses">
-                            <NuxtLinkLocale :to="formatLink('/account/address')">
+                            <NuxtLinkLocale to="/account/address">
                                 <slot name="personal-addresses">
                                     {{ $t('account.address') }}
                                 </slot>
@@ -72,7 +72,7 @@ provide('closeDialog', () => {
                     </UiDropdownMenuItem>
                     <UiDropdownMenuItem>
                         <slot name="action-payment-methods">
-                            <NuxtLinkLocale :to="formatLink('/account/payment')">
+                            <NuxtLinkLocale to="/account/payment">
                                 <slot name="personal-payment-methods">
                                     {{ $t('account.payment') }}
                                 </slot>
@@ -81,7 +81,7 @@ provide('closeDialog', () => {
                     </UiDropdownMenuItem>
                     <UiDropdownMenuItem>
                         <slot name="action-orders">
-                            <NuxtLinkLocale :to="formatLink('/account/order')">
+                            <NuxtLinkLocale to="/account/order">
                                 <slot name="personal-orders">
                                     {{ $t('account.order') }}
                                 </slot>
@@ -90,7 +90,7 @@ provide('closeDialog', () => {
                     </UiDropdownMenuItem>
                     <UiDropdownMenuItem>
                         <slot name="action-wishlist">
-                            <NuxtLinkLocale :to="formatLink('/account/wishlist')">
+                            <NuxtLinkLocale to="/account/wishlist">
                                 <slot name="wishlist">
                                     {{ $t('account.wishlist') }}
                                 </slot>
@@ -134,7 +134,7 @@ provide('closeDialog', () => {
 
                     <UiDropdownMenuItem>
                         <slot name="action-register">
-                            <NuxtLinkLocale :to="formatLink('/account/register')">
+                            <NuxtLinkLocale to="/account/register">
                                 <slot name="register">
                                     {{ $t('account.auth.register') }}
                                 </slot>

@@ -42,7 +42,7 @@ provide('closeDialog', () => {
                     <template v-if="signedIn">
                         <slot name="signed-in">
                             <slot name="action-overview">
-                                <NuxtLinkLocale :to="formatLink('/account')" @click="() => $emit('click')">
+                                <NuxtLinkLocale to="/account" @click="() => $emit('click')">
                                     <slot name="overview">
                                         <div class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3">
                                             {{ $t('account.account') }}
@@ -51,7 +51,7 @@ provide('closeDialog', () => {
                                 </NuxtLinkLocale>
                             </slot>
                             <slot name="action-personal-profile">
-                                <NuxtLinkLocale :to="formatLink('/account/profile')" @click="() => $emit('click')">
+                                <NuxtLinkLocale to="/account/profile" @click="() => $emit('click')">
                                     <slot name="personal-profile">
                                         <div class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3">
                                             {{ $t('account.profile') }}
@@ -61,7 +61,7 @@ provide('closeDialog', () => {
                             </slot>
 
                             <slot name="action-addresses">
-                                <NuxtLinkLocale :to="formatLink('/account/address')" @click="() => $emit('click')">
+                                <NuxtLinkLocale to="/account/address" @click="() => $emit('click')">
                                     <slot name="personal-addresses">
                                         <div class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3">
                                             {{ $t('account.address') }}
@@ -71,7 +71,7 @@ provide('closeDialog', () => {
                             </slot>
 
                             <slot name="action-payment-methods">
-                                <NuxtLinkLocale :to="formatLink('/account/payment')" @click="() => $emit('click')">
+                                <NuxtLinkLocale to="/account/payment" @click="() => $emit('click')">
                                     <slot name="personal-payment-methods">
                                         <div class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3">
                                             {{ $t('account.payment') }}
@@ -81,7 +81,7 @@ provide('closeDialog', () => {
                             </slot>
 
                             <slot name="action-orders">
-                                <NuxtLinkLocale :to="formatLink('/account/order')" @click="() => $emit('click')">
+                                <NuxtLinkLocale to="/account/order" @click="() => $emit('click')">
                                     <slot name="personal-orders">
                                         <div class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3">
                                             {{ $t('account.order') }}
@@ -91,7 +91,7 @@ provide('closeDialog', () => {
                             </slot>
 
                             <slot name="action-wishlist">
-                                <NuxtLinkLocale :to="formatLink('/account/wishlist')" @click="() => $emit('click')">
+                                <NuxtLinkLocale to="/account/wishlist" @click="() => $emit('click')">
                                     <slot name="wishlist">
                                         <div class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3">
                                             {{ $t('account.wishlist') }}
@@ -136,7 +136,7 @@ provide('closeDialog', () => {
                             </UiDialog>
 
                             <slot name="action-register">
-                                <NuxtLinkLocale :to="formatLink('/account/register')" @click="() => $emit('click')">
+                                <NuxtLinkLocale to="/account/register" @click="() => $emit('click')">
                                     <slot name="register">
                                         <div class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3">
                                             {{ $t('account.auth.register') }}
