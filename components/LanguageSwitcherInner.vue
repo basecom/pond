@@ -4,22 +4,22 @@ import type { AcceptableValue } from 'reka-ui';
 
 const { languages, changeLanguage, replaceToDevStorefront, getAvailableLanguages } =
     useInternationalization();
-
-await getAvailableLanguages();
-
 const { languageIdChain } = useSessionContext();
+
+onMounted(async () => {
+    await getAvailableLanguages();
+});
 
 const selectedLanguage = ref(languageIdChain);
 
 const onUpdate = async (selectedLanguageId: AcceptableValue): Promise<void> =>  {
     if(typeof selectedLanguageId === 'string') {
-        const response = await changeLanguage(selectedLanguageId);
-        const redirectUrl = response.redirectUrl;
-
-        if (redirectUrl) {
+        try {
+            const response = await changeLanguage(selectedLanguageId);
+            const redirectUrl = response.redirectUrl;
             window.location.replace(replaceToDevStorefront(redirectUrl));
-        } else {
-            window.location.reload();
+        } catch(err) {
+            console.error('Language switch failed', err);
         }
     }
 };
