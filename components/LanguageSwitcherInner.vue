@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import languageEmojis from '~/assets/json/languages.json';
 import type { AcceptableValue } from 'reka-ui';
 
 const { languages, changeLanguage, replaceToDevStorefront, getAvailableLanguages } =
@@ -22,6 +23,11 @@ const onUpdate = async (selectedLanguageId: AcceptableValue): Promise<void> =>  
         }
     }
 };
+
+const getEmoji = (isoCode: string) => {
+    const language = languageEmojis.find(languageEmoji => languageEmoji.iso_code === isoCode);
+    return language?.emoji;
+};
 </script>
 
 <template>
@@ -40,6 +46,7 @@ const onUpdate = async (selectedLanguageId: AcceptableValue): Promise<void> =>  
                         :key="language.id"
                         :value="language.id"
                     >
+                        {{ getEmoji(language.translationCode.code) }}
                         {{ language.name }}
                     </UiSelectItem>
                 </UiSelectGroup>
