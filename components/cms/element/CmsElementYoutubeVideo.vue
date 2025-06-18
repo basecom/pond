@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // Overrides node_modules/@shopware/cms-base-layer/components/public/cms/element/CmsElementYoutubeVideo.vue
 import type { CmsElementYoutubeVideo } from '@shopware/composables';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
+import CmsElementVideoConfirmation from './CmsElementVideoConfirmation.vue';
 
 const props = defineProps<{
   content: CmsElementYoutubeVideo;
@@ -26,6 +27,7 @@ const config = computed(() => ({
           ? `end=${getConfigValue('end')}&`
           : '',
     disableKeyboard: 'disablekb=1',
+    needsConfirmation: getConfigValue('needsConfirmation'),
 }));
 
 //change: fix change domain based on advancedPrivacyMode config
@@ -43,9 +45,19 @@ const videoUrl = `${videoDomain}\
             ${config.value.start}\
             ${config.value.end}\
             ${config.value.disableKeyboard}`.replace(/ /g, '');
+
+const confirmed = ref(false);
 </script>
 <template>
+  <CmsElementVideoConfirmation
+    v-if="config.needsConfirmation && !confirmed"
+    :preview-url="content.data.media.url"
+    :alt="'Video preview'"
+    v-model="confirmed"
+  />
+  <template v-else>
     <div class="cms-element-youtube-video">
-        <iframe class="inset-0 aspect-video w-full" :src="videoUrl" />
+      <iframe class="inset-0 aspect-video w-full" :src="videoUrl" />
     </div>
+  </template>
 </template>
