@@ -51,6 +51,7 @@ for (const key in props.content.config) {
 }
 const needsConfirmation = getConfigValue('needsConfirmation');
 const confirmed = ref(false);
+
 const handleConfirmation = (value: boolean) => {
     confirmed.value = value;
 };
