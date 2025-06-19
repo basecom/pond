@@ -16,18 +16,20 @@ const emits = defineEmits<{
     login: [loginData: LoginData];
 }>();
 
+const closeDialog = inject('closeDialog');
+
 const { t } = useI18n();
 
 const schema = z.object({
     username: z
         .string({
-            required_error: t('account.login.email.error'),
+            required_error: t('account.email.error'),
         })
         .email(),
 
     password: z
         .string({
-            required_error: t('account.login.password.errorGeneral'),
+            required_error: t('account.password.errorGeneral'),
         }),
 });
 export type LoginData = z.infer<typeof schema>;
@@ -44,26 +46,30 @@ const login = async (loginData: LoginData) => {
         :schema="schema"
         :field-config="{
             username: {
-                label: $t('account.login.email.label'),
+                label: $t('account.email.label'),
                 inputProps: {
                     type: 'email',
-                    placeholder: $t('account.login.email.placeholder'),
+                    placeholder: $t('account.email.placeholder'),
                 },
             },
             password: {
-                label: $t('account.login.password.label'),
+                label: $t('account.password.label'),
                 inputProps: {
                     type: 'password',
-                    placeholder: $t('account.login.password.placeholder'),
+                    placeholder: $t('account.password.placeholder'),
                 },
             },
         }"
         @submit="login"
     >
-        <div class="!mt-0 grid">
+        <div class="mt-0! grid">
             <slot name="password-forgotten">
-                <NuxtLinkLocale to="/account/todo" class="mb-6 justify-self-start py-2 text-sm underline underline-offset-4">
-                    {{ $t('account.login.password.forgotten') }}
+                <NuxtLinkLocale
+                    to="/account/recover"
+                    class="mb-6 justify-self-start py-2 text-sm underline underline-offset-4"
+                    @click="closeDialog?.()"
+                >
+                    {{ $t('account.password.forgotten') }}
                 </NuxtLinkLocale>
             </slot>
 

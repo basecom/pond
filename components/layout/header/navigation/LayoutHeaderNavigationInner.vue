@@ -9,7 +9,7 @@ defineProps<{
 
 <template>
     <slot name="header-navigation">
-        <UiNavigationMenu class="!static !justify-start">
+        <UiNavigationMenu class="static! justify-start!">
             <UiNavigationMenuList>
                 <UiNavigationMenuItem v-for="navigationElement in navigationElements" :key="navigationElement.id">
                     <UiNavigationMenuLink v-if="navigationElement.visibleChildCount === 0" :class="navigationMenuTriggerStyle()">
