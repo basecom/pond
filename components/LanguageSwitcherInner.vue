@@ -6,11 +6,10 @@ const { languages, changeLanguage, replaceToDevStorefront, getAvailableLanguages
     useInternationalization();
 const { languageIdChain } = useSessionContext();
 const { handleError } = usePondHandleError();
-const router = useRouter()
 
 onMounted(async () => {
-  await getAvailableLanguages();
-})
+    await getAvailableLanguages();
+});
 
 const selectedLanguage = ref(languageIdChain);
 
