@@ -1,20 +1,15 @@
 export function usePondSalesChannel() {
     const { apiClient } = useShopwareContext();
+    const { handleError } = usePondHandleError();
 
-    const getAvailableCurrencies = async () => {
-        const res = await apiClient.invoke('loadCurrencies get /currency');
-        console.log('erge', res);
-
-        usePondCacheAsyncData('availableCurrencies', async () => {
-            try {
-                console.log('try');
-                const res = await apiClient.invoke('loadCurrencies get /currency').data;
-                console.log('danach', res);
-            } catch (error) {
-                return null;
-            }
-        });
-    };
+    const getAvailableCurrencies = async () => usePondCacheAsyncData('availableCurrencies', async () => {
+        try {
+            return (await apiClient.invoke('loadCurrencies get /currency')).data;
+        } catch (error) {
+            handleError(error);
+            return null;
+        }
+    });
 
     return { getAvailableCurrencies };
 }

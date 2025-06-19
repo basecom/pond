@@ -1,3 +1,3 @@
 <template>
-  <CurrencySwitcherInner />
+    <CurrencySwitcherInner />
 </template>

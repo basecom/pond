@@ -1,39 +1,51 @@
 <script setup lang="ts">
+import type { Schemas } from '@shopware/api-client/api-types';
 import type { AcceptableValue } from 'reka-ui';
+import {onMounted} from 'vue';
 
 const { currency, setCurrency } = useSessionContext();
-
-const { handleError } = usePondHandleError();
 const { getAvailableCurrencies } = usePondSalesChannel();
-console.log('context', currency);
-console.log('all', await getAvailableCurrencies());
-// GET /store-api/currency
 
+const availableCurrencies: Ref<null | Schemas['Currency'][]> = ref(null);
+const selectedCurrencyId: Ref<null | AcceptableValue> = ref(null);
+
+onMounted(() => {
+    selectedCurrencyId.value = currency.value.id;
+});
+
+const { data } = await getAvailableCurrencies();
+const { fetchedAt, server, ...currencies } = data.value;
+availableCurrencies.value = currencies;
+
+const onUpdate = async (selectedId: AcceptableValue) => {
+    const arrayOfAvailableCurrencies = availableCurrencies.value ? Object.values(availableCurrencies.value) : [];
+    const currency = arrayOfAvailableCurrencies.find(availableCurrency => availableCurrency.id === selectedId);
+    await setCurrency(currency);
+    selectedCurrencyId.value = selectedId;
+};
 </script>
 
 <template>
- <div>
-   currrency
- </div>
-  <!--<UiSelect :default-value="selectedLanguage" @update:model-value="onUpdate">
-    <slot name="language-switcher-trigger">
-      <UiSelectTrigger>
-        <UiSelectValue  />
-      </UiSelectTrigger>
-    </slot>
+    <UiSelect :model-value="selectedCurrencyId" @update:model-value="onUpdate">
+        <slot name="currency-switcher-trigger">
+            <UiSelectTrigger>
+                <UiSelectValue  />
+            </UiSelectTrigger>
+        </slot>
 
-    <slot name="language-switcher-content">
-      <UiSelectContent>
-        <UiSelectGroup>
-          <UiSelectItem
-              v-for="language in languages"
-              :key="language.id"
-              :value="language.id"
-          >
-            {{ language.name }}
-          </UiSelectItem>
-        </UiSelectGroup>
-      </UiSelectContent>
-    </slot>
-  </UiSelect>-->
+        <slot name="currency-switcher-content">
+            <UiSelectContent>
+                <UiSelectGroup>
+                    <UiSelectItem
+                        v-for="availableCurrency in availableCurrencies"
+                        :key="availableCurrency.id"
+                        :value="availableCurrency.id"
+                    >
+                        {{ availableCurrency.symbol }}
+                        {{ availableCurrency.shortName }}
+                    </UiSelectItem>
+                </UiSelectGroup>
+            </UiSelectContent>
+        </slot>
+    </UiSelect>
 </template>
