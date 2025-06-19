@@ -34,6 +34,8 @@ const doUpdatePersonalData = async (personalDataForm: PersonalDataForm) => {
         personalDataForm.vatIds = [personalDataForm.vatIds];
         if (personalDataForm.vatIds && typeof personalDataForm.vatIds === 'string') {
             personalDataForm.vatIds = [personalDataForm.vatIds];
+        } else if (!personalDataForm.vatIds) {
+            personalDataForm.vatIds = [];
         }
         await updatePersonalInfo(personalDataForm);
         await customerStore.refreshContext();
