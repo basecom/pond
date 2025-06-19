@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
 import type { AcceptableValue } from 'reka-ui';
-import {onMounted} from 'vue';
 
 const { currency, setCurrency } = useSessionContext();
 const { getAvailableCurrencies } = usePondSalesChannel();
@@ -14,6 +13,7 @@ onMounted(() => {
 });
 
 const { data } = await getAvailableCurrencies();
+// Remove fetchedAt & server, which is returned due to async fetch
 const { fetchedAt, server, ...currencies } = data.value;
 availableCurrencies.value = currencies;
 
