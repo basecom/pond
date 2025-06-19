@@ -13,15 +13,19 @@ onMounted(() => {
 });
 
 const { data } = await getAvailableCurrencies();
-// Remove fetchedAt & server, which is returned due to async fetch
-const { fetchedAt, server, ...currencies } = data.value;
-availableCurrencies.value = currencies;
+if (data.value) {
+    // Remove fetchedAt & server, which is returned due to async fetch
+    const { fetchedAt, server, ...currencies } = data.value;
+    availableCurrencies.value = currencies;
+}
 
 const onUpdate = async (selectedId: AcceptableValue) => {
     const arrayOfAvailableCurrencies = availableCurrencies.value ? Object.values(availableCurrencies.value) : [];
     const currency = arrayOfAvailableCurrencies.find(availableCurrency => availableCurrency.id === selectedId);
-    await setCurrency(currency);
-    selectedCurrencyId.value = selectedId;
+    if (currency) {
+        await setCurrency(currency);
+        selectedCurrencyId.value = selectedId;
+    }
 };
 </script>
 
@@ -37,7 +41,7 @@ const onUpdate = async (selectedId: AcceptableValue) => {
             <UiSelectContent>
                 <UiSelectGroup>
                     <UiSelectItem
-                        v-for="availableCurrency in availableCurrencies"
+                        v-for="availableCurrency in availableCurrencies || []"
                         :key="availableCurrency.id"
                         :value="availableCurrency.id"
                     >
