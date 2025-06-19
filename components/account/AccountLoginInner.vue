@@ -23,10 +23,10 @@ const { t } = useI18n();
 const schema = z.object({
     username: z
         .string({
-            required_error: t('account.email.error'),
+            required_error: t('account.email.required'),
         })
         .email({
-            message: t('account.email.error'),
+            message: t('account.email.invalid'),
         }),
     password: z
         .string({

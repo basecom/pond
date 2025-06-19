@@ -20,10 +20,10 @@ const emits = defineEmits<{
 const schema = z.object({
     email: z
         .string({
-            required_error: t('account.email.error'),
+            required_error: t('account.email.required'),
         })
         .email({
-            message: t('account.email.error'),
+            message: t('account.email.invalid'),
         }),
 });
 
