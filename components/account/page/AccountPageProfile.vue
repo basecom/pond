@@ -32,6 +32,9 @@ const doUpdatePersonalData = async (personalDataForm: PersonalDataForm) => {
        * string. Therefore, the type must be adjusted for the Store API.
        */
         personalDataForm.vatIds = [personalDataForm.vatIds];
+        if (personalDataForm.vatIds && typeof personalDataForm.vatIds === 'string') {
+            personalDataForm.vatIds = [personalDataForm.vatIds];
+        }
         await updatePersonalInfo(personalDataForm);
         await customerStore.refreshContext();
         toast({
