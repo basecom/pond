@@ -26,7 +26,7 @@ const allowBuyInListing = configStore.get('core.listing.allowBuyInListing') ?? f
 const autoPlayVideoInListing = configStore.get('core.listing.autoplayVideoInListing') ?? false;
 
 const { t, te } = useI18n();
-const { addToCart, isInCart, count } = useAddToCart(product);
+const { addToCart } = useAddToCart(product);
 const { getErrorsCodes } = useCartNotification();
 const { resolveCartError } = useCartErrorParamsResolver();
 const { toast } = useToast();

@@ -24,14 +24,12 @@ const props = withDefaults(
     },
 );
 
-console.log(props.layoutType);
 const emit = defineEmits<{
     (event: 'addToCart'): void;
 }>();
 
 const { product } = toRefs(props);
-const { messages } = useI18n();
-
+const { isInCart, count } = useAddToCart(product);
 const addToCart = () => {
     emit('addToCart');
 };
@@ -49,7 +47,7 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
 <template>
     <slot name="wrapper">
         <div
-            class="sw-product-card hover:scale-101 group relative flex max-w-full flex-col justify-between rounded-lg border border-gray-200 bg-white transition duration-300"
+            class="sw-product-card not-prose hover:scale-101 group relative flex max-w-full flex-col justify-between rounded-lg border border-gray-200 bg-white transition duration-300"
         >
             <slot name="product-image">
                 <RouterLink
@@ -118,13 +116,13 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
                     <div>
                         <slot name="variant-characteristics">
                             <div class="min-h-4 mt-4 text-xs text-gray-600">
-                                <p
-                                    v-for="option in product?.options"
+                                <span
+                                    v-for="(option, index) in product?.options"
                                     :key="option.id"
                                 >
                                     {{ option.group.translated.name }}:
-                                    <span class="font-bold">{{ option.translated.name }}</span>
-                                </p>
+                                    <span class="font-bold">{{ option.translated.name }}</span><span v-if="index < product.options.length - 1"> | </span>
+                                </span>
                             </div>
                         </slot>
 
@@ -133,7 +131,7 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
                                 class="mt-4 line-clamp-2"
                                 :to="buildUrlPrefix(getProductRoute(product), getUrlPrefix())"
                             >
-                                <h2>
+                                <h2 class="text-lg my-0">
                                     {{ getProductName({ product }) }}
                                 </h2>
                             </RouterLink>
@@ -162,6 +160,12 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
                                     @click="addToCart"
                                 >
                                     {{ $t('product.addToCart') }}
+                                    <slot name="is-in-cart-icon">
+                                        <div v-if="isInCart" class="flex ml-2 items-center">
+                                            <Icon name="mdi:cart-outline" class="size-4 mr-1" />
+                                            {{ count }}
+                                        </div>
+                                    </slot>
                                 </UiButton>
                             </template>
 

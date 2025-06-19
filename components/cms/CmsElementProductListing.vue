@@ -1,7 +1,6 @@
 <script setup lang="ts">
 // Overrides node_modules/@shopware/cms-base-layer/components/public/cms/elements/CmsElementProductListing.vue
 import type { CmsElementProductListing } from '@shopware/composables';
-import { useCmsTranslations } from '@shopware/composables';
 import { defu } from 'defu';
 import { computed, ref, useTemplateRef, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -11,37 +10,11 @@ import type { Schemas, operations } from '#shopware';
 const props = defineProps<{
     content: CmsElementProductListing;
 }>();
-const { t } = useI18n();
+// change: use i18n's t function instead of provided translations
 const defaultLimit = 15;
 const defaultPage = 1;
 const defaultOrder = 'name-asc';
 const productListElement = useTemplateRef('productListElement');
-
-type Translations = {
-    listing: {
-        noProducts: string;
-        perPage: string;
-        product: string;
-        products: string;
-    };
-};
-/*let translations: Translations = {
-    listing: {
-        noProducts: t('cms.listing.noProducts'),
-        perPage: t('cms.listing.perPage'),
-        product: t('cms.listing.product'),
-        products: t('cms.listing.products'),
-    },
-};*/
-let translations: Translations = {
-    listing: {
-        noProducts: 'fallback',
-        perPage: 'fallback',
-        product: 'fallback',
-        products: 'fallback',
-    },
-};
-translations = defu(useCmsTranslations(), translations) as Translations;
 
 const {
     changeCurrentPage,
@@ -160,9 +133,12 @@ compareRouteQueryWithInitialListing();
 </script>
 
 <template>
-    <!-- changed: product card component, grid -->
+    <!-- changed: product card component, grid, translations, no products message -->
+    <div v-if="!loading && getElements.length === 0">
+        {{ $t('listing.noProducts') }}
+    </div>
     <div
-        v-if="!loading"
+        v-if="!loading && getElements.length > 0"
         ref="productListElement"
         class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 productListElement"
     >
@@ -205,7 +181,7 @@ compareRouteQueryWithInitialListing();
                     for="limit"
                     class="inline mr-4"
                     data-testid="listing-pagination-limit-label"
-                >{{ translations.listing.perPage }}</label>
+                >{{ $t('listing.perPage') }}</label>
                 <select
                     id="limit"
                     v-model="limit"
@@ -214,15 +190,15 @@ compareRouteQueryWithInitialListing();
                     data-testid="listing-pagination-limit-select"
                     @change="changeLimit"
                 >
-                    <option :value="1">1 {{ translations.listing.product }}</option>
+                    <option :value="1">1 {{ $t('listing.product') }}</option>
                     <option :value="15">
-                        15 {{ translations.listing.products }}
+                        15 {{ $t('listing.products') }}
                     </option>
                     <option :value="30">
-                        30 {{ translations.listing.products }}
+                        30 {{ $t('listing.products') }}
                     </option>
                     <option :value="45">
-                        45 {{ translations.listing.products }}
+                        45 {{ $t('listing.products') }}
                     </option>
                 </select>
                 <div

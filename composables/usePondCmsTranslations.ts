@@ -46,8 +46,8 @@ export const usePondCmsTranslations = () => {
         flattenCompiledTranslations(
             messages.value[locale.value as keyof typeof messages.value] ??
             messages.value[defaultLocale] ??
-            {}
-        )
+            {},
+        ),
     );
 
     return {
