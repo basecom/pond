@@ -156,7 +156,7 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
                 </div>
             </template>
 
-            <template #vatIds[]="slotProps">
+            <template #vatIds="slotProps">
                 <div class="col-span-12 md:col-span-6">
                     <UiAutoFormField v-bind="slotProps" />
                 </div>

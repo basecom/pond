@@ -27,6 +27,11 @@ const doUpdatePersonalData = async (personalDataForm: PersonalDataForm) => {
     isLoading.value.personalData = true;
 
     try {
+        /**
+       * The Store API expects VAT IDs as arrays. Since the VAT ID can be changed in the frontend, the field type is a
+       * string. Therefore, the type must be adjusted for the Store API.
+       */
+        personalDataForm.vatIds = [personalDataForm.vatIds];
         await updatePersonalInfo(personalDataForm);
         await customerStore.refreshContext();
         toast({
