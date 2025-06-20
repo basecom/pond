@@ -5,7 +5,7 @@ import { defu } from 'defu';
 import { computed, ref, useTemplateRef, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useCategoryListing } from '#imports';
-import type { Schemas, operations } from '#shopware';
+import type {Schemas, operations} from '@shopware/api-client/api-types';
 
 const props = defineProps<{
     content: CmsElementProductListing;

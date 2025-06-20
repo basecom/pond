@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type {Schemas} from '#shopware';
 import type {BoxLayout, DisplayMode} from '@shopware/composables';
 import {buildUrlPrefix, getProductName, getProductRoute, getSmallestThumbnailUrl} from '@shopware/helpers';
 import {useUrlResolver} from '#imports';
 import {RouterLink} from 'vue-router';
 import {computed, toRefs} from 'vue';
+import type {Schemas} from '@shopware/api-client/api-types';
 
 const props = withDefaults(
     defineProps<{
@@ -121,7 +121,7 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
                                     :key="option.id"
                                 >
                                     {{ option.group.translated.name }}:
-                                    <span class="font-bold">{{ option.translated.name }}</span><span v-if="index < product.options.length - 1"> | </span>
+                                    <span class="font-bold">{{ option.translated.name }}</span><span v-if="index < (product?.options?.length ?? 0) - 1"> | </span>
                                 </span>
                             </div>
                         </slot>
@@ -154,7 +154,7 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
                         </slot>
 
                         <slot name="product-action">
-                            <template v-if="allowBuyInListing && product.availableStock > 0 && !product.childCount">
+                            <template v-if="allowBuyInListing && (product?.availableStock ?? 0) > 0 && !product.childCount">
                                 <UiButton
                                     class="w-full"
                                     @click="addToCart"

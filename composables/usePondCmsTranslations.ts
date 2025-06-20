@@ -5,49 +5,55 @@
  * base-layer cms element are missing, take care to add them using the correct keys.
  */
 type CompiledMessage = {
-    type: number;
-    body: {
-        type: number;
-        static: string;
-        items: any[];
-        [key: string]: any;
+    loc?: {
+        source?: string;
+        [key: string]: unknown;
     };
-    [key: string]: any;
+    [key: string]: unknown;
 };
 
 type CompiledMessagesTree = {
-    [key: string]: CompiledMessage | CompiledMessagesTree;
+    [key: string]: CompiledMessage | CompiledMessagesTree | unknown;
 };
+
+type OldMessagesTree = {
+    [key: string]: string | OldMessagesTree;
+};
+
+const isCompiledMessage = (value: unknown): value is CompiledMessage => typeof value === 'object' && value !== null && 'loc' in value;
+
+const isSourceTextNode = (value: unknown): value is { source: string } => typeof value === 'object' && value !== null && 'source' in value;
 
 export const usePondCmsTranslations = () => {
     const { messages, locale, defaultLocale } = useI18n();
 
-    const flattenCompiledTranslations = (messages: CompiledMessagesTree | CompiledMessage): any => {
+    const mapCompiledToOldFormat = (
+        messages: CompiledMessagesTree | CompiledMessage | unknown,
+    ): string | OldMessagesTree => {
         if (
-            typeof messages === 'object' &&
-            'body' in messages &&
-            typeof messages.body?.static === 'string'
+            isCompiledMessage(messages) &&
+            isSourceTextNode(messages.loc)
         ) {
-            return messages.body.static;
+            return messages.loc.source ?? '';
         }
 
         if (typeof messages === 'object' && messages !== null) {
-            const result: any = {};
-            for (const key in messages) {
-                result[key] = flattenCompiledTranslations(messages[key] as any);
+            const result: OldMessagesTree = {};
+            for (const [key, value] of Object.entries(messages as Record<string, unknown>)) {
+                result[key] = mapCompiledToOldFormat(value);
             }
             return result;
         }
 
-        return messages;
+        return '';
     };
 
+    const messagesForCurrentLocale =
+        messages.value[locale.value as keyof typeof messages.value] ??
+        messages.value[defaultLocale];
+
     const cmsTranslations = computed(() =>
-        flattenCompiledTranslations(
-            messages.value[locale.value as keyof typeof messages.value] ??
-            messages.value[defaultLocale] ??
-            {},
-        ),
+        mapCompiledToOldFormat(messagesForCurrentLocale),
     );
 
     return {
