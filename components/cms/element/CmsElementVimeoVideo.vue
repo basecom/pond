@@ -1,4 +1,5 @@
 <script setup lang="ts">
+//change: add confirmation logic
 // Overrides node_modules/@shopware/cms-base-layer/components/public/cms/element/CmsElementYoutubeVideo.vue
 import type { CmsElementVimeoVideo } from '@shopware/composables';
 import { ref } from 'vue';
@@ -9,7 +10,7 @@ const props = defineProps<{
   content: CmsElementVimeoVideo;
 }>();
 const { getConfigValue } = useCmsElementConfig(props.content);
-// TODO CMS add proper mapping or config type. This Component needs rework.
+
 type CmsElementVimeoVideoConfigKey = keyof CmsElementVimeoVideo['config'];
 
 const vimeoConfigMapping = {
@@ -52,17 +53,14 @@ for (const key in props.content.config) {
 const needsConfirmation = getConfigValue('needsConfirmation');
 const confirmed = ref(false);
 
-const handleConfirmation = (value: boolean) => {
-    confirmed.value = value;
-};
 </script>
 <template>
     <!--change: add needsConfirmation logic-->
     <CmsElementVideoConfirmation
         v-if="needsConfirmation && !confirmed"
-        @confirm="handleConfirmation"
-        :preview-url="content.data.media.url"
-        :alt="'Video preview'"
+        :preview-url="content?.data?.media?.url"
+        alt="Video preview"
+        @confirm="(hasConfirmed) => confirmed = hasConfirmed"
     />
     <template v-else>
         <div class="cms-element-vimeo-video">

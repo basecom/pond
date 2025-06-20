@@ -7,6 +7,9 @@
         "back": "Zurück",
         "showAll": "Alle anzeigen",
         "categories": "Kategorien",
-        "privacyNoticeText": "Ich habe die Datenschutzbestimmungen zur Kenntnis genommen und erkenne diese an."
+        "privacyNoticeText": "Ich habe die Datenschutzbestimmungen zur Kenntnis genommen und erkenne diese an.",
+        "button": {
+            "acceptLabel": "Akzeptieren"
+        }
     }
 }

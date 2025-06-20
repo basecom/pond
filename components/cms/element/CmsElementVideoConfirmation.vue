@@ -1,25 +1,30 @@
 <script setup lang="ts">
-defineProps<{
-  previewUrl: string;
-  alt?: string;
+withDefaults(
+    defineProps<{
+        previewUrl?: string;
+        alt?: string;
+    }>(),
+    {
+        previewUrl: '',
+        alt: 'Video preview',
+    },
+);
+const emits = defineEmits<{
+    confirm: [hasConfirmed: boolean];
 }>();
-const emit = defineEmits(['confirm']);
 </script>
 
 <template>
-    <div
-        class="cms-element-video-confirmation relative w-full aspect-video flex items-center justify-center overflow-hidden"
-        style="min-height: 200px;"
-    >
+    <div class="relative w-full aspect-video flex items-center justify-center overflow-hidden min-h-52">
         <img
+            v-if="previewUrl.length > 0"
             :src="previewUrl"
-            :alt="alt || 'Video preview'"
+            :alt="alt"
             class="absolute inset-0 w-full h-full object-cover"
             draggable="false"
         >
         <div
-            class="absolute inset-0 bg-black opacity-60"
-            style="pointer-events: none;"
+            class="absolute inset-0 bg-black opacity-60 pointer-events-none"
         />
         <div class="relative z-10 flex flex-col items-center justify-center bg-white bg-opacity-90 rounded-lg shadow-lg px-8 py-6 max-w-xs w-full">
             <div class="text-gray-700 text-center text-xs leading-relaxed">
@@ -28,9 +33,9 @@ const emit = defineEmits(['confirm']);
             <UiButton
                 class="w-full mb-4 px-6 py-3 mt-4"
                 color="primary"
-                @click="emit('confirm', true)"
+                @click="emits('confirm', true)"
             >
-                {{  $t('cms.video.acceptButtonLabel') }}
+                {{  $t('general.button.acceptLabel') }}
             </UiButton>
         
         </div>

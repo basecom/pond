@@ -1,4 +1,5 @@
 <script setup lang="ts">
+//change: add confirmation logic
 // Overrides node_modules/@shopware/cms-base-layer/components/public/cms/element/CmsElementYoutubeVideo.vue
 import type { CmsElementYoutubeVideo } from '@shopware/composables';
 import { computed, ref } from 'vue';
@@ -46,19 +47,14 @@ const videoUrl = `${videoDomain}\
             ${config.value.disableKeyboard}`.replace(/ /g, '');
 
 const confirmed = ref(false);
-
-const handleConfirmation = (value: boolean) => {
-    confirmed.value = value;
-};
-
 </script>
 <template>
     <!--change: add needsConfirmation logic-->
     <CmsElementVideoConfirmation
         v-if="config.needsConfirmation && !confirmed"
-        :preview-url="content.data.media.url"
+        :preview-url="content?.data?.media?.url"
         :alt="'Video preview'"
-        @confirm="handleConfirmation"
+        @confirm="(hasConfirmed) => confirmed = hasConfirmed"
     />
     <template v-else>
         <div class="cms-element-youtube-video">
