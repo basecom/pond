@@ -5,7 +5,7 @@ withDefaults(
         alt?: string;
     }>(),
     {
-        previewUrl: '',
+        previewUrl: undefined,
         alt: 'Video preview',
     },
 );
@@ -17,7 +17,7 @@ const emits = defineEmits<{
 <template>
     <div class="relative w-full aspect-video flex items-center justify-center overflow-hidden min-h-52">
         <img
-            v-if="previewUrl.length > 0"
+            v-if="previewUrl"
             :src="previewUrl"
             :alt="alt"
             class="absolute inset-0 w-full h-full object-cover"
