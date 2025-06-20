@@ -60,7 +60,7 @@ const confirmed = ref(false);
         v-if="needsConfirmation && !confirmed"
         :preview-url="content?.data?.media?.url"
         alt="Video preview"
-        @confirm="(hasConfirmed) => confirmed = hasConfirmed"
+        @confirm="(hasConfirmed: boolean) => confirmed = hasConfirmed"
     />
     <template v-else>
         <div class="cms-element-vimeo-video">
