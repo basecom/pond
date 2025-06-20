@@ -67,6 +67,7 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
 </script>
 
 <template>
+  <AccountTest />
     <slot name="introduction">
         <h1 class="mb-4 text-xl font-bold md:mb-6 md:text-2xl">{{ $t('account.profile') }}</h1>
     </slot>
