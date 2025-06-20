@@ -1,9 +1,15 @@
 <script setup lang="ts">
 
-const customerStore = useCustomerStore();
-const { orders } = storeToRefs(customerStore);
+import {onMounted} from "vue";
+
+const {loadOrders, orders} = useCustomerOrders();
+
+onMounted(async () => {
+  await loadOrders();
+  console.log('orders', orders);
+})
 </script>
 
 <template>
-  <AccountPageOrderInner v-if="orders" :orders="orders" />
+  <AccountPageOrderInner v-if="orders" :orders="orders"  />
 </template>
