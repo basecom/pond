@@ -15,6 +15,7 @@ export type CmsImageSliderItem = {
   apiAlias: 'cms_image_slider_item';
 };
 
+
 const props = defineProps<{
   content: CmsElementImageSlider;
 }>();
@@ -33,7 +34,7 @@ const speed = config.getConfigValue('speed');
 const sliderRef = ref(null);
 
 if (slides.value?.length) {
-  useSwiper(sliderRef, {});
+    useSwiper(sliderRef, {});
 }
 
 const autoplayConfig = computed(() =>
@@ -62,9 +63,10 @@ const slidesRef = ref([]);
                 :style="{ minHeight: minHeight }"
                 :autoplay="autoplayConfig"
                 :speed="speedConfig"
-                :pagination="navigationDots !== 'None'"
-                :navigation="navigationArrows !== 'None'"
-                :is-outside="navigationArrows === 'outside'"
+                :pagination="navigationDots.toLowerCase() !== 'none'"
+                :navigation="navigationArrows.toLowerCase() !== 'none'"
+                :is-outside-pagination="navigationDots.toLowerCase() === 'outside'"
+                :is-outside-navigation="navigationArrows.toLowerCase() === 'outside'"
                 :loop="true"
             >
                 <LayoutSliderSlide
@@ -74,7 +76,7 @@ const slidesRef = ref([]);
                 >
                     <img
                         ref="slidesRef"
-                        :src="slide.media.url"
+                        :src="slide?.media?.url"
                         :alt="getTranslatedProperty(slide.media, 'alt') || $t('cms.element.imageAlt')"
                         :title="getTranslatedProperty(slide.media, 'title') || $t('cms.element.imageAlt')"
                         class="size-full object-center"

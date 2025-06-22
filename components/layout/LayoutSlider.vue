@@ -25,7 +25,10 @@ withDefaults(
       thumbRef?: string;
       initialSlide?: number;
       isZoomEnabled?: boolean;
-      isOutside?: boolean;
+      isOutsidePagination?: boolean;
+      isOutsideNavigation?: boolean;
+      navigation?: boolean;
+      pagination?: boolean;
     }>(),
     {
         autoSlide: false,
@@ -77,14 +80,16 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
     };
 
     Object.assign(swiperContainer.value, swiperParams);
+    
     const paginationParams = {
         pagination:
-        {el: '.swiper-pagination', clickable: true, renderBullet(index: number, className:string) { return `<span class="${className} block w-3 h-3 bg-gray-400 rounded-full mx-1 opacity-100 transition-all bg-black"></span>`; },
+        {el: '.swiper-pagination', clickable: true, renderBullet(index: number, className:string) { return `<span class="${className} block w-4 h-4 bg-gray-400 rounded-full mx-1 opacity-100 transition-all bg-black"></span>`; },
         }     as PaginationOptions,
-        navigation: true,
     };
 
+
     Object.assign(swiperContainer.value, paginationParams);
+
 
     // swiperContainer?.value has the method initialize
     // eslint-disable-next-line  @typescript-eslint/ban-ts-comment
@@ -96,42 +101,21 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
 <template>
     <ClientOnly>
         <div
-            class="relative"
+            class="relative"s
             :class="[classes, {
                 'cursor-grab': slidesCounter > 1
-            }]"
+            }, isOutsideNavigation ? 'px-20' :'']"
         >
-            <div
-                v-if="isZoomEnabled"
-                class="flex"
-            >
-                <!-- Zoom in button -->
-                <button
-                    class="mr-2 flex"
-                    :title="t('icon.zoomIn')"
-                    @click="computedSwiperContainer.zoom.in()"
-                >
-                    button zoom
-                </button>
-
-                <!-- Zoom out button -->
-                <button
-                    class="flex"
-                    :title="t('icon.zoomOut')"
-                    @click="computedSwiperContainer.zoom.out()"
-                >
-                    button zoom out
-                </button>
-            </div>
-
+            <template v-if="navigation">
             <div
                 ref="prevSlide"
                 class="absolute z-10 bg-gray-light/50"
                 :class="[!navigationArrows ? 'hidden' : '', verticalNavigation
                     ? 'left-1/2 top-0 flex w-full -translate-x-1/2 justify-center py-1 lg:py-2'
-                    : 'left-5 top-1/2 -translate-y-1/2 px-1 py-6 sm:left-0 lg:px-2 lg:py-12']"
+                    : 'top-1/2 -translate-y-1/2 py-4 lg:py-8',
+                     isOutsideNavigation ? 'left-5 sm:left-0' : 'left-0 bg-gray-300 opacity-30 hover:opacity-70 hover:mouse-cursor-pointer']"
             >
-              asdasdsa
+                <Icon name="mdi:chevron-left" class="size-20" />
             </div>
 
             <div
@@ -139,10 +123,13 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
                 class="absolute z-10 bg-gray-light/50"
                 :class="[!navigationArrows ? 'hidden' : '', verticalNavigation
                     ? 'bottom-0 left-1/2 flex w-full -translate-x-1/2 justify-center py-1 lg:py-2'
-                    : 'right-5 top-1/2 -translate-y-1/2 px-1 py-6 sm:right-0 lg:px-2 lg:py-12']"
+                    : 'top-1/2 -translate-y-1/2 py-4 lg:py-8',
+                    isOutsideNavigation ? 'right-5 sm:right-0' : 'right-0 bg-gray-300 opacity-30 hover:opacity-70 hover:mouse-cursor-pointer']"
             >
-               asdsadadas
+                <Icon name="mdi:chevron-right" class="size-20" />
             </div>
+
+             </template>
 
 
             <swiper-container
@@ -152,7 +139,7 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
                 :autoplay="autoSlide"
                 :speed="speed"
                 :pagination="navigationDots"
-                :navigation="false"
+                :navigation="true"
                 :loop="loop"
                 :direction="direction"
                 :space-between="spaceBetween"
@@ -164,13 +151,16 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
                 @swiperslideslengthchange="$emit('slides-change')"
             >
                 <slot />
-
+    
             </swiper-container>
-            <template v-if="isOutside">
-              <div class="swiper swiper-horizontal flex w-full justify-center mt-4">
-                <div ref="paginationEl" class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal flex" />
-              </div>
-            </template>
+                <div
+                    v-if="navigation"
+                    class="swiper swiper-horizontal flex w-full justify-center mt-4"
+                    :class="isOutsidePagination ? '': 'absolute left-0 bottom-0 z-20 mb-2'"
+                >
+                    <div ref="paginationEl" class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal flex" />
+                </div>
+
         </div>
     </ClientOnly>
 </template>
