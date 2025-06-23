@@ -77,7 +77,7 @@ export const usePondForm = () => {
         {
             sourceField: 'accountType',
             type: DependencyType.HIDES,
-            targetField: 'vatIds[]',
+            targetField: 'vatIds',
             when: (accountType: string) => accountType !== 'business',
         },
         {
