@@ -19,7 +19,12 @@ defineEmits<{
 
 <template>
     <slot name="account-action-link">
-        <NuxtLinkLocale :to="link" @click="() => $emit('click')">
+        <NuxtLinkLocale
+            :to="link"
+            :aria-label="label || 'Account action link'"
+            role="button"
+            @click="() => $emit('click')"
+        >
             <slot name="account-action-link-inner">
                 <div class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3">
                     {{ label }}
