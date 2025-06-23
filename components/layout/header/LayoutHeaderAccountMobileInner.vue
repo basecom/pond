@@ -40,64 +40,17 @@ provide('closeDialog', () => {
                     <!-- user view -->
                     <template v-if="signedIn">
                         <slot name="signed-in">
-                            <slot name="action-overview">
-                                <NuxtLinkLocale to="/account" @click="() => $emit('click')">
-                                    <slot name="overview">
-                                        <div class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3">
-                                            {{ $t('account.account') }}
-                                        </div>
-                                    </slot>
-                                </NuxtLinkLocale>
-                            </slot>
-                            <slot name="action-personal-profile">
-                                <NuxtLinkLocale to="/account/profile" @click="() => $emit('click')">
-                                    <slot name="personal-profile">
-                                        <div class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3">
-                                            {{ $t('account.profile') }}
-                                        </div>
-                                    </slot>
-                                </NuxtLinkLocale>
-                            </slot>
+                            <AccountActionLink link="/account" :label="$t('account.account')" @click="() => $emit('click')" />
 
-                            <slot name="action-addresses">
-                                <NuxtLinkLocale to="/account/address" @click="() => $emit('click')">
-                                    <slot name="personal-addresses">
-                                        <div class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3">
-                                            {{ $t('account.address') }}
-                                        </div>
-                                    </slot>
-                                </NuxtLinkLocale>
-                            </slot>
+                            <AccountActionLink link="/account/profile" :label="$t('account.profile')" @click="() => $emit('click')" />
 
-                            <slot name="action-payment-methods">
-                                <NuxtLinkLocale to="/account/payment" @click="() => $emit('click')">
-                                    <slot name="personal-payment-methods">
-                                        <div class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3">
-                                            {{ $t('account.payment') }}
-                                        </div>
-                                    </slot>
-                                </NuxtLinkLocale>
-                            </slot>
+                            <AccountActionLink link="/account/address" :label="$t('account.address')" @click="() => $emit('click')" />
 
-                            <slot name="action-orders">
-                                <NuxtLinkLocale to="/account/order" @click="() => $emit('click')">
-                                    <slot name="personal-orders">
-                                        <div class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3">
-                                            {{ $t('account.order') }}
-                                        </div>
-                                    </slot>
-                                </NuxtLinkLocale>
-                            </slot>
+                            <AccountActionLink link="/account/payment" :label="$t('account.payment')" @click="() => $emit('click')" />
 
-                            <slot name="action-wishlist">
-                                <NuxtLinkLocale to="/account/wishlist" @click="() => $emit('click')">
-                                    <slot name="wishlist">
-                                        <div class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3">
-                                            {{ $t('account.wishlist') }}
-                                        </div>
-                                    </slot>
-                                </NuxtLinkLocale>
-                            </slot>
+                            <AccountActionLink link="/account/order" :label="$t('account.order')" @click="() => $emit('click')" />
+
+                            <AccountActionLink link="/account/wishlist" :label="$t('account.wishlist')" @click="() => $emit('click')" />
 
                             <div class="cursor-pointer" @click="$emit('logout')">
                                 <slot name="logout">
@@ -135,13 +88,7 @@ provide('closeDialog', () => {
                             </UiDialog>
 
                             <slot name="action-register">
-                                <NuxtLinkLocale to="/account/register" @click="() => $emit('click')">
-                                    <slot name="register">
-                                        <div class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3">
-                                            {{ $t('account.auth.register') }}
-                                        </div>
-                                    </slot>
-                                </NuxtLinkLocale>
+                                <AccountActionLink link="/account/register" :label="$t('account.auth.register')" @click="() => $emit('click')" />
                             </slot>
                         </slot>
                     </template>
