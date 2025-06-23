@@ -1,38 +1,66 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
 
-const props = defineProps<{
+defineProps<{
     orders: Schemas['Order'][];
+    currentPage: number;
+    totalPages: number;
   }>();
-console.log('orders', props.orders);
+
+defineEmits<{
+  'change-page': [page: number];
+}>();
 </script>
 
 <template>
-  <div>
-    <h1>
-      ORDERS
-    </h1>
-    <slot name="orders-overview">
-      <div v-for="order in orders" :key="order.id">
-        <!-- TODO: Akkordion für jede Order: Display Infos so wie im Core -->
-        <UiAccordion type="single" collapsible>
-          <UiAccordionItem value="my-account-order">
-            <slot name="my-account-order-trigger">
-              <UiAccordionTrigger class="text-lg font-bold">
-                Order date: {{ useDateFormat(order.orderDate) }}
-                Status: ---
-                order number: ---
-                Tabelle: shipping status, payment status, payment method, shipping method
-              </UiAccordionTrigger>
-            </slot>
-            <slot name="my-account-order-content">
-              <UiAccordionContent class="text-base">
-                {{order.id}}
-              </UiAccordionContent>
-            </slot>
-          </UiAccordionItem>
-        </UiAccordion>
-      </div>
-    </slot>
-  </div>
+    <div>
+        <slot name="headline">
+            <h1>
+                {{ $t('order.headline') }}
+            </h1>
+        </slot>
+        <slot name="sub-headline">
+            <h2>
+                {{ $t('order.subHeadline') }}
+            </h2>
+        </slot>
+
+        <slot name="account-orders-overview">
+            <div v-for="order in orders" :key="order.id">
+                <UiAccordion type="single" collapsible>
+                    <UiAccordionItem value="my-account-order">
+                        <slot name="account-order-details-trigger">
+                            <UiAccordionTrigger class="text-lg font-bold">
+                                <div class="flex flex-col items-start w-full gap-2.5">
+                                    <div class="flex items-center gap-5 text-left">
+                                        {{ $t('order.orderDate') }} {{ useDateFormat(order.orderDate, 'DD.MM.YYYY') }}
+                                        <UiBadge>
+                                            {{ order.stateMachineState.name }}
+                                        </UiBadge>
+                                    </div>
+                                    <span class="font-normal">
+                                        {{ $t('order.orderNumber') }} {{ order.orderNumber }}
+                                    </span>
+                                </div>
+                            </UiAccordionTrigger>
+                        </slot>
+                        <slot name="account-order-details-content">
+                            <UiAccordionContent class="text-base">
+                                <AccountOrderDetails :order-id="order.id" />
+                            </UiAccordionContent>
+                        </slot>
+                    </UiAccordionItem>
+                </UiAccordion>
+            </div>
+        </slot>
+        <slot name="pagination">
+            <div class="flex w-full justify-center mt-5 gap-2.5">
+                <SwPagination
+                    :total="totalPages"
+                    :current="currentPage"
+                    @change-page="(page: number) => $emit('change-page', page)"
+                />
+            </div>
+        </slot>
+    </div>
 </template>
