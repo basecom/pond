@@ -25,19 +25,23 @@ const { t } = useI18n();
 const schema = z.object({
     email: z
         .string({
-            required_error: t('account.login.email.error'),
+            required_error: t('account.email.required'),
         })
-        .email(),
+        .email({
+            message: t('account.email.invalid'),
+        }),
 
     emailConfirmation: z
         .string({
-            required_error: t('account.login.email.error'),
+            required_error: t('account.email.required'),
         })
-        .email(),
+        .email({
+            message: t('account.email.invalid'),
+        }),
 
     password: z
         .string({
-            required_error: t('account.login.password.errorGeneral'),
+            required_error: t('account.password.errorGeneral'),
         }),
 });
 export type ChangeMailForm = z.infer<typeof schema>;
@@ -101,24 +105,24 @@ watch(() => props.resetForm, (newValue) => {
                             :schema="schema"
                             :field-config="{
                                 email: {
-                                    label: $t('account.login.email.label'),
+                                    label: $t('account.email.label'),
                                     inputProps: {
                                         type: 'email',
-                                        placeholder: $t('account.login.email.placeholder'),
+                                        placeholder: $t('account.email.placeholder'),
                                     },
                                 },
                                 emailConfirmation: {
                                     label: $t('account.personalProfile.changeMailAddress.confirmation'),
                                     inputProps: {
                                         type: 'email',
-                                        placeholder: $t('account.login.email.placeholder'),
+                                        placeholder: $t('account.email.placeholder'),
                                     },
                                 },
                                 password: {
-                                    label: $t('account.login.password.label'),
+                                    label: $t('account.password.label'),
                                     inputProps: {
                                         type: 'password',
-                                        placeholder: $t('account.login.password.placeholder'),
+                                        placeholder: $t('account.password.placeholder'),
                                     },
                                 },
                             }"

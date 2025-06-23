@@ -20,9 +20,11 @@ const emits = defineEmits<{
 const schema = z.object({
     email: z
         .string({
-            required_error: t('account.email.error'),
+            required_error: t('account.email.required'),
         })
-        .email(),
+        .email({
+            message: t('account.email.invalid'),
+        }),
 });
 
 export type RecoverData = z.infer<typeof schema>;
@@ -54,7 +56,6 @@ const recover = (recoverData: RecoverData) => {
 
             <slot name="header">
                 <h1 class="text-lg font-semibold">{{ $t('account.recover.header') }}</h1>
-                <hr>
             </slot>
 
             <slot name="info-text">
