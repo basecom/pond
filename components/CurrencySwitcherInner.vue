@@ -5,8 +5,8 @@ import type { AcceptableValue } from 'reka-ui';
 const { currency, setCurrency } = useSessionContext();
 const { getAvailableCurrencies } = usePondSalesChannel();
 
-const availableCurrencies: Ref<null | Schemas['Currency'][]> = ref(null);
-const selectedCurrencyId: Ref<null | AcceptableValue> = ref(null);
+const availableCurrencies: Ref<undefined | Schemas['Currency'][]> = ref(undefined);
+const selectedCurrencyId: Ref<undefined | AcceptableValue> = ref(undefined);
 
 onMounted(() => {
     selectedCurrencyId.value = currency.value.id;
@@ -38,18 +38,20 @@ const onUpdate = async (selectedId: AcceptableValue) => {
         </slot>
 
         <slot name="currency-switcher-content">
-            <UiSelectContent>
-                <UiSelectGroup>
-                    <UiSelectItem
-                        v-for="availableCurrency in availableCurrencies || []"
-                        :key="availableCurrency.id"
-                        :value="availableCurrency.id"
-                    >
-                        {{ availableCurrency.symbol }}
-                        {{ availableCurrency.shortName }}
-                    </UiSelectItem>
-                </UiSelectGroup>
-            </UiSelectContent>
+            <template v-if="availableCurrencies && availableCurrencies.length > 0">
+                <UiSelectContent>
+                    <UiSelectGroup>
+                        <UiSelectItem
+                            v-for="availableCurrency in availableCurrencies"
+                            :key="availableCurrency.id"
+                            :value="availableCurrency.id"
+                        >
+                            {{ availableCurrency.symbol }}
+                            {{ availableCurrency.shortName }}
+                        </UiSelectItem>
+                    </UiSelectGroup>
+                </UiSelectContent>
+            </template>
         </slot>
     </UiSelect>
 </template>
