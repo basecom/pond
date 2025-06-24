@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 withDefaults(
     defineProps<{
       link?: string;
@@ -14,7 +13,6 @@ withDefaults(
 defineEmits<{
   click: [];
 }>();
-
 </script>
 
 <template>
