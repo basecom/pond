@@ -2,7 +2,7 @@
 import type { Schemas } from '@shopware/api-client/api-types';
 
 const props = defineProps<{
-  order: Schemas['Order'];
+  order: Schemas['Order'] | undefined;
   paymentMethodName: string;
   shippingCosts: number | undefined;
   total: number | undefined;
@@ -14,7 +14,7 @@ const props = defineProps<{
 }>();
 
 const { getFormattedPrice } = usePrice();
-const orderHasPhysicalProductsInOrder = computed(() => props.order.lineItems?.some(lineItem =>
+const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.some(lineItem =>
     // Check if product is physical
     Object.values(lineItem.states).includes('is-physical'),
 ));
@@ -37,6 +37,7 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order.lineItems?.so
             </div>
         </slot>
     </template>
+
     <template v-else>
         <div class="flex flex-col gap-2 p-4 pb-0 md:pb-4">
             <slot name="line-items-header">
@@ -50,13 +51,12 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order.lineItems?.so
             </slot>
 
             <slot name="line-items">
-                <template v-for="lineItem in order.lineItems" :key="lineItem.id">
+                <template v-for="lineItem in order?.lineItems" :key="lineItem.id">
                     <OrderLineItem :line-item="lineItem" />
                 </template>
             </slot>
         </div>
 
-        <!-- pricing & shipment infos -->
         <slot name="order-information">
             <div class="flex flex-col md:grid md:grid-cols-5 bg-gray-100 p-4">
                 <slot name="general-order-information">
@@ -67,7 +67,7 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order.lineItems?.so
                                     {{ $t('order.orderDate') }}
                                 </span>
                                 <span class="md:col-span-2 justify-end md:justify-start">
-                                    {{ useDateFormat(order.orderDate, 'DD.MM.YYYY') }}
+                                    {{ useDateFormat(order?.orderDate, 'DD.MM.YYYY') }}
                                 </span>
                             </slot>
                             <slot name="order-number">
@@ -75,7 +75,7 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order.lineItems?.so
                                     {{ $t('order.orderNumber') }}
                                 </span>
                                 <span class="justify-end md:justify-start md:col-span-2">
-                                    {{ order.orderNumber }}
+                                    {{ order?.orderNumber }}
                                 </span>
                             </slot>
                             <slot name="payment-method">
@@ -140,7 +140,7 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order.lineItems?.so
                                 </span>
                             </slot>
                             <slot name="tax">
-                                <template v-for="calculatedTax in order.price.calculatedTaxes" :key="calculatedTax.taxRate">
+                                <template v-for="calculatedTax in order?.price.calculatedTaxes" :key="calculatedTax.taxRate">
                                     <span class="font-bold">
                                         {{ $t('order.tax', { taxRate: calculatedTax.taxRate }) }}
                                     </span>

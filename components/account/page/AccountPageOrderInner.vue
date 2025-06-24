@@ -78,11 +78,7 @@ defineEmits<{
                 <slot name="account-no-orders">
                     <UiAlert class="flex gap-4 items-center">
                         <Icon name="mdi:alert-circle-outline" class="size-4 shrink-0" />
-
-                        <div>
-                            <UiAlertTitle class="mb-0"> {{ $t('order.noOrders') }} </UiAlertTitle>
-
-                        </div>
+                        <UiAlertTitle class="mb-0"> {{ $t('order.noOrders') }} </UiAlertTitle>
                     </UiAlert>
                 </slot>
             </template>
