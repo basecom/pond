@@ -9,7 +9,7 @@ const props = defineProps<{
   paymentState: string;
   shippingMethodName: string;
   shippingState: string;
-  trackingCodes: Schemas['Tax'][] | undefined;
+  trackingCodes: string[] | undefined;
   isLoading: boolean;
 }>();
 
