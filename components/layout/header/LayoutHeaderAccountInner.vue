@@ -12,8 +12,6 @@ defineEmits<{
   logout: [];
 }>();
 
-const { formatLink } = useInternationalization();
-
 const dialogOpen = ref<boolean>(false);
 
 provide('closeDialog', () => {

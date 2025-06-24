@@ -44,9 +44,7 @@ onBeforeRouteLeave(() => {
     clearBreadcrumbs();
 });
 
-const pascalRouteName = computed(() => {
-    return pascalCase(routeName.value);
-});
+const pascalRouteName = computed(() => pascalCase(routeName.value));
 </script>
 
 <template>
