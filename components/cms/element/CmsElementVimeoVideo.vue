@@ -1,11 +1,6 @@
 <script setup lang="ts">
 //change: add confirmation logic
 // Overrides node_modules/@shopware/cms-base-layer/components/public/cms/element/CmsElementYoutubeVideo.vue
-import type { CmsElementVimeoVideo } from '@shopware/composables';
-import { ref } from 'vue';
-import type { Ref } from 'vue';
-import { useCmsElementConfig } from '#imports';
-
 const props = defineProps<{
   content: CmsElementVimeoVideo;
 }>();
@@ -52,8 +47,8 @@ for (const key in props.content.config) {
 }
 const needsConfirmation = getConfigValue('needsConfirmation');
 const confirmed = ref(false);
-
 </script>
+
 <template>
     <!--change: add needsConfirmation logic-->
     <CmsElementVideoConfirmation
