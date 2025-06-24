@@ -99,44 +99,47 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
 </script>
 
 <template>
+    
     <ClientOnly>
         <div
-            class="relative"s
+            class="relative"
+            s
             :class="[classes, {
                 'cursor-grab': slidesCounter > 1
             }, isOutsideNavigation ? 'px-20' :'']"
         >
             <template v-if="navigation">
-            <div
-                ref="prevSlide"
-                class="absolute z-10 bg-gray-light/50"
-                :class="[!navigationArrows ? 'hidden' : '', verticalNavigation
-                    ? 'left-1/2 top-0 flex w-full -translate-x-1/2 justify-center py-1 lg:py-2'
-                    : 'top-1/2 -translate-y-1/2 py-4 lg:py-8',
-                     isOutsideNavigation ? 'left-5 sm:left-0' : 'left-0 bg-gray-300 opacity-30 hover:opacity-70 hover:mouse-cursor-pointer']"
-            >
-                <Icon name="mdi:chevron-left" class="size-20" />
-            </div>
+                <div
+                    ref="prevSlide"
+                    class="absolute z-10 bg-gray-light/50"
+                    :class="[!navigationArrows ? 'hidden' : '', verticalNavigation
+                                 ? 'left-1/2 top-0 flex w-full -translate-x-1/2 justify-center py-1 lg:py-2'
+                                 : 'top-1/2 -translate-y-1/2 py-4 lg:py-8',
+                             isOutsideNavigation ? 'left-5 sm:left-0' : 'left-0 bg-gray-300 opacity-30 hover:opacity-70 hover:mouse-cursor-pointer']"
+                >
+                    <Icon name="mdi:chevron-left" class="size-20" />
+                </div>
 
-            <div
-                ref="nextSlide"
-                class="absolute z-10 bg-gray-light/50"
-                :class="[!navigationArrows ? 'hidden' : '', verticalNavigation
-                    ? 'bottom-0 left-1/2 flex w-full -translate-x-1/2 justify-center py-1 lg:py-2'
-                    : 'top-1/2 -translate-y-1/2 py-4 lg:py-8',
-                    isOutsideNavigation ? 'right-5 sm:right-0' : 'right-0 bg-gray-300 opacity-30 hover:opacity-70 hover:mouse-cursor-pointer']"
-            >
-                <Icon name="mdi:chevron-right" class="size-20" />
-            </div>
+                <div
+                    ref="nextSlide"
+                    class="absolute z-10 bg-gray-light/50"
+                    :class="[!navigationArrows ? 'hidden' : '', verticalNavigation
+                                 ? 'bottom-0 left-1/2 flex w-full -translate-x-1/2 justify-center py-1 lg:py-2'
+                                 : 'top-1/2 -translate-y-1/2 py-4 lg:py-8',
+                             isOutsideNavigation ? 'right-5 sm:right-0' : 'right-0 bg-gray-300 opacity-30 hover:opacity-70 hover:mouse-cursor-pointer']"
+                >
+                    <Icon name="mdi:chevron-right" class="size-20" />
+                </div>
 
-             </template>
+            </template>
 
 
             <swiper-container
                 ref="swiperContainer"
                 class="grid size-full"
-                :class="thumbRef ? thumbRef : `min-h-[${minHeight}px]`"
+                :class="thumbRef ? thumbRef : `min-h-[300px]`"
                 :autoplay="autoSlide"
+                :auto-height="true"
                 :speed="speed"
                 :pagination="navigationDots"
                 :navigation="true"
@@ -153,13 +156,13 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
                 <slot />
     
             </swiper-container>
-                <div
-                    v-if="navigation"
-                    class="swiper swiper-horizontal flex w-full justify-center mt-4"
-                    :class="isOutsidePagination ? '': 'absolute left-0 bottom-0 z-20 mb-2'"
-                >
-                    <div ref="paginationEl" class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal flex" />
-                </div>
+            <div
+                v-if="navigation"
+                class="swiper swiper-horizontal flex w-full justify-center mt-4"
+                :class="isOutsidePagination ? '': 'absolute left-0 bottom-0 z-20 mb-2'"
+            >
+                <div ref="paginationEl" class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal flex" />
+            </div>
 
         </div>
     </ClientOnly>
