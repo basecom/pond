@@ -95,6 +95,9 @@ export default defineNuxtConfig({
         head: {
             link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
         },
+        meta: [
+            { charset: 'UTF-8' },
+        ],
     },
 
     runtimeConfig: {
