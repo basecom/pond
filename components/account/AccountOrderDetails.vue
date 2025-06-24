@@ -18,6 +18,7 @@ onMounted(async () => {
 
 <template>
     <AccountOrderDetailsInner
+        v-if="order"
         :order="order"
         :payment-method-name="paymentMethod?.name ?? ''"
         :shipping-costs="shippingCosts"

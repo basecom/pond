@@ -18,6 +18,7 @@
     "tax": "zzgl. {taxRate} % MwSt.",
     "total": "Gesamtsumme:",
     "tracking": "Paketverfolgung:",
-    "noTracking": "Nicht verfügbar"
+    "noTracking": "Nicht verfügbar",
+    "noOrders": "Sie haben noch keine Bestellungen getätigt."
   }
 }

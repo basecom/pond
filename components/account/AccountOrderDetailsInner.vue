@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
 
-defineProps<{
-  order?: Schemas['Order'] | undefined;
+const props = defineProps<{
+  order: Schemas['Order'];
   paymentMethodName: string;
   shippingCosts?: number | undefined;
   total?: number | undefined;
@@ -13,6 +13,10 @@ defineProps<{
 }>();
 
 const { getFormattedPrice } = usePrice();
+const orderHasPhysicalProductsInOrder = computed(() => props.order.lineItems?.some(lineItem =>
+    // Check if product is physical
+    Object.values(lineItem.states).includes('is-physical'),
+));
 </script>
 
 <template>
@@ -28,7 +32,7 @@ const { getFormattedPrice } = usePrice();
         </slot>
 
         <slot name="line-items">
-            <template v-for="lineItem in order?.lineItems" :key="lineItem.id">
+            <template v-for="lineItem in order.lineItems" :key="lineItem.id">
                 <OrderLineItem :line-item="lineItem" />
             </template>
         </slot>
@@ -45,7 +49,7 @@ const { getFormattedPrice } = usePrice();
                                 {{ $t('order.orderDate') }}
                             </span>
                             <span class="md:col-span-2 justify-end md:justify-start">
-                                {{ useDateFormat(order?.orderDate, 'DD.MM.YYYY') }}
+                                {{ useDateFormat(order.orderDate, 'DD.MM.YYYY') }}
                             </span>
                         </slot>
                         <slot name="order-number">
@@ -53,7 +57,7 @@ const { getFormattedPrice } = usePrice();
                                 {{ $t('order.orderNumber') }}
                             </span>
                             <span class="justify-end md:justify-start md:col-span-2">
-                                {{ order?.orderNumber }}
+                                {{ order.orderNumber }}
                             </span>
                         </slot>
                         <slot name="payment-method">
@@ -73,18 +77,18 @@ const { getFormattedPrice } = usePrice();
                             </span>
                         </slot>
                         <slot name="shipping-method">
-                            <span class="font-bold col-start-1">
+                            <span v-if="orderHasPhysicalProductsInOrder" class="font-bold col-start-1">
                                 {{ $t('order.shippingMethod') }}
                             </span>
-                            <span class="md:col-span-2 justify-end md:justify-start">
+                            <span v-if="orderHasPhysicalProductsInOrder" class="md:col-span-2 justify-end md:justify-start">
                                 {{ shippingMethodName }}
                             </span>
                         </slot>
                         <slot name="shipping-state">
-                            <span class="font-bold col-start-1">
+                            <span v-if="orderHasPhysicalProductsInOrder" class="font-bold col-start-1">
                                 {{ $t('order.shippingState') }}
                             </span>
-                            <span class="md:col-span-2 justify-end md:justify-start">
+                            <span v-if="orderHasPhysicalProductsInOrder" class="md:col-span-2 justify-end md:justify-start">
                                 {{ shippingState }}
                             </span>
                         </slot>
@@ -118,7 +122,7 @@ const { getFormattedPrice } = usePrice();
                             </span>
                         </slot>
                         <slot name="tax">
-                            <template v-for="calculatedTax in order?.price.calculatedTaxes" :key="calculatedTax.taxRate">
+                            <template v-for="calculatedTax in order.price.calculatedTaxes" :key="calculatedTax.taxRate">
                                 <span class="font-bold">
                                     {{ $t('order.tax', { taxRate: calculatedTax.taxRate }) }}
                                 </span>

@@ -18,6 +18,7 @@
     "tax": "plus {taxRate} % VAT",
     "total": "Total:",
     "tracking": "Tracking:",
-    "noTracking": "Not available"
+    "noTracking": "Not available",
+    "noOrders": "You have not ordered yet."
   }
 }

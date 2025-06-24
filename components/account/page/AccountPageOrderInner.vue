@@ -13,7 +13,7 @@ defineEmits<{
 </script>
 
 <template>
-    <div>
+    <div class="gap-2.5 flex flex-col">
         <slot name="headline">
             <h1>
                 {{ $t('order.headline') }}
@@ -25,42 +25,56 @@ defineEmits<{
             </h2>
         </slot>
 
-        <slot name="account-orders-overview">
-            <div v-for="order in orders" :key="order.id">
-                <UiAccordion type="single" collapsible>
-                    <UiAccordionItem value="my-account-order">
-                        <slot name="account-order-details-trigger">
-                            <UiAccordionTrigger class="text-lg font-bold">
-                                <div class="flex flex-col items-start w-full gap-2.5">
-                                    <div class="flex items-center gap-5 text-left">
-                                        {{ $t('order.orderDate') }} {{ useDateFormat(order.orderDate, 'DD.MM.YYYY') }}
-                                        <UiBadge>
-                                            {{ order.stateMachineState.name }}
-                                        </UiBadge>
+        <template v-if="orders.length > 0">
+            <slot name="account-orders-overview">
+                <div v-for="order in orders" :key="order.id">
+                    <UiAccordion type="single" collapsible>
+                        <UiAccordionItem value="my-account-order">
+                            <slot name="account-order-details-trigger">
+                                <UiAccordionTrigger class="text-lg font-bold">
+                                    <div class="flex flex-col items-start w-full gap-2.5">
+                                        <div class="flex items-center gap-5 text-left">
+                                            {{ $t('order.orderDate') }} {{ useDateFormat(order.orderDate, 'DD.MM.YYYY') }}
+                                            <UiBadge>
+                                                {{ order.stateMachineState.name }}
+                                            </UiBadge>
+                                        </div>
+                                        <span class="font-normal">
+                                            {{ $t('order.orderNumber') }} {{ order.orderNumber }}
+                                        </span>
                                     </div>
-                                    <span class="font-normal">
-                                        {{ $t('order.orderNumber') }} {{ order.orderNumber }}
-                                    </span>
-                                </div>
-                            </UiAccordionTrigger>
-                        </slot>
-                        <slot name="account-order-details-content">
-                            <UiAccordionContent class="text-base">
-                                <AccountOrderDetails :order-id="order.id" />
-                            </UiAccordionContent>
-                        </slot>
-                    </UiAccordionItem>
-                </UiAccordion>
-            </div>
-        </slot>
-        <slot name="pagination">
-            <div class="flex w-full justify-center mt-5 gap-2.5">
-                <SwPagination
-                    :total="totalPages"
-                    :current="currentPage"
-                    @change-page="(page: number) => $emit('change-page', page)"
-                />
-            </div>
-        </slot>
+                                </UiAccordionTrigger>
+                            </slot>
+                            <slot name="account-order-details-content">
+                                <UiAccordionContent class="text-base">
+                                    <AccountOrderDetails :order-id="order.id" />
+                                </UiAccordionContent>
+                            </slot>
+                        </UiAccordionItem>
+                    </UiAccordion>
+                </div>
+            </slot>
+            <slot name="pagination">
+                <div class="flex w-full justify-center mt-5 gap-2.5">
+                    <SwPagination
+                        :total="totalPages"
+                        :current="currentPage"
+                        @change-page="(page: number) => $emit('change-page', page)"
+                    />
+                </div>
+            </slot>
+        </template>
+        <template v-else>
+            <slot name="account-no-orders">
+                <UiAlert class="flex gap-4 items-center">
+                    <Icon name="mdi:alert-circle-outline" class="size-4 shrink-0" />
+
+                    <div>
+                        <UiAlertTitle class="mb-0"> {{ $t('order.noOrders') }} </UiAlertTitle>
+
+                    </div>
+                </UiAlert>
+            </slot>
+        </template>
     </div>
 </template>
