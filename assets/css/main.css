@@ -71,7 +71,3 @@
 #__nuxt {
   @apply flex flex-col min-h-screen;
 }
-
-h1 {
-  @apply text-xl font-bold md:text-2xl;
-}

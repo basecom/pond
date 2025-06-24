@@ -21,6 +21,7 @@ onMounted(async () => {
 });
 
 const changePage = async (page: number) => {
+    isLoading.value = true;
     await router.push({
         query: {
             ...route.query,
@@ -28,12 +29,12 @@ const changePage = async (page: number) => {
         },
     });
     await changeCurrentPage(page);
+    isLoading.value = false;
 };
 </script>
 
 <template>
     <AccountPageOrderInner
-        v-if="orders"
         :total-pages="totalPages"
         :current-page="currentPage"
         :orders="orders"

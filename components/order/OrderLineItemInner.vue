@@ -8,7 +8,6 @@ defineProps<{
 const { getFormattedPrice } = usePrice();
 const configStore = useConfigStore();
 const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.productFallBackCover') as string;
-const promotionCover = configStore.get('BasecomPondCompanionPlugin.config.promotionCover') as string;
 </script>
 
 <template>
@@ -24,19 +23,15 @@ const promotionCover = configStore.get('BasecomPondCompanionPlugin.config.promot
                         class="object-center h-16 aspect-square"
                     >
                     <img
-                        v-else-if="lineItem.type === 'promotion' && promotionCover"
-                        :src="promotionCover"
-                        alt=""
-                        title=""
-                        class="object-center h-16 aspect-square"
-                    >
-                    <img
-                        v-else-if="lineItem.type === 'product' && productFallBackCover"
+                        v-else-if="lineItem.type !== 'promotion' && productFallBackCover"
                         :src="productFallBackCover"
                         alt=""
                         title=""
                         class="object-center h-16 aspect-square"
                     >
+                    <div v-else-if="lineItem.type === 'promotion'" class="h-16 w-16 border border-gray-300 items-center flex justify-center">
+                        <Icon name="mdi:percent" class="size-4 shrink-0" />
+                    </div>
                 </slot>
 
                 <slot name="line-item-information">
