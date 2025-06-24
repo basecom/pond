@@ -58,74 +58,72 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.s
         </div>
 
         <slot name="order-information">
-            <div class="flex flex-col md:grid md:grid-cols-5 bg-gray-100 p-4">
+            <div class="flex flex-col md:flex-row justify-between bg-gray-100 p-4">
                 <slot name="general-order-information">
-                    <div class="col-span-3">
-                        <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
-                            <slot name="order-date">
-                                <span class="font-bold col-start-1">
-                                    {{ $t('order.orderDate') }}
-                                </span>
-                                <span class="md:col-span-2 justify-end md:justify-start">
-                                    {{ useDateFormat(order?.orderDate, 'DD.MM.YYYY') }}
-                                </span>
-                            </slot>
-                            <slot name="order-number">
-                                <span class="font-bold col-start-1">
-                                    {{ $t('order.orderNumber') }}
-                                </span>
-                                <span class="justify-end md:justify-start md:col-span-2">
-                                    {{ order?.orderNumber }}
-                                </span>
-                            </slot>
-                            <slot name="payment-method">
-                                <span class="font-bold col-start-1">
-                                    {{ $t('order.paymentMethod') }}
-                                </span>
-                                <span class="md:col-span-2 justify-end md:justify-start">
-                                    {{ paymentMethodName }}
-                                </span>
-                            </slot>
-                            <slot name="payment-state">
-                                <span class="font-bold col-start-1">
-                                    {{ $t('order.paymentState') }}
-                                </span>
-                                <span class="md:col-span-2 justify-end md:justify-start">
-                                    {{ paymentState }}
-                                </span>
-                            </slot>
-                            <slot name="shipping-method">
-                                <span v-if="orderHasPhysicalProductsInOrder" class="font-bold col-start-1">
-                                    {{ $t('order.shippingMethod') }}
-                                </span>
-                                <span v-if="orderHasPhysicalProductsInOrder" class="md:col-span-2 justify-end md:justify-start">
-                                    {{ shippingMethodName }}
-                                </span>
-                            </slot>
-                            <slot name="shipping-state">
-                                <span v-if="orderHasPhysicalProductsInOrder" class="font-bold col-start-1">
-                                    {{ $t('order.shippingState') }}
-                                </span>
-                                <span v-if="orderHasPhysicalProductsInOrder" class="md:col-span-2 justify-end md:justify-start">
-                                    {{ shippingState }}
-                                </span>
-                            </slot>
-                            <slot name="tracking">
-                                <span v-if="orderHasPhysicalProductsInOrder" class="font-bold col-start-1">
-                                    {{ $t('order.tracking') }}
-                                </span>
-                                <span v-if="orderHasPhysicalProductsInOrder" class="md:col-span-2 justify-end md:justify-start">
-                                    <template v-if="trackingCodes && trackingCodes.length > 0">
-                                        <template v-for="(trackingCode, index)  in trackingCodes" :key="trackingCode">
-                                            {{ trackingCode }} <span v-if="index !== trackingCodes.length - 1">, </span>
-                                        </template>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                        <slot name="order-date">
+                            <span class="font-bold col-start-1">
+                                {{ $t('order.orderDate') }}
+                            </span>
+                            <span class="md:col-span-2 text-end md:text-start">
+                                {{ useDateFormat(order?.orderDate, 'DD.MM.YYYY') }}
+                            </span>
+                        </slot>
+                        <slot name="order-number">
+                            <span class="font-bold col-start-1">
+                                {{ $t('order.orderNumber') }}
+                            </span>
+                            <span class="text-end md:text-start md:col-span-2">
+                                {{ order?.orderNumber }}
+                            </span>
+                        </slot>
+                        <slot name="payment-method">
+                            <span class="font-bold col-start-1">
+                                {{ $t('order.paymentMethod') }}
+                            </span>
+                            <span class="md:col-span-2 text-end md:text-start">
+                                {{ paymentMethodName }}
+                            </span>
+                        </slot>
+                        <slot name="payment-state">
+                            <span class="font-bold col-start-1">
+                                {{ $t('order.paymentState') }}
+                            </span>
+                            <span class="md:col-span-2 text-end md:text-start">
+                                {{ paymentState }}
+                            </span>
+                        </slot>
+                        <slot name="shipping-method">
+                            <span v-if="orderHasPhysicalProductsInOrder" class="font-bold col-start-1">
+                                {{ $t('order.shippingMethod') }}
+                            </span>
+                            <span v-if="orderHasPhysicalProductsInOrder" class="md:col-span-2 text-end md:text-start">
+                                {{ shippingMethodName }}
+                            </span>
+                        </slot>
+                        <slot name="shipping-state">
+                            <span v-if="orderHasPhysicalProductsInOrder" class="font-bold col-start-1">
+                                {{ $t('order.shippingState') }}
+                            </span>
+                            <span v-if="orderHasPhysicalProductsInOrder" class="md:col-span-2 text-end md:text-start">
+                                {{ shippingState }}
+                            </span>
+                        </slot>
+                        <slot name="tracking">
+                            <span v-if="orderHasPhysicalProductsInOrder" class="font-bold col-start-1">
+                                {{ $t('order.tracking') }}
+                            </span>
+                            <span v-if="orderHasPhysicalProductsInOrder" class="md:col-span-2 text-end md:text-start">
+                                <template v-if="trackingCodes && trackingCodes.length > 0">
+                                    <template v-for="(trackingCode, index)  in trackingCodes" :key="trackingCode">
+                                        {{ trackingCode }} <span v-if="index !== trackingCodes.length - 1">, </span>
                                     </template>
-                                    <template v-else>
-                                        {{ $t('order.noTracking') }}
-                                    </template>
-                                </span>
-                            </slot>
-                        </div>
+                                </template>
+                                <template v-else>
+                                    {{ $t('order.noTracking') }}
+                                </template>
+                            </span>
+                        </slot>
                     </div>
                 </slot>
                 <slot name="price-order-information">
