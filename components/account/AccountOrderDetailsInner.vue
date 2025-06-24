@@ -127,35 +127,33 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.s
                     </div>
                 </slot>
                 <slot name="price-order-information">
-                    <div class="col-start-4 col-span-2">
-                        <div class="grid grid-cols-2 gap-2">
-                            <slot name="shipping-costs">
+                    <div class="grid grid-cols-2 gap-2 h-fit">
+                        <slot name="shipping-costs">
+                            <span class="font-bold">
+                                {{ $t('order.shipping') }}
+                            </span>
+                            <span class="flex justify-end col-start-2">
+                                {{ getFormattedPrice(shippingCosts ?? 0) }}
+                            </span>
+                        </slot>
+                        <slot name="tax">
+                            <template v-for="calculatedTax in order?.price.calculatedTaxes" :key="calculatedTax.taxRate">
                                 <span class="font-bold">
-                                    {{ $t('order.shipping') }}
+                                    {{ $t('order.tax', { taxRate: calculatedTax.taxRate }) }}
                                 </span>
                                 <span class="flex justify-end col-start-2">
-                                    {{ getFormattedPrice(shippingCosts ?? 0) }}
+                                    {{ getFormattedPrice(calculatedTax.tax) }}
                                 </span>
-                            </slot>
-                            <slot name="tax">
-                                <template v-for="calculatedTax in order?.price.calculatedTaxes" :key="calculatedTax.taxRate">
-                                    <span class="font-bold">
-                                        {{ $t('order.tax', { taxRate: calculatedTax.taxRate }) }}
-                                    </span>
-                                    <span class="flex justify-end col-start-2">
-                                        {{ getFormattedPrice(calculatedTax.tax) }}
-                                    </span>
-                                </template>
-                            </slot>
-                            <slot name="total">
-                                <span class="font-bold">
-                                    {{ $t('order.total') }}
-                                </span>
-                                <span class="flex justify-end col-start-2">
-                                    {{ getFormattedPrice(total ?? 0) }}
-                                </span>
-                            </slot>
-                        </div>
+                            </template>
+                        </slot>
+                        <slot name="total">
+                            <span class="font-bold">
+                                {{ $t('order.total') }}
+                            </span>
+                            <span class="flex justify-end col-start-2">
+                                {{ getFormattedPrice(total ?? 0) }}
+                            </span>
+                        </slot>
                     </div>
                 </slot>
             </div>
