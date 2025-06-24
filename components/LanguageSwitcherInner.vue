@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import languageEmojis from '~/assets/json/languages.json';
+import languageEmojis from '~/assets/json/languageEmojis.json';
 import type { AcceptableValue } from 'reka-ui';
 
 const { languages, changeLanguage, replaceToDevStorefront, getAvailableLanguages } =
@@ -35,7 +35,7 @@ const getEmoji = (isoCode: string) => {
     <UiSelect :default-value="selectedLanguage" @update:model-value="onUpdate">
         <slot name="language-switcher-trigger">
             <UiSelectTrigger>
-                <UiSelectValue  />
+                <UiSelectValue />
             </UiSelectTrigger>
         </slot>
 
