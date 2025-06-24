@@ -93,10 +93,10 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order.lineItems?.so
                             </span>
                         </slot>
                         <slot name="tracking">
-                            <span class="font-bold col-start-1">
+                            <span v-if="orderHasPhysicalProductsInOrder" class="font-bold col-start-1">
                                 {{ $t('order.tracking') }}
                             </span>
-                            <span class="md:col-span-2 justify-end md:justify-start">
+                            <span v-if="orderHasPhysicalProductsInOrder" class="md:col-span-2 justify-end md:justify-start">
                                 <template v-if="trackingCodes && trackingCodes.length > 0">
                                     <template v-for="(trackingCode, index)  in trackingCodes" :key="trackingCode">
                                         {{ trackingCode }} <span v-if="index !== trackingCodes.length - 1">, </span>
