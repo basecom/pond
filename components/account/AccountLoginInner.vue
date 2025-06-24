@@ -23,10 +23,11 @@ const { t } = useI18n();
 const schema = z.object({
     username: z
         .string({
-            required_error: t('account.email.error'),
+            required_error: t('account.email.required'),
         })
-        .email(),
-
+        .email({
+            message: t('account.email.invalid'),
+        }),
     password: z
         .string({
             required_error: t('account.password.errorGeneral'),
@@ -50,6 +51,7 @@ const login = async (loginData: LoginData) => {
                 inputProps: {
                     type: 'email',
                     placeholder: $t('account.email.placeholder'),
+                    autocomplete: 'username'
                 },
             },
             password: {
@@ -57,6 +59,7 @@ const login = async (loginData: LoginData) => {
                 inputProps: {
                     type: 'password',
                     placeholder: $t('account.password.placeholder'),
+                    autocomplete: 'current-password',
                 },
             },
         }"
