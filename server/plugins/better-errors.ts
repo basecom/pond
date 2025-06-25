@@ -7,6 +7,6 @@ export default defineNitroPlugin((nitroApp) => {
             return;
         }
 
-        console.error(`${event?.path} Application Error:`, error)
+        console.error(`${event?.path} Application Error:`, error);
     });
 });

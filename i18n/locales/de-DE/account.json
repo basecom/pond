@@ -35,28 +35,38 @@
             "successMessage": "Eine Bestätigungs-E-Mail mit einem Link zum Zurücksetzen des Passworts wurde versandt, wenn die angegebene E-Mail-Adresse registriert ist."
         },
         "customer": {
-            "accountType": "Accounttyp",
-            "salutation": "Andrede",
+            "accountType": {
+                "label": "Acconttyp",
+                "errorRequired": "Bitte wählen Sie einen Accounttyp aus",
+                "business": "Business",
+                "private": "Privat"
+            },
+            "salutation": {
+                "label": "Anrede",
+                "errorRequired": "Bitte Andrede auswählen",
+                "placeholder": "Anrede auswählen ..."
+            },
             "firstName": {
                 "label": "Vorname",
                 "placeholder": "Vornamen eingeben ...",
-                "errorGeneral": "Bitte geben Sie einen Vornamen ein"
+                "errorRequired": "Bitte geben Sie einen Vornamen ein"
             },
             "lastName": {
                 "label": "Nachname",
                 "placeholder": "Nachnamen eingeben ...",
-                "errorGeneral": "Bitte geben Sie einen Nachnamen ein"
+                "errorRequired": "Bitte geben Sie einen Nachnamen ein"
             },
             "name": "Name",
-            "mail": {
+            "email": {
                 "label": "E-Mail",
                 "placeholder": "E-Mail eingeben ...",
                 "confirm": {
                     "label": "E-Mail Bestätigung",
                     "placeholder": "E-Mail erneut eingeben ..."
                 },
-                "errorGeneral": "Bitte geben Sie eine E-Mail ein",
-                "error": "Bitte geben Sie eine valide E-Mail ein"
+                "errorRequired": "Bitte geben Sie eine E-Mail ein",
+                "errorInvalid": "Bitte geben Sie eine valide E-Mail ein",
+                "errorConfirmed": "Stimmen nicht"
             },
             "title": {
                 "label": "Titel",
@@ -65,7 +75,7 @@
             "company": {
                 "label": "Unternehmen",
                 "placeholder": "Unternehmen eingeben ...",
-                "errorGeneral": "Bitte geben Sie ein Unternehmen ein"
+                "errorRequired": "Bitte geben Sie ein Unternehmen ein"
             },
             "department": {
                 "label": "Abteilung",
@@ -77,13 +87,23 @@
             },
             "birthday": {
                 "label": "Geburtstag",
-                "dayPlaceholder": "Tag",
-                "monthPlaceholder": "Monat",
-                "yearPlaceholder": "Jahr",
-                "errorGeneral": "Bitte geben Sie einen Geburtstag ein"
+                "day": "Tag",
+                "month": "Monat",
+                "year": "Jahr",
+                "errorRequired": "Bitte geben Sie einen Geburtstag ein"
             },
             "birthdayMonth": "Monat des Geburtstages",
-            "birthdayYear": "Jahr des Geburtstages"
+            "birthdayYear": "Jahr des Geburtstages",
+            "password": {
+                "label": "Passwort",
+                "placeholder": "Passwort eingeben ...",
+                "errorRequired": "Bitte geben Sie ein Password ein",
+                "errorConfirmed": "Nicht gleich",
+                "confirm": {
+                    "label": "Passwort Bestätigung",
+                    "placeholder": "Passwort erneut eingeben ..."
+                }
+            }
         },
         "overview": {
             "description": "Hier haben Sie direkten Zugriff auf Ihre Profilinformationen, hinterlegte Adressen und die Standard-Zahlungsart.",
@@ -131,16 +151,9 @@
             }
         },
         "register": {
-            "password": {
-                "label": "Passwort",
-                "placeholder": "Passwort eingeben ...",
-                "errorGeneral": "Bitte geben Sie ein Password ein",
-                "errorLength": "Ihr Passwort muss mind. {length} Zeichen lang sein",
-                "confirm": "Passwort bestätigen"
-            },
-            "acceptedDataProtection": {
-                "label": "Ich habe die Datenschutzbestimmungen zur Kenntnis genommen und die AGB gelesen und bin mit ihnen einverstanden."
-            }
+            "headline": "Registrierung",
+
+            "acceptedDataProtection": "Ich habe die Datenschutzbestimmungen zur Kenntnis genommen und die AGB gelesen und bin mit ihnen einverstanden."
         }
     }
 }

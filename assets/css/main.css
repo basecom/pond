@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 @import "tw-animate-css";
+@import '@vueform/vueform/dist/vueform.css';
+
 @plugin '@tailwindcss/typography';
 @source "../../stories";
 

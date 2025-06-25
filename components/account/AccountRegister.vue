@@ -42,11 +42,9 @@ const register = async (registerData: LoginData) => {
 </script>
 
 <template>
-    <AccountRegisterInner
+    <AccountRegisterFormInner
         :is-loading="isLoading"
         :error-message="errorMessage"
         @register="(registerData: LoginData) => register(registerData)"
-    >
-        <template #headline><slot name="headline" /></template>
-    </AccountRegisterInner>
+    />
 </template>
