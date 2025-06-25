@@ -72,15 +72,14 @@ const slidesRef = ref([]);
                 <LayoutSliderSlide
                     v-for="slide in slides"
                     :key="slide.media.id"
-                    :class="`min-h-[${minHeight}]`"
+                    :style="{ minHeight: minHeight }"
                 >
                     <img
                         ref="slidesRef"
                         :src="slide?.media?.url"
                         :alt="getTranslatedProperty(slide.media, 'alt') || $t('cms.element.imageAlt')"
                         :title="getTranslatedProperty(slide.media, 'title') || $t('cms.element.imageAlt')"
-                        class="size-full object-center"
-                        :class="'object-' + displayMode"
+                        class="object-center object-contain"
                     >
                 </LayoutSliderSlide>
             </LayoutSlider>

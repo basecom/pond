@@ -139,7 +139,6 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
                 class="grid size-full"
                 :class="thumbRef ? thumbRef : `min-h-[300px]`"
                 :autoplay="autoSlide"
-                :auto-height="true"
                 :speed="speed"
                 :pagination="navigationDots"
                 :navigation="true"
