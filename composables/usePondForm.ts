@@ -55,7 +55,7 @@ export const usePondForm = () => {
             const vatIds = customer.accountType === 'business' ? customer.vatIds?.join(', ') : '';
             personalDataForm = personalDataForm.extend({
                 company: z.string().default(companyName),
-                'vatIds[]': z.string().optional().default(vatIds),
+                vatIds: z.string().optional().default(vatIds),
             });
         }
 
@@ -88,7 +88,7 @@ export const usePondForm = () => {
         {
             sourceField: 'accountType',
             type: DependencyType.HIDES,
-            targetField: 'vatIds[]',
+            targetField: 'vatIds',
             when: (accountType: string) => accountType !== 'business',
         },
         {
