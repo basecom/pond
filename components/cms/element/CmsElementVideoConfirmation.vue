@@ -31,7 +31,7 @@ const emits = defineEmits<{
                     class="absolute inset-0 bg-black opacity-60 pointer-events-none"
                 />
             </slot>
-            <slot name="privacyNotice">
+            <slot name="privacy-notice">
                 <div class="relative z-10 flex flex-col items-center justify-center bg-white bg-opacity-90 rounded-lg shadow-lg px-8 py-6 max-w-xs w-full">
                     <div class="text-center text-xs leading-relaxed">
                         <slot name="notice">
