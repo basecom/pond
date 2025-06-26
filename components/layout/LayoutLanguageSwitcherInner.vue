@@ -14,13 +14,13 @@ onMounted(async () => {
 const selectedLanguage = ref(languageIdChain);
 
 const onUpdate = async (selectedLanguageId: AcceptableValue): Promise<void> =>  {
-    if(typeof selectedLanguageId === 'string') {
+    if (typeof selectedLanguageId === 'string') {
         try {
             const response = await changeLanguage(selectedLanguageId);
             const redirectUrl = response.redirectUrl;
             window.location.replace(replaceToDevStorefront(redirectUrl));
         } catch {
-            handleError('Language switch failed');
+            handleError('[Pond][LayoutLanguageSwitchInner] Language switch failed');
         }
     }
 };
@@ -47,10 +47,12 @@ const getEmoji = (isoCode: string) => {
                         :key="language.id"
                         :value="language.id"
                     >
-                      <template v-if="language.translationCode.code">
-                        <Icon :name="`custom-icons:${language.translationCode.code}`" />
-                      </template>
-                        {{ language.name }}
+                        <div class="flex items-center gap-1">
+                            <template v-if="language.translationCode.code">
+                                <Icon :name="`custom-icons:${language.translationCode.code}`" />
+                            </template>
+                            {{ language.name }}
+                        </div>
                     </UiSelectItem>
                 </UiSelectGroup>
             </UiSelectContent>

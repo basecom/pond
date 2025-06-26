@@ -18,13 +18,13 @@ const shopName = configStore.get('core.basicInformation.shopName') as string|nul
                 </span>
             </slot>
             <slot name="language-switcher">
-              <div class="order-3 md:order-[unset]">
-                <LanguageSwitcher />
-              </div>
+                <div class="order-3 md:order-[unset]">
+                    <LayoutLanguageSwitcher />
+                </div>
             </slot>
             <slot name="currency-switcher">
                 <div class="order-4 md:order-[unset]">
-                    <CurrencySwitcher />
+                    <LayoutCurrencySwitcher />
                 </div>
             </slot>
         </div>
