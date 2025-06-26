@@ -1,5 +1,5 @@
 <template>
-    <swiper-slide class="flex relative max-w-full justify-center">
+    <LayoutSliderSlideInner>
         <slot />
-    </swiper-slide>
+    </LayoutSliderSlideInner>
 </template>
