@@ -6,10 +6,54 @@ withDefaults(
       isDetail?: boolean;
       // E.g. registration form wraps the addresses in group elements. To ensure that the conditions are applied correctly (they must include all group elements), this prop is required
       accountTypeConditions?: () => [string, string];
+      accountTypeCols?: { [key:string]: number };
+      salutationCols?: { [key:string]: number };
+      titleCols?: { [key:string]: number };
+      firstNameCols?: { [key:string]: number };
+      lastNameCols?: { [key:string]: number };
+      birthdayCols?: { [key:string]: number };
+      companyCols?: { [key:string]: number };
+      vatIdCols?: { [key:string]: number };
+      departmentCols?: { [key:string]: number };
+      emailCols?: { [key:string]: number };
+      passwordCols?: { [key:string]: number };
     }>(),
     {
         isDetail: false,
         accountTypeConditions: () => ['accountType', 'business'],
+        titleCols: () => ({
+          sm: 12,
+          md: 3,
+        }),
+      firstNameCols: () => ({
+        sm: 12,
+        md: 6,
+      }),
+      lastNameCols: () => ({
+        sm: 12,
+        md: 6,
+      }),
+      companyCols: () => ({
+        sm: 12,
+        md: 6,
+      }),
+      vatIdCols: () => ({
+        sm: 12,
+        md: 6,
+      }),
+      departmentCols: () => ({
+        sm: 12,
+        md: 6,
+      }),
+      emailCols: () => ({
+        sm: 12,
+        md: 6,
+      }),
+      passwordCols: () => ({
+        sm: 12,
+        md: 6,
+      }),
+
     },
 );
 
@@ -37,6 +81,7 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
             :label="$t('account.customer.title.label')"
             name="title"
             :placeholder="$t('account.customer.title.placeholder')"
+            :columns="titleCols"
         />
     </slot>
 
@@ -47,6 +92,8 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
             :placeholder="$t('account.customer.firstName.placeholder')"
             rules="required"
             :messages="{ required: $t('account.customer.firstName.errorRequired') }"
+            :columns="firstNameCols"
+            add-class="element-teal"
         />
     </slot>
 
@@ -57,6 +104,7 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
             :placeholder="$t('account.customer.lastName.placeholder')"
             rules="required"
             :messages="{ required: $t('account.customer.lastName.errorRequired') }"
+            :columns="lastNameCols"
         />
     </slot>
 
@@ -72,6 +120,7 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
             rules="required"
             :messages="{ required: $t('account.customer.company.errorRequired') }"
             :conditions="[accountTypeConditions]"
+            :columns="companyCols"
         />
     </slot>
 
@@ -81,6 +130,7 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
             :label="$t('account.customer.department.label')"
             :placeholder="$t('account.customer.department.placeholder')"
             :conditions="[accountTypeConditions]"
+            :columns="departmentCols"
         />
     </slot>
 
@@ -90,6 +140,7 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
             :label="$t('account.customer.vatId.label')"
             :placeholder="$t('account.customer.vatId.placeholder')"
             :conditions="[accountTypeConditions]"
+            :columns="vatIdCols"
         />
     </slot>
 
@@ -106,6 +157,7 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
             ]"
             :debounce="300"
             :messages="{ email: $t('account.customer.email.errorInvalid'), confirmed: $t('account.customer.email.errorConfirmed'), required: $t('account.customer.email.errorRequired') }"
+            :columns="emailCols"
         />
     </slot>
 
@@ -118,6 +170,7 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
             rules="required|email|max:255"
             :debounce="300"
             :messages="{ email: $t('account.customer.email.errorInvalid'), confirmed: $t('account.customer.email.errorConfirmed'), required: $t('account.customer.email.errorRequired') }"
+            :columns="emailCols"
         />
     </slot>
 
@@ -136,6 +189,7 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
             ]"
             :debounce="300"
             :messages="{ required: $t('account.customer.password.errorRequired'), confirmed: $t('account.customer.password.errorConfirmed') }"
+            :columns="passwordCols"
         />
     </slot>
 
@@ -148,6 +202,7 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
             :placeholder="$t('account.customer.password.confirm.placeholder')"
             :messages="{ required: $t('account.customer.password.errorRequired') }"
             rules="required"
+            :columns="passwordCols"
         />
     </slot>
 </template>

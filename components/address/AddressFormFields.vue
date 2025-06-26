@@ -1,18 +1,48 @@
 <script setup lang="ts">
-type SizeValue = { container: number; label: number; wrapper: number; } | number;
 withDefaults(
     defineProps<{
       isDetail?: boolean;
       accountTypeConditions?: [string, string];
-      streetCols?: SizeValue[];
+      streetCols?: { [key:string]: number };
+      zipCols?: { [key:string]: number };
+      cityCols?: { [key:string]: number };
+      additionalAddressLine1Cols?: { [key:string]: number };
+      additionalAddressLine2Cols?: { [key:string]: number };
+      countryCols?: { [key:string]: number };
+      stateCols?: { [key:string]: number };
+      phoneNumberCols?: { [key:string]: number };
     }>(),
     {
         isDetail: false,
-        accountTypeConditions:  () => ['accountType', 'business'],
-        streetCols: () => [{
+        accountTypeConditions: undefined,
+        streetCols: () => ({
+            sm: 12,
             md: 6,
-        },
-        ],
+        }),
+        zipCols: () => ({
+            sm: 12,
+            md: 3,
+        }),
+        cityCols: () => ({
+            sm: 12,
+            md: 3,
+        }),
+        additionalAddressLine1Cols: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        additionalAddressLine2Cols: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        countryCols: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        phoneNumberCols: () => ({
+            sm: 12,
+            md: 6,
+        }),
     },
 );
 
@@ -74,10 +104,11 @@ const fetchStates = (selectedCountryId: string) => {
         <slot name="zipCode">
             <TextElement
                 :label="$t('address.zipCode.label')"
-                name="postalCode"
+                name="zipCode"
                 :placeholder="$t('address.zipCode.placeholder')"
                 rules="required"
                 :messages="{ required: $t('address.zipCode.errorRequired') }"
+                :columns="zipCols"
             />
         </slot>
 
@@ -88,6 +119,7 @@ const fetchStates = (selectedCountryId: string) => {
                 :placeholder="$t('address.city.placeholder')"
                 rules="required"
                 :messages="{ required: $t('address.city.errorRequired') }"
+                :columns="cityCols"
             />
         </slot>
 
@@ -99,6 +131,7 @@ const fetchStates = (selectedCountryId: string) => {
                 :placeholder="$t('address.additionalAddressLine1.placeholder')"
                 :rules="isAdditionalAddress1FieldRequired ? 'required': ''"
                 :messages="{ required: $t('address.additionalAddressLine1.errorRequired') }"
+                :columns="additionalAddressLine1Cols"
             />
         </slot>
 
@@ -110,6 +143,7 @@ const fetchStates = (selectedCountryId: string) => {
                 :placeholder="$t('address.additionalAddressLine2.placeholder')"
                 :rules="isAdditionalAddress2FieldRequired ? 'required': ''"
                 :messages="{ required: $t('address.additionalAddressLine2.errorRequired') }"
+                :columns="additionalAddressLine2Cols"
             />
         </slot>
 
@@ -123,6 +157,7 @@ const fetchStates = (selectedCountryId: string) => {
                 :native="false"
                 :can-clear="false"
                 :items="formattedCountries"
+                :columns="countryCols"
                 @change="(value: string) => fetchStates(value)"
             />
         </slot>
@@ -136,6 +171,7 @@ const fetchStates = (selectedCountryId: string) => {
                 :native="false"
                 :can-clear="false"
                 :items="states"
+                :columns="stateCols"
             />
         </slot>
 
@@ -147,6 +183,7 @@ const fetchStates = (selectedCountryId: string) => {
                 :placeholder="$t('address.phoneNumber.placeholder')"
                 :rules="isPhoneNumberRequired ? 'required': ''"
                 :messages="{ required: $t('address.phoneNumber.errorRequired') }"
+                :columns="phoneNumberCols"
             />
         </slot>
     </GroupElement>

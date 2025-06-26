@@ -1,4 +1,16 @@
 <script setup lang="ts">
+withDefaults(
+    defineProps<{
+      displayError?: boolean;
+      showRequired?: string[];
+      isLoading?: boolean;
+    }>(),
+    {
+        displayError: false,
+        showRequired: () => ['label'],
+        isLoading: false,
+    },
+);
 
 // Admin configs
 const configStore = useConfigStore();
@@ -7,7 +19,7 @@ const isDataProtectionCheckboxRequired = ref(configStore.get('core.loginRegistra
 </script>
 
 <template>
-    <div class="flex md:flex-col justify-center container gap-5">
+    <div class="flex flex-col justify-center gap-5">
         <slot name="headline">
             <h1 class="text-center">
                 {{ $t('account.register.headline') }}
@@ -15,7 +27,7 @@ const isDataProtectionCheckboxRequired = ref(configStore.get('core.loginRegistra
         </slot>
 
         <slot name="register-form">
-            <Vueform>
+            <Vueform :display-errors="displayError" :show-required="showRequired" :loading="isLoading">
                 <slot name="register-customer-info-and-billing-address">
                     <GroupElement name="billingAddress">
                         <AddressFormFields
