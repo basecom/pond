@@ -16,7 +16,7 @@ const emits = defineEmits<{
     login: [loginData: LoginData];
 }>();
 
-const closeDialog = inject('closeDialog');
+const closeDialog = inject<() => void>('closeDialog', () => {});
 
 const { t } = useI18n();
 

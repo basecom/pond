@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @import "tw-animate-css";
 @source "../../stories";
+@source "../../layers/cms-base-layer";
+@source "../../node_modules/@shopware";
 
 @theme inline {
   --font-main: "PT Sans", sans-serif;
