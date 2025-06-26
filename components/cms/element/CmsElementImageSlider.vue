@@ -54,16 +54,13 @@ const slidesRef = ref([]);
 <template>
     <div
         v-if="slides?.length"
-        :style="{ minHeight: minHeight }"
     >
-        {{ isDecorative }}
         <ClientOnly>
             <LayoutSlider
                 :ref="sliderRef"
                 :slides-counter="slides.length"
                 :display-mode="displayMode.toLowerCase()"
                 class="w-full"
-                :style="{ minHeight: minHeight }"
                 :autoplay="autoplayConfig"
                 :speed="speedConfig"
                 :pagination="navigationDots.toLowerCase() !== 'none'"
@@ -75,10 +72,11 @@ const slidesRef = ref([]);
                 <LayoutSliderSlide
                     v-for="slide in slides"
                     :key="slide.media.id"
-                    :style="displayMode === 'cover' ? { minHeight: minHeight, height: minHeight } : { minHeight: minHeight }"
+                    :style="displayMode === 'cover' ? { minHeight: minHeight, height: minHeight } : ''"
                 >
                     <component
                         :is="slide.url ? 'a' : 'span'"
+                        class="w-full"
                         v-bind="slide.url ? { href: slide.url, target: slide.newTab ? '_blank' : '_self', rel: 'noopener' } : {}"
                     >
                         <img
@@ -93,7 +91,7 @@ const slidesRef = ref([]);
                                 verticalAlign === 'center' ? 'object-center' :
                                 verticalAlign === 'flex-end' ? 'object-bottom' : 'object-top',
                             ]"
-                            class="w-full h-auto max-w-full"
+                            class="w-full h-full"
                         >
                     </component>
                 </LayoutSliderSlide>

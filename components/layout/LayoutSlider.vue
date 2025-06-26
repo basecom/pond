@@ -1,8 +1,8 @@
 <script setup lang="ts">
-
 import type { Swiper } from 'swiper';
 import type { PaginationOptions } from 'swiper/types';
-
+import { ChevronRight } from 'lucide-vue-next';
+import { ChevronLeft } from 'lucide-vue-next';
 withDefaults(
     defineProps<{
       autoSlide?: boolean;
@@ -84,8 +84,10 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
     
     const paginationParams = {
         pagination:
-        {el: '.swiper-pagination', clickable: true, renderBullet(index: number, className:string) { return `<span class="${className} block w-4 h-4 bg-gray-400 rounded-full mx-1 opacity-100 transition-all bg-black"></span>`; },
-        }     as PaginationOptions,
+        {el: '.swiper-pagination', clickable: true,
+        bulletClass:'swiper-pagination-bullet bg-gray-400 block w-4 h-4 rounded-full mx-2 opacity-100 transition-all', 
+        bulletActiveClass: 'swiper-pagination-bullet-active bg-brand-primary! shadow-brand-primary shadow-sm',
+        } as PaginationOptions,
     };
 
 
@@ -108,7 +110,7 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
             s
             :class="[classes, {
                 'cursor-grab': slidesCounter > 1
-            }, isOutsideNavigation ? 'px-20 max-sm:px-4' :'']"
+            }, isOutsideNavigation ? 'px-20 max-sm:px-8' :'']"
         >
             <template v-if="navigation">
                 <div
@@ -117,9 +119,9 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
                     :class="[!navigationArrows ? 'hidden' : '', verticalNavigation
                                  ? 'left-1/2 top-0 flex w-full -translate-x-1/2 justify-center py-1 lg:py-2'
                                  : 'top-1/2 -translate-y-1/2 py-4 lg:py-8',
-                             isOutsideNavigation ? 'left-5 sm:left-0' : 'left-0 bg-gray-300 opacity-30 hover:opacity-70 hover:mouse-cursor-pointer']"
+                             isOutsideNavigation ? 'left-5 max-sm:-left-1' : 'left-0 bg-gray-300 opacity-30 hover:opacity-70 hover:mouse-cursor-pointer']"
                 >
-                    <Icon name="mdi:chevron-left" class="size-20" />
+                    <ChevronLeft class="size-8 shrink-0 opacity-50" />
                 </div>
 
                 <div
@@ -128,9 +130,9 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
                     :class="[!navigationArrows ? 'hidden' : '', verticalNavigation
                                  ? 'bottom-0 left-1/2 flex w-full -translate-x-1/2 justify-center py-1 lg:py-2'
                                  : 'top-1/2 -translate-y-1/2 py-4 lg:py-8',
-                             isOutsideNavigation ? 'right-5 sm:right-0' : 'right-0 bg-gray-300 opacity-30 hover:opacity-70 hover:mouse-cursor-pointer']"
+                             isOutsideNavigation ? 'right-5 max-sm:right-0' : 'right-0 bg-gray-300 opacity-30 hover:opacity-70 hover:mouse-cursor-pointer']"
                 >
-                    <Icon name="mdi:chevron-right" class="size-20" />
+                    <ChevronRight class="size-8 shrink-0 opacity-50" />
                 </div>
 
             </template>
@@ -139,7 +141,6 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
             <swiper-container
                 ref="swiperContainer"
                 class="grid size-full"
-                :class="thumbRef ? thumbRef : `min-h-[300px]`"
                 :autoplay="autoSlide"
                 :auto-height="displayMode ==='standard'"
                 :speed="speed"
@@ -169,9 +170,3 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
         </div>
     </ClientOnly>
 </template>
-<style>
-  .swiper-pagination-bullet-active {
-    background-color: black;
-    opacity: 100;
-  }
-</style>
