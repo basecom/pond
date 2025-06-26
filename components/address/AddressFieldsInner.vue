@@ -1,16 +1,18 @@
 <script setup lang="ts">
+import type {Columns} from '~/types/vueForm/Columns';
+
 withDefaults(
     defineProps<{
       isDetail?: boolean;
-      accountTypeConditions?: [string, string];
-      streetCols?: { [key:string]: number };
-      zipCols?: { [key:string]: number };
-      cityCols?: { [key:string]: number };
-      additionalAddressLine1Cols?: { [key:string]: number };
-      additionalAddressLine2Cols?: { [key:string]: number };
-      countryCols?: { [key:string]: number };
-      stateCols?: { [key:string]: number };
-      phoneNumberCols?: { [key:string]: number };
+      accountTypeConditions?: string[];
+      streetCols?: Columns;
+      zipCols?: Columns;
+      cityCols?: Columns;
+      additionalAddressLine1Cols?: Columns;
+      additionalAddressLine2Cols?: Columns;
+      countryCols?: Columns;
+      stateCols?: Columns;
+      phoneNumberCols?: Columns;
     }>(),
     {
         isDetail: false,
@@ -36,6 +38,10 @@ withDefaults(
             md: 6,
         }),
         countryCols: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        stateCols: () => ({
             sm: 12,
             md: 6,
         }),
@@ -81,7 +87,9 @@ const fetchStates = (selectedCountryId: string) => {
 </script>
 
 <template>
-    <AccountCustomerFormFields :is-detail="isDetail" :account-type-conditions="accountTypeConditions" />
+    <slot name="account-customer-fields">
+        <AccountCustomerFields :is-detail="isDetail" :account-type-conditions="accountTypeConditions" />
+    </slot>
 
     <slot name="address-headline">
         <h2>
@@ -89,7 +97,7 @@ const fetchStates = (selectedCountryId: string) => {
         </h2>
     </slot>
 
-    <GroupElement name="customer_address">
+    <GroupElement name="customer-address">
         <slot name="street">
             <TextElement
                 :label="$t('address.street.label')"
@@ -101,7 +109,7 @@ const fetchStates = (selectedCountryId: string) => {
             />
         </slot>
 
-        <slot name="zipCode">
+        <slot name="zip-code">
             <TextElement
                 :label="$t('address.zipCode.label')"
                 name="zipCode"
@@ -123,7 +131,7 @@ const fetchStates = (selectedCountryId: string) => {
             />
         </slot>
 
-        <slot name="additionalAddressLine1">
+        <slot name="additional-address-line-1">
             <TextElement
                 v-if="showAdditionalAddress1Field"
                 :label="$t('address.additionalAddressLine1.label')"
@@ -135,7 +143,7 @@ const fetchStates = (selectedCountryId: string) => {
             />
         </slot>
 
-        <slot name="additionalAddressLine2">
+        <slot name="additional-address-line-2">
             <TextElement
                 v-if="showAdditionalAddress2Field"
                 :label="$t('address.additionalAddressLine2.label')"
@@ -175,7 +183,7 @@ const fetchStates = (selectedCountryId: string) => {
             />
         </slot>
 
-        <slot name="phoneNumber">
+        <slot name="phone-number">
             <TextElement
                 v-if="showPhoneNumber"
                 :label="$t('address.phoneNumber.label')"

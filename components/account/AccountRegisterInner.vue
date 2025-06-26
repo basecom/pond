@@ -1,223 +1,72 @@
 <script setup lang="ts">
-import type * as z from 'zod';
-
 withDefaults(
     defineProps<{
+      displayError?: boolean;
+      showRequired?: string[];
       isLoading?: boolean;
-      errorMessage?: string;
     }>(),
     {
+        displayError: false,
+        showRequired: () => ['label'],
         isLoading: false,
-        errorMessage: undefined,
     },
 );
 
-const emits = defineEmits<{
-  register: [registerData: LoginData];
-}>();
-
-const { getRegisterForm, getRegisterDependencies } = usePondForm();
-//const { getCountries: countries, getStatesForCountry} = useCountries();
-const { getRegisterFormFieldConfig } = usePondFieldConfig();
+// Admin configs
 const configStore = useConfigStore();
-
-const isBirthdayRequired = ref(configStore.get('core.loginRegistration.birthdayFieldRequired') as boolean);
-
-const schema = getRegisterForm();
-const dependencies = getRegisterDependencies();
-export type LoginData = z.infer<typeof schema>;
-
-const register = async (registerData: LoginData) => {
-    emits('register', registerData);
-};
-
-// Create fieldConfig
-const fieldConfig = getRegisterFormFieldConfig();
+const isDataProtectionCheckboxRequired = ref(configStore.get('core.loginRegistration.requireDataProtectionCheckbox') as boolean);
 </script>
 
 <template>
-    <slot name="headline" />
-    <UiAutoForm
-        class="grid grid-cols-12 gap-4"
-        :dependencies="dependencies"
-        :schema="schema"
-        :field-config="fieldConfig"
-        @submit="register"
-    >
-        <!-- Account type -->
-        <template #accountType="slotProps">
-            <div class="col-span-3">
-                <UiAutoFormField v-bind="slotProps" />
-            </div>
-        </template>
+    <div class="flex flex-col justify-center gap-5">
+        <slot name="headline">
+            <h1 class="text-center">
+                {{ $t('account.register.headline') }}
+            </h1>
+        </slot>
 
-        <!-- Salutations -->
-        <template #salutationId="slotProps">
-            <div class="col-span-3 col-start-1">
-                <FormField v-slot="{ componentField }" v-bind="slotProps" name="salutationId">
-                    <SharedFormFieldsSalutation :component-field="componentField">
-                        <template #label>
-                            <UiAutoFormLabel :required="true">{{ $t('account.customer.salutation') }}</UiAutoFormLabel>
-                        </template>
-                    </SharedFormFieldsSalutation>
-                </FormField>
-            </div>
-        </template>
-
-        <!-- Title -->
-        <template #title="slotProps">
-            <div class="col-span-3">
-                <UiAutoFormField v-bind="slotProps" />
-            </div>
-        </template>
-
-        <!-- First name -->
-        <template #firstName="slotProps">
-            <div class="col-span-6 col-start-1">
-                <UiAutoFormField v-bind="slotProps" />
-            </div>
-        </template>
-
-        <!-- Last name -->
-        <template #lastName="slotProps">
-            <div class="col-span-6">
-                <UiAutoFormField v-bind="slotProps" />
-            </div>
-        </template>
-
-        <!-- Email -->
-        <template #email="slotProps">
-            <div class="col-span-6 col-start-1">
-                <UiAutoFormField v-bind="slotProps" />
-            </div>
-        </template>
-
-        <!-- Email confirm -->
-        <template #emailConfirmation="slotProps">
-            <div class="col-span-6">
-                <UiAutoFormField v-bind="slotProps" />
-            </div>
-        </template>
-
-        <!-- Birthday -->
-        <template #birthdayDay="slotProps">
-            <div class="col-span-2 col-start-1">
-                <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayDay">
-                    <SharedFormFieldsBirthdayDay :component-field="componentField">
-                        <template #label>
-                            <UiAutoFormLabel :required="isBirthdayRequired">{{ $t('account.customer.birthday.label') }}</UiAutoFormLabel>
-                        </template>
-                    </SharedFormFieldsBirthdayDay>
-                </FormField>
-            </div>
-        </template>
-
-        <template #birthdayMonth="slotProps">
-            <div class="col-span-2 grid items-end">
-                <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayMonth">
-                    <SharedFormFieldsBirthdayMonth :component-field="componentField">
-                        <template #label>
-                            <UiAutoFormLabel :required="isBirthdayRequired" class="sr-only">{{ $t('account.customer.birthdayMonth') }}</UiAutoFormLabel>
-                        </template>
-                    </SharedFormFieldsBirthdayMonth>
-                </FormField>
-            </div>
-        </template>
-
-        <template #birthdayYear="slotProps">
-            <div class="col-span-2 grid items-end">
-                <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayYear">
-                    <SharedFormFieldsBirthdayYear :component-field="componentField">
-                        <template #label>
-                            <UiAutoFormLabel :required="isBirthdayRequired" class="sr-only"> {{ $t('account.customer.birthdayYear') }} </UiAutoFormLabel>
-                        </template>
-                    </SharedFormFieldsBirthdayYear>
-                </FormField>
-            </div>
-        </template>
-
-        <!-- Company -->
-        <template #company="slotProps">
-            <div class="col-span-6">
-                <UiAutoFormField v-bind="slotProps" />
-            </div>
-        </template>
-
-        <!-- Department -->
-        <template #department="slotProps">
-            <div class="col-span-3 col-start-1">
-                <UiAutoFormField v-bind="slotProps" />
-            </div>
-        </template>
-
-        <!-- VAT id -->
-        <template #vatId="slotProps">
-            <div class="col-span-3">
-                <UiAutoFormField v-bind="slotProps" />
-            </div>
-        </template>
-
-        <!-- password -->
-        <template #password="slotProps">
-            <div class="col-span-6 col-start-1">
-                <UiAutoFormField v-bind="slotProps" />
-            </div>
-        </template>
-
-        <!-- confirm password -->
-        <template #confirmPassword="slotProps">
-            <div class="col-span-6">
-                <UiAutoFormField v-bind="slotProps" />
-            </div>
-        </template>
-
-        <!-- ToDo: Mit Nele Rücksprache halten: Wie passe ich das Design an? -->
-        <!-- Address fields -->
-        <template #billingAddress="slotProps">
-            <div class="col-span-12 col-start-1">
-                <UiAutoFormField v-bind="slotProps" />
-            </div>
-        </template>
-
-        <!-- checkbox -->
-        <template #differentShippingAddress="slotProps">
-            <div class="col-span-12 col-start-1">
-                <UiAutoFormField v-bind="slotProps" />
-            </div>
-        </template>
-
-        <!-- Different shipping address -->
-        <template #shippingAddress="slotProps">
-            <div class="col-span-12 col-start-1">
-                <UiAutoFormField v-bind="slotProps" />
-            </div>
-        </template>
-
-        <template #acceptedDataProtection="slotProps">
-            <div class="col-span-12 col-start-1">
-                <UiAutoFormField v-bind="slotProps" />
-            </div>
-        </template>
-
-        <slot name="alert">
-            <UiAlert v-if="errorMessage" variant="destructive" class="col-span-12 mb-4 flex gap-4">
-                <slot name="alert-icon">
-                    <Icon name="mdi:alert-circle-outline" class="size-4 text-red-500" />
+        <slot name="register-form">
+            <Vueform :display-errors="displayError" :show-required="showRequired" :loading="isLoading">
+                <slot name="register-customer-info-and-billing-address">
+                    <GroupElement name="billingAddress">
+                        <AddressFields
+                            :is-detail="true"
+                            :account-type-conditions="() => ['billingAddress.accountType', 'business']"
+                        />
+                    </GroupElement>
                 </slot>
 
-                <div>
-                    <UiAlertTitle>{{ $t('error.generalHeadline') }}</UiAlertTitle>
-                    <UiAlertDescription>
-                        {{ errorMessage }}
-                    </UiAlertDescription>
-                </div>
-            </UiAlert>
-        </slot>
+                <slot name="different-shipping-address">
+                    <CheckboxElement name="differentShippingAddress">
+                        {{ $t('address.differentShippingAddress') }}
+                    </CheckboxElement>
+                </slot>
 
-        <slot name="submit-button">
-            <UiButton type="submit" :is-loading="isLoading" class="col-span-12">
-                {{ $t('account.auth.register') }}
-            </UiButton>
+                <slot name="shipping-address">
+                    <GroupElement
+                        name="shippingAddress"
+                        :conditions="[['differentShippingAddress', true]]"
+                    >
+                        <AddressFields :account-type-conditions="() => ['shippingAddress.accountType', 'business']" />
+                    </GroupElement>
+                </slot>
+
+                <slot name="data-protection">
+                    <CheckboxElement name="dataProtection" :rules="isDataProtectionCheckboxRequired ? 'required' : ''">
+                        {{ $t('account.register.acceptedDataProtection') }}
+                    </CheckboxElement>
+                </slot>
+
+                <slot name="register-submit-button">
+                    <ButtonElement
+                        name="submit"
+                        full
+                        submits
+                    >
+                        {{ $t('account.auth.register') }}
+                    </ButtonElement>
+                </slot>
+            </Vueform>
         </slot>
-    </UiAutoForm>
+    </div>
 </template>

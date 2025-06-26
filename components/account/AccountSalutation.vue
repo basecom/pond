@@ -1,26 +1,23 @@
 <script setup lang="ts">
-const { getSalutations: salutations, fetchSalutations } = useSalutations();
+import type {Columns} from '~/types/vueForm/Columns';
 
-const formattedSalutations = ref(undefined);
-
-onMounted(async () => {
-    await fetchSalutations();
-    formattedSalutations.value = salutations.value?.map(item => ({
-        value: item.id,
-        label: item.displayName,
-    }));
-});
+withDefaults(
+    defineProps<{
+      cols?: Columns;
+    }>(),
+    {
+        cols: () => ({
+            sm: 12,
+            md: 3,
+        }),
+    },
+);
 </script>
 
 <template>
-    <SelectElement
-        name="salutation"
-        :label="$t('account.customer.salutation.label')"
-        :placeholder="$t('account.customer.salutation.placeholder')"
-        :messages="{ required: $t('account.customer.salutation.errorRequired') }"
-        rules="required"
-        :native="false"
-        :can-clear="false"
-        :items="formattedSalutations"
-    />
+    <AccountSalutationInner>
+        <template #salutation>
+            <slot name="salutation" />
+        </template>
+    </AccountSalutationInner>
 </template>
