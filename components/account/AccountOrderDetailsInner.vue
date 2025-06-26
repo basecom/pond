@@ -2,14 +2,14 @@
 import type { Schemas } from '@shopware/api-client/api-types';
 
 const props = withDefaults(defineProps<{
-  order?: Schemas['Order'] | undefined;
+  order?: Schemas['Order'];
   paymentMethodName: string;
-  shippingCosts?: number | undefined;
-  total?: number | undefined;
+  shippingCosts?: number;
+  total?: number;
   paymentState: string;
   shippingMethodName: string;
   shippingState: string;
-  trackingCodes?: string[] | undefined;
+  trackingCodes?: string[];
   isLoading?: boolean;
   }>(),
 {

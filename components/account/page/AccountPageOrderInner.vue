@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
 
-defineProps<{
-    orders: Schemas['Order'][] | undefined;
+withDefaults(defineProps<{
+    orders?: Schemas['Order'][];
     currentPage: number;
     totalPages: number;
-    isLoading: boolean;
-  }>();
+    isLoading?: boolean;
+  }>(),
+{
+    orders: undefined,
+    isLoading: false,
+},
+);
 
 defineEmits<{
   'change-page': [page: number];
