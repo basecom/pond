@@ -29,6 +29,7 @@ withDefaults(
       isOutsideNavigation?: boolean;
       navigation?: boolean;
       pagination?: boolean;
+      displayStandard?: boolean;
     }>(),
     {
         autoSlide: false,
@@ -96,6 +97,7 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
     // @ts-ignore
     swiperContainer.value?.initialize();
 });
+
 </script>
 
 <template>
@@ -139,6 +141,7 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
                 class="grid size-full"
                 :class="thumbRef ? thumbRef : `min-h-[300px]`"
                 :autoplay="autoSlide"
+                :auto-height="displayMode ==='standard'"
                 :speed="speed"
                 :pagination="navigationDots"
                 :navigation="true"

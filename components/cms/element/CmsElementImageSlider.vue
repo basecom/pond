@@ -30,6 +30,7 @@ const autoSlide = config.getConfigValue('autoSlide');
 const autoplayTimeout = config.getConfigValue('autoplayTimeout');
 const minHeight = config.getConfigValue('minHeight');
 const speed = config.getConfigValue('speed');
+const verticalAlign = config.getConfigValue('verticalAlign');
 
 const sliderRef = ref(null);
 
@@ -48,7 +49,6 @@ const autoplayConfig = computed(() =>
 
 const speedConfig = computed(() => autoSlide ? speed : 300);
 const slidesRef = ref([]);
-
 </script>
 <template>
     <div
@@ -59,6 +59,7 @@ const slidesRef = ref([]);
             <LayoutSlider
                 :ref="sliderRef"
                 :slides-counter="slides.length"
+                :display-mode="displayMode.toLowerCase()"
                 class="w-full"
                 :style="{ minHeight: minHeight }"
                 :autoplay="autoplayConfig"
@@ -79,7 +80,14 @@ const slidesRef = ref([]);
                         :src="slide?.media?.url"
                         :alt="getTranslatedProperty(slide.media, 'alt') || $t('cms.element.imageAlt')"
                         :title="getTranslatedProperty(slide.media, 'title') || $t('cms.element.imageAlt')"
-                        class="object-center object-contain"
+                        :class="[
+                            displayMode === 'cover' ? 'object-cover' :
+                            displayMode === 'contain' ? 'object-contain':'',
+                            verticalAlign === 'flex-start' ? 'object-top' :
+                            verticalAlign === 'flex-center' ? 'object-center' :
+                            verticalAlign === 'flex-end' ? 'object-bottom' : '',
+                        ]"
+                        class="w-full h-auto max-w-full"
                     >
                 </LayoutSliderSlide>
             </LayoutSlider>
