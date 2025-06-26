@@ -1,19 +1,29 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
 
-const props = defineProps<{
-  order: Schemas['Order'] | undefined;
+const props = withDefaults(defineProps<{
+  order?: Schemas['Order'] | undefined;
   paymentMethodName: string;
-  shippingCosts: number | undefined;
-  total: number | undefined;
+  shippingCosts?: number | undefined;
+  total?: number | undefined;
   paymentState: string;
   shippingMethodName: string;
   shippingState: string;
-  trackingCodes: string[] | undefined;
-  isLoading: boolean;
-}>();
+  trackingCodes?: string[] | undefined;
+  isLoading?: boolean;
+  }>(),
+{
+    order: undefined,
+    shippingCosts: undefined,
+    total: undefined,
+    trackingCodes: undefined,
+    isLoading: false,
+},
+);
 
 const { getFormattedPrice } = usePrice();
+const { formatLocaleDate } = usePondDate();
+
 const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.some(lineItem =>
     // Check if product is physical
     Object.values(lineItem.states).includes('is-physical'),
@@ -66,7 +76,7 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.s
                                 {{ $t('order.orderDate') }}
                             </span>
                             <span class="md:col-span-2 text-end md:text-start">
-                                {{ useDateFormat(order?.orderDate, 'DD.MM.YYYY') }}
+                                {{ formatLocaleDate(order?.orderDate) }}
                             </span>
                         </slot>
                         <slot name="order-number">

@@ -11,6 +11,8 @@ defineProps<{
 defineEmits<{
   'change-page': [page: number];
 }>();
+
+const { formatLocaleDate } = usePondDate();
 </script>
 
 <template>
@@ -44,7 +46,7 @@ defineEmits<{
                                     <UiAccordionTrigger class="text-lg font-bold">
                                         <div class="flex flex-col items-start w-full gap-2.5">
                                             <div class="flex items-center gap-5 text-left">
-                                                {{ $t('order.orderDate') }} {{ useDateFormat(order?.orderDate, 'DD.MM.YYYY') }}
+                                                {{ $t('order.orderDate') }} {{ formatLocaleDate(order?.orderDate) }}
                                                 <UiBadge>
                                                     {{ order?.stateMachineState.name }}
                                                 </UiBadge>
