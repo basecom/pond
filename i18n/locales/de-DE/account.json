@@ -16,7 +16,8 @@
         "email": {
             "label": "Ihre E-Mail-Adresse",
             "placeholder": "E-Mail-Adresse",
-            "error": "Bitte geben Sie eine valide E-Mail-Adresse ein"
+            "invalid": "Bitte geben Sie eine valide E-Mail-Adresse ein",
+            "required": "Eine E-Mail-Adresse ist erforderlich"
         },
         "password": {
             "label": "Ihr Passwort",

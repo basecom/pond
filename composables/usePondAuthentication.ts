@@ -10,6 +10,22 @@ export function usePondAuthentication() {
         }
     };
 
+    const rerouteIfLoggedIn = async (targetRoute: string = '/account') => {
+        await sessionContextLoaded();
+
+        // The customer can log in via modal and be on the login page at the same time. The watcher is required to handle the case.
+        const stop = watch(
+            () => signedIn.value,
+            (isSignedIn) => {
+                if (!isSignedIn) return;
+                navigateTo(formatLink(targetRoute));
+                // prevent duplicate redirects & memory leaks
+                stop();
+            },
+            { immediate: true },
+        );
+    };
+
     const sessionContextLoaded = async () => {
         if (loading.value) {
             await until(loading).toBe(false);
@@ -18,5 +34,6 @@ export function usePondAuthentication() {
 
     return {
         rerouteIfLoggedOut,
+        rerouteIfLoggedIn,
     };
 }
