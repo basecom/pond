@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Schemas } from '@shopware/api-client/api-types';
 import type { AcceptableValue } from 'reka-ui';
 
 const { languages, changeLanguage, replaceToDevStorefront, getAvailableLanguages } =
@@ -6,16 +7,22 @@ const { languages, changeLanguage, replaceToDevStorefront, getAvailableLanguages
 const { languageIdChain } = useSessionContext();
 const { handleError } = usePondHandleError();
 
+const selectedLanguage: Ref<undefined | Schemas['Language']> = ref(undefined);
+const selectedLanguageId = ref(languageIdChain);
+
 onMounted(async () => {
     await getAvailableLanguages();
+    if(selectedLanguageId.value) {
+        selectedLanguage.value = languages.value.find(language => language.id === selectedLanguageId.value);
+    }
 });
 
-const selectedLanguage = ref(languageIdChain);
-
-const onUpdate = async (selectedLanguageId: AcceptableValue): Promise<void> =>  {
-    if (typeof selectedLanguageId === 'string') {
+const onUpdate = async (selectedValue: AcceptableValue): Promise<void> =>  {
+    if (typeof selectedValue === 'string') {
         try {
-            const response = await changeLanguage(selectedLanguageId);
+            const response = await changeLanguage(selectedValue);
+            // Update language
+            selectedLanguage.value = languages.value.find(language => language.id === selectedValue);
             const redirectUrl = response.redirectUrl;
             window.location.replace(replaceToDevStorefront(redirectUrl));
         } catch {
@@ -26,10 +33,17 @@ const onUpdate = async (selectedLanguageId: AcceptableValue): Promise<void> =>  
 </script>
 
 <template>
-    <UiSelect :default-value="selectedLanguage" @update:model-value="onUpdate">
+    <UiSelect :model-value="selectedLanguageId" @update:model-value="onUpdate">
         <slot name="language-switcher-trigger">
             <UiSelectTrigger class="border-none shadow-none p-0">
-                <UiSelectValue />
+                <UiSelectValue>
+                    <template v-if="selectedLanguage">
+                        <div class="flex items-center gap-1">
+                            <Icon :name="`custom-icons:${selectedLanguage?.translationCode?.code}`" />
+                            {{ selectedLanguage?.name }}
+                        </div>
+                    </template>
+                </UiSelectValue>
             </UiSelectTrigger>
         </slot>
 
