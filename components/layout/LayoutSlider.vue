@@ -108,7 +108,7 @@ watch([prevSlide, nextSlide, swiperContainer], ([prevSlideValue, nextSlideValue]
             s
             :class="[classes, {
                 'cursor-grab': slidesCounter > 1
-            }, isOutsideNavigation ? 'px-20' :'']"
+            }, isOutsideNavigation ? 'px-20 max-sm:px-4' :'']"
         >
             <template v-if="navigation">
                 <div

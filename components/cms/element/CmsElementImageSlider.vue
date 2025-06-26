@@ -31,6 +31,7 @@ const autoplayTimeout = config.getConfigValue('autoplayTimeout');
 const minHeight = config.getConfigValue('minHeight');
 const speed = config.getConfigValue('speed');
 const verticalAlign = config.getConfigValue('verticalAlign');
+const isDecorative = config.getConfigValue('isDecorative');
 
 const sliderRef = ref(null);
 
@@ -55,6 +56,7 @@ const slidesRef = ref([]);
         v-if="slides?.length"
         :style="{ minHeight: minHeight }"
     >
+        {{ isDecorative }}
         <ClientOnly>
             <LayoutSlider
                 :ref="sliderRef"
@@ -73,22 +75,27 @@ const slidesRef = ref([]);
                 <LayoutSliderSlide
                     v-for="slide in slides"
                     :key="slide.media.id"
-                    :style="{ minHeight: minHeight }"
+                    :style="displayMode === 'cover' ? { minHeight: minHeight, height: minHeight } : { minHeight: minHeight }"
                 >
-                    <img
-                        ref="slidesRef"
-                        :src="slide?.media?.url"
-                        :alt="getTranslatedProperty(slide.media, 'alt') || $t('cms.element.imageAlt')"
-                        :title="getTranslatedProperty(slide.media, 'title') || $t('cms.element.imageAlt')"
-                        :class="[
-                            displayMode === 'cover' ? 'object-cover' :
-                            displayMode === 'contain' ? 'object-contain':'',
-                            verticalAlign === 'flex-start' ? 'object-top' :
-                            verticalAlign === 'flex-center' ? 'object-center' :
-                            verticalAlign === 'flex-end' ? 'object-bottom' : '',
-                        ]"
-                        class="w-full h-auto max-w-full"
+                    <component
+                        :is="slide.url ? 'a' : 'span'"
+                        v-bind="slide.url ? { href: slide.url, target: slide.newTab ? '_blank' : '_self', rel: 'noopener' } : {}"
                     >
+                        <img
+                            ref="slidesRef"
+                            :src="slide?.media?.url"
+                            :alt="isDecorative ? '': undefined"
+                            :title="getTranslatedProperty(slide.media, 'title') || $t('cms.element.imageAlt')"
+                            :class="[
+                                displayMode === 'cover' ? 'object-cover' :
+                                displayMode === 'contain' ? 'object-contain':'',
+                                verticalAlign === 'flex-start' ? 'object-top' :
+                                verticalAlign === 'center' ? 'object-center' :
+                                verticalAlign === 'flex-end' ? 'object-bottom' : 'object-top',
+                            ]"
+                            class="w-full h-auto max-w-full"
+                        >
+                    </component>
                 </LayoutSliderSlide>
             </LayoutSlider>
 
