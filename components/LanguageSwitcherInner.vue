@@ -48,7 +48,7 @@ const getEmoji = (isoCode: string) => {
                         :value="language.id"
                     >
                       <template v-if="language.translationCode.code">
-                        <Icon :name="`icons:${language.translationCode.code}`" />
+                        <Icon :name="`custom-icons:${language.translationCode.code}`" />
                       </template>
                         {{ language.name }}
                     </UiSelectItem>
