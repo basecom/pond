@@ -10,6 +10,7 @@ const selectedCurrencyId: Ref<undefined | AcceptableValue> = ref(undefined);
 
 onMounted(() => {
     selectedCurrencyId.value = currency.value.id;
+    console.log('onmount', availableCurrencies.value);
 });
 
 const { data } = await getAvailableCurrencies();
@@ -17,6 +18,7 @@ if (data.value) {
     // Remove fetchedAt & server, which is returned due to async fetch
     const { fetchedAt, server, ...currencies } = data.value;
     availableCurrencies.value = currencies;
+    console.log('danach', availableCurrencies);
 }
 
 const onUpdate = async (selectedId: AcceptableValue) => {
@@ -32,13 +34,13 @@ const onUpdate = async (selectedId: AcceptableValue) => {
 <template>
     <UiSelect :model-value="selectedCurrencyId" @update:model-value="onUpdate">
         <slot name="currency-switcher-trigger">
-            <UiSelectTrigger>
+            <UiSelectTrigger class="border-none shadow-none">
                 <UiSelectValue  />
             </UiSelectTrigger>
         </slot>
 
         <slot name="currency-switcher-content">
-            <template v-if="availableCurrencies && availableCurrencies.length > 0">
+            <template v-if="availableCurrencies">
                 <UiSelectContent>
                     <UiSelectGroup>
                         <UiSelectItem

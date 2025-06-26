@@ -49,12 +49,6 @@ defineProps<{
                         </div>
                     </slot>
 
-                    <slot name="currency-switcher">
-                        <div class="w-full mt-5 md:mt-0 md:w-auto flex justify-self-end">
-                            <CurrencySwitcher />
-                        </div>
-                    </slot>
-
                     <!-- footer service navigation -->
                     <slot name="footer-service-navigation">
                         <LayoutFooterSericeNavigation :navigation-elements="serviceNavigationElements" />
