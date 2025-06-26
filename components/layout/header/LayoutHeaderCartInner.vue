@@ -14,7 +14,7 @@ withDefaults(
 <template>
     <UiSheet>
         <slot name="cart-trigger">
-            <UiSheetTrigger class="size-5">
+            <UiSheetTrigger id="open-offcanvas-cart" class="size-5" aria-label="open-offcanvas-cart">
                 <slot name="cart-icon">
                     <Icon name="mdi:cart-outline" class="size-5" />
                 </slot>

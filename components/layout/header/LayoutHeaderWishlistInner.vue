@@ -12,8 +12,10 @@ withDefaults(
 <template>
     <slot name="wrapper">
         <NuxtLinkLocale
+            id="wishlist"
             to="/wishlist"
             class="relative h-5"
+            aria-label="wishlist"
         >
             <slot name="wishlist-icon">
                 <Icon name="mdi:cards-heart-outline" class="size-5" />
