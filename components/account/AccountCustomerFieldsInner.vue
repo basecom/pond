@@ -168,6 +168,7 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
         <TextElement
             v-if="isDetail"
             name="email"
+            autocomplete="user"
             :label="$t('account.customer.email.label')"
             :placeholder="$t('account.customer.email.placeholder')"
             :rules="confirmEmail ? [
@@ -184,6 +185,7 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
     <slot name="email-confirm">
         <TextElement
             v-if="confirmEmail && isDetail"
+            autocomplete="new-user"
             name="email_confirmation"
             :label="$t('account.customer.email.confirm.label')"
             :placeholder="$t('account.customer.email.confirm.placeholder')"
@@ -198,6 +200,7 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
         <TextElement
             v-if="isDetail"
             :label="$t('account.customer.password.label')"
+            autocomplete="password"
             name="password"
             input-type="password"
             :placeholder="$t('account.customer.password.placeholder')"
@@ -216,6 +219,7 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
     <slot name="password-confirm">
         <TextElement
             v-if="confirmPassword && isDetail"
+            autocomplete="new-password"
             name="password_confirmation"
             :label="$t('account.customer.password.confirm.label')"
             input-type="password"

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type {Columns} from '~/types/vueForm/Columns';
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
       // Additional fields (such as email, password, ...) are required for the registration form. These are displayed depending on this props
       isDetail?: boolean;
       // E.g. registration form wraps the addresses in group elements. To ensure that the conditions are applied correctly (they must include all group elements), this prop is required
-      accountTypeConditions?: string[];
+      accountTypeConditions?: () => string[];
       titleCols?: Columns;
       firstNameCols?: Columns;
       lastNameCols?: Columns;
@@ -32,18 +32,7 @@ withDefaults(
 </script>
 
 <template>
-    <AccountCustomerFieldsInner
-        :is-detail="isDetail"
-        :account-type-conditions="() => accountTypeConditions"
-        :title-cols="titleCols"
-        :first-name-cols="firstNameCols"
-        :last-name-cols="lastNameCols"
-        :company-cols="companyCols"
-        :vat-id-cols="vatIdCols"
-        :department-cols="departmentCols"
-        :email-cols="emailCols"
-        :password-cols="passwordCols"
-    >
+    <AccountCustomerFieldsInner v-bind="props">
         <template #account-type>
             <slot name="account-type" />
         </template>

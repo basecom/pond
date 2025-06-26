@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type {Columns} from '~/types/vueForm/Columns';
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
       cols?: Columns;
     }>(),
@@ -12,7 +12,7 @@ withDefaults(
 </script>
 
 <template>
-    <AccountTypeInner>
+    <AccountTypeInner v-bind="props">
         <template #account-type>
             <slot name="account-type" />
         </template>

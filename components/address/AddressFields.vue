@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type {Columns} from '~/types/vueForm/Columns';
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
       isDetail?: boolean;
-      accountTypeConditions?: string[];
+      accountTypeConditions?: () => string[];
       streetCols?: Columns;
       zipCols?: Columns;
       cityCols?: Columns;
@@ -30,18 +30,7 @@ withDefaults(
 </script>
 
 <template>
-    <AddressFieldsInner
-        :is-detail="isDetail"
-        :account-type-conditions="accountTypeConditions"
-        :street-cols="streetCols"
-        :zip-cols="zipCols"
-        :city-cols="cityCols"
-        :additional-address-line1-cols="additionalAddressLine1Cols"
-        :additional-address-line2-cols="additionalAddressLine2Cols"
-        :country-cols="countryCols"
-        :state-cols="stateCols"
-        :phone-number-cols="phoneNumberCols"
-    >
+    <AddressFieldsInner v-bind="props">
         <template #account-customer-fields>
             <slot name="account-customer-fields" />
         </template>

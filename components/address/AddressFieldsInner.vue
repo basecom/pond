@@ -4,7 +4,7 @@ import type {Columns} from '~/types/vueForm/Columns';
 withDefaults(
     defineProps<{
       isDetail?: boolean;
-      accountTypeConditions?: string[];
+      accountTypeConditions?: () => string[];
       streetCols?: Columns;
       zipCols?: Columns;
       cityCols?: Columns;
@@ -174,7 +174,7 @@ const fetchStates = (selectedCountryId: string) => {
             <SelectElement
                 v-if="states"
                 name="state"
-                :label="$t('address.country.label')"
+                :label="$t('address.state.label')"
                 :placeholder="$t('address.state.placeholder')"
                 :native="false"
                 :can-clear="false"

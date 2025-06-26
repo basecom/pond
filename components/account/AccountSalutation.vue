@@ -1,21 +1,18 @@
 <script setup lang="ts">
 import type {Columns} from '~/types/vueForm/Columns';
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
       cols?: Columns;
     }>(),
     {
-        cols: () => ({
-            sm: 12,
-            md: 3,
-        }),
+        cols: undefined,
     },
 );
 </script>
 
 <template>
-    <AccountSalutationInner>
+    <AccountSalutationInner v-bind="props">
         <template #salutation>
             <slot name="salutation" />
         </template>

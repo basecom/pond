@@ -26,7 +26,20 @@ const isDataProtectionCheckboxRequired = ref(configStore.get('core.loginRegistra
         </slot>
 
         <slot name="register-form">
-            <Vueform :display-errors="displayError" :show-required="showRequired" :loading="isLoading">
+            <Vueform
+                :display-errors="displayError"
+                :show-required="showRequired"
+                :loading="isLoading"
+                :endpoint="async function(FormData, form$){
+                    const formData = FormData // FormData instance
+                    const data = form$.data // form data including conditional data
+                    const requestData = form$.requestData // form data excluding conditional data
+                    console.log('Formdata', formData);
+                    console.log('data', data);
+                    console.log('requestdata', requestData);
+                    // handle form submission
+                }"
+            >
                 <slot name="register-customer-info-and-billing-address">
                     <GroupElement name="billingAddress">
                         <AddressFields
