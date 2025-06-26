@@ -10,5 +10,7 @@ const logout = async () => {
 </script>
 
 <template>
-    <LayoutHeaderAccountInner :signed-in="signedIn" @logout="logout" />
+    <div class="hidden md:flex">
+        <LayoutHeaderAccountInner :signed-in="signedIn" @logout="logout" />
+    </div>
 </template>

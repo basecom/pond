@@ -12,9 +12,7 @@ defineEmits<{
   logout: [];
 }>();
 
-const { formatLink } = useInternationalization();
-
-const dialogOpen = ref(true);
+const dialogOpen = ref<boolean>(false);
 
 provide('closeDialog', () => {
     dialogOpen.value = false;
@@ -24,7 +22,7 @@ provide('closeDialog', () => {
 <template>
     <UiDropdownMenu>
         <slot name="action-login-menu">
-            <UiDropdownMenuTrigger class="size-5">
+            <UiDropdownMenuTrigger id="header-account-action" class="size-5" aria-label="header-account-action">
                 <slot name="icon">
                     <Icon name="mdi:account-outline" class="size-5" />
                 </slot>
@@ -45,7 +43,7 @@ provide('closeDialog', () => {
                 <slot name="signed-in">
                     <UiDropdownMenuItem>
                         <slot name="action-overview">
-                            <NuxtLinkLocale :to="formatLink('/account')">
+                            <NuxtLinkLocale to="/account">
                                 <slot name="overview">
                                     {{ $t('account.account') }}
                                 </slot>
@@ -54,7 +52,7 @@ provide('closeDialog', () => {
                     </UiDropdownMenuItem>
                     <UiDropdownMenuItem>
                         <slot name="action-personal-profile">
-                            <NuxtLinkLocale :to="formatLink('/account/profile')">
+                            <NuxtLinkLocale to="/account/profile">
                                 <slot name="personal-profile">
                                     {{ $t('account.profile') }}
                                 </slot>
@@ -63,7 +61,7 @@ provide('closeDialog', () => {
                     </UiDropdownMenuItem>
                     <UiDropdownMenuItem>
                         <slot name="action-addresses">
-                            <NuxtLinkLocale :to="formatLink('/account/address')">
+                            <NuxtLinkLocale to="/account/address">
                                 <slot name="personal-addresses">
                                     {{ $t('account.address') }}
                                 </slot>
@@ -72,7 +70,7 @@ provide('closeDialog', () => {
                     </UiDropdownMenuItem>
                     <UiDropdownMenuItem>
                         <slot name="action-payment-methods">
-                            <NuxtLinkLocale :to="formatLink('/account/payment')">
+                            <NuxtLinkLocale to="/account/payment">
                                 <slot name="personal-payment-methods">
                                     {{ $t('account.payment') }}
                                 </slot>
@@ -81,7 +79,7 @@ provide('closeDialog', () => {
                     </UiDropdownMenuItem>
                     <UiDropdownMenuItem>
                         <slot name="action-orders">
-                            <NuxtLinkLocale :to="formatLink('/account/order')">
+                            <NuxtLinkLocale to="/account/order">
                                 <slot name="personal-orders">
                                     {{ $t('account.order') }}
                                 </slot>
@@ -90,7 +88,7 @@ provide('closeDialog', () => {
                     </UiDropdownMenuItem>
                     <UiDropdownMenuItem>
                         <slot name="action-wishlist">
-                            <NuxtLinkLocale :to="formatLink('/account/wishlist')">
+                            <NuxtLinkLocale to="/account/wishlist">
                                 <slot name="wishlist">
                                     {{ $t('account.wishlist') }}
                                 </slot>

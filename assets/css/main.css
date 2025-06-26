@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import "tw-animate-css";
+@plugin '@tailwindcss/typography';
 @source "../../stories";
 @source "../../layers/cms-base-layer";
 @source "../../node_modules/@shopware";
@@ -36,6 +37,15 @@
 @layer utilities {
   * {
     @apply font-main antialiased hyphens-auto [hyphenate-limit-chars:6_3_3] [hyphenate-limit-lines:2] [hyphenate-limit-last:always] [hyphenate-limit-zone:8%];
+  }
+
+  .prose {
+    max-width: none;
+  }
+
+  .prose hr {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
   }
 }
 

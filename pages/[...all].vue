@@ -43,12 +43,14 @@ if (!routeName.value) {
 onBeforeRouteLeave(() => {
     clearBreadcrumbs();
 });
+
+const pascalRouteName = computed(() => pascalCase(routeName.value));
 </script>
 
 <template>
     <component
-        :is="pascalCase(routeName)"
-        v-if="componentExists(pascalCase(routeName))"
+        :is="pascalRouteName"
+        v-if="componentExists(pascalRouteName)"
         :navigation-id="foreignKey"
     />
 </template>
