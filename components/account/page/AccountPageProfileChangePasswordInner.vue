@@ -23,17 +23,17 @@ const { t } = useI18n();
 const schema = z.object({
     newPassword: z
         .string({
-            required_error: t('account.login.password.errorGeneral'),
+            required_error: t('account.password.errorGeneral'),
         }),
 
     newPasswordConfirm: z
         .string({
-            required_error: t('account.login.password.errorGeneral'),
+            required_error: t('account.password.errorGeneral'),
         }),
 
     password: z
         .string({
-            required_error: t('account.login.password.errorGeneral'),
+            required_error: t('account.password.errorGeneral'),
         }),
 });
 export type ChangePasswordForm = z.infer<typeof schema>;
@@ -96,21 +96,21 @@ watch(() => props.resetForm, (newValue) => {
                                     label: $t('account.personalProfile.changePassword.newPassword'),
                                     inputProps: {
                                         type: 'password',
-                                        placeholder: $t('account.login.password.placeholder'),
+                                        placeholder: $t('account.password.placeholder'),
                                     },
                                 },
                                 newPasswordConfirm: {
                                     label: $t('account.personalProfile.changePassword.confirmation'),
                                     inputProps: {
                                         type: 'password',
-                                        placeholder: $t('account.login.password.placeholder'),
+                                        placeholder: $t('account.password.placeholder'),
                                     },
                                 },
                                 password: {
                                     label: $t('account.personalProfile.changePassword.oldPassword'),
                                     inputProps: {
                                         type: 'password',
-                                        placeholder: $t('account.login.password.placeholder'),
+                                        placeholder: $t('account.password.placeholder'),
                                     },
                                 },
                             }"
