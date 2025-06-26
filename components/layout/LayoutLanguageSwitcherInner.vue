@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import languageEmojis from '~/assets/json/languageEmojis.json';
 import type { AcceptableValue } from 'reka-ui';
 
 const { languages, changeLanguage, replaceToDevStorefront, getAvailableLanguages } =
@@ -23,11 +22,6 @@ const onUpdate = async (selectedLanguageId: AcceptableValue): Promise<void> =>  
             handleError('[Pond][LayoutLanguageSwitchInner] Language switch failed');
         }
     }
-};
-
-const getEmoji = (isoCode: string) => {
-    const language = languageEmojis.find(languageEmoji => languageEmoji.iso_code === isoCode);
-    return language?.emoji;
 };
 </script>
 
