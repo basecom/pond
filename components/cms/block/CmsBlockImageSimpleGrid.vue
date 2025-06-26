@@ -21,7 +21,7 @@ const rightContent = getSlotContent('right');
             <CmsGenericElement :content="leftBottomContent" />
         </div>
 
-        <!-- change: we object-cover -->
+        <!-- change: add object-cover -->
         <CmsGenericElement class="*:object-cover" :content="rightContent" />
     </div>
 </template>

@@ -13,8 +13,9 @@ const leftContent = getSlotContent('left');
 const rightContent = getSlotContent('right');
 const centerContent = getSlotContent('center');
 </script>
+
 <template>
-    <!-- change: we add our custom gray & a padding -->
+    <!-- change: add our custom gray & a padding -->
     <div class="cms-block-image-highlight-row grid md:grid-cols-3 gap-10 bg-gray-200 p-4">
         <CmsGenericElement class="*:border-8 *:border-white" :content="leftContent" />
         <CmsGenericElement class="*:border-8 *:border-white" :content="centerContent" />
