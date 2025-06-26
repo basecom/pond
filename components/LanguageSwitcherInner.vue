@@ -34,7 +34,7 @@ const getEmoji = (isoCode: string) => {
 <template>
     <UiSelect :default-value="selectedLanguage" @update:model-value="onUpdate">
         <slot name="language-switcher-trigger">
-            <UiSelectTrigger>
+            <UiSelectTrigger class="border-none shadow-none p-0">
                 <UiSelectValue />
             </UiSelectTrigger>
         </slot>
@@ -47,7 +47,9 @@ const getEmoji = (isoCode: string) => {
                         :key="language.id"
                         :value="language.id"
                     >
-                        {{ getEmoji(language.translationCode.code) }}
+                      <template v-if="language.translationCode.code">
+                        <Icon :name="`icons:${language.translationCode.code}`" />
+                      </template>
                         {{ language.name }}
                     </UiSelectItem>
                 </UiSelectGroup>

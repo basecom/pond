@@ -61,6 +61,12 @@ export default defineNuxtConfig({
         serverBundle: {
             collections: ['mdi'],
         },
+        customCollections: [
+            {
+                prefix: 'icons',
+                dir: './app/assets/css/icons'
+            },
+        ],
     },
 
     components: {
@@ -95,9 +101,6 @@ export default defineNuxtConfig({
         head: {
             link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
         },
-        meta: [
-            { charset: 'UTF-8' },
-        ],
     },
 
     runtimeConfig: {

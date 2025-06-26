@@ -49,12 +49,6 @@ defineProps<{
                         </div>
                     </slot>
 
-                    <slot name="language-switcher">
-                        <div class="w-full mt-5 md:mt-0 md:w-auto flex justify-self-end">
-                            <LanguageSwitcher />
-                        </div>
-                    </slot>
-
                     <!-- footer service navigation -->
                     <slot name="footer-service-navigation">
                         <LayoutFooterSericeNavigation :navigation-elements="serviceNavigationElements" />
