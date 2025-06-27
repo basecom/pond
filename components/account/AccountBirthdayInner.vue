@@ -4,12 +4,14 @@ import type {Columns} from '~/types/vueForm/Columns';
 withDefaults(
     defineProps<{
       cols?: Columns;
+      prefix?: string;
     }>(),
     {
         cols: () => ({
             xs: 1,
             md: 2,
         }),
+        prefix: '',
     },
 );
 const configStore = useConfigStore();
@@ -32,8 +34,9 @@ const possibleBirthdayYears = computed(() => {
     <slot name="birthday">
         <GroupElement name="birthday" :label="$t('account.customer.birthday.label')">
             <slot name="birthday-day">
-                <SelectElement
-                    name="birthdayDay"
+                <FormSelectElement
+                    :id="`${prefix}birthdayDay`"
+                    :name="`${prefix}birthdayDay`"
                     :placeholder="$t('account.customer.birthday.day')"
                     :rules="isBirthdayRequired ? ['required'] : ''"
                     :messages="{ required: $t('account.customer.birthday.errorRequired') }"
@@ -45,8 +48,9 @@ const possibleBirthdayYears = computed(() => {
             </slot>
 
             <slot name="birthday-month">
-                <SelectElement
-                    name="birthdayMonth"
+                <FormSelectElement
+                    :id="`${prefix}birthdayMonth`"
+                    :name="`${prefix}birthdayMonth`"
                     :placeholder="$t('account.customer.birthday.month')"
                     :messages="{ required: $t('account.customer.birthday.errorRequired') }"
                     :rules="isBirthdayRequired ? ['required'] : ''"
@@ -58,8 +62,9 @@ const possibleBirthdayYears = computed(() => {
             </slot>
 
             <slot name="birthday-year">
-                <SelectElement
-                    name="birthdayYear"
+                <FormSelectElement
+                    :id="`${prefix}birthdayYear`"
+                    :name="`${prefix}birthdayYear`"
                     :placeholder="$t('account.customer.birthday.year')"
                     :messages="{ required: $t('account.customer.birthday.errorRequired') }"
                     :rules="isBirthdayRequired ? ['required'] : ''"

@@ -24,9 +24,6 @@ const register = async (registerData: LoginData) => {
     try {
         console.log('data', registerData);
 
-        if(!registerData.differentShippingAddress) {
-            delete registerData.shippingAddress;
-        }
         await customerStore.register(registerData);
 
     } catch (error) {

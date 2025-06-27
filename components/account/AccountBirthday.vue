@@ -1,18 +1,9 @@
 <script setup lang="ts">
-import type {Columns} from '~/types/vueForm/Columns';
 
-const props = withDefaults(
-    defineProps<{
-      cols?: Columns;
-    }>(),
-    {
-        cols: undefined,
-    },
-);
 </script>
 
 <template>
-    <AccountBirthdayInner v-bind="props">
+    <AccountBirthdayInner v-bind="$props">
         <template #birthday>
             <slot name="birthday" />
         </template>

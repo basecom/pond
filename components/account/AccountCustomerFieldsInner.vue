@@ -6,7 +6,7 @@ withDefaults(
       // Additional fields (such as email, password, ...) are required for the registration form. These are displayed depending on this props
       isDetail?: boolean;
       // E.g. registration form wraps the addresses in group elements. To ensure that the conditions are applied correctly (they must include all group elements), this prop is required
-      accountTypeConditions?: () => string[];
+      accountTypeConditions?: [];
       accountTypeCols?: Columns;
       salutationCols?: Columns;
       titleCols?: Columns;
@@ -17,11 +17,13 @@ withDefaults(
       vatIdCols?: Columns;
       departmentCols?: Columns;
       emailCols?: Columns;
-      passwordCols?: Columns
+      passwordCols?: Columns,
+      prefix?: string;
+      showVatIds?: boolean;
     }>(),
     {
         isDetail: false,
-        accountTypeConditions: () => ['accountType', 'business'],
+        accountTypeConditions: undefined,
         accountTypeCols: () => ({
             sm: 12,
             md: 3,
@@ -66,7 +68,8 @@ withDefaults(
             sm: 12,
             md: 6,
         }),
-
+        prefix: '',
+        showVatIds: true,
     },
 );
 
@@ -82,20 +85,21 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
 <template>
     <GroupElement name="account-type">
         <slot name="account-type">
-            <AccountType />
+            <AccountType :prefix="prefix" />
         </slot>
     </GroupElement>
 
     <GroupElement name="salutation-and-title">
         <slot name="salutation">
-            <AccountSalutation />
+            <AccountSalutation :prefix="prefix" />
         </slot>
 
         <slot name="title">
-            <TextElement
+            <FormTextElement
                 v-if="showTitle"
+                :id="`${prefix}title`"
                 :label="$t('account.customer.title.label')"
-                name="title"
+                :name="`${prefix}title`"
                 :placeholder="$t('account.customer.title.placeholder')"
                 :columns="titleCols"
             />
@@ -104,9 +108,10 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
 
     <GroupElement name="customer-name">
         <slot name="first-name">
-            <TextElement
+            <FormTextElement
+                :id="`${prefix}firstName`"
                 :label="$t('account.customer.firstName.label')"
-                name="firstName"
+                :name="`${prefix}firstName`"
                 :placeholder="$t('account.customer.firstName.placeholder')"
                 rules="required"
                 :messages="{ required: $t('account.customer.firstName.errorRequired') }"
@@ -115,9 +120,10 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
         </slot>
 
         <slot name="last-name">
-            <TextElement
+            <FormTextElement
+                :id="`${prefix}lastName`"
                 :label="$t('account.customer.lastName.label')"
-                name="lastName"
+                :name="`${prefix}lastName`"
                 :placeholder="$t('account.customer.lastName.placeholder')"
                 rules="required"
                 :messages="{ required: $t('account.customer.lastName.errorRequired') }"
@@ -127,47 +133,52 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
     </GroupElement>
 
     <slot name="birthday">
-        <AccountBirthday v-if="showBirthday && isDetail" />
+        <AccountBirthday v-if="showBirthday && isDetail" :prefix="prefix" />
     </slot>
 
     <GroupElement name="business-customer">
         <slot name="company">
-            <TextElement
-                name="company"
+            <FormTextElement
+                :id="`${prefix}company`"
+                :name="`${prefix}company`"
                 :placeholder="$t('account.customer.company.placeholder')"
                 :label="$t('account.customer.company.label')"
                 rules="required"
                 :messages="{ required: $t('account.customer.company.errorRequired') }"
-                :conditions="[accountTypeConditions()]"
+                :conditions="accountTypeConditions"
                 :columns="companyCols"
             />
         </slot>
 
         <slot name="department">
-            <TextElement
-                name="department"
+            <FormTextElement
+                :id="`${prefix}department`"
+                :name="`${prefix}department`"
                 :label="$t('account.customer.department.label')"
                 :placeholder="$t('account.customer.department.placeholder')"
-                :conditions="[accountTypeConditions()]"
+                :conditions="accountTypeConditions"
                 :columns="departmentCols"
             />
         </slot>
 
         <slot name="vat-id">
-            <TextElement
-                name="vatId"
+            <FormTextElement
+                v-if="showVatIds"
+                :id="`${prefix}vatIds`"
+                :name="`${prefix}vatIds`"
                 :label="$t('account.customer.vatId.label')"
                 :placeholder="$t('account.customer.vatId.placeholder')"
-                :conditions="[accountTypeConditions()]"
+                :conditions="accountTypeConditions"
                 :columns="vatIdCols"
             />
         </slot>
     </GroupElement>
 
     <slot name="email">
-        <TextElement
+        <FormTextElement
             v-if="isDetail"
-            name="email"
+            :id="`${prefix}email`"
+            :name="`${prefix}email`"
             autocomplete="user"
             :label="$t('account.customer.email.label')"
             :placeholder="$t('account.customer.email.placeholder')"
@@ -183,10 +194,11 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
     </slot>
 
     <slot name="email-confirm">
-        <TextElement
+        <FormTextElement
             v-if="confirmEmail && isDetail"
+            :id="`${prefix}email_confirmation`"
             autocomplete="new-user"
-            name="email_confirmation"
+            :name="`${prefix}email_confirmation`"
             :label="$t('account.customer.email.confirm.label')"
             :placeholder="$t('account.customer.email.confirm.placeholder')"
             rules="required|email|max:255"
@@ -197,11 +209,12 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
     </slot>
 
     <slot name="password">
-        <TextElement
+        <FormTextElement
             v-if="isDetail"
+            :id="`${prefix}password`"
             :label="$t('account.customer.password.label')"
             autocomplete="password"
-            name="password"
+            :name="`${prefix}password`"
             input-type="password"
             :placeholder="$t('account.customer.password.placeholder')"
             :rules="confirmPassword ? [
@@ -217,10 +230,11 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
     </slot>
 
     <slot name="password-confirm">
-        <TextElement
+        <FormTextElement
             v-if="confirmPassword && isDetail"
+            :id="`${prefix}password_confirmation`"
             autocomplete="new-password"
-            name="password_confirmation"
+            :name="`${prefix}password_confirmation`"
             :label="$t('account.customer.password.confirm.label')"
             input-type="password"
             :placeholder="$t('account.customer.password.confirm.placeholder')"

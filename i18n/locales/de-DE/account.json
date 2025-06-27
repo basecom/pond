@@ -152,8 +152,10 @@
         },
         "register": {
             "headline": "Registrierung",
-
-            "acceptedDataProtection": "Ich habe die Datenschutzbestimmungen zur Kenntnis genommen und die AGB gelesen und bin mit ihnen einverstanden."
+            "acceptedDataProtection": {
+                "label": "Ich habe die Datenschutzbestimmungen zur Kenntnis genommen und die AGB gelesen und bin mit ihnen einverstanden.",
+                "errorRequired": "Bitte stimmen Sie den Datenschutzbestimmungen zu"
+            }
         }
     }
 }

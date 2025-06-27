@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type {Columns} from '~/types/vueForm/Columns';
 
-const props = withDefaults(
+withDefaults(
     defineProps<{
       id?: string;
       label?: string;
@@ -9,12 +9,14 @@ const props = withDefaults(
       placeholder?: string;
       rules?: string[] | string;
       messages?: {[key: string]: string};
-      cols?: Columns,
+      columns?: Columns,
       floating?: boolean;
       autocomplete?: string;
       native?: boolean;
       canClear?: boolean;
+      canDeselect?: boolean;
       items?: [];
+      defaultValue?: string;
     }>(),
     {
         id: undefined,
@@ -23,14 +25,20 @@ const props = withDefaults(
         placeholder: undefined,
         rules: undefined,
         messages: undefined,
-        cols: undefined,
+        columns: undefined,
         floating: false,
         autocomplete: undefined,
         native: false,
         canClear: false,
         items: undefined,
+        defaultValue: undefined,
+        canDeselect: false,
     },
 );
+
+defineEmits<{
+  'on-change': [value: string];
+}>();
 </script>
 
 <template>
@@ -44,9 +52,12 @@ const props = withDefaults(
             :rules="rules"
             :native="native"
             :can-clear="canClear"
+            :can-deselect="canDeselect"
             :items="items"
-            :columns="cols"
-            @change="(value: string) => $emit('on-change')"
+            :columns="columns"
+            :default="defaultValue"
+            :floating="floating"
+            @change="(value: string) => $emit('on-change', value)"
         />
     </slot>
 </template>

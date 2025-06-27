@@ -4,7 +4,7 @@ import type {Columns} from '~/types/vueForm/Columns';
 withDefaults(
     defineProps<{
       isDetail?: boolean;
-      accountTypeConditions?: () => string[];
+      accountTypeConditions?: [];
       streetCols?: Columns;
       zipCols?: Columns;
       cityCols?: Columns;
@@ -13,6 +13,10 @@ withDefaults(
       countryCols?: Columns;
       stateCols?: Columns;
       phoneNumberCols?: Columns;
+      prefix?: string;
+      headlineClasses?: string;
+      headline?: string;
+      showVatIds?: boolean;
     }>(),
     {
         isDetail: false,
@@ -49,6 +53,10 @@ withDefaults(
             sm: 12,
             md: 6,
         }),
+        prefix: '',
+        headlineClasses: undefined,
+        headline: undefined,
+        showVatIds: true,
     },
 );
 
@@ -88,20 +96,26 @@ const fetchStates = (selectedCountryId: string) => {
 
 <template>
     <slot name="account-customer-fields">
-        <AccountCustomerFields :is-detail="isDetail" :account-type-conditions="accountTypeConditions" />
+        <AccountCustomerFields
+            :is-detail="isDetail"
+            :show-vat-ids="showVatIds"
+            :account-type-conditions="accountTypeConditions"
+            :prefix="prefix"
+        />
     </slot>
 
     <slot name="address-headline">
-        <h2>
-            {{ $t('address.headline') }}
+        <h2 v-if="headline" :class="headlineClasses">
+            {{ headline }}
         </h2>
     </slot>
 
     <GroupElement name="customer-address">
         <slot name="street">
-            <TextElement
+            <FormTextElement
+                :id="`${prefix}street`"
                 :label="$t('address.street.label')"
-                name="street"
+                :name="`${prefix}street`"
                 :placeholder="$t('address.street.placeholder')"
                 rules="required"
                 :messages="{ required: $t('address.street.errorRequired') }"
@@ -110,9 +124,10 @@ const fetchStates = (selectedCountryId: string) => {
         </slot>
 
         <slot name="zip-code">
-            <TextElement
+            <FormTextElement
+                :id="`${prefix}zipcode`"
                 :label="$t('address.zipCode.label')"
-                name="zipCode"
+                :name="`${prefix}zipcode`"
                 :placeholder="$t('address.zipCode.placeholder')"
                 rules="required"
                 :messages="{ required: $t('address.zipCode.errorRequired') }"
@@ -121,9 +136,10 @@ const fetchStates = (selectedCountryId: string) => {
         </slot>
 
         <slot name="city">
-            <TextElement
+            <FormTextElement
+                :id="`${prefix}city`"
                 :label="$t('address.city.label')"
-                name="city"
+                :name="`${prefix}city`"
                 :placeholder="$t('address.city.placeholder')"
                 rules="required"
                 :messages="{ required: $t('address.city.errorRequired') }"
@@ -132,10 +148,11 @@ const fetchStates = (selectedCountryId: string) => {
         </slot>
 
         <slot name="additional-address-line-1">
-            <TextElement
+            <FormTextElement
                 v-if="showAdditionalAddress1Field"
+                :id="`${prefix}additionalAddressLine1`"
                 :label="$t('address.additionalAddressLine1.label')"
-                name="additionalLine1"
+                :name="`${prefix}additionalAddressLine1`"
                 :placeholder="$t('address.additionalAddressLine1.placeholder')"
                 :rules="isAdditionalAddress1FieldRequired ? 'required': ''"
                 :messages="{ required: $t('address.additionalAddressLine1.errorRequired') }"
@@ -144,10 +161,11 @@ const fetchStates = (selectedCountryId: string) => {
         </slot>
 
         <slot name="additional-address-line-2">
-            <TextElement
+            <FormTextElement
                 v-if="showAdditionalAddress2Field"
+                :id="`${prefix}additionalAddressLine2`"
                 :label="$t('address.additionalAddressLine2.label')"
-                name="additionalLine2"
+                :name="`${prefix}additionalAddressLine2`"
                 :placeholder="$t('address.additionalAddressLine2.placeholder')"
                 :rules="isAdditionalAddress2FieldRequired ? 'required': ''"
                 :messages="{ required: $t('address.additionalAddressLine2.errorRequired') }"
@@ -156,8 +174,9 @@ const fetchStates = (selectedCountryId: string) => {
         </slot>
 
         <slot name="country">
-            <SelectElement
-                name="country"
+            <FormSelectElement
+                :id="`${prefix}countryId`"
+                :name="`${prefix}countryId`"
                 :placeholder="$t('address.country.placeholder')"
                 :label="$t('address.country.label')"
                 :messages="{ required: $t('address.country.errorRequired') }"
@@ -166,14 +185,15 @@ const fetchStates = (selectedCountryId: string) => {
                 :can-clear="false"
                 :items="formattedCountries"
                 :columns="countryCols"
-                @change="(value: string) => fetchStates(value)"
+                @on-change="(value: string) => fetchStates(value)"
             />
         </slot>
 
         <slot name="state">
-            <SelectElement
+            <FormSelectElement
                 v-if="states"
-                name="state"
+                :id="`${prefix}state`"
+                :name="`${prefix}state`"
                 :label="$t('address.state.label')"
                 :placeholder="$t('address.state.placeholder')"
                 :native="false"
@@ -184,10 +204,11 @@ const fetchStates = (selectedCountryId: string) => {
         </slot>
 
         <slot name="phone-number">
-            <TextElement
+            <FormTextElement
                 v-if="showPhoneNumber"
+                :id="`${prefix}phoneNumber`"
                 :label="$t('address.phoneNumber.label')"
-                name="phoneNumber"
+                :name="`${prefix}phoneNumber`"
                 :placeholder="$t('address.phoneNumber.placeholder')"
                 :rules="isPhoneNumberRequired ? 'required': ''"
                 :messages="{ required: $t('address.phoneNumber.errorRequired') }"

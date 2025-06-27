@@ -9,9 +9,12 @@ withDefaults(
       placeholder?: string;
       rules?: string[] | string;
       messages?: {[key: string]: string};
-      cols?: Columns,
+      columns?: Columns,
       floating?: boolean;
       autocomplete?: string;
+      conditions?: [];
+inputType?: string;
+      debounce?: number;
     }>(),
     {
         id: undefined,
@@ -20,9 +23,12 @@ withDefaults(
         placeholder: undefined,
         rules: undefined,
         messages: undefined,
-        cols: undefined,
+        columns: undefined,
         floating: false,
         autocomplete: undefined,
+        conditions: undefined,
+        inputType: undefined,
+        debounce: undefined,
     },
 );
 </script>
@@ -36,9 +42,12 @@ withDefaults(
             :placeholder="placeholder"
             :rules="rules"
             :messages="messages"
-            :columns="cols"
+            :columns="columns"
             :floating="floating"
             :autocomplete="autocomplete"
+            :conditions="conditions"
+            :input-type="inputType"
+            :debounce="debounce"
         />
     </slot>
 </template>
