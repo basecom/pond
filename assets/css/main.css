@@ -40,12 +40,17 @@
   }
 
   .prose {
-    max-width: none;
+    @apply max-w-[unset]
   }
 
   .prose hr {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+    @apply mt-2 mb-2;
+  }
+
+  .prose {
+    & :where(img):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+      @apply m-0
+    }
   }
 }
 
