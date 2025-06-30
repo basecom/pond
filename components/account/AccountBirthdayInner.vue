@@ -40,8 +40,6 @@ const possibleBirthdayYears = computed(() => {
                     :placeholder="$t('account.customer.birthday.day')"
                     :rules="isBirthdayRequired ? ['required'] : ''"
                     :messages="{ required: $t('account.customer.birthday.errorRequired') }"
-                    :native="false"
-                    :can-clear="false"
                     :items="birthdayDays"
                     :columns="cols"
                 />
@@ -54,8 +52,6 @@ const possibleBirthdayYears = computed(() => {
                     :placeholder="$t('account.customer.birthday.month')"
                     :messages="{ required: $t('account.customer.birthday.errorRequired') }"
                     :rules="isBirthdayRequired ? ['required'] : ''"
-                    :native="false"
-                    :can-clear="false"
                     :items="birthdayMonths"
                     :columns="cols"
                 />
@@ -68,8 +64,6 @@ const possibleBirthdayYears = computed(() => {
                     :placeholder="$t('account.customer.birthday.year')"
                     :messages="{ required: $t('account.customer.birthday.errorRequired') }"
                     :rules="isBirthdayRequired ? ['required'] : ''"
-                    :native="false"
-                    :can-clear="false"
                     :items="possibleBirthdayYears"
                     :columns="cols"
                 />

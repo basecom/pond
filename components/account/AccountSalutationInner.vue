@@ -4,6 +4,10 @@ import type {Columns} from '~/types/vueForm/Columns';
 withDefaults(
     defineProps<{
       cols?: Columns;
+      /**
+       * This component can be used multiple times in a form (e.g., registration form). To ensure that the form fields
+       * are unique upon submission, it is possible to specify a prefix
+       */
       prefix?: string;
     }>(),
     {
@@ -37,8 +41,6 @@ onMounted(async () => {
             :placeholder="$t('account.customer.salutation.placeholder')"
             :messages="{ required: $t('account.customer.salutation.errorRequired') }"
             rules="required"
-            :native="false"
-            :can-clear="false"
             :items="formattedSalutations"
             :columns="cols"
         />

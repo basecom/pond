@@ -2,20 +2,11 @@
 import { ApiClientError } from '@shopware/api-client';
 import type {RegisterFormData} from '~/types/vueForm/Register';
 
-withDefaults(
-    defineProps<{
-      redirectTo?: string | null;
-    }>(),
-    {
-        redirectTo: '/',
-    },
-);
+const customerStore = useCustomerStore();
+const { t } = useI18n();
 
 const isLoading = ref(false);
 const errorMessage: Ref<string|undefined> = ref(undefined);
-
-const customerStore = useCustomerStore();
-const { t } = useI18n();
 
 const register = async (registerData: RegisterFormData) => {
     isLoading.value = true;
@@ -23,7 +14,6 @@ const register = async (registerData: RegisterFormData) => {
 
     try {
         await customerStore.register(registerData);
-
     } catch (error) {
         if (error instanceof ApiClientError) {
             errorMessage.value = t(`error.${ error.details.errors[0]?.code}`);

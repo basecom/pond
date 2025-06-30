@@ -12,7 +12,7 @@ withDefaults(
       columns?: Columns,
       floating?: boolean;
       autocomplete?: string;
-      native?: boolean;
+      isNative?: boolean;
       canClear?: boolean;
       canDeselect?: boolean;
       items?: [];
@@ -28,7 +28,7 @@ withDefaults(
         columns: undefined,
         floating: false,
         autocomplete: undefined,
-        native: false,
+        isNative: false,
         canClear: false,
         items: undefined,
         defaultValue: undefined,
@@ -50,7 +50,7 @@ defineEmits<{
             :label="label"
             :messages="messages"
             :rules="rules"
-            :native="native"
+            :native="isNative"
             :can-clear="canClear"
             :can-deselect="canDeselect"
             :items="items"

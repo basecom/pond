@@ -22,7 +22,6 @@ const inputComponent = computed(() => props.config?.component === 'textarea' ? U
                         type="text"
                         v-bind="{ ...slotProps.componentField, ...config?.inputProps }"
                         :disabled="config?.inputProps?.disabled ?? disabled"
-                        :required="required"
                     />
                 </slot>
             </UiFormControl>

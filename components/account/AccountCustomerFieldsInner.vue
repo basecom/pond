@@ -3,9 +3,12 @@ import type {Columns} from '~/types/vueForm/Columns';
 
 withDefaults(
     defineProps<{
-      // Additional fields (such as email, password, ...) are required for the registration form. These are displayed depending on this props
+      // The detail view includes the fields email, password, vat id and birthday
       isDetail?: boolean;
-      // E.g. registration form wraps the addresses in group elements. To ensure that the conditions are applied correctly (they must include all group elements), this prop is required
+      /**
+       * The AccountType field can be wrapped in GroupElements. For the conditions to assign the correct field, all
+       * GroupElements must be included in the condition -> See: https://vueform.com/reference/text-element#option-conditions
+       */
       accountTypeConditions?: [];
       accountTypeCols?: Columns;
       salutationCols?: Columns;
@@ -18,8 +21,11 @@ withDefaults(
       departmentCols?: Columns;
       emailCols?: Columns;
       passwordCols?: Columns,
+      /**
+       * This component can be used multiple times in a form (e.g., registration form). To ensure that the form fields
+       * are unique upon submission, it is possible to specify a prefix
+       */
       prefix?: string;
-      showVatIds?: boolean;
     }>(),
     {
         isDetail: false,
@@ -69,7 +75,6 @@ withDefaults(
             md: 6,
         }),
         prefix: '',
-        showVatIds: true,
     },
 );
 
@@ -163,7 +168,7 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
 
         <slot name="vat-id">
             <FormTextElement
-                v-if="showVatIds"
+                v-if="isDetail"
                 :id="`${prefix}vatIds`"
                 :name="`${prefix}vatIds`"
                 :label="$t('account.customer.vatId.label')"

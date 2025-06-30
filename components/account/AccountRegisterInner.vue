@@ -3,13 +3,13 @@ import type { VueFormRequestData, RegisterFormData, VueFormSubmitData} from '~/t
 
 withDefaults(
     defineProps<{
-      displayError?: boolean;
+      displayVueFormErrors?: boolean;
       showRequired?: string[];
       isLoading?: boolean;
       errorMessage?: string;
     }>(),
     {
-        displayError: false,
+        displayVueFormErrors: false,
         showRequired: () => ['label'],
         isLoading: false,
         errorMessage: undefined,
@@ -25,12 +25,10 @@ const configStore = useConfigStore();
 const isDataProtectionCheckboxRequired = ref(configStore.get('core.loginRegistration.requireDataProtectionCheckbox') as boolean);
 
 const onSubmit = (data: VueFormRequestData) => {
-    console.log('data', data);
-    // Create a copy of the data to avoid changing the original
     const registerData: Ref<undefined | RegisterFormData> = ref(undefined);
 
+    // create registration object according to the store api
     registerData.value = {
-        // set Customer info
         firstName: data.firstName,
         lastName: data.lastName,
         title: data.title,
@@ -62,17 +60,16 @@ const onSubmit = (data: VueFormRequestData) => {
         },
     };
 
+    // If set: VatIds must be passed to the api as an array
     if(data.vatIds && registerData.value) {
-    // VatIds must be passed to the api as an array
         registerData.value.vatIds = Array.isArray(data.vatIds)
             ? data.vatIds
             : [data.vatIds];
     }
 
-    // set shipping address
     // If a different shipping address was specified
     if (data.differentShippingAddress && registerData.value) {
-        // Create a new object for shippingAddress
+        // Create shipping address object according to the store api
         registerData.value.shippingAddress = {
             accountType: data.accountType,
             title: data['shipping-title'],
@@ -92,7 +89,7 @@ const onSubmit = (data: VueFormRequestData) => {
         };
     }
 
-    if(registerData.value) {
+    if (registerData.value) {
         emits('register', registerData.value);
     }
 };
@@ -108,7 +105,7 @@ const onSubmit = (data: VueFormRequestData) => {
 
         <slot name="register-form">
             <Vueform
-                :display-errors="displayError"
+                :display-errors="displayVueFormErrors"
                 :show-required="showRequired"
                 :loading="isLoading"
                 :endpoint="false"
@@ -141,7 +138,6 @@ const onSubmit = (data: VueFormRequestData) => {
                         <AddressFields
                             :account-type-conditions="[['shipping-address.account-type.shipping-accountType', 'business']]"
                             prefix="shipping-"
-                            :show-vat-ids="false"
                         />
                     </GroupElement>
                 </slot>

@@ -4,6 +4,10 @@ import type {Columns} from '~/types/vueForm/Columns';
 withDefaults(
     defineProps<{
       cols?: Columns;
+      /**
+       * This component can be used multiple times in a form (e.g., registration form). To ensure that the form fields
+       * are unique upon submission, it is possible to specify a prefix
+       */
       prefix?: string;
     }>(),
     {
@@ -24,8 +28,6 @@ withDefaults(
             :label="$t('account.customer.accountType.label')"
             :messages="{ required: $t('account.customer.accountType.errorRequired') }"
             rules="required"
-            :native="false"
-            :can-clear="false"
             :items="[{ value: 'private', label: $t('account.customer.accountType.private') }, { value: 'business', label: $t('account.customer.accountType.business') }]"
             default-value="private"
             :columns="cols"

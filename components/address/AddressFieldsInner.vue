@@ -13,10 +13,13 @@ withDefaults(
       countryCols?: Columns;
       stateCols?: Columns;
       phoneNumberCols?: Columns;
+      /**
+       * This component can be used multiple times in a form (e.g., registration form). To ensure that the form fields
+       * are unique upon submission, it is possible to specify a prefix
+       */
       prefix?: string;
       headlineClasses?: string;
       headline?: string;
-      showVatIds?: boolean;
     }>(),
     {
         isDetail: false,
@@ -56,7 +59,6 @@ withDefaults(
         prefix: '',
         headlineClasses: undefined,
         headline: undefined,
-        showVatIds: true,
     },
 );
 
@@ -65,7 +67,7 @@ const { getCountries: countries, getStatesForCountry, fetchCountries} = useCount
 
 const formattedCountries: Ref<undefined | { value: string; label: string; }[]> = ref(undefined);
 const states: Ref<undefined | { value: string; label: string; }[]> = ref(undefined);
-// admin configs
+// Admin configs
 const showAdditionalAddress1Field = ref(configStore.get('core.loginRegistration.showAdditionalAddressField1') as boolean);
 const isAdditionalAddress1FieldRequired = ref(configStore.get('core.loginRegistration.additionalAddressField1Required') as boolean);
 const showAdditionalAddress2Field = ref(configStore.get('core.loginRegistration.showAdditionalAddressField2') as boolean);
@@ -96,9 +98,10 @@ const fetchStates = (selectedCountryId: string) => {
 
 <template>
     <slot name="account-customer-fields">
+        <!-- Component renders custom form fields (e.g. first name, last name). Since this component is used for the registration
+      form, additional fields (email, password, etc.) are displayed for the registration depending on the is-detail. -->
         <AccountCustomerFields
             :is-detail="isDetail"
-            :show-vat-ids="showVatIds"
             :account-type-conditions="accountTypeConditions"
             :prefix="prefix"
         />
@@ -181,8 +184,6 @@ const fetchStates = (selectedCountryId: string) => {
                 :label="$t('address.country.label')"
                 :messages="{ required: $t('address.country.errorRequired') }"
                 rules="required"
-                :native="false"
-                :can-clear="false"
                 :items="formattedCountries"
                 :columns="countryCols"
                 @on-change="(value: string) => fetchStates(value)"
@@ -196,8 +197,6 @@ const fetchStates = (selectedCountryId: string) => {
                 :name="`${prefix}state`"
                 :label="$t('address.state.label')"
                 :placeholder="$t('address.state.placeholder')"
-                :native="false"
-                :can-clear="false"
                 :items="states"
                 :columns="stateCols"
             />

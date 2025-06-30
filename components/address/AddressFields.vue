@@ -1,7 +1,3 @@
-<script setup lang="ts">
-
-</script>
-
 <template>
     <AddressFieldsInner v-bind="$props">
         <template #account-customer-fields>
