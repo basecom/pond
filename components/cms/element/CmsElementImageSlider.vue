@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import type {
-    CmsElementImage,
     CmsElementImageSlider,
 } from '@shopware/composables';
+
 import { computed, ref } from 'vue';
 import type { Schemas } from '@shopware/api-client/api-types';
-import { getTranslatedProperty } from '@shopware-pwa/helpers-next';
-import { useSwiper } from 'swiper/vue';
 export type CmsImageSliderItem = {
   url: string;
   newTab: boolean;
@@ -19,9 +17,9 @@ export type CmsImageSliderItem = {
 const props = defineProps<{
   content: CmsElementImageSlider;
 }>();
+
 const config = useCmsElementConfig(props.content);
 const slides = computed(() => props.content.data.sliderItems);
-const firstSlide = slides?.value.at(0);
 
 const navigationDots = config.getConfigValue('navigationDots');
 const navigationArrows = config.getConfigValue('navigationArrows');
@@ -34,10 +32,6 @@ const verticalAlign = config.getConfigValue('verticalAlign');
 const isDecorative = config.getConfigValue('isDecorative');
 
 const sliderRef = ref(null);
-
-if (slides.value?.length) {
-    useSwiper(sliderRef, {});
-}
 
 const autoplayConfig = computed(() =>
     autoSlide
@@ -57,16 +51,13 @@ const slidesRef = ref([]);
     >
         <ClientOnly>
             <LayoutSlider
-                :ref="sliderRef"
-                :slides-counter="slides.length"
-                :display-mode="displayMode.toLowerCase()"
-                class="w-full"
+                ref="sliderRef"
+                :slides-counter="slides?.length"
+                :display-mode="displayMode?.toLowerCase()"
+                :navigation-dots="navigationDots"
+                :navigation-arrows="navigationArrows"
                 :autoplay="autoplayConfig"
                 :speed="speedConfig"
-                :pagination="navigationDots.toLowerCase() !== 'none'"
-                :navigation="navigationArrows.toLowerCase() !== 'none'"
-                :is-outside-pagination="navigationDots.toLowerCase() === 'outside'"
-                :is-outside-navigation="navigationArrows.toLowerCase() === 'outside'"
                 :loop="true"
             >
                 <LayoutSliderSlide
@@ -83,7 +74,6 @@ const slidesRef = ref([]);
                             ref="slidesRef"
                             :src="slide?.media?.url"
                             :alt="isDecorative ? '': undefined"
-                            :title="getTranslatedProperty(slide.media, 'title') || $t('cms.element.imageAlt')"
                             :class="[
                                 displayMode === 'cover' ? 'object-cover' :
                                 displayMode === 'contain' ? 'object-contain':'',
@@ -98,14 +88,16 @@ const slidesRef = ref([]);
             </LayoutSlider>
 
             <template #fallback>
-                fallback
+                <div class="w-full bg-gray-light">
+                    <LayoutImagePlaceholder size="lg" />
+                </div>
             </template>
         </ClientOnly>
     </div>
 
     <template v-else>
         <div class="w-full bg-gray-light">
-            fall back in v-else
+            <LayoutImagePlaceholder size="lg" />
         </div>
     </template>
 </template>

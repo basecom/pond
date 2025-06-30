@@ -4,8 +4,6 @@ withDefaults(
       autoSlide?: boolean;
       autoplayTimeout?: number;
       speed?: number;
-      navigationDots?: boolean;
-      navigationArrows?: boolean;
       displayMode?: string;
       minHeight?: string;
       classes?: { [key: string]: boolean };
@@ -17,22 +15,19 @@ withDefaults(
       thumbsSwiper?: string;
       breakpoints?: unknown;
       init?: boolean;
-      verticalNavigation?: boolean;
       thumbRef?: string;
       initialSlide?: number;
       isZoomEnabled?: boolean;
-      isOutsidePagination?: boolean;
-      isOutsideNavigation?: boolean;
-      navigation?: boolean;
-      pagination?: boolean;
+      navigationDots?: 'none' | 'inside' | 'outside';
+      navigationArrows?: 'none' | 'inside' | 'outside';
       displayStandard?: boolean;
     }>(),
     {
         autoSlide: false,
         autoplayTimeout: 3000,
         speed: 300,
-        navigationDots: true,
-        navigationArrows: true,
+        navigationDots: 'none',
+        navigationArrows: 'none',
         displayMode: 'cover',
         minHeight: '300',
         classes: undefined,
@@ -44,7 +39,6 @@ withDefaults(
         thumbsSwiper: undefined,
         breakpoints: undefined,
         init: false,
-        verticalNavigation: false,
         thumbRef: undefined,
         initialSlide: 0,
         isZoomEnabled: false,
