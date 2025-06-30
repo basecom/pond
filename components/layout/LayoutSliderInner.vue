@@ -55,8 +55,8 @@ const paginationEl = ref<HTMLElement | null>(null);
 
 const isOutsidePagination = computed(() => props.navigationDots === 'outside');
 const isOutsideNavigation = computed(() => props.navigationArrows === 'outside');
-const hasPagination = computed(() => props.navigationDots !== 'none' && props.navigationDots !== undefined);
-const hasNavigation = computed(() => props.navigationArrows !== 'none' && props.navigationArrows !== undefined);
+const hasPagination = computed(() => props.navigationDots !== 'none');
+const hasNavigation = computed(() => props.navigationArrows !== 'none');
 
 watch([prevSlide, nextSlide, paginationEl, swiperContainer], ([prevSlideValue, nextSlideValue, paginationValue, swiperValue]) => {
     if (!swiperValue) {

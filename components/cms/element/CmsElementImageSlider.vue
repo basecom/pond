@@ -31,7 +31,7 @@ const speed = config.getConfigValue('speed');
 const verticalAlign = config.getConfigValue('verticalAlign');
 const isDecorative = config.getConfigValue('isDecorative');
 
-const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.productFallBackCover');
+const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.productFallBackCover') as string;
 
 const autoplayConfig = computed(() =>
     autoSlide
@@ -108,7 +108,7 @@ const anchorAttrs = (slide: CmsImageSliderItem) =>
     <template v-else>
         <div class="w-full bg-gray-light h-64 flex justify-center items-center">
             <img
-                :src="productFallBackCover"
+                :src="productFallBackCover ?? ''"
                 alt=""
                 title=""
                 class="object-center h-16 aspect-square"
