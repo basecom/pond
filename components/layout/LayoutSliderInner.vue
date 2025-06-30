@@ -2,6 +2,7 @@
 import { ChevronRight, ChevronLeft  } from 'lucide-vue-next';
 import type { Swiper } from 'swiper';
 import type { PaginationOptions } from 'swiper/types';
+import { onMounted, nextTick } from 'vue';
 
 const props = withDefaults(
     defineProps<{
@@ -58,35 +59,13 @@ const isOutsideNavigation = computed(() => props.navigationArrows === 'outside')
 const hasPagination = computed(() => props.navigationDots !== 'none');
 const hasNavigation = computed(() => props.navigationArrows !== 'none');
 
-watch([prevSlide, nextSlide, paginationEl, swiperContainer], ([prevSlideValue, nextSlideValue, paginationValue, swiperValue]) => {
-    if (!swiperValue) {
-        return;
+onMounted(async () => {
+    await nextTick();
+    if (swiperContainer.value) {
+        if ('initialize' in swiperContainer.value && typeof swiperContainer.value.initialize === 'function') {
+            swiperContainer.value.initialize();
+        }
     }
-
-    // Set up navigation
-    const swiperParams = {
-        navigation: {
-            prevEl: prevSlideValue,
-            nextEl: nextSlideValue,
-        },
-    };
-    Object.assign(swiperValue, swiperParams);
-
-    // Set up pagination
-    const paginationParams = {
-        pagination: {
-            el: paginationValue,
-            clickable: true,
-            bulletClass: 'swiper-pagination-bullet bg-gray-400 block w-4 h-4 rounded-full mx-2 opacity-100 transition-all',
-            bulletActiveClass: 'swiper-pagination-bullet-active bg-brand-primary! shadow-brand-primary shadow-sm',
-        } as PaginationOptions,
-    };
-    Object.assign(swiperValue, paginationParams);
-
-    // Initialize swiper
-    // eslint-disable-next-line  @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    swiperValue?.initialize();
 });
 </script>
 
@@ -137,6 +116,10 @@ watch([prevSlide, nextSlide, paginationEl, swiperContainer], ([prevSlideValue, n
                         :thumbs-swiper="thumbsSwiper"
                         :init="init"
                         :initial-slide="initialSlide"
+                        :navigation="hasNavigation ? { prevEl: prevSlide, nextEl: nextSlide } : false"
+                        :pagination="hasPagination ? { el: paginationEl, clickable: true, 
+                                                       bulletClass: 'swiper-pagination-bullet bg-gray-400 block w-4 h-4 rounded-full mx-2 opacity-100 transition-all', 
+                                                       bulletActiveClass: 'swiper-pagination-bullet-active bg-brand-primary! shadow-brand-primary shadow-sm' } : false"
                         @swiperslideslengthchange="$emit('slides-change')"
                     >
                         <slot />
