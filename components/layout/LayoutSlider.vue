@@ -20,7 +20,6 @@ withDefaults(
       thumbRef?: string;
       initialSlide?: number;
       isZoomEnabled?: boolean;
-      displayStandard?: boolean;
     }>(),
     {
         autoSlide: false,
