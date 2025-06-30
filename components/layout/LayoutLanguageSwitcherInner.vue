@@ -35,7 +35,7 @@ const onUpdate = async (selectedValue: AcceptableValue): Promise<void> =>  {
 <template>
     <UiSelect :model-value="selectedLanguageId" @update:model-value="onUpdate">
         <slot name="language-switcher-trigger">
-            <UiSelectTrigger class="border-none shadow-none p-0">
+            <UiSelectTrigger id="language-switch" class="border-none shadow-none p-0" aria-label="language-switch">
                 <UiSelectValue>
                     <template v-if="selectedLanguage">
                         <div class="flex items-center gap-1">

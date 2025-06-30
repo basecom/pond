@@ -13,7 +13,7 @@ export function usePondDate() {
             try {
                 return useDateFormat(date, format);
             } catch {
-                handleError('Invalid date format');
+                handleError('[Pond][usePondDate]: Invalid date format');
                 return undefined;
             }
         }
