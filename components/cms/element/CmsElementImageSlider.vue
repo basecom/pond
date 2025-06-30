@@ -43,15 +43,34 @@ const autoplayConfig = computed(() =>
 );
 
 const speedConfig = computed(() => autoSlide ? speed : 300);
-const slidesRef = ref([]);
+
+const slideStyle = computed(() =>
+    displayMode === 'cover'
+        ? { minHeight, height: minHeight }
+        : { minHeight },
+);
+
+const imageClass = computed(() => [
+    displayMode === 'cover' ? 'object-cover' :
+        displayMode === 'contain' ? 'object-contain' : '',
+    verticalAlign === 'flex-start' ? 'object-top' :
+        verticalAlign === 'center' ? 'object-center' :
+            verticalAlign === 'flex-end' ? 'object-bottom' : 'object-top',
+    'w-full h-full',
+]);
+
+const anchorAttrs = (slide: CmsImageSliderItem) =>
+    slide.url
+        ? { href: slide.url, target: slide.newTab ? '_blank' : '_self', rel: 'noopener', class: 'w-full' }
+        : { class: 'w-full' };
 </script>
+
 <template>
     <div
         v-if="slides?.length"
     >
         <ClientOnly>
             <LayoutSlider
-                ref="sliderRef"
                 :slides-counter="slides?.length"
                 :display-mode="displayMode?.toLowerCase()"
                 :navigation-dots="navigationDots"
@@ -63,28 +82,20 @@ const slidesRef = ref([]);
                 <LayoutSliderSlide
                     v-for="slide in slides"
                     :key="slide.media.id"
-                    :style="displayMode === 'cover' ? { minHeight: minHeight, height: minHeight } : ''"
+                    :style="slideStyle"
                 >
                     <component
                         :is="slide.url ? 'a' : 'span'"
-                        class="w-full"
-                        v-bind="slide.url ? { href: slide.url, target: slide.newTab ? '_blank' : '_self', rel: 'noopener' } : {}"
+                        v-bind="anchorAttrs(slide)"
                     >
                         <img
                             ref="slidesRef"
                             :src="slide?.media?.url"
-                            :alt="isDecorative ? '': undefined"
-                            :class="[
-                                displayMode === 'cover' ? 'object-cover' :
-                                displayMode === 'contain' ? 'object-contain':'',
-                                verticalAlign === 'flex-start' ? 'object-top' :
-                                verticalAlign === 'center' ? 'object-center' :
-                                verticalAlign === 'flex-end' ? 'object-bottom' : 'object-top',
-                            ]"
-                            class="w-full h-full"
+                            :alt="isDecorative ? '' : undefined"
+                            :class="imageClass"
                         >
                     </component>
-                </LayoutSliderSlide>
+                </LayoutSliderSlide>         
             </LayoutSlider>
 
             <template #fallback>

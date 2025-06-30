@@ -27,6 +27,6 @@ onMounted(() => {
 
 <template>
     <div class="flex aspect-square size-full items-center">
-        <Icon name="mdi:image" class="size-32 mx-auto block text-gray-dark" :class="`h-${imageSize} w-${imageSize}`" />
+        <Icon name="mdi:image" class="size-32 mx-auto block text-gray-dark animate-pulse" :class="`h-${imageSize} w-${imageSize}`" />
     </div>
 </template>

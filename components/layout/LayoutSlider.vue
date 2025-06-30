@@ -4,6 +4,8 @@ withDefaults(
       autoSlide?: boolean;
       autoplayTimeout?: number;
       speed?: number;
+      navigationDots?: 'none' | 'inside' | 'outside';
+      navigationArrows?: 'none' | 'inside' | 'outside';
       displayMode?: string;
       minHeight?: string;
       classes?: { [key: string]: boolean };
@@ -18,8 +20,6 @@ withDefaults(
       thumbRef?: string;
       initialSlide?: number;
       isZoomEnabled?: boolean;
-      navigationDots?: 'none' | 'inside' | 'outside';
-      navigationArrows?: 'none' | 'inside' | 'outside';
       displayStandard?: boolean;
     }>(),
     {
