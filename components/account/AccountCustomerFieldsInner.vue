@@ -5,10 +5,6 @@ withDefaults(
     defineProps<{
       // The detail view includes the fields email, password, vat id and birthday
       isDetail?: boolean;
-      /**
-       * The AccountType field can be wrapped in GroupElements. For the conditions to assign the correct field, all
-       * GroupElements must be included in the condition -> See: https://vueform.com/reference/text-element#option-conditions
-       */
       accountTypeConditions?: [];
       accountTypeCols?: Columns;
       salutationCols?: Columns;
