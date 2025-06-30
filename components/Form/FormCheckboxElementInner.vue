@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type {Columns} from '~/types/vueForm/Columns';
+
 withDefaults(
     defineProps<{
       id?: string;
@@ -7,6 +9,7 @@ withDefaults(
       rules?: string[] | string;
       messages?: {[key: string]: string};
       classes?: string;
+      columns?: Columns,
     }>(),
     {
         id: undefined,
@@ -15,6 +18,7 @@ withDefaults(
         rules: undefined,
         messages: undefined,
         classes: undefined,
+        columns: undefined,
     },
 );
 </script>
@@ -27,6 +31,7 @@ withDefaults(
             :rules="rules"
             :messages="messages"
             :class="classes"
+            :columns="columns"
         >
             {{ label }}
         </CheckboxElement>

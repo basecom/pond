@@ -10,7 +10,7 @@ withDefaults(
       rules?: string[] | string;
       messages?: {[key: string]: string};
       columns?: Columns,
-      floating?: boolean;
+      floating?: string;
       autocomplete?: string;
       conditions?: [];
       inputType?: string;
@@ -25,7 +25,7 @@ withDefaults(
         rules: undefined,
         messages: undefined,
         columns: undefined,
-        floating: false,
+        floating: undefined,
         autocomplete: undefined,
         conditions: undefined,
         inputType: undefined,
