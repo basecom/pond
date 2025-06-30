@@ -99,6 +99,7 @@
                 "placeholder": "Passwort eingeben ...",
                 "errorRequired": "Bitte geben Sie ein Password ein",
                 "errorConfirmed": "Die Passwörter stimmen nicht überein.",
+                "errorMin": "Das Passwort muss mindestens {number} Zeichen lang sein",
                 "confirm": {
                     "label": "Passwort Bestätigung",
                     "placeholder": "Passwort erneut eingeben ..."

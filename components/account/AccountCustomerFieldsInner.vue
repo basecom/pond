@@ -84,6 +84,8 @@ const confirmEmail = ref(configStore.get('core.loginRegistration.requireEmailCon
 const showBirthday = ref(configStore.get('core.loginRegistration.showBirthdayField') as boolean);
 const confirmPassword = ref(configStore.get('core.loginRegistration.requirePasswordConfirmation') as boolean);
 const showAccountType = configStore.get('core.loginRegistration.showAccountTypeSelection') as boolean;
+const passwordMinLength = configStore.get('core.loginRegistration.passwordMinLength') as number;
+const passwordMinRule = ref(`min:${passwordMinLength}`);
 </script>
 
 <template>
@@ -197,9 +199,9 @@ const showAccountType = configStore.get('core.loginRegistration.showAccountTypeS
             :label="$t('account.customer.email.label')"
             :placeholder="$t('account.customer.email.placeholder')"
             :rules="confirmEmail ? [
-                'required', 'email', 'max:255', 'confirmed'
+                'required', 'email', 'confirmed'
             ] : [
-                'required', 'email', 'max:255'
+                'required', 'email'
             ]"
             :debounce="300"
             :messages="{ email: $t('account.customer.email.errorInvalid'), confirmed: $t('account.customer.email.errorConfirmed'), required: $t('account.customer.email.errorRequired') }"
@@ -215,7 +217,7 @@ const showAccountType = configStore.get('core.loginRegistration.showAccountTypeS
             :name="`${prefix}email_confirmation`"
             :label="$t('account.customer.email.confirm.label')"
             :placeholder="$t('account.customer.email.confirm.placeholder')"
-            rules="required|email|max:255"
+            rules="required|email"
             :debounce="300"
             :messages="{ email: $t('account.customer.email.errorInvalid'), confirmed: $t('account.customer.email.errorConfirmed'), required: $t('account.customer.email.errorRequired') }"
             :columns="emailCols"
@@ -233,12 +235,14 @@ const showAccountType = configStore.get('core.loginRegistration.showAccountTypeS
             :placeholder="$t('account.customer.password.placeholder')"
             :rules="confirmPassword ? [
                 'required',
-                'confirmed'
+                'confirmed',
+                passwordMinRule
             ] : [
-                'required'
+                'required',
+                passwordMinRule
             ]"
             :debounce="300"
-            :messages="{ required: $t('account.customer.password.errorRequired'), confirmed: $t('account.customer.password.errorConfirmed') }"
+            :messages="{ required: $t('account.customer.password.errorRequired'), confirmed: $t('account.customer.password.errorConfirmed'), min: $t('account.customer.password.errorMin', { number: passwordMinLength }) }"
             :columns="passwordCols"
         />
     </slot>

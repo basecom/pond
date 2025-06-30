@@ -99,6 +99,7 @@
                 "placeholder": "Enter password ...",
                 "errorRequired": "Please enter a password",
                 "errorConfirmed": "The passwords do not match.",
+                "errorMin": "The password must be at least {number} characters long",
                 "confirm": {
                     "label": "Password Confirmation",
                     "placeholder": "Re-enter password ..."
