@@ -72,7 +72,7 @@ const showAdditionalAddress1Field = ref(configStore.get('core.loginRegistration.
 const isAdditionalAddress1FieldRequired = ref(configStore.get('core.loginRegistration.additionalAddressField1Required') as boolean);
 const showAdditionalAddress2Field = ref(configStore.get('core.loginRegistration.showAdditionalAddressField2') as boolean);
 const isAdditionalAddress2FieldRequired = ref(configStore.get('core.loginRegistration.additionalAddressField2Required') as boolean);
-const showPhoneNumber = ref(configStore.get('core.loginRegistration.showBirthdayField') as boolean);
+const showPhoneNumber = ref(configStore.get('core.loginRegistration.showPhoneNumberField') as boolean);
 const isPhoneNumberRequired = ref(configStore.get('core.loginRegistration.phoneNumberFieldRequired') as boolean);
 
 const isVatIdRequiredBySelectedCountry = ref(false);
