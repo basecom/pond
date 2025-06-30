@@ -1,10 +1,10 @@
 <script setup lang="ts">
+// Overrides node_modules/@shopware/cms-base-layer/components/public/cms/element/CmsElementImageSlider.vue
 import type {
     CmsElementImageSlider,
 } from '@shopware/composables';
-
-import { computed, ref } from 'vue';
 import type { Schemas } from '@shopware/api-client/api-types';
+
 export type CmsImageSliderItem = {
   url: string;
   newTab: boolean;
@@ -20,7 +20,7 @@ const props = defineProps<{
 
 const config = useCmsElementConfig(props.content);
 const slides = computed(() => props.content.data.sliderItems);
-
+const configStore = useConfigStore();
 const navigationDots = config.getConfigValue('navigationDots');
 const navigationArrows = config.getConfigValue('navigationArrows');
 const displayMode = config.getConfigValue('displayMode');
@@ -31,7 +31,7 @@ const speed = config.getConfigValue('speed');
 const verticalAlign = config.getConfigValue('verticalAlign');
 const isDecorative = config.getConfigValue('isDecorative');
 
-const sliderRef = ref(null);
+const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.productFallBackCover');
 
 const autoplayConfig = computed(() =>
     autoSlide
@@ -51,11 +51,13 @@ const slideStyle = computed(() =>
 );
 
 const imageClass = computed(() => [
-    displayMode === 'cover' ? 'object-cover' :
-        displayMode === 'contain' ? 'object-contain' : '',
-    verticalAlign === 'flex-start' ? 'object-top' :
-        verticalAlign === 'center' ? 'object-center' :
-            verticalAlign === 'flex-end' ? 'object-bottom' : 'object-top',
+    displayMode === 'cover' ? 'object-cover'
+        : displayMode === 'contain' ? 'object-contain'
+            : '',
+    verticalAlign === 'flex-start' ? 'object-top'
+        : verticalAlign === 'center' ? 'object-center'
+            : verticalAlign === 'flex-end' ? 'object-bottom'
+                : 'object-top',
     'w-full h-full',
 ]);
 
@@ -66,9 +68,7 @@ const anchorAttrs = (slide: CmsImageSliderItem) =>
 </script>
 
 <template>
-    <div
-        v-if="slides?.length"
-    >
+    <div v-if="slides?.length">
         <ClientOnly>
             <LayoutSlider
                 :slides-counter="slides?.length"
@@ -89,26 +89,29 @@ const anchorAttrs = (slide: CmsImageSliderItem) =>
                         v-bind="anchorAttrs(slide)"
                     >
                         <img
-                            ref="slidesRef"
-                            :src="slide?.media?.url"
-                            :alt="isDecorative ? '' : undefined"
+                            :src="slide?.media?.url || productFallBackCover || ''"
+                            :alt="isDecorative ? '' : (slide.media.alt || '')"
+                            :title="slide.media.title || ''"
                             :class="imageClass"
                         >
                     </component>
-                </LayoutSliderSlide>         
+                </LayoutSliderSlide>
             </LayoutSlider>
-
             <template #fallback>
-                <div class="w-full bg-gray-light">
-                    <LayoutImagePlaceholder size="lg" />
+                <div class="w-full bg-gray-light my-4">
+                    <UiSkeleton class="h-64 w-full" />
                 </div>
             </template>
         </ClientOnly>
     </div>
-
     <template v-else>
-        <div class="w-full bg-gray-light">
-            <LayoutImagePlaceholder size="lg" />
+        <div class="w-full bg-gray-light h-64 flex justify-center items-center">
+            <img
+                :src="productFallBackCover"
+                alt=""
+                title=""
+                class="object-center h-16 aspect-square"
+            >
         </div>
     </template>
 </template>

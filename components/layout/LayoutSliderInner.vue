@@ -55,10 +55,9 @@ const paginationEl = ref<HTMLElement | null>(null);
 
 const isOutsidePagination = computed(() => props.navigationDots === 'outside');
 const isOutsideNavigation = computed(() => props.navigationArrows === 'outside');
-const hasPagination = computed(() => props.navigationDots !== 'none');
-const hasNavigation = computed(() => props.navigationArrows !== 'none');
+const hasPagination = computed(() => props.navigationDots !== 'none' && props.navigationDots !== undefined);
+const hasNavigation = computed(() => props.navigationArrows !== 'none' && props.navigationArrows !== undefined);
 
-// Watch for changes in navigation and pagination refs and swiperContainer
 watch([prevSlide, nextSlide, paginationEl, swiperContainer], ([prevSlideValue, nextSlideValue, paginationValue, swiperValue]) => {
     if (!swiperValue) {
         return;
@@ -89,7 +88,6 @@ watch([prevSlide, nextSlide, paginationEl, swiperContainer], ([prevSlideValue, n
     // @ts-ignore
     swiperValue?.initialize();
 });
-
 </script>
 
 <template>
@@ -101,14 +99,13 @@ watch([prevSlide, nextSlide, paginationEl, swiperContainer], ([prevSlideValue, n
                     'cursor-grab': slidesCounter > 1
                 }, isOutsideNavigation ? 'px-20 max-sm:px-8' : '']"
             >
-                <!-- Navigation buttons -->
                 <slot name="navigation-buttons">
                     <template v-if="hasNavigation">
                         <slot name="previous-slide">
                             <button
                                 ref="prevSlide"
                                 class="absolute z-10 bg-gray-light/50"
-                                :class="[!navigationArrows ? 'hidden' : '', 'top-1/2 -translate-y-1/2 py-4 lg:py-8',
+                                :class="['top-1/2 -translate-y-1/2 py-4 lg:py-8',
                                          isOutsideNavigation ? 'left-5 max-sm:-left-1' : 'left-0 bg-gray-300 opacity-30 hover:opacity-70 hover:mouse-cursor-pointer']"
                             >
                                 <ChevronLeft class="size-8 shrink-0 opacity-50" />
@@ -118,7 +115,7 @@ watch([prevSlide, nextSlide, paginationEl, swiperContainer], ([prevSlideValue, n
                             <button
                                 ref="nextSlide"
                                 class="absolute z-10 bg-gray-light/50"
-                                :class="[!navigationArrows ? 'hidden' : '', 'top-1/2 -translate-y-1/2 py-4 lg:py-8',
+                                :class="['top-1/2 -translate-y-1/2 py-4 lg:py-8',
                                          isOutsideNavigation ? 'right-5 max-sm:right-0' : 'right-0 bg-gray-300 opacity-30 hover:opacity-70 hover:mouse-cursor-pointer']"
                             >
                                 <ChevronRight class="size-8 shrink-0 opacity-50" />
@@ -127,7 +124,6 @@ watch([prevSlide, nextSlide, paginationEl, swiperContainer], ([prevSlideValue, n
                     </template>
                 </slot>
                 <slot name="swiper-container">
-                    <!-- Swiper container -->
                     <swiper-container
                         ref="swiperContainer"
                         class="grid size-full"
@@ -146,7 +142,6 @@ watch([prevSlide, nextSlide, paginationEl, swiperContainer], ([prevSlideValue, n
                         <slot />
                     </swiper-container>
                 </slot>
-                <!-- Pagination -->
                 <slot name="pagination">
                     <div
                         v-if="hasPagination"
