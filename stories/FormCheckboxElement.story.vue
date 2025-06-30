@@ -8,7 +8,7 @@ onMounted(() => isMounted.value = true);
 </script>
 
 <template>
-    <Vueform v-if="isMounted" id="story-button-form">
+    <Vueform v-if="isMounted" id="story-checkbox-form">
         <FormCheckboxElement
             id="form-checkbox-element-default"
             name="form-checkbox-element-default"

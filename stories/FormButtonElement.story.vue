@@ -50,8 +50,8 @@ onMounted(() => isMounted.value = true);
 
         <p class="col-span-12"> I am a secondary disabled button </p>
         <FormButtonElement
-            id="form-button-element-story-is-secondary"
-            name="form-button-element-story-is-secondary"
+            id="form-button-element-story-is-secondary-and-disabled"
+            name="form-button-element-story-is-secondary-and-disabled"
             :label="$t('account.auth.register')"
             :is-secondary="true"
             is-disabled="true"
@@ -59,8 +59,8 @@ onMounted(() => isMounted.value = true);
 
         <p class="col-span-12"> I am a secondary loading button </p>
         <FormButtonElement
-            id="form-button-element-story-is-secondary"
-            name="form-button-element-story-is-secondary"
+            id="form-button-element-story-is-secondary-and-loading"
+            name="form-button-element-story-is-secondary-and-loading"
             :label="$t('account.auth.register')"
             :is-secondary="true"
             :is-loading="true"

@@ -9,7 +9,7 @@ onMounted(() => isMounted.value = true);
 
 <template>
     <div class="grid gap-4">
-        <Vueform v-if="isMounted" id="story-text-form">
+        <Vueform v-if="isMounted" id="story-select-form">
             <FormSelectElement
                 id="form-select-element-default"
                 name="form-select-element-default"
