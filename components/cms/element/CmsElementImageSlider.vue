@@ -63,8 +63,8 @@ const imageClass = computed(() => [
 
 const anchorAttrs = (slide: CmsImageSliderItem) =>
     slide.url
-        ? { href: slide.url, target: slide.newTab ? '_blank' : '_self', rel: 'noopener', class: 'w-full' }
-        : { class: 'w-full' };
+        ? { href: slide.url, target: slide.newTab ? '_blank' : '_self', rel: 'noopener' }
+        : {};
 </script>
 
 <template>
@@ -87,6 +87,7 @@ const anchorAttrs = (slide: CmsImageSliderItem) =>
                     <component
                         :is="slide.url ? 'a' : 'span'"
                         v-bind="anchorAttrs(slide)"
+                        class="w-full"
                     >
                         <img
                             :src="slide?.media?.url || productFallBackCover || ''"
