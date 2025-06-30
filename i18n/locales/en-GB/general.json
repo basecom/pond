@@ -6,6 +6,10 @@
         "copyright": "© 2025 {companyName}",
         "back": "Back",
         "showAll": "Show all",
-        "categories": "Categories"
+        "categories": "Categories",
+        "privacyNoticeText": "I have acknowledged the privacy policy and accept it.",
+        "button": {
+            "acceptLabel": "Accept"
+        }
     }
 }

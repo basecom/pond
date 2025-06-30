@@ -20,7 +20,11 @@ withDefaults(
                 <LayoutHeaderWishlist v-if="wishlistEnabled" />
             </slot>
 
-            <slot name="account">
+            <slot name="account-mobile">
+                <LayoutHeaderAccountMobile />
+            </slot>
+
+            <slot name="account-desktop">
                 <LayoutHeaderAccount />
             </slot>
 

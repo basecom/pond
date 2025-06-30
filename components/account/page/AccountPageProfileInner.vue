@@ -91,7 +91,7 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
                 firstName: { label: $t('account.customer.firstName') },
                 lastName: { label: $t('account.customer.lastName') },
                 company: { label: $t('account.customer.companyName') },
-                'vatIds[]': { label: $t('account.customer.vat') },
+                vatIds: { label: $t('account.customer.vat') },
                 birthdayDay: { label: $t('account.customer.birthday') },
             }"
             @submit="changePersonalData"
@@ -156,7 +156,7 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
                 </div>
             </template>
 
-            <template #vatIds[]="slotProps">
+            <template #vatIds="slotProps">
                 <div class="col-span-12 md:col-span-6">
                     <UiAutoFormField v-bind="slotProps" />
                 </div>
