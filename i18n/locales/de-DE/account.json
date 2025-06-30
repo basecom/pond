@@ -36,7 +36,7 @@
         },
         "customer": {
             "accountType": {
-                "label": "Acconttyp",
+                "label": "Accounttyp",
                 "errorRequired": "Bitte wählen Sie einen Accounttyp aus",
                 "business": "Business",
                 "private": "Privat"
@@ -66,7 +66,7 @@
                 },
                 "errorRequired": "Bitte geben Sie eine E-Mail ein",
                 "errorInvalid": "Bitte geben Sie eine valide E-Mail ein",
-                "errorConfirmed": "Stimmen nicht"
+                "errorConfirmed": "Die E-Mail-Adressen stimmen nicht überein."
             },
             "title": {
                 "label": "Titel",
@@ -98,7 +98,7 @@
                 "label": "Passwort",
                 "placeholder": "Passwort eingeben ...",
                 "errorRequired": "Bitte geben Sie ein Password ein",
-                "errorConfirmed": "Nicht gleich",
+                "errorConfirmed": "Die Passwörter stimmen nicht überein.",
                 "confirm": {
                     "label": "Passwort Bestätigung",
                     "placeholder": "Passwort erneut eingeben ..."

@@ -81,7 +81,7 @@ export default defineNuxtConfig({
             },
             {
                 code: 'en-GB',
-                files: ['en-GB/account.json', 'en-GB/error.json', 'en-GB/general.json'],
+                files: ['en-GB/account.json', 'en-GB/error.json', 'en-GB/general.json', 'en-GB/address.json'],
             },
         ],
         lazy: true,

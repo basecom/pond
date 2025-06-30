@@ -29,7 +29,7 @@ const showAdditionalAddressField2 = configStore.get('core.loginRegistration.show
 
                 <slot name="personal-data-content">
                     <div class="grid grid-cols-[4fr_8fr] gap-2">
-                        <span v-if="customer.salutation" class="font-semibold">{{ $t('account.customer.salutation') }}</span>
+                        <span v-if="customer.salutation" class="font-semibold">{{ $t('account.customer.salutation.label') }}</span>
                         <span>{{ customer.salutation?.displayName }}</span>
 
                         <template v-if="showTitle && customer.title">
@@ -40,7 +40,7 @@ const showAdditionalAddressField2 = configStore.get('core.loginRegistration.show
                         <span class="font-semibold">{{ $t('account.customer.name') }}</span>
                         <span>{{ customer.firstName }} {{ customer.lastName }}</span>
 
-                        <span class="font-semibold">{{ $t('account.customer.mail.label') }}</span>
+                        <span class="font-semibold">{{ $t('account.customer.email.label') }}</span>
                         <span>{{ customer.email }}</span>
 
                         <template v-if="customer.accountType === 'business'">

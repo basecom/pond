@@ -1,21 +1,23 @@
 <script setup lang="ts">
-import type {RegisterVueFormData, VueFormRequestData} from '~/types/vueForm/Register';
+import type { VueFormRequestData, RegisterFormData, VueFormSubmitData} from '~/types/vueForm/Register';
 
 withDefaults(
     defineProps<{
       displayError?: boolean;
       showRequired?: string[];
       isLoading?: boolean;
+      errorMessage?: string;
     }>(),
     {
         displayError: false,
         showRequired: () => ['label'],
         isLoading: false,
+        errorMessage: undefined,
     },
 );
 
 const emits = defineEmits<{
-  register: [registerData];
+  register: [formData: RegisterFormData];
 }>();
 
 // Admin configs
@@ -24,54 +26,75 @@ const isDataProtectionCheckboxRequired = ref(configStore.get('core.loginRegistra
 
 const onSubmit = (data: VueFormRequestData) => {
     console.log('data', data);
-    // ToDO: Keine Copy erstellen sondern ganz neu erstellen -> Bessere Lesbarkeit und besser mit Types
     // Create a copy of the data to avoid changing the original
-    const registerData = { ...data };
+    const registerData: Ref<undefined | RegisterFormData> = ref(undefined);
 
-    // Remove confirmation fields, if present, as they are not used in the api
-    if (registerData.password_confirmation) {
-        delete registerData.password_confirmation;
-    }
-    if (registerData.email_confirmation) {
-        delete registerData.email_confirmation;
-    }
-
-    // Create new object for billingAddress, since billing address uses fields from address and customer
-    registerData.billingAddress = {
-        firstName: registerData.firstName,
-        lastName: registerData.lastName,
-        street: registerData.street,
-        zipcode: registerData.zipcode,
-        countryId: registerData.countryId,
-        city: registerData.city,
-        state: registerData.state,
-        additionalAddressLine1: registerData.additionalAddressLine1,
-        additionalAddressLine2: registerData.additionalAddressLine2,
-        phoneNumber: registerData.phoneNumber,
-        company: registerData.company,
-        department: registerData.department,
+    registerData.value = {
+        // set Customer info
+        firstName: data.firstName,
+        lastName: data.lastName,
+        title: data.title,
+        accountType: data.accountType,
+        birthdayDay: data.birthdayDay,
+        birthdayMonth: data.birthdayMonth,
+        birthdayYear: data.birthdayYear,
+        email: data.email,
+        password: data.password,
+        company: data.company,
+        acceptedDataProtection: data.acceptedDataProtection,
+        differentShippingAddress: data.differentShippingAddress,
+        salutationId: data.salutation,
+        billingAddress: {
+            title: data.title,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            street: data.street,
+            zipcode: data.zipcode,
+            countryId: data.countryId,
+            city: data.city,
+            countryStateId: data.state,
+            additionalAddressLine1: data.additionalAddressLine1,
+            additionalAddressLine2: data.additionalAddressLine2,
+            phoneNumber: data.phoneNumber,
+            company: data.company,
+            department: data.department,
+            salutationId: data.salutation,
+        },
     };
 
+    if(data.vatIds && registerData.value) {
     // VatIds must be passed to the api as an array
-    registerData.vatIds = Array.isArray(registerData.vatIds)
-        ? registerData.vatIds
-        : [registerData.vatIds];
-
-    // If a different shipping address was specified
-    if (registerData.differentShippingAddress) {
-        // Create a new object for shippingAddress
-        registerData.shippingAddress = {};
-
-        // Check all keys that start with 'shipping-'
-        Object.keys(registerData).forEach((key) => {
-            if (key.startsWith('shipping-')) {
-                const newKey = key.substring('shipping-'.length);
-                registerData.shippingAddress[newKey] = registerData[key];
-            }
-        });
+        registerData.value.vatIds = Array.isArray(data.vatIds)
+            ? data.vatIds
+            : [data.vatIds];
     }
-    console.log('danach', registerData);
-    emits('register', registerData);
+
+    // set shipping address
+    // If a different shipping address was specified
+    if (data.differentShippingAddress && registerData.value) {
+        // Create a new object for shippingAddress
+        registerData.value.shippingAddress = {
+            accountType: data.accountType,
+            title: data['shipping-title'],
+            firstName: data['shipping-firstName'],
+            lastName: data['shipping-lastName'],
+            street: data['shipping-street'],
+            zipcode: data['shipping-zipcode'],
+            countryId: data['shipping-countryId'],
+            city: data['shipping-city'],
+            countryStateId: data['shipping-state'],
+            additionalAddressLine1: data['shipping-additionalAddressLine1'],
+            additionalAddressLine2: data['shipping-additionalAddressLine2'],
+            phoneNumber: data['shipping-phoneNumber'],
+            company: data['shipping-company'],
+            department: data['shipping-department'],
+            salutationId: data['shipping-salutation'],
+        };
+    }
+
+    if(registerData.value) {
+        emits('register', registerData.value);
+    }
 };
 </script>
 
@@ -88,7 +111,8 @@ const onSubmit = (data: VueFormRequestData) => {
                 :display-errors="displayError"
                 :show-required="showRequired"
                 :loading="isLoading"
-                :endpoint="(form$: RegisterVueFormData) => onSubmit(form$.requestData)"
+                :endpoint="false"
+                @submit="(value: VueFormSubmitData) => onSubmit(value.data)"
             >
                 <slot name="register-customer-info-and-billing-address">
                     <GroupElement name="billing-address">
@@ -130,6 +154,21 @@ const onSubmit = (data: VueFormRequestData) => {
                         :label="$t('account.register.acceptedDataProtection.label')"
                         :messages="{ required: $t('account.register.acceptedDataProtection.errorRequired') }"
                     />
+                </slot>
+
+                <slot name="alert">
+                    <UiAlert v-if="errorMessage" variant="destructive" class="mb-4 flex gap-4">
+                        <slot name="alert-icon">
+                            <Icon name="mdi:alert-circle-outline" class="size-4 text-red-500" />
+                        </slot>
+
+                        <div>
+                            <UiAlertTitle>{{ $t('error.generalHeadline') }}</UiAlertTitle>
+                            <UiAlertDescription>
+                                {{ errorMessage }}
+                            </UiAlertDescription>
+                        </div>
+                    </UiAlert>
                 </slot>
 
                 <slot name="register-submit-button">

@@ -1,7 +1,5 @@
-
-
-export type RegisterVueFormData = {
-    requestData: VueFormRequestData;
+export type VueFormSubmitData = {
+    data: VueFormRequestData;
 }
 
 export type VueFormRequestData = {
@@ -12,6 +10,7 @@ export type VueFormRequestData = {
     birthdayDay?: number;
     birthdayMonth?: number;
     birthdayYear?: number;
+    company?: string;
     city: string;
     countryId: string
     differentShippingAddress: boolean;
@@ -36,8 +35,62 @@ export type VueFormRequestData = {
     'shipping-street': string;
     'shipping-title'?: string;
     'shipping-zipcode': string;
+    'shipping-company'?: string;
+    'shipping-department'?: string;
+    department?: string;
     state: string;
     street: string;
     title?: string;
     zipcode: string;
+    vatIds?: string;
+}
+
+export type RegisterFormData = {
+    firstName: string;
+    lastName: string;
+    title?: string | null;
+    accountType: string;
+    birthdayDay?: number;
+    birthdayMonth?: number;
+    birthdayYear?: number;
+    email: string;
+    password: string;
+    company?: string | null;
+    acceptedDataProtection: boolean;
+    differentShippingAddress: boolean;
+    salutationId: string;
+    vatIds?: string[];
+    billingAddress: {
+        title?: string,
+        firstName: string
+        lastName: string,
+        street: string,
+        zipcode: string,
+        countryId: string,
+        city: string,
+        countryStateId: string,
+        additionalAddressLine1?: string | null,
+        additionalAddressLine2?: string | null,
+        phoneNumber?: string | null,
+        company?: string | null,
+        department?: string | null,
+        salutationId: string,
+    },
+    shippingAddress?: {
+        accountType: string;
+        title?: string,
+        firstName: string
+        lastName: string,
+        street: string,
+        zipcode: string,
+        countryId: string,
+        city: string,
+        countryStateId: string,
+        additionalAddressLine1?: string | null,
+        additionalAddressLine2?: string | null,
+        phoneNumber?: string | null,
+        company?: string | null,
+        department?: string | null,
+        salutationId: string,
+    }
 }

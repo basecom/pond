@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ApiClientError } from '@shopware/api-client';
-import type { LoginData } from './AccountLoginInner.vue';
+import type {RegisterFormData} from '~/types/vueForm/Register';
 
 withDefaults(
     defineProps<{
@@ -17,17 +17,14 @@ const errorMessage: Ref<string|undefined> = ref(undefined);
 const customerStore = useCustomerStore();
 const { t } = useI18n();
 
-const register = async (registerData: LoginData) => {
+const register = async (registerData: RegisterFormData) => {
     isLoading.value = true;
     errorMessage.value = undefined;
 
     try {
-        console.log('data', registerData);
-
         await customerStore.register(registerData);
 
     } catch (error) {
-        console.log('error', error);
         if (error instanceof ApiClientError) {
             errorMessage.value = t(`error.${ error.details.errors[0]?.code}`);
             return;
@@ -42,6 +39,6 @@ const register = async (registerData: LoginData) => {
     <AccountRegisterInner
         :is-loading="isLoading"
         :error-message="errorMessage"
-        @register="(registerData: LoginData) => register(registerData)"
+        @register="(registerData: RegisterFormData) => register(registerData)"
     />
 </template>
