@@ -6,6 +6,7 @@ withDefaults(
       name?: string;
       rules?: string[] | string;
       messages?: {[key: string]: string};
+      classes?: string;
     }>(),
     {
         id: undefined,
@@ -13,6 +14,7 @@ withDefaults(
         name: undefined,
         rules: undefined,
         messages: undefined,
+        classes: undefined,
     },
 );
 </script>
@@ -24,6 +26,7 @@ withDefaults(
             :name="name"
             :rules="rules"
             :messages="messages"
+            :class="classes"
         >
             {{ label }}
         </CheckboxElement>

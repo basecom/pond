@@ -9,6 +9,7 @@ withDefaults(
       isSecondary?: boolean;
       isDisabled?: boolean;
       isLoading?: boolean;
+      classes?: string;
     }>(),
     {
         id: undefined,
@@ -19,6 +20,7 @@ withDefaults(
         isSecondary: false,
         isDisabled: false,
         isLoading: false,
+        classes: undefined,
     },
 );
 </script>
@@ -33,6 +35,7 @@ withDefaults(
             :secondary="isSecondary"
             :disabled="isDisabled"
             :loading="isLoading"
+            :class="classes"
         >
             {{ label }}
         </ButtonElement>

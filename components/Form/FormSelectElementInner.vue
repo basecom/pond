@@ -17,6 +17,7 @@ withDefaults(
       canDeselect?: boolean;
       items?: [];
       defaultValue?: string;
+      classes?: string;
     }>(),
     {
         id: undefined,
@@ -33,6 +34,7 @@ withDefaults(
         items: undefined,
         defaultValue: undefined,
         canDeselect: false,
+        classes: undefined,
     },
 );
 
@@ -57,6 +59,7 @@ defineEmits<{
             :columns="columns"
             :default="defaultValue"
             :floating="floating"
+            :class="classes"
             @change="(value: string) => $emit('on-change', value)"
         />
     </slot>

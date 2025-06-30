@@ -13,8 +13,9 @@ withDefaults(
       floating?: boolean;
       autocomplete?: string;
       conditions?: [];
-inputType?: string;
+      inputType?: string;
       debounce?: number;
+      classes?: string;
     }>(),
     {
         id: undefined,
@@ -29,6 +30,7 @@ inputType?: string;
         conditions: undefined,
         inputType: undefined,
         debounce: undefined,
+        classes: undefined,
     },
 );
 </script>
@@ -48,6 +50,7 @@ inputType?: string;
             :conditions="conditions"
             :input-type="inputType"
             :debounce="debounce"
+            :class="classes"
         />
     </slot>
 </template>
