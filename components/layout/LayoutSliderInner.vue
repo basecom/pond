@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ChevronRight, ChevronLeft  } from 'lucide-vue-next';
 import type { Swiper } from 'swiper';
-import type { PaginationOptions } from 'swiper/types';
 import { onMounted, nextTick } from 'vue';
 
 const props = withDefaults(
