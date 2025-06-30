@@ -11,11 +11,23 @@ const shopName = configStore.get('core.basicInformation.shopName') as string|nul
 
 <template>
     <div class="mt-4 grid justify-between gap-6 border-t border-gray-500/70 pt-4 text-sm text-gray-700 md:mt-8 md:flex md:pt-8">
-        <slot name="copyright">
-            <span class="order-2 md:order-[unset]">
-                {{ $t('general.copyright', { 'companyName': shopName }) }}
-            </span>
-        </slot>
+        <div class="flex gap-2 md:gap-4 items-center">
+            <slot name="copyright">
+                <span class="order-2 md:order-[unset]">
+                    {{ $t('general.copyright', { 'companyName': shopName }) }}
+                </span>
+            </slot>
+            <slot name="language-switcher">
+                <div class="order-3 md:order-[unset]">
+                    <LayoutLanguageSwitcher />
+                </div>
+            </slot>
+            <slot name="currency-switcher">
+                <div class="order-4 md:order-[unset]">
+                    <LayoutCurrencySwitcher />
+                </div>
+            </slot>
+        </div>
 
         <slot name="navigation-elements">
             <div class="grid gap-2 md:flex md:gap-4">
