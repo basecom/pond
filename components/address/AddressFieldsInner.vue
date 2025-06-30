@@ -72,8 +72,10 @@ const showAdditionalAddress1Field = ref(configStore.get('core.loginRegistration.
 const isAdditionalAddress1FieldRequired = ref(configStore.get('core.loginRegistration.additionalAddressField1Required') as boolean);
 const showAdditionalAddress2Field = ref(configStore.get('core.loginRegistration.showAdditionalAddressField2') as boolean);
 const isAdditionalAddress2FieldRequired = ref(configStore.get('core.loginRegistration.additionalAddressField2Required') as boolean);
-const showPhoneNumber = ref(configStore.get('core.loginRegistration.phoneNumberFieldRequired') as boolean);
+const showPhoneNumber = ref(configStore.get('core.loginRegistration.showBirthdayField') as boolean);
 const isPhoneNumberRequired = ref(configStore.get('core.loginRegistration.phoneNumberFieldRequired') as boolean);
+
+const isVatIdRequiredBySelectedCountry = ref(false);
 
 onMounted(async () => {
     await fetchCountries();
@@ -84,7 +86,7 @@ onMounted(async () => {
     }));
 });
 
-const fetchStates = (selectedCountryId: string) => {
+const onSelectCountry = (selectedCountryId: string) => {
     // When a country is selected, the corresponding states are fetched and also brought into the correct form for select type
     const fetchedStates = getStatesForCountry(selectedCountryId);
     if(fetchedStates) {
@@ -93,6 +95,9 @@ const fetchStates = (selectedCountryId: string) => {
             label: item.name,
         }));
     }
+
+    // Check, if vat id is required by the selected country
+    isVatIdRequiredBySelectedCountry.value = countries.value.find(country => country.id === selectedCountryId).vatIdRequired;
 };
 </script>
 
@@ -104,6 +109,7 @@ const fetchStates = (selectedCountryId: string) => {
             :is-detail="isDetail"
             :account-type-conditions="accountTypeConditions"
             :prefix="prefix"
+            :is-vat-id-required-by-selected-country="isVatIdRequiredBySelectedCountry"
         />
     </slot>
 
@@ -186,7 +192,7 @@ const fetchStates = (selectedCountryId: string) => {
                 rules="required"
                 :items="formattedCountries"
                 :columns="countryCols"
-                @on-change="(value: string) => fetchStates(value)"
+                @on-change="(value: string) => onSelectCountry(value)"
             />
         </slot>
 

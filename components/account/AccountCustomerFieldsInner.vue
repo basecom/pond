@@ -22,6 +22,7 @@ withDefaults(
        * are unique upon submission, it is possible to specify a prefix
        */
       prefix?: string;
+      isVatIdRequiredBySelectedCountry?: boolean;
     }>(),
     {
         isDetail: false,
@@ -71,6 +72,7 @@ withDefaults(
             md: 6,
         }),
         prefix: '',
+        isVatIdRequiredBySelectedCountry: false,
     },
 );
 
@@ -81,12 +83,13 @@ const showTitle = ref(configStore.get('core.loginRegistration.showTitleField') a
 const confirmEmail = ref(configStore.get('core.loginRegistration.requireEmailConfirmation') as boolean);
 const showBirthday = ref(configStore.get('core.loginRegistration.showBirthdayField') as boolean);
 const confirmPassword = ref(configStore.get('core.loginRegistration.requirePasswordConfirmation') as boolean);
+const showAccountType = configStore.get('core.loginRegistration.showAccountTypeSelection') as boolean;
 </script>
 
 <template>
     <GroupElement name="account-type">
         <slot name="account-type">
-            <AccountType :prefix="prefix" />
+            <AccountType v-if="showAccountType" :prefix="prefix" />
         </slot>
     </GroupElement>
 
@@ -164,13 +167,23 @@ const confirmPassword = ref(configStore.get('core.loginRegistration.requirePassw
 
         <slot name="vat-id">
             <FormTextElement
-                v-if="isDetail"
+                v-if="isDetail && !isVatIdRequiredBySelectedCountry"
                 :id="`${prefix}vatIds`"
                 :name="`${prefix}vatIds`"
                 :label="$t('account.customer.vatId.label')"
                 :placeholder="$t('account.customer.vatId.placeholder')"
                 :conditions="accountTypeConditions"
                 :columns="vatIdCols"
+            />
+            <FormTextElement
+                v-if="isDetail && isVatIdRequiredBySelectedCountry"
+                :id="`${prefix}vatIds`"
+                :name="`${prefix}vatIds`"
+                :label="$t('account.customer.vatId.label')"
+                :placeholder="$t('account.customer.vatId.placeholder')"
+                :conditions="accountTypeConditions"
+                :columns="vatIdCols"
+                rules="required"
             />
         </slot>
     </GroupElement>

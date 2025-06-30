@@ -153,7 +153,7 @@ const onSubmit = (data: VueFormRequestData) => {
                 </slot>
 
                 <slot name="alert">
-                    <UiAlert v-if="errorMessage" variant="destructive" class="mb-4 flex gap-4">
+                    <UiAlert v-if="errorMessage" variant="destructive" class="mb-4 flex gap-4 col-span-12">
                         <slot name="alert-icon">
                             <Icon name="mdi:alert-circle-outline" class="size-4 text-red-500" />
                         </slot>
