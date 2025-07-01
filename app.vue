@@ -66,7 +66,7 @@ useHead(() => ({
         },
         {
             rel: 'alternate',
-            hreflang: locale ?? 'x-default',
+            hreflang: locale.value ?? 'x-default',
             href: url.origin + route.path,
         },
     ],
