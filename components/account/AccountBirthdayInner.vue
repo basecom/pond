@@ -21,12 +21,8 @@ const isBirthdayRequired = ref(configStore.get('core.loginRegistration.birthdayF
 const birthdayDays = ref(Array.from({ length: 31 }, (_, i) => i + 1));
 const birthdayMonths = ref(Array.from({ length: 12 }, (_, i) => i + 1));
 const possibleBirthdayYears = computed(() => {
-    const years = [];
     const today = new Date();
-    // we can not use a foreach here
-    // eslint-disable-next-line no-restricted-syntax
-    for (let i = (today.getFullYear() - 120); i <= today.getFullYear(); i++) years.push(i);
-    return years;
+    return Array.from({ length: 121 }, (_, i) => today.getFullYear() - 120 + i);
 });
 </script>
 
