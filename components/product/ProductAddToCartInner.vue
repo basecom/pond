@@ -1,4 +1,13 @@
 <script setup lang="ts">
+withDefaults(
+    defineProps<{
+      isLoading?: boolean;
+    }>(),
+    {
+        isLoading: false,
+    },
+);
+
 const { product } = useProduct();
 const { isInCart, count } = useAddToCart(product);
 const addToCart = () => {
@@ -9,19 +18,27 @@ const emit = defineEmits<{
     (event: 'addToCart'): void;
 }>();
 
+const isProductInCard = ref(false);
+const productCount = ref(0);
+
+onMounted(() => {
+    isProductInCard.value = isInCart.value;
+    productCount.value = count.value;
+});
 </script>
 
 <template>
     <slot name="wrapper">
         <UiButton
             class="w-full"
+            :is-loading="isLoading"
             @click="addToCart"
         >
             {{ $t('product.addToCart') }}
             <slot name="is-in-cart-icon">
-                <div v-if="isInCart" class="flex ml-2 items-center">
+                <div v-if="isProductInCard" class="flex ml-2 items-center">
                     <Icon name="mdi:cart-outline" class="size-4 mr-1" />
-                    {{ count }}
+                    {{ productCount }}
                 </div>
             </slot>
         </UiButton>

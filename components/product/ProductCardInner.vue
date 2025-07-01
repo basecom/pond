@@ -3,12 +3,10 @@ import type {BoxLayout, DisplayMode} from '@shopware/composables';
 import {buildUrlPrefix, getProductName, getProductRoute, getSmallestThumbnailUrl} from '@shopware/helpers';
 import {useUrlResolver} from '#imports';
 import {RouterLink} from 'vue-router';
-import {computed} from 'vue';
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
         layoutType?: BoxLayout;
-        isProductListing?: boolean;
         displayMode?: DisplayMode;
         allowBuyInListing?: boolean;
         autoPlayVideoInListing?: boolean;
@@ -16,7 +14,6 @@ withDefaults(
     {
         layoutType: 'standard',
         displayMode: 'standard',
-        isProductListing: false,
         allowBuyInListing: false,
         autoPlayVideoInListing: false,
     },
@@ -32,12 +29,23 @@ const showControls = ref(false);
 const srcPath = computed(() => getSmallestThumbnailUrl(
     product.value?.cover?.media,
 ) ?? product.value?.cover?.media?.url);
+
+const showAddToCartButton = ref(false);
+
+const computeShowButton = () => props.allowBuyInListing && (product.value?.availableStock ?? 0) > 0 && !product.value?.childCount;
+
+showAddToCartButton.value = computeShowButton();
+
+onMounted(() => {
+    showAddToCartButton.value = computeShowButton();
+});
 </script>
 
 <template>
+    {{ layoutType }}
     <slot name="wrapper">
         <div
-            class="sw-product-card not-prose hover:scale-101 group relative flex max-w-full flex-col justify-between rounded-lg border border-gray-200 bg-white transition duration-300"
+            class="sw-product-card not-prose group relative flex max-w-full flex-col justify-between rounded-lg border border-gray-200 bg-white transition duration-300 hover:shadow-lg"
         >
             <slot name="product-image">
                 <RouterLink
@@ -129,7 +137,7 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
 
                         <template v-if="layoutType === 'standard'">
                             <slot name="product-description">
-                                <p class="mt-6 text-sm text-gray-600">{{ product.translated.description }}</p>
+                                <p class="mt-6 text-sm text-gray-600 line-clamp-5">{{ product.translated.description }}</p>
                             </slot>
                         </template>
 

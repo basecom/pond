@@ -1,42 +1,39 @@
 <script setup lang="ts">
 import ProductAddToCartInner from '~/components/product/ProductAddToCartInner.vue';
 import { useToast } from '~/components/ui/toast';
+import { ApiClientError } from '@shopware/api-client';
 
 const { product } = useProduct();
-const { t, te } = useI18n();
+const { t } = useI18n();
 const { addToCart } = useAddToCart(product);
-const { getErrorsCodes } = useCartNotification();
-const { resolveCartError } = useCartErrorParamsResolver();
 const { toast } = useToast();
 
-const addProductToCart = async () => {
-    await addToCart();
-    const errors = getErrorsCodes();
+const isLoading = ref(false);
 
-    if (!errors.length){
+const addProductToCart = async () => {
+    isLoading.value = true;
+
+    try {
+        await addToCart();
         toast({
             title: `${product.value.translated.name} added to cart`,
         });
-        return;
-    }
-
-    for (const error of errors) {
-        const { messageKey, params } = resolveCartError(error);
-        const key = `error.${messageKey}`;
-
-        const translatedMessage = te(key)
-            ? t(key, params ?? {})
-            : t('error.addToCartErrorDefault');
-
-        toast({
-            title: t('error.generalHeadline'),
-            description: t(translatedMessage),
-            variant: 'destructive',
-        });
+        isLoading.value = false;
+    } catch(error) {
+        if (error instanceof ApiClientError) {
+            toast({
+                title: t('error.generalHeadline'),
+                description: t(`error.${ error.details.errors[0]?.code}`),
+                variant: 'destructive',
+            });
+            return;
+        }
+    } finally {
+        isLoading.value = false;
     }
 };
 </script>
 
 <template>
-    <ProductAddToCartInner @add-to-cart="addProductToCart" />
+    <ProductAddToCartInner :is-loading="isLoading" @add-to-cart="addProductToCart" />
 </template>

@@ -2,14 +2,23 @@
 // Overrides node_modules/@shopware/cms-base-layer/components/public/cms/elements/CmsElementProductListing.vue
 import type { CmsElementProductListing } from '@shopware/composables';
 import { defu } from 'defu';
-import { computed, ref, useTemplateRef, watch } from 'vue';
+import { ref, useTemplateRef, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useCategoryListing } from '#imports';
 import type {Schemas, operations} from '@shopware/api-client/api-types';
+import type { cssClasses, layoutStyles } from '~/types/cms';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
     content: CmsElementProductListing;
-}>();
+    // Added optional props, as these are passed by the CmsGenericElement and otherwise lead to vue warnings in the console
+    class?: cssClasses,
+    style?: layoutStyles
+}>(),
+{
+    class: null,
+    style: undefined,
+},
+);
 // change: use i18n's t function instead of provided translations
 const defaultLimit = 15;
 const defaultPage = 1;
@@ -35,6 +44,13 @@ const limit = ref(
 );
 
 const initalRoute = defu(route);
+
+const isLoading = ref(true);
+
+onMounted(() => {
+    isLoading.value = loading.value;
+});
+
 watch(
     () => route,
     (newRoute) => {
@@ -86,9 +102,6 @@ const changeLimit = async (limit: Event) => {
     productListElement.value?.scrollIntoView({ behavior: 'smooth' });
 };
 
-const isProductListing = computed(
-    () => props.content?.type === 'product-listing',
-);
 // This is a workaround because vercel caching with the nuxt preset does not support query params at the moment
 // @see https://github.com/shopware/frontends/issues/687#issuecomment-1988392091
 const compareRouteQueryWithInitialListing = async () => {
@@ -140,15 +153,13 @@ compareRouteQueryWithInitialListing();
     <div
         v-if="!loading && getElements.length > 0"
         ref="productListElement"
-        class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 productListElement"
+        class="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-8 productListElement"
     >
         <ProductCard
             v-for="product in getElements"
             :key="product.id"
             :product="product"
-            :is-product-listing="isProductListing"
             :layout-type="content.config.boxLayout.value"
-            class="lg:w-3/7 2xl:w-7/24 w-full rounded-lg border p-4 shadow-md transition-shadow duration-200 ease-in-out hover:shadow-lg"
         />
     </div>
     <div
