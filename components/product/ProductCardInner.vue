@@ -19,12 +19,13 @@ const props = withDefaults(
     },
 );
 
+const configStore = useConfigStore();
 const { product } = useProduct();
-
 const { getUrlPrefix } = useUrlResolver();
 
 const mediaType = product.value?.cover?.media?.mimeType?.split('/')[0];
 const showControls = ref(false);
+const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.productFallBackCover') as string;
 
 const srcPath = computed(() => getSmallestThumbnailUrl(
     product.value?.cover?.media,
@@ -42,7 +43,6 @@ onMounted(() => {
 </script>
 
 <template>
-    {{ layoutType }}
     <slot name="wrapper">
         <div
             class="sw-product-card not-prose group relative flex max-w-full flex-col justify-between rounded-lg border border-gray-200 bg-white transition duration-300 hover:shadow-lg"
@@ -100,9 +100,10 @@ onMounted(() => {
                     <template v-else>
                         <slot name="fallback-cover">
                             <img
-                                src="/fallback-product-cover.svg"
-                                :alt="getProductName({ product }) || ''"
-                                class="m-auto h-full object-contain p-8 brightness-[0.6] contrast-[0.7] invert"
+                                :src="productFallBackCover"
+                                :alt="getProductName({ product }) || 'Fallback product'"
+                                title="For this product is no image set"
+                                class="m-auto h-full object-contain p-8"
                             >
                         </slot>
                     </template>

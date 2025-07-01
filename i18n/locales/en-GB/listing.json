@@ -10,6 +10,8 @@
         "resetFilters": "Reset filters",
         "sort": "Sort by",
         "from": "From",
-        "variantsFrom": "Variants from"
+        "variantsFrom": "Variants from",
+        "previously": "Previously",
+        "to": "to"
     }
 }
