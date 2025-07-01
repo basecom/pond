@@ -97,7 +97,8 @@ const onSelectCountry = (selectedCountryId: string) => {
     }
 
     // Check, if vat id is required by the selected country
-    isVatIdRequiredBySelectedCountry.value = countries.value.find(country => country.id === selectedCountryId).vatIdRequired;
+    const selectedCountry = countries.value.find(country => country.id === selectedCountryId);
+    isVatIdRequiredBySelectedCountry.value = selectedCountry?.vatIdRequired ?? false;
 };
 </script>
 

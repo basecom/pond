@@ -83,7 +83,7 @@ const showTitle = ref(configStore.get('core.loginRegistration.showTitleField') a
 const confirmEmail = ref(configStore.get('core.loginRegistration.requireEmailConfirmation') as boolean);
 const showBirthday = ref(configStore.get('core.loginRegistration.showBirthdayField') as boolean);
 const confirmPassword = ref(configStore.get('core.loginRegistration.requirePasswordConfirmation') as boolean);
-const showAccountType = configStore.get('core.loginRegistration.showAccountTypeSelection') as boolean;
+const showAccountType = ref(configStore.get('core.loginRegistration.showAccountTypeSelection') as boolean);
 const passwordMinLength = configStore.get('core.loginRegistration.passwordMinLength') as number;
 const passwordMinRule = ref(`min:${passwordMinLength}`);
 </script>
@@ -219,7 +219,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
             :placeholder="$t('account.customer.email.confirm.placeholder')"
             rules="required|email"
             :debounce="300"
-            :messages="{ email: $t('account.customer.email.errorInvalid'), confirmed: $t('account.customer.email.errorConfirmed'), required: $t('account.customer.email.errorRequired') }"
+            :messages="{ email: $t('account.customer.email.errorInvalid'), required: $t('account.customer.email.errorRequired') }"
             :columns="emailCols"
         />
     </slot>

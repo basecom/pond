@@ -16,8 +16,16 @@ const register = async (registerData: RegisterFormData) => {
         await customerStore.register(registerData);
     } catch (error) {
         if (error instanceof ApiClientError) {
-            errorMessage.value = t(`error.${ error.details.errors[0]?.code}`);
-            return;
+            const firstError = error.details.errors?.[0];
+            if (firstError?.code) {
+                errorMessage.value = t(`error.${firstError.code}`);
+            } else {
+                errorMessage.value = t('error.generic');
+            }
+
+        } else {
+            console.error('Unexpected registration error:', error);
+            errorMessage.value = t('error.generic');
         }
     } finally {
         isLoading.value = false;

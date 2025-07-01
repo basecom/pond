@@ -43,7 +43,7 @@
             },
             "salutation": {
                 "label": "Anrede",
-                "errorRequired": "Bitte Andrede auswählen",
+                "errorRequired": "Bitte Anrede auswählen",
                 "placeholder": "Anrede auswählen ..."
             },
             "firstName": {
@@ -97,7 +97,7 @@
             "password": {
                 "label": "Passwort",
                 "placeholder": "Passwort eingeben ...",
-                "errorRequired": "Bitte geben Sie ein Password ein",
+                "errorRequired": "Bitte geben Sie ein Passwort ein",
                 "errorConfirmed": "Die Passwörter stimmen nicht überein.",
                 "errorMin": "Das Passwort muss mindestens {number} Zeichen lang sein",
                 "confirm": {

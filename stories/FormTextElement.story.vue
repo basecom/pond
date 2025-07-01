@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import {onMounted} from 'vue';
-
 // set onMounted flag, otherwise hydration mismatched may occur
 const isMounted = ref(false);
 
