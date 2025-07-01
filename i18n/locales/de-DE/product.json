@@ -1,6 +1,7 @@
 {
     "product": {
         "addToCart": "In den Warenkorb",
-        "details": "Details"
+        "details": "Details",
+        "productAddedToCart": "{product} zum Warenkorb hinzugefügt"
     }
 }

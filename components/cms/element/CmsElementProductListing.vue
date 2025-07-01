@@ -167,7 +167,7 @@ compareRouteQueryWithInitialListing();
         data-testid="loading"
         class="flex justify-center flex-wrap p-4 md:p-6 lg:p-8"
     >
-        <ProductCardSkeleton
+        <UiSkeleton
             v-for="index in limit"
             :key="index"
             class="w-full mb-8 sm:w-3/7 lg:w-2/7 2xl:w-7/24 mr-0 sm:mr-8 mb-8"

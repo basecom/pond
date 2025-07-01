@@ -16,7 +16,7 @@ const addProductToCart = async () => {
     try {
         await addToCart();
         toast({
-            title: `${product.value.translated.name} added to cart`,
+            title: t('product.productAddedToCart', {product: product.value.translated.name}),
         });
         isLoading.value = false;
     } catch(error) {

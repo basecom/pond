@@ -4,7 +4,7 @@ import {buildUrlPrefix, getProductName, getProductRoute, getSmallestThumbnailUrl
 import {useUrlResolver} from '#imports';
 import {RouterLink} from 'vue-router';
 
-const props = withDefaults(
+withDefaults(
     defineProps<{
         layoutType?: BoxLayout;
         displayMode?: DisplayMode;
@@ -30,16 +30,6 @@ const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.
 const srcPath = computed(() => getSmallestThumbnailUrl(
     product.value?.cover?.media,
 ) ?? product.value?.cover?.media?.url);
-
-const showAddToCartButton = ref(false);
-
-const computeShowButton = () => props.allowBuyInListing && (product.value?.availableStock ?? 0) > 0 && !product.value?.childCount;
-
-showAddToCartButton.value = computeShowButton();
-
-onMounted(() => {
-    showAddToCartButton.value = computeShowButton();
-});
 </script>
 
 <template>
@@ -55,6 +45,7 @@ onMounted(() => {
                         layoutType === 'image' ? 'h-80' : 'h-60',
                         mediaType === 'image' ? 'hover:opacity-75' : '',
                     ]"
+                    :aria-label="`navigate-to-${getProductName({ product })}`"
                 >
                     <template v-if="mediaType === 'image'">
                         <slot name="product-cover-image">
@@ -92,6 +83,7 @@ onMounted(() => {
                                 muted
                                 playsinline
                                 :controls="showControls"
+                                :aria-label="`product-video-${getProductName({ product })}`"
                                 @mouseenter="showControls = true"
                                 @mouseleave="showControls = false"
                             />
@@ -141,7 +133,6 @@ onMounted(() => {
                                 <p class="mt-6 text-sm text-gray-600 line-clamp-5">{{ product.translated.description }}</p>
                             </slot>
                         </template>
-
                     </div>
 
                     <div>
@@ -160,6 +151,7 @@ onMounted(() => {
                             <template v-else>
                                 <RouterLink
                                     :to="buildUrlPrefix(getProductRoute(product), getUrlPrefix())"
+                                    :aria-label="`navigate-to-${getProductName({ product })}`"
                                 >
                                     <UiButton variant="secondary" class="w-full">
                                         {{ $t('product.details') }}

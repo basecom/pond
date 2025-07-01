@@ -1,6 +1,7 @@
 {
     "product": {
         "addToCart": "Add to cart",
-        "details": "Show details"
+        "details": "Show details",
+        "productAddedToCart": "{product} added to cart"
     }
 }

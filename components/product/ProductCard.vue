@@ -25,7 +25,7 @@ const autoPlayVideoInListing = configStore.get('core.listing.autoplayVideoInList
     <ProductCardInner
         :layout-type="layoutType"
         :display-mode="displayMode"
-        :allow-buy-in-listing="!!allowBuyInListing"
-        :auto-play-video-in-listing="!!autoPlayVideoInListing"
+        :allow-buy-in-listing="allowBuyInListing"
+        :auto-play-video-in-listing="autoPlayVideoInListing"
     />
 </template>
