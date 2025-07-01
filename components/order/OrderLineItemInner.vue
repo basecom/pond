@@ -20,14 +20,14 @@ const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.
                         :src="lineItem.cover.url"
                         :alt="lineItem.cover.translated?.alt"
                         :title="lineItem.cover.translated?.title"
-                        class="object-center h-16 aspect-square"
+                        class="object-center object-contain h-16 aspect-square"
                     >
                     <img
                         v-else-if="lineItem.type !== 'promotion' && productFallBackCover"
                         :src="productFallBackCover"
                         alt=""
                         title=""
-                        class="object-center h-16 aspect-square"
+                        class="object-center h-16 aspect-square object-contain"
                     >
                     <div v-else-if="lineItem.type === 'promotion'" class="h-16 w-16 border border-gray-300 items-center flex justify-center">
                         <Icon name="mdi:percent" class="size-4 shrink-0" />
@@ -61,7 +61,7 @@ const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.
         </slot>
 
         <slot name="total-price">
-            <span class="flex justify-end font-bold">
+            <span class="flex justify-center font-bold">
                 {{ getFormattedPrice(lineItem.totalPrice) }}
             </span>
         </slot>

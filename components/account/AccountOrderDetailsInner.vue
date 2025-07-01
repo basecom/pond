@@ -139,10 +139,10 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.s
                 <slot name="price-order-information">
                     <div class="grid grid-cols-2 gap-2 h-fit">
                         <slot name="shipping-costs">
-                            <span class="font-bold">
+                            <span v-if="orderHasPhysicalProductsInOrder" class="font-bold">
                                 {{ $t('order.shipping') }}
                             </span>
-                            <span class="flex justify-end col-start-2">
+                            <span v-if="orderHasPhysicalProductsInOrder" class="flex justify-end col-start-2">
                                 {{ getFormattedPrice(shippingCosts ?? 0) }}
                             </span>
                         </slot>
