@@ -29,7 +29,7 @@ defineProps<{
                             </UiNavigationMenuTrigger>
 
                             <UiNavigationMenuContent>
-                                <ul class="max-w-11/12 grid w-96 gap-y-3 p-6 text-sm lg:grid-cols-2">
+                                <ul class="grid w-max gap-3 p-6 text-sm lg:grid-cols-2">
                                     <LayoutHeaderNavigationRecursiveLink :navigation-element="navigationElement" />
                                 </ul>
                             </UiNavigationMenuContent>
