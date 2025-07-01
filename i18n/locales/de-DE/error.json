@@ -13,7 +13,6 @@
         "VIOLATION::CUSTOMER_EMAIL_NOT_UNIQUE": "Bitte wählen Sie eine andere E-Mail-Adresse",
         "VIOLATION::CUSTOMER_PASSWORD_NOT_CORRECT": "Bitte geben Sie das korrekte Passwort ein",
         "VIOLATION::IS_BLANK_ERROR": "Bitte füllen Sie alle benötigten Felder aus",
-        "product-stock-reached": "Das Produkt \"{name}\" ist nur noch {quantity} mal verfügbar",
         "addToCartErrorDefault": "Das Produkt konnte nicht in den Warenkorb gelegt werden."
     }
 }

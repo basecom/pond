@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import ProductAddToCartInner from '~/components/product/ProductAddToCartInner.vue';
 import { useToast } from '~/components/ui/toast';
 
 const { product } = useProduct();
