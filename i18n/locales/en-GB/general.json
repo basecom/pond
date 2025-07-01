@@ -10,6 +10,7 @@
         "privacyNoticeText": "I have acknowledged the privacy policy and accept it.",
         "button": {
             "acceptLabel": "Accept"
-        }
+        },
+        "currencySwitch": "Currency switched to {currency}"
     }
 }
