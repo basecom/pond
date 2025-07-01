@@ -2,7 +2,6 @@
 // Overrides node_modules/@shopware/cms-base-layer/components/public/cms/elements/CmsElementProductListing.vue
 import type { CmsElementProductListing } from '@shopware/composables';
 import { defu } from 'defu';
-import { ref, useTemplateRef, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useCategoryListing } from '#imports';
 import type {Schemas, operations} from '@shopware/api-client/api-types';
@@ -43,7 +42,8 @@ const limit = ref(
             : defaultLimit,
 );
 
-const initalRoute = defu(route);
+// Corrected defu usage
+const initalRoute = defu({}, route);
 
 const isLoading = ref(true);
 
@@ -142,7 +142,10 @@ setInitialListing(
     props?.content?.data?.listing as Schemas['ProductListingResult'],
 );
 
-compareRouteQueryWithInitialListing();
+onMounted(async () => {
+    // Call compareRouteQueryWithInitialListing within onMounted
+    await compareRouteQueryWithInitialListing();
+});
 </script>
 
 <template>

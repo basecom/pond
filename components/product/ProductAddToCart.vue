@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import ProductAddToCartInner from '~/components/product/ProductAddToCartInner.vue';
 import { useToast } from '~/components/ui/toast';
-import { ApiClientError } from '@shopware/api-client';
 
 const { product } = useProduct();
 const { t } = useI18n();
@@ -18,16 +17,13 @@ const addProductToCart = async () => {
         toast({
             title: t('product.productAddedToCart', {product: product.value.translated.name}),
         });
-        isLoading.value = false;
-    } catch(error) {
-        if (error instanceof ApiClientError) {
-            toast({
-                title: t('error.generalHeadline'),
-                description: t(`error.${ error.details.errors[0]?.code}`),
-                variant: 'destructive',
-            });
-            return;
-        }
+    } catch {
+        toast({
+            title: t('error.generalHeadline'),
+            description: t('error.addToCartErrorDefault'),
+            variant: 'destructive',
+        });
+        return;
     } finally {
         isLoading.value = false;
     }

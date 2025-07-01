@@ -17,8 +17,8 @@ const props = withDefaults(
 useProduct(props.product);
 
 const configStore = useConfigStore();
-const allowBuyInListing = configStore.get('core.listing.allowBuyInListing') as boolean;
-const autoPlayVideoInListing = configStore.get('core.listing.autoplayVideoInListing') as boolean;
+const allowBuyInListing = ref(configStore.get('core.listing.allowBuyInListing') as boolean);
+const autoPlayVideoInListing = ref(configStore.get('core.listing.autoplayVideoInListing') as boolean);
 </script>
 
 <template>

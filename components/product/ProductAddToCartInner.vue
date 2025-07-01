@@ -18,11 +18,12 @@ const emit = defineEmits<{
     (event: 'addToCart'): void;
 }>();
 
-const isProductInCard = ref(false);
+// Set isProductInCard and productCount in onMounted. Otherwise, there are hydration mismatched
+const isProductInCart = ref(false);
 const productCount = ref(0);
 
 onMounted(() => {
-    isProductInCard.value = isInCart.value;
+    isProductInCart.value = isInCart.value;
     productCount.value = count.value;
 });
 </script>
@@ -36,7 +37,7 @@ onMounted(() => {
         >
             {{ $t('product.addToCart') }}
             <slot name="is-in-cart-icon">
-                <div v-if="isProductInCard" class="flex ml-2 items-center">
+                <div v-if="isProductInCart" class="flex ml-2 items-center">
                     <Icon name="mdi:cart-outline" class="size-4 mr-1" />
                     {{ productCount }}
                 </div>
