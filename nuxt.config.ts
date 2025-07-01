@@ -67,6 +67,7 @@ export default defineNuxtConfig({
         '/registration/confirm': { redirect: '/account/register/confirm' },
         '/account/**': { ssr: false },
         '/checkout/**': { ssr: false },
+        '/newsletter/**': { ssr: false },
         '/wishlist/**': { ssr: false },
     },
 
