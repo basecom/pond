@@ -16,7 +16,7 @@ const centerContent = getSlotContent('center');
 
 <template>
     <!-- change: move styling to CmsGenericElement (otherwise we receive errors) -->
-    <div class="cms-block-image-bubble-row grid md:grid-cols-3 gap-10">
+    <div class="cms-block-image-bubble-row grid md:grid-cols-3 gap-10 *:w-[340px]">
         <div class="flex items-center justify-center mx-auto">
             <CmsGenericElement :content="leftContent" class="w-full *:object-cover *:overflow-hidden *:rounded-full *:aspect-square *:max-w-xs" />
         </div>
