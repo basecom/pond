@@ -40,12 +40,12 @@ const categoryLink = computed(() => {
 const handleClick = () => {
     // if it's an external link: link to it
     if (isExternalLink && externalLink) {
-        navigateTo(categoryLink.value, {external: true, open: {target: '_blank'}});
+        navigateTo(categoryLink.value, { external: true, open: { target: '_blank' } });
         return;
     }
 
     // internal? push event
-    const options =linkNewTab ? {open: {target: '_blank'}} : undefined;
+    const options =linkNewTab ? { open: { target: '_blank' } } : undefined;
     emits('click', props.navigationElement, categoryLink.value, options);
 };
 </script>
