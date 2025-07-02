@@ -11,15 +11,15 @@ const content = config.getConfigValue('content');
 
 // get data for 'mapped' config values
 const { getCmsElementData } = useCmsUtils();
-const elementData = getCmsElementData(props.element);
+const elementData : string = getCmsElementData(props.element, 'content');
 </script>
 
 <template>
-    <!-- v-html is necessary because the text contains inline stylings -->
+    <!-- v-html is necessary because the text contains inlines stylings -->
     <!-- eslint-disable vue/no-v-html -->
     <div
-        v-if="content || elementData.content"
+        v-if="content || elementData"
         class="cms_html"
-        v-html="decodeHTML(`${content ? content : elementData.content}`)"
+        v-html="decodeHTML(`${content ? content : elementData}`)"
     />
 </template>
