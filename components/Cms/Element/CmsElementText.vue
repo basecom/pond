@@ -15,7 +15,7 @@ const elementData : string = getCmsElementData(props.element, 'content');
 </script>
 
 <template>
-    <!-- v-html is necessary because the text contains inlines stylings -->
+    <!-- v-html is necessary because the text contains inline stylings -->
     <!-- eslint-disable vue/no-v-html -->
     <div
         v-if="content || elementData"
