@@ -52,7 +52,8 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
                             <img
                                 loading="lazy"
                                 :src="srcPath"
-                                :alt="getProductName({ product }) || ''"
+                                :alt="getProductName({ product }) || $t('product.image')"
+                                :title="$t('product.image')"
                                 class="absolute inset-0 size-full rounded-t-lg"
                                 :class="{
                                     'object-cover':
@@ -93,8 +94,8 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
                         <slot name="fallback-cover">
                             <img
                                 :src="productFallBackCover"
-                                :alt="getProductName({ product }) || 'Fallback product'"
-                                title="For this product is no image set"
+                                :alt="getProductName({ product }) || $t('general.imageNotFound')"
+                                :title="$t('general.imageNotFound')"
                                 class="m-auto h-full object-contain p-8"
                             >
                         </slot>

@@ -10,6 +10,7 @@
         "privacyNoticeText": "Ich habe die Datenschutzbestimmungen zur Kenntnis genommen und erkenne diese an.",
         "button": {
             "acceptLabel": "Akzeptieren"
-        }
+        },
+        "imageNotFound": "Kein Bild gefunden"
     }
 }
