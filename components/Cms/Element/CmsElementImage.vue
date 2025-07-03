@@ -27,7 +27,7 @@ const imageComputedContainerAttrs = computed(() => {
 
 const mediaObject = props.element.data?.media;
 const shouldPreloadImage = shouldPreloadElement(props.element);
-if (shouldPreloadImage && !isVideoElement.value) {
+if (shouldPreloadImage && !isVideoElement.value && srcPath.value) {
     useImagePreload({
         src: srcPath.value,
         srcset: imageAttrs.value.srcset,
