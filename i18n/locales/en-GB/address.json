@@ -1,0 +1,45 @@
+{
+  "address": {
+    "headline": "Your Address",
+    "differentShippingAddress": "Shipping address differs from billing address.",
+    "street": {
+      "label": "Street",
+      "placeholder": "Enter street ...",
+      "errorRequired": "Please enter a street"
+    },
+    "additionalAddressLine1": {
+      "label": "Address Additional 1",
+      "placeholder": "Enter address additional ...",
+      "errorRequired": "Please enter an address additional"
+    },
+    "additionalAddressLine2": {
+      "label": "Address Additional 2",
+      "placeholder": "Enter address additional ...",
+      "errorRequired": "Please enter an address additional"
+    },
+    "zipCode": {
+      "label": "ZIP Code",
+      "placeholder": "Enter ZIP code ...",
+      "errorRequired": "Please enter a ZIP code"
+    },
+    "city": {
+      "label": "City",
+      "placeholder": "Enter city ...",
+      "errorRequired": "Please enter a city"
+    },
+    "country": {
+      "label": "Country",
+      "placeholder": "Select country ...",
+      "errorRequired": "Please select a country"
+    },
+    "state": {
+      "label": "State",
+      "placeholder": "Select state ..."
+    },
+    "phoneNumber": {
+      "label": "Phone Number",
+      "placeholder": "Enter phone number ...",
+      "errorRequired": "Please provide a phone number"
+    }
+  }
+}
