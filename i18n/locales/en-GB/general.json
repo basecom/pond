@@ -11,6 +11,7 @@
         "button": {
             "acceptLabel": "Accept"
         },
-        "currencySwitch": "Currency switched to {currency}"
+        "currencySwitch": "Currency switched to {currency}",
+        "imageNotFound": "No image found"
     }
 }
