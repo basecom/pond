@@ -20,7 +20,7 @@ defineEmits<{
 const { formatLocaleDate } = usePondDate();
 
 const getBadgeVariant = (stateMachineTechnicalName: string, paymentStateMachineTechnicalName: string) => {
-    if(paymentStateMachineTechnicalName === 'failed' || paymentStateMachineTechnicalName === 'cancelled' || paymentStateMachineTechnicalName === 'reminded') {
+    if(paymentStateMachineTechnicalName === 'failed' || paymentStateMachineTechnicalName === 'cancelled' || paymentStateMachineTechnicalName === 'reminded' || paymentStateMachineTechnicalName === 'unconfirmed') {
         return 'destructive';
     }
     if( stateMachineTechnicalName === 'completed') {
@@ -32,7 +32,7 @@ const getBadgeVariant = (stateMachineTechnicalName: string, paymentStateMachineT
     return 'default';
 };
 
-const displayCompletePaymentLink = (paymentStateMachineTechnicalName: string) => paymentStateMachineTechnicalName === 'failed' || paymentStateMachineTechnicalName === 'cancelled' || paymentStateMachineTechnicalName === 'reminded';
+const displayCompletePaymentLink = (paymentStateMachineTechnicalName: string) => paymentStateMachineTechnicalName === 'failed' || paymentStateMachineTechnicalName === 'cancelled' || paymentStateMachineTechnicalName === 'reminded' || paymentStateMachineTechnicalName === 'unconfirmed';
 </script>
 
 <template>
