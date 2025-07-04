@@ -1,26 +1,22 @@
 <script setup lang="ts">
 
 const {
-  items,
-  clearWishlist,
-  getWishlistProducts,
-  currentPage,
-  totalPagesCount,
-  canSyncWishlist,
+    items,
+    getWishlistProducts,
 } = useWishlist();
 
 const isLoading = ref(true);
 
 onMounted(async () => {
-  await getWishlistProducts();
-  isLoading.value = false;
+    await getWishlistProducts();
+    isLoading.value = false;
 
-  console.log('produ', items);
-})
+    // ToDo: Load products by id from items: string[]
+});
 
 </script>
 
 
 <template>
-  <AccountPageWishlistInner :isLoading="isLoading" :items="items" />
+    <AccountPageWishlistInner :is-loading="isLoading" />
 </template>

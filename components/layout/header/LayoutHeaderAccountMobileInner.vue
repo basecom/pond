@@ -52,7 +52,12 @@ provide('closeDialog', () => {
 
                             <AccountActionLink link="/account/order" :label="$t('account.order')" @click="() => $emit('click')" />
 
-                            <AccountActionLink v-if="wishlistEnabled" link="/account/wishlist" :label="$t('account.wishlist')" @click="() => $emit('click')" />
+                            <AccountActionLink
+                                v-if="wishlistEnabled"
+                                link="/account/wishlist"
+                                :label="$t('account.wishlist')"
+                                @click="() => $emit('click')"
+                            />
 
                             <div class="cursor-pointer" @click="$emit('logout')">
                                 <slot name="logout">

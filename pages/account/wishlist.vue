@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 definePageMeta({
-  layout: 'account',
+    layout: 'account',
 });
 
 const { t } = useI18n();
@@ -9,12 +9,12 @@ const configStore = useConfigStore();
 const wishlistEnabled = configStore.get('core.cart.wishlistEnabled') as boolean;
 console.log('PAGE', wishlistEnabled);
 onMounted(() => {
-  if(!wishlistEnabled) {
-    throw createError({statusCode: 404, message: t('error.404.heading')});
-  }
-})
+    if(!wishlistEnabled) {
+        throw createError({statusCode: 404, message: t('error.404.heading')});
+    }
+});
 </script>
 
 <template>
-  <AccountPageWishlist />
+    <AccountPageWishlist />
 </template>
