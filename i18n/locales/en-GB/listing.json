@@ -1,0 +1,17 @@
+{
+    "listing": {
+        "filters": "Filters",
+        "max": "Max",
+        "min": "Min",
+        "noProducts": "No products found 😔",
+        "perPage": "Per page:",
+        "product": "Product",
+        "products": "Products",
+        "resetFilters": "Reset filters",
+        "sort": "Sort by",
+        "from": "From",
+        "variantsFrom": "Variants from",
+        "previously": "Previously",
+        "to": "to"
+    }
+}

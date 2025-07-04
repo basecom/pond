@@ -12,6 +12,7 @@
         "CHECKOUT__CUSTOMER_AUTH_THROTTLED": "Too many login attempts. Please wait before trying again.",
         "VIOLATION::CUSTOMER_EMAIL_NOT_UNIQUE": "Please use another e-mail address",
         "VIOLATION::CUSTOMER_PASSWORD_NOT_CORRECT": "Please enter the correct password",
-        "VIOLATION::IS_BLANK_ERROR": "Please fill in all required fields"
+        "VIOLATION::IS_BLANK_ERROR": "Please fill in all required fields",
+        "addToCartErrorDefault": "The product could not be added to the cart."
     }
 }
