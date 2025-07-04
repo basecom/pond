@@ -18,6 +18,21 @@ defineEmits<{
 }>();
 
 const { formatLocaleDate } = usePondDate();
+
+const getBadgeVariant = (stateMachineTechnicalName: string, paymentStateMachineTechnicalName: string) => {
+    if(paymentStateMachineTechnicalName === 'failed' || paymentStateMachineTechnicalName === 'cancelled' || paymentStateMachineTechnicalName === 'reminded') {
+        return 'destructive';
+    }
+    if( stateMachineTechnicalName === 'completed') {
+        return 'success';
+    }
+    if( stateMachineTechnicalName === 'cancelled') {
+        return 'destructive';
+    }
+    return 'default';
+};
+
+const displayCompletePaymentLink = (paymentStateMachineTechnicalName: string) => paymentStateMachineTechnicalName === 'failed' || paymentStateMachineTechnicalName === 'cancelled' || paymentStateMachineTechnicalName === 'reminded';
 </script>
 
 <template>
@@ -52,8 +67,16 @@ const { formatLocaleDate } = usePondDate();
                                         <div class="flex flex-col items-start w-full gap-2.5">
                                             <div class="flex items-center gap-5 text-left">
                                                 {{ $t('order.orderDate') }} {{ formatLocaleDate(order?.orderDate) }}
-                                                <UiBadge>
-                                                    {{ order?.stateMachineState.name }}
+                                                <UiBadge v-if="order && order.transactions" :variant="getBadgeVariant(order?.stateMachineState.technicalName, order?.transactions[0]?.stateMachineState?.technicalName ?? '')">
+                                                    <NuxtLinkLocale
+                                                        v-if="order && order.transactions && displayCompletePaymentLink(order.transactions[0]?.stateMachineState?.technicalName ?? '')"
+                                                        to="/"
+                                                    >
+                                                        {{ $t('payment.completePayment') }}
+                                                    </NuxtLinkLocale>
+                                                    <span v-else>
+                                                        {{ order?.stateMachineState.name }}
+                                                    </span>
                                                 </UiBadge>
                                             </div>
                                             <span class="font-normal">

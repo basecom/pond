@@ -9,6 +9,11 @@ onMounted(async () => {
     await loadOrders({
         associations: {
             stateMachineState: {},
+            transactions: {
+                associations: {
+                    stateMachineState: {},
+                },
+            },
         },
         sort: [
             {
