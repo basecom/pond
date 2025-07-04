@@ -13,7 +13,7 @@ withDefaults(
     <slot name="wrapper">
         <NuxtLinkLocale
             id="wishlist"
-            to="/wishlist"
+            to="/account/wishlist"
             class="relative h-5"
             aria-label="wishlist"
         >
