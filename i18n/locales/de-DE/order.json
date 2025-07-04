@@ -1,0 +1,24 @@
+{
+  "order": {
+    "headline": "Bestellungen",
+    "subHeadline": "Ihre letzten Bestellungen:",
+    "orderDate": "Bestelldatum:",
+    "orderNumber": "Bestellnummer:",
+    "shippingState": "Lieferstatus:",
+    "shippingMethod": "Versandart:",
+    "paymentState": "Bezahlstatus:",
+    "paymentMethod": "Bezahlmethode:",
+    "lineItem": {
+      "product": "Produkt",
+      "quantity": "Anzahl",
+      "unitPrice": "Stückpreis",
+      "totalPrice": "Summe"
+    },
+    "shipping": "Versandkosten:",
+    "tax": "zzgl. {taxRate} % MwSt.",
+    "total": "Gesamtsumme:",
+    "tracking": "Paketverfolgung:",
+    "noTracking": "Nicht verfügbar",
+    "noOrders": "Sie haben noch keine Bestellungen getätigt."
+  }
+}

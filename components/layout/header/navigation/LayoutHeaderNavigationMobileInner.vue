@@ -19,7 +19,7 @@ defineEmits<{
     <div class="flex items-center md:hidden">
         <UiSheet :open="open" @update:open="(value: boolean) => $emit('open', value)">
             <slot name="mobile-menu-trigger">
-                <UiSheetTrigger class="size-5">
+                <UiSheetTrigger id="mobile-open-navigation" class="size-5" aria-label="mobile-open-navigation">
                     <slot name="mobile-menu-icon">
                         <Icon name="mdi:menu" class="size-5" />
                     </slot>
