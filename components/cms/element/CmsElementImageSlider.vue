@@ -3,16 +3,7 @@
 import type {
     CmsElementImageSlider,
 } from '@shopware/composables';
-import type { Schemas } from '@shopware/api-client/api-types';
-
-export type CmsImageSliderItem = {
-  url: string;
-  newTab: boolean;
-  media: Schemas['Media'];
-  mediaId: string;
-  apiAlias: 'cms_image_slider_item';
-};
-
+import type { CmsImageSliderItem } from '~/types/cms/CmsImageSlider/CmsImageSliderItem';
 
 const props = defineProps<{
   content: CmsElementImageSlider;
@@ -80,7 +71,7 @@ const anchorAttrs = (slide: CmsImageSliderItem) =>
                 :loop="true"
             >
                 <LayoutSliderSlide
-                    v-for="slide in slides"
+                    v-for="(slide, index) in slides"
                     :key="slide.media.id"
                     :style="slideStyle"
                 >
@@ -91,8 +82,8 @@ const anchorAttrs = (slide: CmsImageSliderItem) =>
                     >
                         <img
                             :src="slide?.media?.url || productFallBackCover || ''"
-                            :alt="isDecorative ? '' : (slide.media.alt || '')"
-                            :title="slide.media.title || ''"
+                            :alt="isDecorative ? '' : $t('image.altSliderText', { 'currentSlide':  index, 'totalSlides': slides?.length })"
+                            :title="$t('image.altSliderText', { 'currentSlide':  index, 'totalSlides': slides?.length })"
                             :class="imageClass"
                         >
                     </component>

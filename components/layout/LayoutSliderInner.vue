@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import { ChevronRight, ChevronLeft  } from 'lucide-vue-next';
 import type { Swiper } from 'swiper';
-import { onMounted, nextTick } from 'vue';
+import type { NavigationOptions } from '~/types/cms/CmsImageSlider/NavigationOptions';
+import type { SliderBreakpointOptions } from '~/types/cms/CmsImageSlider/SwiperBreakpointOptions';
 
 const props = withDefaults(
     defineProps<{
       autoSlide?: boolean;
       autoplayTimeout?: number;
       speed?: number;
-      navigationDots?: 'none' | 'inside' | 'outside';
-      navigationArrows?: 'none' | 'inside' | 'outside';
-      displayMode?: string;
+      navigationDots?: NavigationOptions;
+      navigationArrows?: NavigationOptions;
+      displayMode?: string; 
       minHeight?: string;
       classes?: { [key: string]: boolean };
       loop?: boolean;
@@ -19,7 +20,7 @@ const props = withDefaults(
       slidesPerView?: number;
       slidesCounter?: number;
       thumbsSwiper?: string;
-      breakpoints?: unknown;
+      breakpoints?: SliderBreakpointOptions;
       init?: boolean;
       thumbRef?: string;
       initialSlide?: number;
@@ -53,10 +54,10 @@ const prevSlide = ref<HTMLElement | null>(null);
 const nextSlide = ref<HTMLElement | null>(null);
 const paginationEl = ref<HTMLElement | null>(null);
 
-const isOutsidePagination = computed(() => props.navigationDots === 'outside');
-const isOutsideNavigation = computed(() => props.navigationArrows === 'outside');
 const hasPagination = computed(() => props.navigationDots !== 'none');
 const hasNavigation = computed(() => props.navigationArrows !== 'none');
+const isOutsidePagination = computed(() => props.navigationDots === 'outside');
+const isOutsideNavigation = computed(() => props.navigationArrows === 'outside');
 
 onMounted(async () => {
     await nextTick();
@@ -74,17 +75,19 @@ onMounted(async () => {
             <div
                 class="relative w-full"
                 :class="[classes, {
-                    'cursor-grab': slidesCounter > 1
-                }, isOutsideNavigation ? 'px-20 max-sm:px-8' : '']"
+                    'cursor-grab': slidesCounter > 1, 'px-20 max-sm:px-8': isOutsideNavigation 
+                }]"
             >
                 <slot name="navigation-buttons">
                     <template v-if="hasNavigation">
                         <slot name="previous-slide">
                             <button
                                 ref="prevSlide"
-                                class="absolute z-10 bg-gray-light/50"
-                                :class="['top-1/2 -translate-y-1/2 py-4 lg:py-8',
-                                         isOutsideNavigation ? 'left-5 max-sm:-left-1' : 'left-0 bg-gray-300 opacity-30 hover:opacity-70 hover:mouse-cursor-pointer']"
+                                class="absolute z-10 bg-gray-light/50 top-1/2 -translate-y-1/2 py-4 lg:py-8"
+                                :class="[
+                                    { 'left-5 max-sm:-left-1' : isOutsideNavigation, 
+                                      'left-0 bg-gray-300 opacity-30 hover:opacity-70 hover:mouse-cursor-pointer': !isOutsideNavigation
+                                    }]"
                             >
                                 <ChevronLeft class="size-8 shrink-0 opacity-50" />
                             </button>
@@ -92,9 +95,10 @@ onMounted(async () => {
                         <slot name="next-slide">
                             <button
                                 ref="nextSlide"
-                                class="absolute z-10 bg-gray-light/50"
-                                :class="['top-1/2 -translate-y-1/2 py-4 lg:py-8',
-                                         isOutsideNavigation ? 'right-5 max-sm:right-0' : 'right-0 bg-gray-300 opacity-30 hover:opacity-70 hover:mouse-cursor-pointer']"
+                                class="absolute z-10 bg-gray-light/50 top-1/2 -translate-y-1/2 py-4 lg:py-8"
+                                :class="{ 'right-5 max-sm:right-0': isOutsideNavigation, 
+                                          'right-0 bg-gray-300 opacity-30 hover:opacity-70 hover:mouse-cursor-pointer' : !isOutsideNavigation 
+                                }"
                             >
                                 <ChevronRight class="size-8 shrink-0 opacity-50" />
                             </button>
@@ -128,7 +132,7 @@ onMounted(async () => {
                     <div
                         v-if="hasPagination"
                         class="swiper swiper-horizontal flex w-full justify-center mt-4"
-                        :class="isOutsidePagination ? '' : 'absolute left-0 bottom-0 z-20 mb-2'"
+                        :class="{ 'absolute left-0 bottom-0 z-20 mb-2' :!isOutsidePagination }"
                     >
                         <div ref="paginationEl" class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal flex" />
                     </div>

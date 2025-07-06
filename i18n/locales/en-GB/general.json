@@ -11,5 +11,9 @@
         "button": {
             "acceptLabel": "Accept"
         }
+    },
+    "image": {
+        "altText": "Image",
+        "altSliderText": "Image-Slider element {currentSlide} of {totalSlides}"
     }
 }
