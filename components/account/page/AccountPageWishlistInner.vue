@@ -3,7 +3,9 @@ import type { Schemas } from '@shopware/api-client/api-types';
 
 withDefaults(
     defineProps<{
-      products?: Schemas['Product'];
+      products?: Schemas['Product'][];
+      currentPage: number;
+      totalPages: number;
       isLoading?: boolean;
     }>(),
     {
@@ -11,29 +13,54 @@ withDefaults(
         isLoading: false,
     },
 );
+
+defineEmits<{
+  'change-page': [page: number];
+}>();
 </script>
 
 <template>
     <div class="gap-5 grid">
-        <h1>
-            {{ $t('wishlist.headline') }}
-        </h1>
+        <slot name="headline">
+            <h1>
+                {{ $t('wishlist.headline') }}
+            </h1>
+        </slot>
 
         <div
             v-if="isLoading"
             class="grid grid-cols-2 md:grid-cols-3 gap-2.5"
         >
-            <div v-for="n in 12" :key="n">
-                <UiSkeleton
-                    class="w-full h-15"
-                />
-            </div>
+            <slot name="loading">
+                <div v-for="n in 12" :key="n">
+                    <UiSkeleton
+                        class="w-full h-50"
+                    />
+                </div>
+            </slot>
         </div>
-        <div
+
+        <template
             v-else-if="products && products.length > 0"
-            class="grid grid-cols-2 md:grid-cols-3 gap-2.5"
-        />
-        <!-- No products -->
+        >
+            <slot name="wishlist-product">
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-2.5">
+
+                    <ProductCard v-for="product in products" :key="product.id" :product="product" />
+                </div>
+            </slot>
+
+            <slot name="wishlist-pagination">
+                <div class="flex w-full justify-center mt-5 gap-2.5">
+                    <SwPagination
+                        :total="totalPages"
+                        :current="currentPage"
+                        @change-page="(page: number) => $emit('change-page', page)"
+                    />
+                </div>
+            </slot>
+        </template>
+
         <template v-else>
             <slot name="wishlist-no-products">
                 <UiAlert class="flex gap-4 items-center">

@@ -4,7 +4,7 @@ export function usePondWishlist() {
 
     const getCustomerWishlistProducts = async (itemIds: string[]) => {
         try {
-            const { data } = await apiClient.invoke("readProduct post /product", {
+            const { data } = await apiClient.invoke('readProduct post /product', {
                 body: { ids: itemIds },
             });
 
