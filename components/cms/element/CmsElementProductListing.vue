@@ -204,15 +204,15 @@ onMounted(async () => {
                     data-testid="listing-pagination-limit-select"
                     @change="changeLimit"
                 >
-                    <option :value="1">1 {{ $t('listing.product') }}</option>
+                    <option :value="1">1 {{ $t('listing.product', { count: 1 }) }}</option>
                     <option :value="15">
-                        15 {{ $t('listing.products') }}
+                        15 {{ $t('listing.product', { count: 2 }) }}
                     </option>
                     <option :value="30">
-                        30 {{ $t('listing.products') }}
+                        30 {{ $t('listing.product', { count: 2 }) }}
                     </option>
                     <option :value="45">
-                        45 {{ $t('listing.products') }}
+                        45 {{ $t('listing.product', { count: 2 }) }}
                     </option>
                 </select>
                 <div
