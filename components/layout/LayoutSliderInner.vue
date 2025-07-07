@@ -74,9 +74,11 @@ onMounted(async () => {
         <slot name="swiper-container">
             <div
                 class="relative w-full"
-                :class="[classes, {
-                    'cursor-grab': slidesCounter > 1, 'px-20 max-sm:px-8': isOutsideNavigation 
-                }]"
+                :class="{
+                    ...classes,
+                    'cursor-grab': slidesCounter > 1, 
+                    'px-20 max-sm:px-8': isOutsideNavigation 
+                }"
             >
                 <slot name="navigation-buttons">
                     <template v-if="hasNavigation">
@@ -84,10 +86,9 @@ onMounted(async () => {
                             <button
                                 ref="prevSlide"
                                 class="absolute z-10 bg-gray-light/50 top-1/2 -translate-y-1/2 py-4 lg:py-8"
-                                :class="[
-                                    { 'left-5 max-sm:-left-1' : isOutsideNavigation, 
-                                      'left-0 bg-gray-300 opacity-30 hover:opacity-70 hover:mouse-cursor-pointer': !isOutsideNavigation
-                                    }]"
+                                :class="{ 'left-5 max-sm:-left-1' : isOutsideNavigation, 
+                                          'left-0 bg-gray-300 opacity-30 hover:opacity-70 hover:mouse-cursor-pointer': !isOutsideNavigation
+                                }"
                             >
                                 <ChevronLeft class="size-8 shrink-0 opacity-50" />
                             </button>
