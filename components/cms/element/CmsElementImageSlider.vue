@@ -100,8 +100,8 @@ const anchorAttrs = (slide: CmsImageSliderItem) =>
         <div class="w-full bg-gray-light h-64 flex justify-center items-center">
             <img
                 :src="productFallBackCover ?? ''"
-                alt=""
-                title=""
+                alt="fallback"
+                title="fallback"
                 class="object-center h-16 aspect-square"
             >
         </div>
