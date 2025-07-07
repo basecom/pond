@@ -5,12 +5,12 @@ const {
     currentPage,
     totalPagesCount,
 } = useWishlist();
-const { getCustomerWishlistProducts } = usePondWishlist();
+const { getProductsById } = usePondProduct();
 const route = useRoute();
 const router = useRouter();
 
 const isLoading = ref(true);
-const wishlistProducts = ref(undefined)
+const wishlistProducts = ref(undefined);
 const defaultLimit = ref(15);
 const defaultPage = ref(1);
 
@@ -23,9 +23,10 @@ onMounted(async () => {
     await getWishlistProducts(query);
 
     // The function getWishlistProducts() updates items. Therefore, the products must be fetched from items using their IDs
-    const result = await getCustomerWishlistProducts(items.value);
-    if (result) {
-        wishlistProducts.value = result;
+    const { data } = await getProductsById(items.value);
+
+    if (data.value) {
+        wishlistProducts.value = data.value.elements;
     }
 
     isLoading.value = false;
@@ -41,9 +42,10 @@ const changePage = async (page: number) => {
     });
     await getWishlistProducts(route.query);
 
-    const result = await getCustomerWishlistProducts(items.value);
-    if (result) {
-        wishlistProducts.value = result;
+    const { data } = await getProductsById(items.value);
+
+    if (data.value) {
+        wishlistProducts.value = data.value.elements;
     }
     isLoading.value = false;
 };
