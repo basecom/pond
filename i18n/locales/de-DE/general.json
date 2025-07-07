@@ -6,6 +6,11 @@
         "copyright": "© 2025 {companyName}",
         "back": "Zurück",
         "showAll": "Alle anzeigen",
-        "categories": "Kategorien"
+        "categories": "Kategorien",
+        "privacyNoticeText": "Ich habe die Datenschutzbestimmungen zur Kenntnis genommen und erkenne diese an.",
+        "button": {
+            "acceptLabel": "Akzeptieren"
+        },
+        "currencySwitch": "Währung umgestellt auf {currency}"
     }
 }
