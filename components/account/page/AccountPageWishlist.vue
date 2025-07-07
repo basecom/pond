@@ -4,19 +4,24 @@ const {
     items,
     getWishlistProducts,
 } = useWishlist();
+const { getCustomerWishlistProducts } = usePondWishlist();
 
 const isLoading = ref(true);
+const wishlistProducts = ref(undefined);
 
 onMounted(async () => {
     await getWishlistProducts();
     isLoading.value = false;
 
-    // ToDo: Load products by id from items: string[]
+    const result = await getCustomerWishlistProducts(items.value);
+    if(result) {
+      wishlistProducts.value = result;
+    }
 });
 
 </script>
 
 
 <template>
-    <AccountPageWishlistInner :is-loading="isLoading" />
+    <AccountPageWishlistInner :is-loading="isLoading" :products="wishlistProducts" />
 </template>
