@@ -54,7 +54,7 @@ const imageClass = computed(() => [
 
 const anchorAttrs = (slide: CmsImageSliderItem) =>
     slide.url
-        ? { href: slide.url, target: slide.newTab ? '_blank' : '_self', rel: 'noopener' }
+        ? { href: slide.url, target: slide.newTab ? '_blank' : '_self', rel: 'noopener', ariaLabel: slide.url }
         : {};
 </script>
 
