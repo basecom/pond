@@ -168,13 +168,15 @@ const onSubmit = (data: VueFormRequestData) => {
                 </slot>
 
                 <slot name="register-submit-button">
-                    <FormButtonElement
+                    <UiButton
                         id="register-submit"
+                        type="submit"
                         name="register-submit"
-                        :label="$t('account.auth.register')"
-                        :is-submit="true"
-                        :is-full="true"
-                    />
+                        :is-loading="isLoading"
+                        class="col-span-12"
+                    >
+                        {{ $t('account.auth.register') }}
+                    </UiButton>
                 </slot>
             </Vueform>
         </slot>

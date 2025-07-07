@@ -40,12 +40,14 @@ onMounted(() => isMounted.value = true);
                 :messages="{ required: 'I am required' }"
             />
 
-            <FormButtonElement
+            <UiButton
                 id="form-submit-button"
                 name="form-submit"
                 label="Submit"
-                :is-submit="true"
-            />
+                type="submit"
+            >
+                Submit
+            </UiButton>
         </Vueform>
 
         <h1> I'm a Vue form, which displays all errors </h1>
@@ -81,12 +83,14 @@ onMounted(() => isMounted.value = true);
                 :messages="{ required: 'Checkbox is required' }"
             />
 
-            <FormButtonElement
+            <UiButton
                 id="form-2-submit-button"
                 name="form-submit"
                 label="Submit"
-                :is-submit="true"
-            />
+                type="submit"
+            >
+                Submit
+            </UiButton>
         </Vueform>
 
         <h1> I'm a Vue form (Grid with 12 col span), which uses different cols for form field and uses group elements </h1>
@@ -124,12 +128,14 @@ onMounted(() => isMounted.value = true);
                 />
             </GroupElement>
 
-            <FormButtonElement
+            <UiButton
                 id="form-3-submit-button"
                 name="form-submit"
                 label="Submit"
-                :is-submit="true"
-            />
+                type="submit"
+            >
+                Submit
+            </UiButton>
         </Vueform>
     </div>
 </template>
