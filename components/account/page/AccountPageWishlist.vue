@@ -15,7 +15,7 @@ const defaultLimit = ref(15);
 const defaultPage = ref(1);
 
 onMounted(async () => {
-  // Define query so that limit is adjustable in the Pond component
+    // Define query so that limit is adjustable in the Pond component
     const query = {
         limit: defaultLimit.value,
         page: route.query.page ?? defaultPage.value,
