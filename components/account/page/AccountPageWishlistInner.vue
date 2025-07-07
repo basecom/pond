@@ -34,7 +34,7 @@ defineEmits<{
             <slot name="loading">
                 <div v-for="n in 12" :key="n">
                     <UiSkeleton
-                        class="w-full h-50"
+                        class="w-full h-30 md:h-50"
                     />
                 </div>
             </slot>
