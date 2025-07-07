@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { ChevronRight, ChevronLeft  } from 'lucide-vue-next';
 import type { Swiper } from 'swiper';
-import type { NavigationOptions } from '~/types/cms/CmsImageSlider/NavigationOptions';
-import type { SliderBreakpointOptions } from '~/types/cms/CmsImageSlider/SwiperBreakpointOptions';
+import type { SliderNavigationOptions } from '~/types/cms/SliderNavigationOptions';
+import type { SliderBreakpointOptions } from '~/types/cms/SliderBreakpointOptions';
 
 const props = withDefaults(
     defineProps<{
       autoSlide?: boolean;
       autoplayTimeout?: number;
       speed?: number;
-      navigationDots?: NavigationOptions;
-      navigationArrows?: NavigationOptions;
+      navigationDots?: SliderNavigationOptions;
+      navigationArrows?: SliderNavigationOptions;
       displayMode?: string; 
       minHeight?: string;
       classes?: { [key: string]: boolean };

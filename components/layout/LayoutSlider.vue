@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import type { NavigationOptions } from '~/types/cms/CmsImageSlider/NavigationOptions';
-import type { SliderBreakpointOptions } from '~/types/cms/CmsImageSlider/SwiperBreakpointOptions';
+import type { SliderNavigationOptions } from '~/types/cms/SliderNavigationOptions';
+import type { SliderBreakpointOptions } from '~/types/cms/SliderBreakpointOptions';
 
 withDefaults(
     defineProps<{
       autoSlide?: boolean;
       autoplayTimeout?: number;
       speed?: number;
-      navigationDots?: NavigationOptions;
-      navigationArrows?: NavigationOptions;
+      navigationDots?: SliderNavigationOptions;
+      navigationArrows?: SliderNavigationOptions;
       displayMode?: string;
       minHeight?: string;
       classes?: { [key: string]: boolean };

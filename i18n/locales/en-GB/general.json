@@ -14,6 +14,6 @@
     },
     "image": {
         "altText": "Image",
-        "altSliderText": "Image-Slider element {currentSlide} of {totalSlides}"
+        "altSliderText": "Image slider element {currentSlide} of {totalSlides}"
     }
 }

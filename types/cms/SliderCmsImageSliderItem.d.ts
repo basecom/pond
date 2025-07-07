@@ -1,4 +1,4 @@
-export type CmsImageSliderItem = {
+export type SliderCmsImageSliderItem = {
   url: string;
   newTab: boolean;
   media: Schemas['Media'];

@@ -1,9 +1,10 @@
 <script setup lang="ts">
 // Overrides node_modules/@shopware/cms-base-layer/components/public/cms/element/CmsElementImageSlider.vue
+// Change: add swiper js for slider functionality
 import type {
     CmsElementImageSlider,
 } from '@shopware/composables';
-import type { CmsImageSliderItem } from '~/types/cms/CmsImageSlider/CmsImageSliderItem';
+import type { SliderCmsImageSliderItem } from '~/types/cms/SliderCmsImageSliderItem';
 
 const props = defineProps<{
   content: CmsElementImageSlider;
@@ -52,7 +53,7 @@ const imageClass = computed(() => [
     'w-full h-full',
 ]);
 
-const anchorAttrs = (slide: CmsImageSliderItem) =>
+const anchorAttrs = (slide: SliderCmsImageSliderItem) =>
     slide.url
         ? { href: slide.url, target: slide.newTab ? '_blank' : '_self', rel: 'noopener', ariaLabel: slide.url }
         : {};
