@@ -56,6 +56,7 @@ const onUpdate = async (selectedId: AcceptableValue) => {
                             v-for="availableCurrency in availableCurrencies"
                             :key="availableCurrency.id"
                             :value="availableCurrency.id"
+                            class="cursor-pointer"
                         >
                             {{ availableCurrency.symbol }}
                             {{ availableCurrency.shortName }}

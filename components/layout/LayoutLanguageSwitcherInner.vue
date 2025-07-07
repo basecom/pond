@@ -55,7 +55,7 @@ const onUpdate = async (selectedValue: AcceptableValue): Promise<void> =>  {
                         :key="language.id"
                         :value="language.id"
                     >
-                        <div class="flex items-center gap-1">
+                        <div class="flex items-center gap-1 cursor-pointer">
                             <template v-if="language.translationCode.code">
                                 <Icon :name="`custom-icons:${language.translationCode.code}`" />
                             </template>
