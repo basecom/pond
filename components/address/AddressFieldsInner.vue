@@ -5,14 +5,6 @@ withDefaults(
     defineProps<{
       isDetail?: boolean;
       accountTypeConditions?: [];
-      streetCols?: Columns;
-      zipCols?: Columns;
-      cityCols?: Columns;
-      additionalAddressLine1Cols?: Columns;
-      additionalAddressLine2Cols?: Columns;
-      countryCols?: Columns;
-      stateCols?: Columns;
-      phoneNumberCols?: Columns;
       /**
        * This component can be used multiple times in a form (e.g., registration form). To ensure that the form fields
        * are unique upon submission, it is possible to specify a prefix
@@ -20,45 +12,57 @@ withDefaults(
       prefix?: string;
       headlineClasses?: string;
       headline?: string;
+      columns?: {
+        streetColumns?: Columns,
+        zipColumns?: Columns,
+        cityColumns?: Columns,
+        additionalAddressLine1Columns?: Columns,
+        additionalAddressLine2Columns?: Columns,
+        countryColumns?: Columns,
+        stateColumns?: Columns,
+        phoneNumberColumns?: Columns,
+      }
     }>(),
     {
         isDetail: false,
         accountTypeConditions: undefined,
-        streetCols: () => ({
-            sm: 12,
-            md: 6,
-        }),
-        zipCols: () => ({
-            sm: 12,
-            md: 3,
-        }),
-        cityCols: () => ({
-            sm: 12,
-            md: 3,
-        }),
-        additionalAddressLine1Cols: () => ({
-            sm: 12,
-            md: 6,
-        }),
-        additionalAddressLine2Cols: () => ({
-            sm: 12,
-            md: 6,
-        }),
-        countryCols: () => ({
-            sm: 12,
-            md: 6,
-        }),
-        stateCols: () => ({
-            sm: 12,
-            md: 6,
-        }),
-        phoneNumberCols: () => ({
-            sm: 12,
-            md: 6,
-        }),
         prefix: '',
         headlineClasses: undefined,
         headline: undefined,
+        columns: () => ({
+            streetColumns: {
+                sm: 12,
+                md: 6,
+            },
+            zipColumns: {
+                sm: 12,
+                md: 3,
+            },
+            cityColumns: {
+                sm: 12,
+                md: 3,
+            },
+            additionalAddressLine1Columns: {
+                sm: 12,
+                md: 6,
+            },
+            additionalAddressLine2Columns: {
+                sm: 12,
+                md: 6,
+            },
+            countryColumns: {
+                sm: 12,
+                md: 6,
+            },
+            stateColumns: {
+                sm: 12,
+                md: 6,
+            },
+            phoneNumberColumns: {
+                sm: 12,
+                md: 6,
+            },
+        }),
     },
 );
 
@@ -129,7 +133,7 @@ const onSelectCountry = (selectedCountryId: string) => {
                 :placeholder="$t('address.street.placeholder')"
                 rules="required"
                 :messages="{ required: $t('address.street.errorRequired') }"
-                :columns="streetCols"
+                :columns="columns.streetColumns"
             />
         </slot>
 
@@ -141,7 +145,7 @@ const onSelectCountry = (selectedCountryId: string) => {
                 :placeholder="$t('address.zipCode.placeholder')"
                 rules="required"
                 :messages="{ required: $t('address.zipCode.errorRequired') }"
-                :columns="zipCols"
+                :columns="columns.zipColumns"
             />
         </slot>
 
@@ -153,7 +157,7 @@ const onSelectCountry = (selectedCountryId: string) => {
                 :placeholder="$t('address.city.placeholder')"
                 rules="required"
                 :messages="{ required: $t('address.city.errorRequired') }"
-                :columns="cityCols"
+                :columns="columns.cityColumns"
             />
         </slot>
 
@@ -166,7 +170,7 @@ const onSelectCountry = (selectedCountryId: string) => {
                 :placeholder="$t('address.additionalAddressLine1.placeholder')"
                 :rules="isAdditionalAddress1FieldRequired ? 'required': ''"
                 :messages="{ required: $t('address.additionalAddressLine1.errorRequired') }"
-                :columns="additionalAddressLine1Cols"
+                :columns="columns.additionalAddressLine1Columns"
             />
         </slot>
 
@@ -179,7 +183,7 @@ const onSelectCountry = (selectedCountryId: string) => {
                 :placeholder="$t('address.additionalAddressLine2.placeholder')"
                 :rules="isAdditionalAddress2FieldRequired ? 'required': ''"
                 :messages="{ required: $t('address.additionalAddressLine2.errorRequired') }"
-                :columns="additionalAddressLine2Cols"
+                :columns="columns.additionalAddressLine2Columns"
             />
         </slot>
 
@@ -192,7 +196,7 @@ const onSelectCountry = (selectedCountryId: string) => {
                 :messages="{ required: $t('address.country.errorRequired') }"
                 rules="required"
                 :items="formattedCountries"
-                :columns="countryCols"
+                :columns="columns.countryColumns"
                 @on-change="(value: string) => onSelectCountry(value)"
             />
         </slot>
@@ -205,7 +209,7 @@ const onSelectCountry = (selectedCountryId: string) => {
                 :label="$t('address.state.label')"
                 :placeholder="$t('address.state.placeholder')"
                 :items="states"
-                :columns="stateCols"
+                :columns="columns.stateColumns"
             />
         </slot>
 
@@ -218,7 +222,7 @@ const onSelectCountry = (selectedCountryId: string) => {
                 :placeholder="$t('address.phoneNumber.placeholder')"
                 :rules="isPhoneNumberRequired ? 'required': ''"
                 :messages="{ required: $t('address.phoneNumber.errorRequired') }"
-                :columns="phoneNumberCols"
+                :columns="columns.phoneNumberColumns"
             />
         </slot>
     </GroupElement>

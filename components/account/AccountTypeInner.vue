@@ -3,7 +3,7 @@ import type {Columns} from '~/types/vueForm/Columns';
 
 withDefaults(
     defineProps<{
-      cols?: Columns;
+      columns?: Columns;
       /**
        * This component can be used multiple times in a form (e.g., registration form). To ensure that the form fields
        * are unique upon submission, it is possible to specify a prefix
@@ -11,7 +11,7 @@ withDefaults(
       prefix?: string;
     }>(),
     {
-        cols: () => ({
+        columns: () => ({
             sm: 12,
             md: 3,
         }),
@@ -30,7 +30,7 @@ withDefaults(
             rules="required"
             :items="[{ value: 'private', label: $t('account.customer.accountType.private') }, { value: 'business', label: $t('account.customer.accountType.business') }]"
             default-value="private"
-            :columns="cols"
+            :columns="columns"
         />
     </slot>
 </template>

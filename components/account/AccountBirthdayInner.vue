@@ -3,11 +3,11 @@ import type {Columns} from '~/types/vueForm/Columns';
 
 withDefaults(
     defineProps<{
-      cols?: Columns;
+      columns?: Columns;
       prefix?: string;
     }>(),
     {
-        cols: () => ({
+        columns: () => ({
             xs: 1,
             md: 2,
         }),
@@ -37,7 +37,7 @@ const possibleBirthdayYears = computed(() => {
                     :rules="isBirthdayRequired ? ['required'] : ''"
                     :messages="{ required: $t('account.customer.birthday.errorRequired') }"
                     :items="birthdayDays"
-                    :columns="cols"
+                    :columns="columns"
                 />
             </slot>
 
@@ -49,7 +49,7 @@ const possibleBirthdayYears = computed(() => {
                     :messages="{ required: $t('account.customer.birthday.errorRequired') }"
                     :rules="isBirthdayRequired ? ['required'] : ''"
                     :items="birthdayMonths"
-                    :columns="cols"
+                    :columns="columns"
                 />
             </slot>
 
@@ -61,7 +61,7 @@ const possibleBirthdayYears = computed(() => {
                     :messages="{ required: $t('account.customer.birthday.errorRequired') }"
                     :rules="isBirthdayRequired ? ['required'] : ''"
                     :items="possibleBirthdayYears"
-                    :columns="cols"
+                    :columns="columns"
                 />
             </slot>
         </GroupElement>

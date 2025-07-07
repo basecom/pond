@@ -4,6 +4,7 @@ import type {RegisterFormData} from '~/types/vueForm/Register';
 
 const customerStore = useCustomerStore();
 const { t } = useI18n();
+const { handleError } = usePondHandleError();
 
 const isLoading = ref(false);
 const errorMessage: Ref<string|undefined> = ref(undefined);
@@ -22,9 +23,8 @@ const register = async (registerData: RegisterFormData) => {
             } else {
                 errorMessage.value = t('error.generic');
             }
-
         } else {
-            console.error('Unexpected registration error:', error);
+            handleError(`Unexpected registration error: ${error}`);
             errorMessage.value = t('error.generic');
         }
     } finally {

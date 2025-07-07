@@ -43,7 +43,7 @@
             },
             "salutation": {
                 "label": "Anrede",
-                "errorRequired": "Bitte Anrede auswählen",
+                "errorRequired": "Bitte wählen Sie eine Anrede aus",
                 "placeholder": "Anrede auswählen ..."
             },
             "firstName": {
@@ -90,7 +90,7 @@
                 "day": "Tag",
                 "month": "Monat",
                 "year": "Jahr",
-                "errorRequired": "Bitte geben Sie einen Geburtstag ein"
+                "errorRequired": "Bitte geben Sie Ihren Geburtstag an"
             },
             "birthdayMonth": "Monat des Geburtstages",
             "birthdayYear": "Jahr des Geburtstages",

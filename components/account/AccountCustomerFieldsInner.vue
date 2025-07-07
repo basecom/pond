@@ -6,70 +6,74 @@ withDefaults(
       // The detail view includes the fields email, password, vat id and birthday
       isDetail?: boolean;
       accountTypeConditions?: [];
-      accountTypeCols?: Columns;
-      salutationCols?: Columns;
-      titleCols?: Columns;
-      firstNameCols?: Columns;
-      lastNameCols?: Columns;
-      birthdayCols?: Columns;
-      companyCols?: Columns;
-      vatIdCols?: Columns;
-      departmentCols?: Columns;
-      emailCols?: Columns;
-      passwordCols?: Columns,
       /**
        * This component can be used multiple times in a form (e.g., registration form). To ensure that the form fields
        * are unique upon submission, it is possible to specify a prefix
        */
       prefix?: string;
       isVatIdRequiredBySelectedCountry?: boolean;
+      columns?: {
+        accountTypeColumns?: Columns;
+        salutationColumns?: Columns;
+        titleColumns?: Columns;
+        firstNameColumns?: Columns;
+        lastNameColumns?: Columns;
+        birthdayColumns?: Columns;
+        companyColumns?: Columns;
+        vatIdColumns?: Columns;
+        departmentColumns?: Columns;
+        emailColumns?: Columns;
+        passwordColumns?: Columns,
+      }
     }>(),
     {
         isDetail: false,
         accountTypeConditions: undefined,
-        accountTypeCols: () => ({
-            sm: 12,
-            md: 3,
-        }),
-        salutationCols: () => ({
-            sm: 12,
-            md: 3,
-        }),
-        birthdayCols: () => ({
-            sm: 1,
-            md: 2,
-        }),
-        titleCols: () => ({
-            sm: 12,
-            md: 3,
-        }),
-        firstNameCols: () => ({
-            sm: 12,
-            md: 6,
-        }),
-        lastNameCols: () => ({
-            sm: 12,
-            md: 6,
-        }),
-        companyCols: () => ({
-            sm: 12,
-            md: 6,
-        }),
-        vatIdCols: () => ({
-            sm: 12,
-            md: 6,
-        }),
-        departmentCols: () => ({
-            sm: 12,
-            md: 6,
-        }),
-        emailCols: () => ({
-            sm: 12,
-            md: 6,
-        }),
-        passwordCols: () => ({
-            sm: 12,
-            md: 6,
+        columns: () => ({
+            accountTypeColumns: {
+                sm: 12,
+                md: 3,
+            },
+            salutationColumns: {
+                sm: 12,
+                md: 3,
+            },
+            birthdayColumns: {
+                sm: 1,
+                md: 2,
+            },
+            titleColumns: {
+                sm: 12,
+                md: 3,
+            },
+            firstNameColumns: {
+                sm: 12,
+                md: 6,
+            },
+            lastNameColumns: {
+                sm: 12,
+                md: 6,
+            },
+            companyColumns: {
+                sm: 12,
+                md: 6,
+            },
+            vatIdColumns: {
+                sm: 12,
+                md: 6,
+            },
+            departmentColumns: {
+                sm: 12,
+                md: 6,
+            },
+            emailColumns: {
+                sm: 12,
+                md: 6,
+            },
+            passwordColumns: {
+                sm: 12,
+                md: 6,
+            },
         }),
         prefix: '',
         isVatIdRequiredBySelectedCountry: false,
@@ -107,7 +111,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
                 :label="$t('account.customer.title.label')"
                 :name="`${prefix}title`"
                 :placeholder="$t('account.customer.title.placeholder')"
-                :columns="titleCols"
+                :columns="columns.titleColumns"
             />
         </slot>
     </GroupElement>
@@ -121,7 +125,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
                 :placeholder="$t('account.customer.firstName.placeholder')"
                 rules="required"
                 :messages="{ required: $t('account.customer.firstName.errorRequired') }"
-                :columns="firstNameCols"
+                :columns="columns.firstNameColumns"
             />
         </slot>
 
@@ -133,7 +137,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
                 :placeholder="$t('account.customer.lastName.placeholder')"
                 rules="required"
                 :messages="{ required: $t('account.customer.lastName.errorRequired') }"
-                :columns="lastNameCols"
+                :columns="columns.lastNameColumns"
             />
         </slot>
     </GroupElement>
@@ -152,7 +156,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
                 rules="required"
                 :messages="{ required: $t('account.customer.company.errorRequired') }"
                 :conditions="accountTypeConditions"
-                :columns="companyCols"
+                :columns="columns.companyColumns"
             />
         </slot>
 
@@ -163,7 +167,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
                 :label="$t('account.customer.department.label')"
                 :placeholder="$t('account.customer.department.placeholder')"
                 :conditions="accountTypeConditions"
-                :columns="departmentCols"
+                :columns="columns.departmentColumns"
             />
         </slot>
 
@@ -175,7 +179,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
                 :label="$t('account.customer.vatId.label')"
                 :placeholder="$t('account.customer.vatId.placeholder')"
                 :conditions="accountTypeConditions"
-                :columns="vatIdCols"
+                :columns="columns.vatIdColumns"
             />
             <FormTextElement
                 v-if="isDetail && isVatIdRequiredBySelectedCountry"
@@ -184,7 +188,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
                 :label="$t('account.customer.vatId.label')"
                 :placeholder="$t('account.customer.vatId.placeholder')"
                 :conditions="accountTypeConditions"
-                :columns="vatIdCols"
+                :columns="columns.vatIdColumns"
                 rules="required"
             />
         </slot>
@@ -205,7 +209,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
             ]"
             :debounce="300"
             :messages="{ email: $t('account.customer.email.errorInvalid'), confirmed: $t('account.customer.email.errorConfirmed'), required: $t('account.customer.email.errorRequired') }"
-            :columns="emailCols"
+            :columns="columns.emailColumns"
         />
     </slot>
 
@@ -220,7 +224,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
             rules="required|email"
             :debounce="300"
             :messages="{ email: $t('account.customer.email.errorInvalid'), required: $t('account.customer.email.errorRequired') }"
-            :columns="emailCols"
+            :columns="columns.emailColumns"
         />
     </slot>
 
@@ -243,7 +247,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
             ]"
             :debounce="300"
             :messages="{ required: $t('account.customer.password.errorRequired'), confirmed: $t('account.customer.password.errorConfirmed'), min: $t('account.customer.password.errorMin', { number: passwordMinLength }) }"
-            :columns="passwordCols"
+            :columns="columns.passwordColumns"
         />
     </slot>
 
@@ -258,7 +262,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
             :placeholder="$t('account.customer.password.confirm.placeholder')"
             :messages="{ required: $t('account.customer.password.errorRequired') }"
             rules="required"
-            :columns="passwordCols"
+            :columns="columns.passwordColumns"
         />
     </slot>
 </template>
