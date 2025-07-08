@@ -32,7 +32,11 @@
             "submitButton": "Request email",
             "backButton": "Back to login",
             "successHeader": "Email sent",
-            "successMessage": "A confirmation email with a password reset link has been sent if the email address provided is registered."
+            "successMessage": "A confirmation email with a password reset link has been sent if the email address provided is registered.",
+            "hash": {
+                "missing": "Der Link zum Zurücksetzen des Passworts scheint defekt zu sein.",
+                "invalid": "Der Link zum Zurücksetzen des Passworts scheint defekt zu sein."
+            }
         },
         "customer": {
             "accountType": "Account type",
