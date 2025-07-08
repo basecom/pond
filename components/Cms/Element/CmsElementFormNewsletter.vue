@@ -151,7 +151,7 @@ watch(customer, async newCustomer => {
             v-model="customerMail"
             type="email"
             :label="$t('account.login.email.label')"
-            :name="`newsletterEmail-${element.id}`"
+            name="email"
             :placeholder="$t('account.login.email.placeholder')"
             validation="required"
             :classes="{
@@ -163,7 +163,7 @@ watch(customer, async newCustomer => {
             <FormKit
                 :id="`newsletterSalutationId-${element.id}`"
                 type="select"
-                :name="`newsletterSalutationId-${element.id}`"
+                name="salutationId"
                 :placeholder="$t('account.register.salutation.placeholder')"
                 :options="salutationOptions"
                 :classes="{
@@ -175,7 +175,7 @@ watch(customer, async newCustomer => {
                 :id="`newsletterFirstName-${element.id}`"
                 type="text"
                 :label="$t('account.register.firstname.label')"
-                :name="`newsletterFirstName-${element.id}`"
+                name="firstName"
                 :placeholder="$t('account.register.firstname.placeholder')"
                 :classes="{
                     outer: 'col-span-1',
@@ -186,7 +186,7 @@ watch(customer, async newCustomer => {
                 :id="`newsletterLastName-${element.id}`"
                 type="text"
                 :label="$t('account.register.lastname.label')"
-                :name="`newsletterLastName-${element.id}`"
+                name="lastName"
                 :placeholder="$t('account.register.lastname.placeholder')"
                 :classes="{
                     outer: 'col-span-1',
