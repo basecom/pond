@@ -36,7 +36,18 @@
             "hash": {
                 "missing": "Der Link zum Zurücksetzen des Passworts scheint defekt zu sein.",
                 "invalid": "Der Link zum Zurücksetzen des Passworts scheint defekt zu sein."
-            }
+            },
+            "password": {
+                "new": {
+                    "label": "Neues Passwort",
+                    "placeholder": "Neues Passwort eingeben ..."
+                },
+                "newConfirm": {
+                    "label": "Passwort-Bestätigung",
+                    "placeholder": "Passwort-Bestätigung eingeben ..."
+                }
+            },
+            "submitRecoverButton": "Password ändern"
         },
         "customer": {
             "accountType": {
