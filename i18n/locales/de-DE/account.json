@@ -153,8 +153,15 @@
         },
         "register": {
             "headline": "Registrierung",
-            "acceptedDataProtection": {
-                "label": "Ich habe die Datenschutzbestimmungen zur Kenntnis genommen und die AGB gelesen und bin mit ihnen einverstanden.",
+            "dataProtection": {
+                "policy": {
+                    "label": "Mit der Auswahl akzeptieren Sie unsere",
+                    "trigger": "Datenschutzinformationen"
+                },
+                "termsAndConditions": {
+                    "label": "und unsere",
+                    "trigger": "allgemeinen Geschäftsbedingungen"
+                },
                 "errorRequired": "Bitte stimmen Sie den Datenschutzbestimmungen zu"
             }
         }
