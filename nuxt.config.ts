@@ -68,6 +68,7 @@ export default defineNuxtConfig({
         '/account/**': { ssr: false },
         '/checkout/**': { ssr: false },
         '/newsletter/**': { ssr: false },
+        '/search/**': { ssr: false },
         '/wishlist/**': { ssr: false },
     },
 
