@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import { useToast } from '@/components/ui/toast/use-toast';
+
 const { formatLink } = useInternationalization();
 const customerStore = useCustomerStore();
 const { customer } = storeToRefs(customerStore);
+const { toast } = useToast();
+const { t } = useI18n();
 
 const accountLinks: {name: string, link: string}[] = [
     {
@@ -31,8 +35,11 @@ const accountLinks: {name: string, link: string}[] = [
 ];
 
 const logout = async () => {
+    await navigateTo(formatLink('/'));
     await customerStore.logout();
-    navigateTo(formatLink('/'));
+    toast({
+        title: t('account.auth.logoutSuccess'),
+    });
 };
 </script>
 

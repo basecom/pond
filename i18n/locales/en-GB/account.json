@@ -11,7 +11,9 @@
         "auth": {
             "login": "Sign in",
             "register": "Sign up",
-            "logout": "Logout"
+            "logout": "Logout",
+            "loginSuccess": "Successfully logged in",
+            "logoutSuccess": "Successfully logged out"
         },
         "email": {
             "label": "Your Email Address",
