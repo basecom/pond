@@ -1,66 +1,70 @@
 <script setup lang="ts">
-const configStore = useConfigStore();
+import type { RecoverPasswordFormData, RecoverPasswordFormSubmitData } from '~/types/vueForm/RecoverPassword';
 
-const passwordMinLength = configStore.get('core.loginRegistration.passwordMinLength') as number;
-const passwordMinRule = ref(`min:${passwordMinLength}`);
+withDefaults(
+    defineProps<{
+      displayErrors?: boolean;
+      isLoading?: boolean;
+      showRequired?: string[];
+      errorMessage?: string;
+      wrapperClasses?: string;
+      submitButtonClasses?: string;
+      floatPlaceholders?: boolean;
+    }>(),
+    {
+        displayErrors: false,
+        isLoading: false,
+        showRequired: () => ['label'],
+        errorMessage: undefined,
+        wrapperClasses: 'grid gap-5',
+        submitButtonClasses: 'col-span-12',
+        floatPlaceholders: false,
+    },
+);
+
+const emits = defineEmits<{
+  recoverPassword: [formData: RecoverPasswordFormData];
+}>();
 </script>
 <template>
-  <!-- Todo: Wrapper classes als props -->
-  <!-- ToDo: Loading -->
-  <div class="grid gap-5">
-    <slot name="headline">
-      <h1> {{ $t('account.recover.header') }} </h1>
-    </slot>
-
-    <slot name="form">
-      <Vueform
-          :display-errors="false"
-          :loading="false"
-          :endpoint="false"
-          :show-required="['label']"
-      >
-        <slot name="new-password">
-          <FormTextElement
-              id="newPassword"
-              :label="$t('account.recover.password.new.label')"
-              autocomplete="password"
-              name="newPassword"
-              input-type="password"
-              :placeholder="$t('account.recover.password.new.placeholder')"
-              :rules="[
-                'required',
-                'confirmed',
-                passwordMinRule
-            ]"
-              :debounce="300"
-              :messages="{ required: $t('account.customer.password.errorRequired'), confirmed: $t('account.customer.password.errorConfirmed'), min: $t('account.customer.password.errorMin', { number: passwordMinLength }) }"
-          />
+    <div :class="wrapperClasses">
+        <slot name="headline">
+            <h1> {{ $t('account.recover.header') }} </h1>
         </slot>
 
-        <slot name="new-password-confirm">
-          <FormTextElement
-              id="newPasswordConfirm"
-              autocomplete="new-password"
-              name="newPasswordConfirm"
-              :label="$t('account.recover.password.newConfirm.label')"
-              input-type="password"
-              :placeholder="$t('account.recover.password.newConfirm.placeholder')"
-              :messages="{ required: $t('account.customer.password.errorRequired') }"
-              rules="required"
-          />
-        </slot>
+        <slot name="form">
+            <Vueform
+                :display-errors="displayErrors"
+                :loading="isLoading"
+                :endpoint="false"
+                :show-required="showRequired"
+                :float-placeholders="floatPlaceholders"
+                @submit="(value: RecoverPasswordFormSubmitData) => emits('recoverPassword', value.data)"
+            >
+                <AccountPassword
+                    :show-confirm="true"
+                    password-id="newPassword"
+                    password-name="newPassword"
+                    :password-label="$t('account.recover.password.new.label')"
+                    :password-placeholder="$t('account.recover.password.new.placeholder')"
+                    password-confirm-id="newPassword_confirmation"
+                    password-confirm-name="newPassword_confirmation"
+                    :password-confirm-label="$t('account.recover.password.newConfirm.label')"
+                    :password-confirm-placeholder="$t('account.recover.password.newConfirm.placeholder')"
+                />
 
-        <slot name="recover-submit-button">
-          <UiButton
-              id="recover-submit"
-              type="submit"
-              name="recover-submit"
-              class="col-span-12"
-          >
-            {{ $t('account.recover.submitRecoverButton') }}
-          </UiButton>
+                <slot name="recover-submit-button">
+                    <UiButton
+                        id="recover-submit"
+                        type="submit"
+                        name="recover-submit"
+                        :class="submitButtonClasses"
+                        :is-loading="isLoading"
+                    >
+                        {{ $t('account.recover.submitRecoverButton') }}
+                    </UiButton>
+                </slot>
+            </Vueform>
         </slot>
-      </Vueform>
-    </slot>
-  </div>
+    </div>
 </template>
