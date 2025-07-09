@@ -2,7 +2,7 @@
 import type {Schemas} from '@shopware/api-client/api-types';
 import {getMainImageUrl} from '@shopware-pwa/helpers-next';
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
       cartItem: Schemas['LineItem'];
       itemTotalPrice?: number,
@@ -11,21 +11,25 @@ withDefaults(
         itemTotalPrice: 0,
     },
 );
-const {getFormattedPrice} = usePrice();
 
+const { getFormattedPrice } = usePrice();
+
+const imageUrl = computed(() => props.cartItem ? getMainImageUrl(props.cartItem) : undefined);
+const label = computed(() => props.cartItem?.label || '');
 </script>
+
 <template>
     <slot name="discount-content">
         <slot name="image-container">
             <div class="order-1 mb-4 flex w-5/6 flex-col">
                 <div class="mb-2 w-auto">
                     <slot name="image">
-                        <CartItemElementImage :cart-item-image="cartItem ? getMainImageUrl(cartItem) : undefined" />
+                        <CartItemElementImage :cart-item-image="imageUrl" />
                     </slot>
                 </div>
                 <div class="font-bold">
                     <slot name="label">
-                        {{ cartItem?.label }}
+                        {{ label }}
                     </slot>
                 </div>
             </div>

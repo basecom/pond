@@ -33,6 +33,7 @@ const {getFormattedPrice} = usePrice();
 
 const configStore = useConfigStore();
 const showDeliveryTime = configStore.get('core.cart.showDeliveryTime') as boolean;
+const wishlistEnabled = configStore.get('core.cart.wishlistEnabled') as boolean;
 
 const emits = defineEmits<{
   isLoading: [boolean],
@@ -85,7 +86,7 @@ const emits = defineEmits<{
                     </div>
                 </slot>
                 <slot name="wishlist-wrapper">
-                    <div class="mt-2 text-xs">
+                    <div v-if="wishlistEnabled" class="mt-2 text-xs">
                         <slot name="wishlist">
                             <CartItemElementAddToWishlist
                                 :is-in-wishlist="isInWishlist"
@@ -97,6 +98,7 @@ const emits = defineEmits<{
                     </div>
                 </slot>
             </div>
+            <slot name="additional-wrapper" />
         </slot>
         <slot name="quantity-wrapper">
             <div class="order-3 mb-4 flex w-full items-center justify-between">
