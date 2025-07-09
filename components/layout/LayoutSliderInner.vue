@@ -85,9 +85,9 @@ onMounted(async () => {
                         <slot name="previous-slide">
                             <button
                                 ref="prevSlide"
-                                class="absolute z-10 bg-gray-light/50 top-1/2 -translate-y-1/2 py-4 lg:py-8"
+                                class="absolute z-10 bg-gray-light/50 top-1/2 -translate-y-1/2 py-4 lg:py-8 cursor-pointer"
                                 :class="{ 'left-5 max-sm:-left-1' : isOutsideNavigation, 
-                                          'left-0 bg-gray-300 opacity-30 hover:opacity-70 hover:mouse-cursor-pointer': !isOutsideNavigation
+                                          'left-0 bg-gray-300 opacity-30 hover:opacity-70': !isOutsideNavigation
                                 }"
                             >
                                 <ChevronLeft class="size-8 shrink-0 opacity-50" />
@@ -96,9 +96,9 @@ onMounted(async () => {
                         <slot name="next-slide">
                             <button
                                 ref="nextSlide"
-                                class="absolute z-10 bg-gray-light/50 top-1/2 -translate-y-1/2 py-4 lg:py-8"
+                                class="absolute z-10 bg-gray-light/50 top-1/2 -translate-y-1/2 py-4 lg:py-8 cursor-pointer"
                                 :class="{ 'right-5 max-sm:right-0': isOutsideNavigation, 
-                                          'right-0 bg-gray-300 opacity-30 hover:opacity-70 hover:mouse-cursor-pointer' : !isOutsideNavigation 
+                                          'right-0 bg-gray-300 opacity-30 hover:opacity-70r' : !isOutsideNavigation 
                                 }"
                             >
                                 <ChevronRight class="size-8 shrink-0 opacity-50" />
@@ -122,7 +122,7 @@ onMounted(async () => {
                         :initial-slide="initialSlide"
                         :navigation="hasNavigation ? { prevEl: prevSlide, nextEl: nextSlide } : false"
                         :pagination="hasPagination ? { el: paginationEl, clickable: true, 
-                                                       bulletClass: 'swiper-pagination-bullet bg-gray-400 block w-4 h-4 rounded-full mx-2 opacity-100 transition-all', 
+                                                       bulletClass: 'swiper-pagination-bullet bg-gray-400 block w-4 h-4 rounded-full mx-2 opacity-100 transition-all cursor-pointer', 
                                                        bulletActiveClass: 'swiper-pagination-bullet-active bg-brand-primary! shadow-brand-primary shadow-sm' } : false"
                         @swiperslideslengthchange="$emit('slides-change')"
                     >

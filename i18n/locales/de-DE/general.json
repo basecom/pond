@@ -13,8 +13,14 @@
         },
         "currencySwitch": "Währung umgestellt auf {currency}"
     },
+
     "image": {
-    "altText": "Bild",
-    "altSliderText": "Bild-Slider Element {currentSlide} von {totalSlides}"
+        "altText": "Bild",
+        "altSliderText": "Bild-Slider Element {currentSlide} von {totalSlides}"
+    },
+
+    "video": {
+        "vimeoTitle": "Vimeo Video",
+        "youtubeTitle": "YouTube Video"
     }
 }
