@@ -1,14 +1,36 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
 
-defineProps<{
+const props = defineProps<{
   customer: Schemas['Customer'];
 }>();
 
 const configStore = useConfigStore();
+const {newsletterStatus , isNewsletterSubscriber, getNewsletterStatus} = useNewsletter();
+const { handleError } = usePondHandleError();
+
 const showTitle = configStore.get('core.loginRegistration.showTitleField') as boolean;
 const showAdditionalAddressField1 = configStore.get('core.loginRegistration.showAdditionalAddressField1') as boolean;
 const showAdditionalAddressField2 = configStore.get('core.loginRegistration.showAdditionalAddressField2') as boolean;
+console.log('custoomer', newsletterStatus.value, isNewsletterSubscriber.value, await getNewsletterStatus());
+
+// ToDo: Check or Define possible states
+// status: "undefined" | "notSet" | "direct" | "optIn" | "optOut";
+const customerNewsletterStatus: Ref<undefined | string> = ref(undefined);
+const isSubscribed = ref(false);
+
+onMounted(async () => {
+  try {
+    const response = await getNewsletterStatus();
+    customerNewsletterStatus.value = response.status;
+    // Logic taken from shopware core -> old storefront twig
+    if(customerNewsletterStatus.value === 'direct' || customerNewsletterStatus.value === 'optIn' || customerNewsletterStatus.value === 'notSet') {
+      isSubscribed.value = true;
+    }
+  } catch(error) {
+    handleError(error);
+  }
+})
 </script>
 
 <template>
@@ -154,5 +176,20 @@ const showAdditionalAddressField2 = configStore.get('core.loginRegistration.show
                 </slot>
             </div>
         </slot>
+
+
+      <slot name="newsletter">
+        <div class="col-start-1 col-span-2">
+          <slot name="newsletter-headline">
+            <h3>
+              Newsletter
+            </h3>
+          </slot>
+
+          <slot name="newsletter-content">
+            contetn
+          </slot>
+        </div>
+      </slot>
     </div>
 </template>
