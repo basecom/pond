@@ -12,13 +12,17 @@ defineEmits<{
   logout: [];
 }>();
 
-const { formatLink } = useInternationalization();
+const dialogOpen = ref<boolean>(false);
+
+provide('closeDialog', () => {
+    dialogOpen.value = false;
+});
 </script>
 
 <template>
     <UiDropdownMenu>
         <slot name="action-login-menu">
-            <UiDropdownMenuTrigger class="size-5">
+            <UiDropdownMenuTrigger id="header-account-action" class="size-5" aria-label="header-account-action">
                 <slot name="icon">
                     <Icon name="mdi:account-outline" class="size-5" />
                 </slot>
@@ -39,7 +43,7 @@ const { formatLink } = useInternationalization();
                 <slot name="signed-in">
                     <UiDropdownMenuItem>
                         <slot name="action-overview">
-                            <NuxtLinkLocale :to="formatLink('/account')">
+                            <NuxtLinkLocale to="/account">
                                 <slot name="overview">
                                     {{ $t('account.account') }}
                                 </slot>
@@ -48,7 +52,7 @@ const { formatLink } = useInternationalization();
                     </UiDropdownMenuItem>
                     <UiDropdownMenuItem>
                         <slot name="action-personal-profile">
-                            <NuxtLinkLocale :to="formatLink('/account/profile')">
+                            <NuxtLinkLocale to="/account/profile">
                                 <slot name="personal-profile">
                                     {{ $t('account.profile') }}
                                 </slot>
@@ -57,7 +61,7 @@ const { formatLink } = useInternationalization();
                     </UiDropdownMenuItem>
                     <UiDropdownMenuItem>
                         <slot name="action-addresses">
-                            <NuxtLinkLocale :to="formatLink('/account/address')">
+                            <NuxtLinkLocale to="/account/address">
                                 <slot name="personal-addresses">
                                     {{ $t('account.address') }}
                                 </slot>
@@ -66,7 +70,7 @@ const { formatLink } = useInternationalization();
                     </UiDropdownMenuItem>
                     <UiDropdownMenuItem>
                         <slot name="action-payment-methods">
-                            <NuxtLinkLocale :to="formatLink('/account/payment')">
+                            <NuxtLinkLocale to="/account/payment">
                                 <slot name="personal-payment-methods">
                                     {{ $t('account.payment') }}
                                 </slot>
@@ -75,7 +79,7 @@ const { formatLink } = useInternationalization();
                     </UiDropdownMenuItem>
                     <UiDropdownMenuItem>
                         <slot name="action-orders">
-                            <NuxtLinkLocale :to="formatLink('/account/order')">
+                            <NuxtLinkLocale to="/account/order">
                                 <slot name="personal-orders">
                                     {{ $t('account.order') }}
                                 </slot>
@@ -84,7 +88,7 @@ const { formatLink } = useInternationalization();
                     </UiDropdownMenuItem>
                     <UiDropdownMenuItem>
                         <slot name="action-wishlist">
-                            <NuxtLinkLocale :to="formatLink('/account/wishlist')">
+                            <NuxtLinkLocale to="/account/wishlist">
                                 <slot name="wishlist">
                                     {{ $t('account.wishlist') }}
                                 </slot>
@@ -104,7 +108,7 @@ const { formatLink } = useInternationalization();
             <!-- guest view -->
             <template v-else>
                 <slot name="guest">
-                    <UiDialog>
+                    <UiDialog v-model:open="dialogOpen">
                         <UiDialogTrigger class="w-full">
                             <slot name="action-login">
                                 <UiDropdownMenuItem class="cursor-pointer" @select.prevent="">

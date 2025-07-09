@@ -7,6 +7,10 @@
         "back": "Back",
         "showAll": "Show all",
         "categories": "Categories",
+        "privacyNoticeText": "I have acknowledged the privacy policy and accept it.",
+        "button": {
+            "acceptLabel": "Accept"
+        },
         "grossTaxInformation": "Prices incl. VAT plus shipping costs",
         "netTaxInformation": "Prices excl. VAT plus shipping costs"
     }

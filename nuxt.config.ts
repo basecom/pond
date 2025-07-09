@@ -1,11 +1,13 @@
+import tailwindcss from '@tailwindcss/vite';
+import { autoInjectTWTheme } from './vite/autoInjectTWTheme';
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     devtools: { enabled: true },
 
     modules: [
         '@pinia/nuxt',
-        '@nuxtjs/tailwindcss',
-        '@formkit/auto-animate/nuxt',
+        '@formkit/auto-animate/nuxt', 
         '@vueuse/nuxt',
         '@nuxt/eslint',
         '@nuxt/fonts',
@@ -20,6 +22,7 @@ export default defineNuxtConfig({
         asyncContext: true,
         sharedPrerenderData: true,
         viewTransition: true,
+        enforceModuleCompatibility: true,
     },
 
     features: {
@@ -30,8 +33,21 @@ export default defineNuxtConfig({
         compatibilityVersion: 4,
     },
 
+    vite: {
+        plugins: [autoInjectTWTheme(), tailwindcss()],
+        optimizeDeps: {
+            include: ['@shopware/cms-base-layer', '@shopware-pwa/helpers-next', 'scule'],
+        },
+    },
+
+    css: ['~/assets/css/main.css'],
+
     nitro: {
         preset: 'bun',
+        // moduleSideEffects: ['vue'],
+        // externals: {
+        //     inline: ['vue', '@vue/runtime-core', '@vue/runtime-dom', '@vue/reactivity']
+        // }
     },
 
     fonts: {
@@ -45,6 +61,13 @@ export default defineNuxtConfig({
         serverBundle: {
             collections: ['mdi'],
         },
+        customCollections: [
+            {
+                prefix: 'custom-icons',
+                dir: './assets/icons',
+                normalizeIconName: false,
+            },
+        ],
     },
 
     components: {
@@ -68,6 +91,9 @@ export default defineNuxtConfig({
             },
         ],
         lazy: true,
+        bundle: {
+            optimizeTranslationDirective: false,
+        },
     },
 
     compatibilityDate: '2025-02-24',

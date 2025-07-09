@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type {Schemas} from '@shopware/api-client/api-types';
+import type { Schemas } from '@shopware/api-client/api-types';
 
 withDefaults(
     defineProps<{
@@ -19,18 +19,15 @@ const hasLineItems = (cartItems?: Schemas['LineItem'][]) => cartItems && cartIte
 <template>
     <UiSheet>
         <slot name="cart-trigger">
-            <UiSheetTrigger class="size-5">
-                <div class="relative">
+          <UiSheetTrigger id="open-offcanvas-cart" class="size-5" aria-label="open-offcanvas-cart">
                     <slot name="cart-icon">
                         <Icon name="mdi:cart-outline" class="size-5" />
                     </slot>
-
                     <slot name="cart-badge">
                         <UiBadge v-if="hasLineItems(cartItems)" class="absolute -right-2 -top-1.5 px-1 py-0 text-xs font-normal">
                             {{ cartItems.length }}
                         </UiBadge>
                     </slot>
-                </div>
             </UiSheetTrigger>
             <UiSheetTrigger>
                 <slot name="cart-amount">
