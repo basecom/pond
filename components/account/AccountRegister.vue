@@ -1,0 +1,42 @@
+<script setup lang="ts">
+import { ApiClientError } from '@shopware/api-client';
+import type {RegisterFormData} from '~/types/vueForm/Register';
+
+const customerStore = useCustomerStore();
+const { t } = useI18n();
+const { handleError } = usePondHandleError();
+
+const isLoading = ref(false);
+const errorMessage: Ref<string|undefined> = ref(undefined);
+
+const register = async (registerData: RegisterFormData) => {
+    isLoading.value = true;
+    errorMessage.value = undefined;
+
+    try {
+        await customerStore.register(registerData);
+    } catch (error) {
+        if (error instanceof ApiClientError) {
+            const firstError = error.details.errors?.[0];
+            if (firstError?.code) {
+                errorMessage.value = t(`error.${firstError.code}`);
+            } else {
+                errorMessage.value = t('error.generic');
+            }
+        } else {
+            handleError(`Unexpected registration error: ${error}`);
+            errorMessage.value = t('error.generic');
+        }
+    } finally {
+        isLoading.value = false;
+    }
+};
+</script>
+
+<template>
+    <AccountRegisterInner
+        :is-loading="isLoading"
+        :error-message="errorMessage"
+        @register="(registerData: RegisterFormData) => register(registerData)"
+    />
+</template>

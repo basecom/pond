@@ -16,6 +16,7 @@ export default defineNuxtConfig({
         'shadcn-nuxt',
         '@shopware/nuxt-module',
         '@therealironduck/ducktory',
+        '@vueform/nuxt',
     ],
 
     experimental: {
@@ -83,11 +84,11 @@ export default defineNuxtConfig({
         locales: [
             {
                 code: 'de-DE',
-                files: ['de-DE/account.json', 'de-DE/error.json', 'de-DE/general.json', 'de-DE/order.json', 'de-DE/payment.json'],
+                files: ['de-DE/account.json', 'de-DE/error.json', 'de-DE/general.json', 'de-DE/order.json', 'de-DE/payment.json', 'de-DE/address.json'],
             },
             {
                 code: 'en-GB',
-                files: ['en-GB/account.json', 'en-GB/error.json', 'en-GB/general.json', 'en-GB/order.json', 'de-DE/payment.json'],
+                files: ['en-GB/account.json', 'en-GB/error.json', 'en-GB/general.json', 'en-GB/order.json', 'de-DE/payment.json', 'en-GB/address.json'],
             },
         ],
         lazy: true,
