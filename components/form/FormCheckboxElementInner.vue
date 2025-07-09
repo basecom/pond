@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type {Columns} from '~/types/vueForm/Columns';
-
-withDefaults(
+const props = withDefaults(
     defineProps<{
       id?: string;
       label?: string;
@@ -10,6 +9,7 @@ withDefaults(
       messages?: {[key: string]: string};
       classes?: string;
       columns?: Columns,
+
     }>(),
     {
         id: undefined,
@@ -19,8 +19,13 @@ withDefaults(
         messages: undefined,
         classes: undefined,
         columns: undefined,
+
     },
 );
+
+const emits = defineEmits<{
+  'on-change': [value: boolean];
+}>();
 </script>
 
 <template>
@@ -32,6 +37,7 @@ withDefaults(
             :messages="messages"
             :class="classes"
             :columns="columns"
+            debounce="300"
         >
             {{ label }}
         </CheckboxElement>

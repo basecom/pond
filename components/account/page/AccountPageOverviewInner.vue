@@ -6,31 +6,75 @@ const props = defineProps<{
 }>();
 
 const configStore = useConfigStore();
-const {newsletterStatus , isNewsletterSubscriber, getNewsletterStatus} = useNewsletter();
+const { getNewsletterStatus, newsletterSubscribe, newsletterUnsubscribe} = useNewsletter();
 const { handleError } = usePondHandleError();
 
 const showTitle = configStore.get('core.loginRegistration.showTitleField') as boolean;
 const showAdditionalAddressField1 = configStore.get('core.loginRegistration.showAdditionalAddressField1') as boolean;
 const showAdditionalAddressField2 = configStore.get('core.loginRegistration.showAdditionalAddressField2') as boolean;
-console.log('custoomer', newsletterStatus.value, isNewsletterSubscriber.value, await getNewsletterStatus());
-
-// ToDo: Check or Define possible states
-// status: "undefined" | "notSet" | "direct" | "optIn" | "optOut";
-const customerNewsletterStatus: Ref<undefined | string> = ref(undefined);
-const isSubscribed = ref(false);
+const form$ = ref(null);
+const newsletterStatus = ref(undefined);
+const displayOptInBanner = ref(false);
 
 onMounted(async () => {
   try {
-    const response = await getNewsletterStatus();
-    customerNewsletterStatus.value = response.status;
+    newsletterStatus.value = await getNewsletterStatus();
+    console.log('stats', newsletterStatus.value);
     // Logic taken from shopware core -> old storefront twig
-    if(customerNewsletterStatus.value === 'direct' || customerNewsletterStatus.value === 'optIn' || customerNewsletterStatus.value === 'notSet') {
-      isSubscribed.value = true;
+    // status: "undefined" | "notSet" | "direct" | "optIn" | "optOut";
+    if(newsletterStatus.value.status === 'direct' || newsletterStatus.value.status === 'optIn' || newsletterStatus.value.status === 'notSet') {
+      form$.value.update({ // updates form data
+        newsletter: true
+      })
+    }
+
+    if ( newsletterStatus.value.status === 'notSet') {
+      // ToDo: Info Banner: Customer muss noch per Mail bestätigen
+      displayOptInBanner.value = true;
     }
   } catch(error) {
     handleError(error);
   }
 })
+
+const onChange = async (formData) => {
+  console.log('form', formData);
+  // ToDo: Validiere mit Status, ob request abgeschickt werden sollte oder nicht
+
+  // Anfrage wird NICHT abgeschickt, wenn Status einer der folgenden ist: notSet, direct, optIn
+
+  if(!formData.newsletter) {
+    // Unsubscribe newsletter
+    try {
+      await newsletterUnsubscribe(props.customer.email);
+      // ToDo Add toast messages
+    } catch (error) {
+      handleError(error)
+    }
+
+    return;
+  }
+
+
+  // Anfrage wird abgeschickt bei folgenenden Statussen: optOut, undefined
+  if (newsletterStatus.value.status === 'notSet' || newsletterStatus.value.status === 'direct' || newsletterStatus.value.status === 'optIn') {
+    return;
+  }
+
+  if (formData.newsletter) {
+    // Subscribe to newsletter
+    try {
+      newsletterSubscribe({email: props.customer.email, option: 'subscribe'});
+      // ToDo Add toast messages
+    } catch (error) {
+      handleError(error)
+    }
+
+    return;
+  }
+
+
+}
 </script>
 
 <template>
@@ -92,6 +136,28 @@ onMounted(async () => {
                 </slot>
             </div>
         </slot>
+
+      <!-- newsletter subscription -->
+      <slot name="newsletter">
+        <div class="col-start-1 col-span-2">
+          <slot name="newsletter-headline">
+            <h3 class="mb-2 border-b border-gray-100 pb-2 text-lg font-bold">
+              {{ $t('newsletter.headline') }}
+            </h3>
+          </slot>
+
+          <slot name="newsletter-content">
+            <Vueform ref="form$" @change="(data) => onChange(data)">
+              <FormCheckboxElement
+                  id="newsletter"
+                  name="newsletter"
+                  :label="$t('newsletter.subscribeToNewsletterLabel')"
+              />
+            </Vueform>
+
+          </slot>
+        </div>
+      </slot>
 
         <!-- default billing address -->
         <slot name="billing-address">
@@ -176,20 +242,5 @@ onMounted(async () => {
                 </slot>
             </div>
         </slot>
-
-
-      <slot name="newsletter">
-        <div class="col-start-1 col-span-2">
-          <slot name="newsletter-headline">
-            <h3>
-              Newsletter
-            </h3>
-          </slot>
-
-          <slot name="newsletter-content">
-            contetn
-          </slot>
-        </div>
-      </slot>
     </div>
 </template>
