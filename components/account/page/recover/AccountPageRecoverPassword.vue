@@ -24,15 +24,16 @@ onMounted(() => {
 });
 
 const recoverPassword = async (recoverPasswordFormData: RecoverPasswordFormData) => {
-    console.log('formdata', recoverPasswordFormData);
-    if(!props.hashQuery) {
+    isLoading.value = true;
+    if (!props.hashQuery) {
+        isLoading.value= false;
         await handleError();
         return;
     }
 
     const result = await recoverPasswordConfirm(props.hashQuery, recoverPasswordFormData.newPassword, recoverPasswordFormData.newPassword_confirmation);
 
-    if(result && result === 200) {
+    if (result && result === 200) {
         await navigateTo(formatLink('/account/login'));
         toast({
             title: t('account.recover.successResetHeader'),
@@ -41,6 +42,7 @@ const recoverPassword = async (recoverPasswordFormData: RecoverPasswordFormData)
     } else {
         await handleError();
     }
+    isLoading.value = false;
 };
 
 const handleError = async () => {

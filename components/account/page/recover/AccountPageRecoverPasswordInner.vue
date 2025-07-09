@@ -26,6 +26,7 @@ const emits = defineEmits<{
   recoverPassword: [formData: RecoverPasswordFormData];
 }>();
 </script>
+
 <template>
     <div :class="wrapperClasses">
         <slot name="headline">
