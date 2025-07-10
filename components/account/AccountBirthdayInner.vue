@@ -28,7 +28,7 @@ const possibleBirthdayYears = computed(() => {
 
 <template>
     <slot name="birthday">
-        <GroupElement name="birthday" :label="$t('account.customer.birthday.label')">
+        <GroupElement name="birthday" :label="$t('account.customer.birthday.label', { required: isBirthdayRequired ? '*' : '' })">
             <slot name="birthday-day">
                 <FormSelectElement
                     :id="`${prefix}birthdayDay`"

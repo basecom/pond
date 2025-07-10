@@ -86,7 +86,7 @@
                 "placeholder": "Enter VAT ID ..."
             },
             "birthday": {
-                "label": "Birthday",
+                "label": "Birthday {required}",
                 "day": "Day",
                 "month": "Month",
                 "year": "Year",
