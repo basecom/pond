@@ -16,6 +16,7 @@ export default defineNuxtConfig({
         'shadcn-nuxt',
         '@shopware/nuxt-module',
         '@therealironduck/ducktory',
+        'nuxt-swiper',
         '@vueform/nuxt',
     ],
 
