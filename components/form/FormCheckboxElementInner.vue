@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type {Columns} from '~/types/vueForm/Columns';
+
 withDefaults(
     defineProps<{
       id?: string;

@@ -23,10 +23,11 @@ const displayDoubleNewsletterRegistrationAlert = ref(false);
 
 onMounted(async () => {
     try {
-    // fetch the newsletter status and update the checkbox
+        // fetch the newsletter status and update the checkbox
         newsletterStatus.value = await getNewsletterStatus();
-        if(newsletterStatus.value?.status === 'direct' || newsletterStatus.value?.status === 'optIn' || newsletterStatus.value?.status === 'notSet') {
-            form$.value?.update({ // updates form data
+        if (newsletterStatus.value?.status === 'direct' || newsletterStatus.value?.status === 'optIn' || newsletterStatus.value?.status === 'notSet') {
+            // updates form data
+            form$.value?.update({
                 newsletter: true,
             });
         }
@@ -42,7 +43,7 @@ onMounted(async () => {
 
 const onChange = async (formData: NewsletterFormData) => {
     // Unsubscribe, if checkbox value is unchecked
-    if(!formData.newsletter) {
+    if (!formData.newsletter) {
         try {
             newsletterUnsubscribe(props.customer.email);
             toast({
