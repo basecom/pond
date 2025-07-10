@@ -55,7 +55,7 @@ const { footerNavigation, serviceNavigation } = storeToRefs(navigationStore);
                 <LayoutFooterPaymentMethods />
 
                 <!-- footer service navigation -->
-                <div class="mt-4 grid gap-1 border-t-2 border-white pt-4 md:flex md:gap-6">
+                <div class="mt-4 grid gap-1 border-t-2 border-gray-medium pt-4 md:flex md:gap-6">
                     <template
                         v-for="navigationElement in serviceNavigation"
                         :key="navigationElement.id"

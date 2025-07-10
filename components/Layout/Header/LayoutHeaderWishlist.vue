@@ -14,6 +14,7 @@ const { t } = useI18n();
             icon="heart"
             :title="t('icon.wishlist')"
         />
+
         <ClientOnly>
             <UtilityPill
                 :number="wishlistCount"

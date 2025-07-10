@@ -74,6 +74,7 @@ const showBackButton = computed(() => navigationPath.value.length > 0);
         class="w-4 cursor-pointer md:hidden"
         @click="sideMenuController.open()"
     />
+
     <LazyLayoutSidebar
         v-if="sideMenuController.isOpen"
         :controller="sideMenuController"

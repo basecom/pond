@@ -51,5 +51,8 @@ const selfNotHovered = refDebounced(isOutsideFlyout, 200);
                 </div>
             </div>
         </Teleport>
+
+        <!-- empty fallback to prevent nuxt from rendering empty span tag which can break the layout and cause CLS -->
+        <template #fallback />
     </ClientOnly>
 </template>

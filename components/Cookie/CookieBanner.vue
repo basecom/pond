@@ -16,13 +16,15 @@ cookieBannerStore.initializeCookies();
 </script>
 
 <template>
-    <div
-        v-if="showCookieBanner"
-        class="fixed bottom-0 z-50 flex w-full border-t-2 border-gray-dark bg-white p-2 text-xs"
-    >
-        <div class="container mx-auto flex flex-col items-center justify-between gap-4 text-center lg:flex-row">
-            <CookieBannerMessage />
-            <CookieBannerActions />
+    <ClientOnly>
+        <div
+            v-if="showCookieBanner"
+            class="fixed bottom-0 z-50 flex w-full border-t-2 border-gray-dark bg-white p-2 text-xs"
+        >
+            <div class="container mx-auto flex flex-col items-center justify-between gap-4 text-center lg:flex-row">
+                <CookieBannerMessage />
+                <CookieBannerActions />
+            </div>
         </div>
-    </div>
+    </ClientOnly>
 </template>

@@ -62,5 +62,8 @@ onClickOutside(sidebarContentElement, () => (props.isClosable ? close() : ''));
                 class="fixed inset-0 z-40 h-screen w-screen bg-black/50"
             />
         </Teleport>
+
+        <!-- empty fallback to prevent nuxt from rendering empty span tag which can break the layout and cause CLS -->
+        <template #fallback />
     </ClientOnly>
 </template>

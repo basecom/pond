@@ -9,7 +9,13 @@ const type = config.getConfigValue('type');
 
 <template>
     <template v-if="type === 'newsletter'">
-        <CmsElementFormNewsletter :element="element" />
+        <ClientOnly>
+            <CmsElementFormNewsletter :element="element" />
+
+            <template #fallback>
+                <LayoutSkeletonCmsElementFormNewsletter />
+            </template>
+        </ClientOnly>
     </template>
 
     <template v-else>

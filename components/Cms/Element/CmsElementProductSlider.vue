@@ -77,31 +77,37 @@ const onProductSelect = (product: Schemas['Product'], index: string | number) =>
             {{ title }}
         </h3>
 
-        <LayoutSlider
-            :slides-counter="slides.length"
-            class="w-full"
-            :auto-slide="shouldAutoSlide"
-            :navigation-arrows="showNavigationArrows"
-            :navigation-dots="false"
-            :slides-per-view="slidesPerView"
-            :space-between="spaceBetween"
-            :breakpoints="breakpoints"
-            @slides-change="isSliderLoaded = true"
-        >
-            <LayoutSliderSlide
-                v-for="(slide, index) in slides"
-                :key="slide.id"
-                class="py-2"
-                :style="minWidth ? { minWidth } : undefined"
+        <ClientOnly>
+            <LayoutSlider
+                :slides-counter="slides.length"
+                class="w-full"
+                :auto-slide="shouldAutoSlide"
+                :navigation-arrows="showNavigationArrows"
+                :navigation-dots="false"
+                :slides-per-view="slidesPerView"
+                :space-between="spaceBetween"
+                :breakpoints="breakpoints"
+                @slides-change="isSliderLoaded = true"
             >
-                <ProductCard
-                    :product="slide"
-                    :layout="boxLayout"
-                    :display-mode="displayMode"
-                    @view-product="onProductView(slide, index)"
-                    @select-product="onProductSelect(slide, index)"
-                />
-            </LayoutSliderSlide>
-        </LayoutSlider>
+                <LayoutSliderSlide
+                    v-for="(slide, index) in slides"
+                    :key="slide.id"
+                    class="py-2"
+                    :style="minWidth ? { minWidth } : undefined"
+                >
+                    <ProductCard
+                        :product="slide"
+                        :layout="boxLayout"
+                        :display-mode="displayMode"
+                        @view-product="onProductView(slide, index)"
+                        @select-product="onProductSelect(slide, index)"
+                    />
+                </LayoutSliderSlide>
+            </LayoutSlider>
+
+            <template #fallback>
+                <LayoutSkeletonProductSlider :slides="slides" />
+            </template>
+        </ClientOnly>
     </div>
 </template>

@@ -144,6 +144,9 @@ watch(customer, async newCustomer => {
             type="radio"
             :options="newsletterOptions"
             validation="required"
+            :classes="{
+                outer: 'col-span-3',
+            }"
         />
 
         <FormKit
@@ -168,6 +171,7 @@ watch(customer, async newCustomer => {
                 :options="salutationOptions"
                 :classes="{
                     outer: 'col-span-1',
+                    input: 'py-0.5',
                 }"
             />
 
@@ -213,7 +217,7 @@ watch(customer, async newCustomer => {
             type="submit"
             :label="newsletterAction"
             :classes="{
-                outer: 'col-span-3 md:col-span-2',
+                outer: 'col-span-3',
             }"
             :name="`newsletterSubmitButton-${element.id}`"
             prefix-icon="envelope"

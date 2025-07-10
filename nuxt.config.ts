@@ -63,8 +63,10 @@ export default defineNuxtConfig({
     },
 
     routeRules: {
+        // add redirects
         '/newsletter-subscribe': { redirect: '/newsletter/confirm' },
         '/registration/confirm': { redirect: '/account/register/confirm' },
+        // disable ssr for specific routes
         '/account/**': { ssr: false },
         '/checkout/**': { ssr: false },
         '/newsletter/**': { ssr: false },

@@ -17,6 +17,7 @@ const { t } = useI18n();
 
 <template>
     <nav
+        v-show="breadcrumbs?.length > 0"
         class="container mx-auto my-8 flex"
         :aria-label="$t('layout.breadcrumb.ariaLabel')"
     >

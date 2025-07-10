@@ -14,7 +14,8 @@ export function useCustomerAddress() {
         setDefaultCustomerBillingAddress,
     } = useAddress();
 
-    const { customer } = storeToRefs(useCustomerStore());
+    const customerStore = useCustomerStore();
+    const { customer } = storeToRefs(customerStore);
 
     const activeShippingAddress = computed(() => customer.value?.activeShippingAddress);
     const activeBillingAddress = computed(() => customer.value?.activeBillingAddress);

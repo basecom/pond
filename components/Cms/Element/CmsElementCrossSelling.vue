@@ -64,15 +64,15 @@ const shouldPreloadImage = shouldPreloadElement(props.element);
 </script>
 
 <template>
-    <ClientOnly>
-        <template
-            v-for="(crossSelling, index) in crossSellings"
-            :key="crossSelling.crossSelling.id"
-        >
-            <h3 class="mt-8 font-bold">
-                {{ crossSelling.crossSelling.translated.name }}
-            </h3>
+    <template
+        v-for="(crossSelling, index) in crossSellings.filter(cs => cs.products?.length)"
+        :key="crossSelling.crossSelling.id"
+    >
+        <h3 class="mt-8 font-bold">
+            {{ crossSelling.crossSelling.translated.name }}
+        </h3>
 
+        <ClientOnly>
             <LayoutSlider
                 :slides-counter="crossSelling.products.length"
                 :navigation-arrows="showNavigationArrowForCrossSelling(crossSelling.crossSelling.id)"
@@ -95,6 +95,10 @@ const shouldPreloadImage = shouldPreloadElement(props.element);
                     />
                 </LayoutSliderSlide>
             </LayoutSlider>
-        </template>
-    </ClientOnly>
+
+            <template #fallback>
+                <LayoutSkeletonProductSlider :slides="crossSelling.products" />
+            </template>
+        </ClientOnly>
+    </template>
 </template>

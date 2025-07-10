@@ -25,6 +25,7 @@ const { isAcceptAllEnabled } = storeToRefs(cookieBannerStore);
                     type="button"
                     name="cookieBannerActionsConfigure"
                     :classes="{
+                        outer: 'w-full sm:w-fit',
                         input: 'max-w-full sm:max-w-fit',
                     }"
                 >

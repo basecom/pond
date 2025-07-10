@@ -52,7 +52,13 @@ const { stop } = useIntersectionObserver(productCard, ([entry]: IntersectionObse
             v-if="wishlistEnabled"
             class="absolute right-0 top-0 z-10 p-4"
         >
-            <ProductAddToWishlist :product="props.product" />
+            <ClientOnly>
+                <ProductAddToWishlist :product="props.product" />
+
+                <template #fallback>
+                    <div class="m-2 size-6 animate-pulse rounded bg-gray-medium" />
+                </template>
+            </ClientOnly>
         </div>
 
         <LocaleLink
@@ -106,11 +112,13 @@ const { stop } = useIntersectionObserver(productCard, ([entry]: IntersectionObse
         </template>
 
         <template v-else>
-            <ProductAddToCart
-                :product="product"
-                :label="false"
-                :icon="true"
-            />
+            <div class="px-4 pb-4">
+                <ProductAddToCart
+                    :product="product"
+                    :label="false"
+                    :icon="true"
+                />
+            </div>
         </template>
     </div>
 </template>

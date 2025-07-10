@@ -5,6 +5,9 @@ const props = defineProps<{
     error: NuxtError;
 }>();
 
+const configStore = useConfigStore();
+await configStore.loadConfig();
+
 const pageNotFound = computed(() => props.error.statusCode === 404);
 
 const isMaintenanceMode = computed(
@@ -15,8 +18,6 @@ const genericServerError = computed(() => props.error.statusCode >= 500);
 </script>
 
 <template>
-    <NuxtLoadingIndicator />
-
     <template v-if="pageNotFound">
         <ErrorNotFound />
     </template>
