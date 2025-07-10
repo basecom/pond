@@ -26,6 +26,7 @@ const { getUrlPrefix } = useUrlResolver();
 const mediaType = product.value?.cover?.media?.mimeType?.split('/')[0];
 const showControls = ref(false);
 const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.productFallBackCover') as string;
+const showReview = configStore.get('core.listing.showReview') as boolean;
 
 const srcPath = computed(() => getSmallestThumbnailUrl(
     product.value?.cover?.media,
@@ -106,15 +107,10 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
             <slot name="product-info">
                 <div class="p-4 h-full flex flex-col justify-between">
                     <div>
-                        <slot name="variant-characteristics">
-                            <div class="min-h-4 mt-4 text-xs text-gray-600">
-                                <span
-                                    v-for="(option, index) in product?.options"
-                                    :key="option.id"
-                                >
-                                    {{ option.group.translated.name }}:
-                                    <span class="font-bold">{{ option.translated.name }}</span><span v-if="index < (product?.options?.length ?? 0) - 1"> | </span>
-                                </span>
+                        <slot name="product-rating">
+                            <!-- Wrapper div, to ensure that elements align, when no rating is present -->
+                            <div class="h-3 sm:h-4 md:h-5">
+                                <ProductRating v-if="showReview && product.ratingAverage" :rating-average="Math.round(product.ratingAverage)" />
                             </div>
                         </slot>
 
@@ -127,6 +123,18 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
                                     {{ getProductName({ product }) }}
                                 </h2>
                             </RouterLink>
+                        </slot>
+
+                        <slot name="variant-characteristics">
+                            <div class="min-h-4 mt-4 text-xs text-gray-600">
+                                <span
+                                    v-for="(option, index) in product?.options"
+                                    :key="option.id"
+                                >
+                                    {{ option.group.translated.name }}:
+                                    <span class="font-bold">{{ option.translated.name }}</span><span v-if="index < (product?.options?.length ?? 0) - 1"> | </span>
+                                </span>
+                            </div>
                         </slot>
 
                         <template v-if="layoutType === 'standard'">
