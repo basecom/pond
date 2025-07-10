@@ -109,8 +109,8 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
                     <div>
                         <slot name="product-rating">
                             <!-- Wrapper div, to ensure that elements align, when no rating is present -->
-                            <div class="h-3 sm:h-4 md:h-5">
-                                <ProductRating v-if="showReview && product.ratingAverage" :rating-average="Math.round(product.ratingAverage)" />
+                            <div v-if="showReview" class="h-3 sm:h-4 md:h-5">
+                                <ProductRating v-if="product.ratingAverage" :rating-average="Math.round(product.ratingAverage)" />
                             </div>
                         </slot>
 
