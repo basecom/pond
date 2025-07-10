@@ -2,7 +2,7 @@
 import type { Schemas } from '@shopware/api-client/api-types';
 import type { NewsletterFormData } from '~/types/vueForm/Newsletter';
 import { useToast } from '@/components/ui/toast/use-toast';
-import { Vueform } from '@vueform/vueform';
+import type { Vueform } from '@vueform/vueform';
 
 const props = defineProps<{
   customer: Schemas['Customer'];
