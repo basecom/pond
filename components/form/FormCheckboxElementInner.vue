@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type {Columns} from '~/types/vueForm/Columns';
-const props = withDefaults(
+withDefaults(
     defineProps<{
       id?: string;
       label?: string;
@@ -9,7 +9,6 @@ const props = withDefaults(
       messages?: {[key: string]: string};
       classes?: string;
       columns?: Columns,
-
     }>(),
     {
         id: undefined,
@@ -19,13 +18,8 @@ const props = withDefaults(
         messages: undefined,
         classes: undefined,
         columns: undefined,
-
     },
 );
-
-const emits = defineEmits<{
-  'on-change': [value: boolean];
-}>();
 </script>
 
 <template>
