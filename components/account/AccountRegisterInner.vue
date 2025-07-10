@@ -71,7 +71,7 @@ const onSubmit = (data: VueFormRequestData) => {
     if (data.differentShippingAddress && registerData.value) {
         // Create shipping address object according to the store api
         registerData.value.shippingAddress = {
-            accountType: data.accountType,
+            accountType: data['shipping-accountType'],
             title: data['shipping-title'],
             firstName: data['shipping-firstName'],
             lastName: data['shipping-lastName'],
