@@ -16,21 +16,25 @@ const defaultLimit = ref(15);
 const defaultPage = ref(1);
 
 onMounted(async () => {
+    try {
     // Define query so that limit is adjustable in the Pond component
-    const query = {
-        limit: defaultLimit.value,
-        page: route.query.page ?? defaultPage.value,
-    };
-    await getWishlistProducts(query);
+        const query = {
+            limit: defaultLimit.value,
+            page: route.query.page ?? defaultPage.value,
+        };
+        await getWishlistProducts(query);
 
-    // The function getWishlistProducts() updates items. Therefore, the products must be fetched from items using their IDs
-    const { data } = await getProductsById(items.value);
+        // The function getWishlistProducts() updates items. Therefore, the products must be fetched from items using their IDs
+        const { data } = await getProductsById(items.value);
 
-    if (data.value) {
-        wishlistProducts.value = data.value.elements;
+        if (data.value) {
+            wishlistProducts.value = data.value.elements;
+        }
+    } catch (error) {
+        handleError(error);
+    } finally {
+        isLoading.value = false;
     }
-
-    isLoading.value = false;
 });
 
 const changePage = async (page: number) => {
