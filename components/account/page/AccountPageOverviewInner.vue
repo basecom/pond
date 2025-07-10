@@ -1,14 +1,89 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
+import type { NewsletterFormData } from '~/types/vueForm/Newsletter';
+import { useToast } from '@/components/ui/toast/use-toast';
+import type { Vueform } from '@vueform/vueform';
 
-defineProps<{
+const props = defineProps<{
   customer: Schemas['Customer'];
 }>();
 
 const configStore = useConfigStore();
+const { getNewsletterStatus, newsletterSubscribe, newsletterUnsubscribe} = useNewsletter();
+const { handleError } = usePondHandleError();
+const { toast } = useToast();
+const { t } = useI18n();
+
 const showTitle = configStore.get('core.loginRegistration.showTitleField') as boolean;
 const showAdditionalAddressField1 = configStore.get('core.loginRegistration.showAdditionalAddressField1') as boolean;
 const showAdditionalAddressField2 = configStore.get('core.loginRegistration.showAdditionalAddressField2') as boolean;
+const form$: Ref<null | Vueform> = ref(null);
+const newsletterStatus: Ref<undefined | Schemas['AccountNewsletterRecipient']> = ref(undefined);
+const displayDoubleNewsletterRegistrationAlert = ref(false);
+
+onMounted(async () => {
+    try {
+        // fetch the newsletter status and update the checkbox
+        newsletterStatus.value = await getNewsletterStatus();
+        if (newsletterStatus.value?.status === 'direct' || newsletterStatus.value?.status === 'optIn' || newsletterStatus.value?.status === 'notSet') {
+            // updates form data
+            form$.value?.update({
+                newsletter: true,
+            });
+        }
+
+        // depending on the newsletter status, the info alert for double registration is displayed
+        if ( newsletterStatus.value?.status === 'notSet') {
+            displayDoubleNewsletterRegistrationAlert.value = true;
+        }
+    } catch (error) {
+        handleError(error);
+    }
+});
+
+const onChange = async (formData: NewsletterFormData) => {
+    // Unsubscribe, if checkbox value is unchecked
+    if (!formData.newsletter) {
+        try {
+            newsletterUnsubscribe(props.customer.email);
+            toast({
+                title: t('newsletter.unsubscribed'),
+            });
+            // alert is no longer displayed
+            displayDoubleNewsletterRegistrationAlert.value = false;
+        } catch (error) {
+            toast({
+                title: t('general.errorHeadline'),
+                description: t('general.errorMessage'),
+            });
+            handleError(error);
+        }
+        return;
+    }
+
+    // Otherwise, subscribe to newsletter
+    try {
+        await newsletterSubscribe({email: props.customer.email, option: 'subscribe'});
+        toast({
+            title: t('newsletter.subscribed.headline'),
+        });
+
+        // Depending on the newsletter status, the alert display is set
+        newsletterStatus.value = await getNewsletterStatus();
+        if (newsletterStatus.value?.status === 'notSet') {
+            displayDoubleNewsletterRegistrationAlert.value = true;
+            return;
+        }
+
+        displayDoubleNewsletterRegistrationAlert.value = false;
+    } catch (error) {
+        toast({
+            title: t('general.errorHeadline'),
+            description: t('general.errorMessage'),
+        });
+        handleError(error);
+    }
+};
 </script>
 
 <template>
@@ -67,6 +142,44 @@ const showAdditionalAddressField2 = configStore.get('core.loginRegistration.show
                 <slot name="payment-method-content">
                     <b>{{ customer.defaultPaymentMethod?.translated.name }}</b>
                     <p class="text-sm">{{ customer.defaultPaymentMethod?.translated.description }}</p>
+                </slot>
+            </div>
+        </slot>
+
+        <!-- newsletter subscription -->
+        <slot name="newsletter">
+            <div class="col-start-1 col-span-2">
+                <slot name="newsletter-headline">
+                    <h3 class="mb-2 border-b border-gray-100 pb-2 text-lg font-bold">
+                        {{ $t('newsletter.headline') }}
+                    </h3>
+                </slot>
+
+                <slot name="newsletter-double-registration">
+                    <UiAlert v-if="displayDoubleNewsletterRegistrationAlert" class="mb-4 flex gap-4">
+                        <slot name="alert-icon">
+                            <Icon name="mdi:info" class="size-4 shrink-0" />
+                        </slot>
+
+                        <slot name="alert-content">
+                            <div>
+                                <UiAlertTitle>{{ $t('newsletter.subscribed.headline') }}</UiAlertTitle>
+                                <UiAlertDescription>
+                                    {{ $t('newsletter.subscribed.message') }}
+                                </UiAlertDescription>
+                            </div>
+                        </slot>
+                    </UiAlert>
+                </slot>
+
+                <slot name="newsletter-content">
+                    <Vueform ref="form$" @change="(data: NewsletterFormData) => onChange(data)">
+                        <FormCheckboxElement
+                            id="newsletter"
+                            name="newsletter"
+                            :label="$t('newsletter.subscribeToNewsletterLabel')"
+                        />
+                    </Vueform>
                 </slot>
             </div>
         </slot>

@@ -32,6 +32,7 @@ withDefaults(
             :messages="messages"
             :class="classes"
             :columns="columns"
+            debounce="300"
         >
             {{ label }}
         </CheckboxElement>
