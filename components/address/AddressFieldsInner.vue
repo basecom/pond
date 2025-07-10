@@ -78,6 +78,7 @@ const showAdditionalAddress2Field = ref(configStore.get('core.loginRegistration.
 const isAdditionalAddress2FieldRequired = ref(configStore.get('core.loginRegistration.additionalAddressField2Required') as boolean);
 const showPhoneNumber = ref(configStore.get('core.loginRegistration.showPhoneNumberField') as boolean);
 const isPhoneNumberRequired = ref(configStore.get('core.loginRegistration.phoneNumberFieldRequired') as boolean);
+const showZipcodeInFrontOfCity = ref(configStore.get('core.loginRegistration.showZipcodeInFrontOfCity') as boolean);
 
 const isVatIdRequiredBySelectedCountry = ref(false);
 
@@ -93,11 +94,13 @@ onMounted(async () => {
 const onSelectCountry = (selectedCountryId: string) => {
     // When a country is selected, the corresponding states are fetched and also brought into the correct form for select type
     const fetchedStates = getStatesForCountry(selectedCountryId);
-    if(fetchedStates) {
+    if (fetchedStates && fetchedStates.length > 0) {
         states.value = fetchedStates.map(item => ({
             value: item.id,
             label: item.name,
         }));
+    } else {
+        states.value = undefined;
     }
 
     // Check, if vat id is required by the selected country
@@ -137,16 +140,8 @@ const onSelectCountry = (selectedCountryId: string) => {
             />
         </slot>
 
-        <slot name="zip-code">
-            <FormTextElement
-                :id="`${prefix}zipcode`"
-                :label="$t('address.zipCode.label')"
-                :name="`${prefix}zipcode`"
-                :placeholder="$t('address.zipCode.placeholder')"
-                rules="required"
-                :messages="{ required: $t('address.zipCode.errorRequired') }"
-                :columns="columns.zipColumns"
-            />
+        <slot name="zip-code-before">
+            <AddressFieldZipcode v-if="showZipcodeInFrontOfCity" :prefix="prefix" :columns="columns.zipColumns" />
         </slot>
 
         <slot name="city">
@@ -159,6 +154,10 @@ const onSelectCountry = (selectedCountryId: string) => {
                 :messages="{ required: $t('address.city.errorRequired') }"
                 :columns="columns.cityColumns"
             />
+        </slot>
+
+        <slot name="zip-code-after">
+            <AddressFieldZipcode v-if="!showZipcodeInFrontOfCity" :prefix="prefix" :columns="columns.zipColumns" />
         </slot>
 
         <slot name="additional-address-line-1">
@@ -203,7 +202,7 @@ const onSelectCountry = (selectedCountryId: string) => {
 
         <slot name="state">
             <FormSelectElement
-                v-if="states"
+                v-if="states && states.length > 0"
                 :id="`${prefix}state`"
                 :name="`${prefix}state`"
                 :label="$t('address.state.label')"

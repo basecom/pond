@@ -157,7 +157,8 @@
             "acceptedDataProtection": {
                 "label": "I have read the data protection regulations and the terms and conditions and agree to them.",
                 "errorRequired": "Please agree to the data protection regulations."
-            }
+            },
+            "success": "You have successfully registered."
         }
     }
 }
