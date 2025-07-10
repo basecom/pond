@@ -6,6 +6,7 @@ export function usePondAuthentication() {
     const { formatLink } = useInternationalization();
     const { toast } = useToast();
     const { t } = useI18n();
+    const { handleError } = usePondHandleError();
 
     const rerouteIfLoggedOut = async (targetRoute: string = '/account/login') => {
         await sessionContextLoaded();
@@ -37,11 +38,15 @@ export function usePondAuthentication() {
     };
 
     const logout = async (redirectTo: string = '/') => {
-        await navigateTo(formatLink(redirectTo));
-        await customerStore.logout();
-        toast({
-            title: t('account.auth.logoutSuccess'),
-        });
+        try {
+            await navigateTo(formatLink(redirectTo));
+            await customerStore.logout();
+            toast({
+                title: t('account.auth.logoutSuccess'),
+            });
+        } catch (error) {
+            handleError(error);
+        }
     };
 
     return {
