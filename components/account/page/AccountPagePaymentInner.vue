@@ -21,11 +21,15 @@ const changePaymentMethod = (paymentMethodForm: PaymentMethodDataForm) => {
 onMounted(async () => {
     await getPaymentMethods();
 });
+
+const { getStyle } = usePondStyle();
+const pageDescriptionStyles = getStyle('account.pageDescription');
 </script>
 
 <template>
     <slot name="introduction">
-        <h1 class="mb-4 text-xl font-bold md:mb-6 md:text-2xl">{{ $t('account.payment') }}</h1>
+        <h1>{{ $t('account.payment') }}</h1>
+        <p :class="pageDescriptionStyles">{{ $t('account.defaultPaymentMethod.description') }}</p>
     </slot>
 
     <UiAutoForm
@@ -37,7 +41,7 @@ onMounted(async () => {
             <slot name="payment-id">
                 <FormField v-slot="{ componentField }" v-bind="slotProps" name="paymentId">
                     <UiFormItem>
-                        <UiAutoFormLabel>{{ $t('account.defaultPaymentMethod.description') }}</UiAutoFormLabel>
+                        <UiAutoFormLabel class="sr-only">{{ $t('account.defaultPaymentMethod.description') }}</UiAutoFormLabel>
                         <UiRadioGroup
                             v-bind="componentField"
                             :default-value="selectedPaymentMethod?.id"

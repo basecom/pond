@@ -5,26 +5,37 @@ defineProps<{
     navigationElements?: Schemas['Category'][];
     serviceNavigationElements?: Schemas['Category'][];
 }>();
+
+const { getStyle } = usePondStyle();
+const wrapperStyles = getStyle('footer.wrapper');
+const outerStyles = getStyle('footer.outer');
+const containerStyles = getStyle('footer.container');
+
+const navigationWrapperStyles = getStyle('footer.navigation.wrapper');
+const navigationListStyles = getStyle('footer.navigation.list');
+const mainElementStyles = getStyle('footer.navigation.mainElement');
+const mainLinkStyles = getStyle('footer.navigation.mainLink');
+const childLinkStyles = getStyle('footer.navigation.childLink');
 </script>
 
 <template>
-    <footer class="mt-auto">
-        <div class="mt-4 bg-gray-50 md:mt-10">
+    <footer :class="wrapperStyles">
+        <div :class="outerStyles">
             <slot name="container">
-                <div class="container py-5 md:pb-5 md:pt-10">
+                <div :class="containerStyles">
                     <!-- footer navigation -->
                     <slot name="footer-navigation">
-                        <div class="grid gap-5 md:flex md:justify-between lg:justify-normal lg:gap-28">
+                        <div :class="navigationWrapperStyles">
                             <template
                                 v-for="navigationElement in navigationElements"
                                 :key="navigationElement.id"
                             >
-                                <ul class="grid list-none gap-2">
+                                <ul :class="navigationListStyles">
                                     <slot name="footer-navigation-main-element">
-                                        <li class="font-bold">
+                                        <li :class="mainElementStyles">
                                             <LazyLayoutHeaderNavigationLink
                                                 :navigation-element="navigationElement"
-                                                :classes="{ 'hover:text-gray-950 transition-colors': true }"
+                                                :classes="{ [mainLinkStyles]: true }"
                                                 :show-as-link="navigationElement.type === 'link' || navigationElement.type === 'page'"
                                                 :show-icon="false"
                                             />
@@ -38,7 +49,7 @@ defineProps<{
                                         >
                                             <LazyLayoutHeaderNavigationLink
                                                 :navigation-element="navigationChild"
-                                                :classes="{ 'text-gray-700 hover:text-gray-950 transition-colors': true }"
+                                                :classes="{ [childLinkStyles]: true }"
                                                 :show-as-link="navigationChild.type === 'link' || navigationChild.type === 'page'"
                                                 :show-icon="false"
                                             />

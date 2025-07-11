@@ -43,7 +43,7 @@ const pageNotFound = computed(() => props.error?.statusCode === 404);
                 <template #title>
                     {{ error?.message }}
                 </template>
-                <template #subTitle>
+                <template #description>
                     {{ error?.statusCode }}
                 </template>
             </ErrorLayout>

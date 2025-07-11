@@ -67,51 +67,65 @@ onMounted(async () => {
         }
     }
 });
+
+const { getStyle } = usePondStyle();
+
+const containerBaseStyle = getStyle('slider.container.base');
+const cursorGrabStyle = getStyle('slider.container.cursorGrab');
+const paddingStyle = getStyle('slider.container.padding');
+
+const navBaseStyle = getStyle('slider.navigation.base');
+const prevButtonStyle = getStyle('slider.navigation.prev.base');
+const prevButtonOutside = getStyle('slider.navigation.prev.outside');
+const prevButtonInside = getStyle('slider.navigation.prev.inside');
+
+const nextButtonStyle = getStyle('slider.navigation.next.base');
+const nextButtonOutside = getStyle('slider.navigation.next.outside');
+const nextButtonInside = getStyle('slider.navigation.next.inside');
+
+const iconStyle = getStyle('slider.navigation.icon');
+
+const paginationWrapperStyle = getStyle('slider.pagination.wrapper');
+const paginationInsideStyle = getStyle('slider.pagination.inside');
+const paginationContainerStyle = getStyle('slider.pagination.container');
+const paginationBulletStyle = getStyle('slider.pagination.bullet');
+const paginationBulletActiveStyle = getStyle('slider.pagination.bulletActive');
 </script>
 
 <template>
     <ClientOnly>
         <slot name="swiper-container">
             <div
-                class="relative w-full"
-                :class="{
-                    ...classes,
-                    'cursor-grab': slidesCounter > 1, 
-                    'px-20 max-sm:px-8': isOutsideNavigation 
-                }"
+                :class="[containerBaseStyle, classes, { [cursorGrabStyle]: slidesCounter > 1, [paddingStyle]: isOutsideNavigation }]"
             >
                 <slot name="navigation-buttons">
                     <template v-if="hasNavigation">
                         <slot name="previous-slide">
                             <button
                                 ref="prevSlide"
-                                class="absolute z-10 bg-gray-light/50 top-1/2 -translate-y-1/2 py-4 lg:py-8 cursor-pointer"
-                                :class="{ 'left-5 max-sm:-left-1' : isOutsideNavigation, 
-                                          'left-0 bg-gray-300 opacity-30 hover:opacity-70': !isOutsideNavigation
-                                }"
+                                :class="[navBaseStyle, prevButtonStyle, isOutsideNavigation ? prevButtonOutside : prevButtonInside]"
                             >
-                                <ChevronLeft class="size-8 shrink-0 opacity-50" />
+                                <ChevronLeft :class="iconStyle" />
                             </button>
                         </slot>
+
                         <slot name="next-slide">
                             <button
                                 ref="nextSlide"
-                                class="absolute z-10 bg-gray-light/50 top-1/2 -translate-y-1/2 py-4 lg:py-8 cursor-pointer"
-                                :class="{ 'right-5 max-sm:right-0': isOutsideNavigation, 
-                                          'right-0 bg-gray-300 opacity-30 hover:opacity-70r' : !isOutsideNavigation 
-                                }"
+                                :class="[navBaseStyle, nextButtonStyle, isOutsideNavigation ? nextButtonOutside : nextButtonInside]"
                             >
-                                <ChevronRight class="size-8 shrink-0 opacity-50" />
+                                <ChevronRight :class="iconStyle" />
                             </button>
                         </slot>
                     </template>
                 </slot>
+
                 <slot name="swiper-container">
                     <swiper-container
                         ref="swiperContainer"
                         class="grid size-full"
                         :autoplay="autoSlide"
-                        :auto-height="displayMode ==='standard'"
+                        :auto-height="displayMode === 'standard'"
                         :speed="speed"
                         :loop="loop"
                         :direction="direction"
@@ -121,21 +135,24 @@ onMounted(async () => {
                         :init="init"
                         :initial-slide="initialSlide"
                         :navigation="hasNavigation ? { prevEl: prevSlide, nextEl: nextSlide } : false"
-                        :pagination="hasPagination ? { el: paginationEl, clickable: true, 
-                                                       bulletClass: 'swiper-pagination-bullet bg-gray-400 block w-4 h-4 rounded-full mx-2 opacity-100 transition-all cursor-pointer', 
-                                                       bulletActiveClass: 'swiper-pagination-bullet-active bg-brand-primary! shadow-brand-primary shadow-sm' } : false"
+                        :pagination="hasPagination ? {
+                            el: paginationEl,
+                            clickable: true,
+                            bulletClass: paginationBulletStyle,
+                            bulletActiveClass: paginationBulletActiveStyle
+                        } : false"
                         @swiperslideslengthchange="$emit('slides-change')"
                     >
                         <slot />
                     </swiper-container>
                 </slot>
+
                 <slot name="pagination">
                     <div
                         v-if="hasPagination"
-                        class="swiper swiper-horizontal flex w-full justify-center mt-4"
-                        :class="{ 'absolute left-0 bottom-0 z-20 mb-2' :!isOutsidePagination }"
+                        :class="[paginationWrapperStyle, { [paginationInsideStyle]: !isOutsidePagination }]"
                     >
-                        <div ref="paginationEl" class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal flex" />
+                        <div ref="paginationEl" :class="paginationContainerStyle" />
                     </div>
                 </slot>
             </div>

@@ -13,61 +13,78 @@ defineEmits<{
   back: [];
   open: [value: boolean];
 }>();
+
+const { getStyle } = usePondStyle();
+const outerStyles = getStyle('header.navigation.mobile.outer');
+const triggerStyles = getStyle('header.navigation.mobile.trigger');
+const iconStyles = getStyle('header.navigation.mobile.icon');
+const headerStyles = getStyle('header.navigation.mobile.header');
+const descriptionStyles = getStyle('header.navigation.mobile.description');
+const categoryListStyles = getStyle('header.navigation.mobile.categoryList');
+const categoryItemStyles = getStyle('header.navigation.mobile.categoryItem');
+const backLinkStyles = getStyle('header.navigation.mobile.backLink');
 </script>
 
 <template>
-    <div class="flex items-center md:hidden">
+    <div :class="outerStyles">
         <UiSheet :open="open" @update:open="(value: boolean) => $emit('open', value)">
             <slot name="mobile-menu-trigger">
-                <UiSheetTrigger id="mobile-open-navigation" class="size-5" aria-label="mobile-open-navigation">
+                <UiSheetTrigger
+                    id="mobile-open-navigation"
+                    :class="triggerStyles"
+                    aria-label="mobile-open-navigation"
+                >
                     <slot name="mobile-menu-icon">
-                        <Icon name="mdi:menu" class="size-5" />
+                        <Icon name="mdi:menu" :class="iconStyles" />
                     </slot>
                 </UiSheetTrigger>
             </slot>
 
             <LazyUiSheetContent side="left">
-                <LazyUiSheetHeader class="text-left!">
+                <LazyUiSheetHeader :class="headerStyles">
                     <LazyUiSheetTitle>
                         <slot name="mobile-menu-title">
                             <template v-if="lastPreviousItem">
                                 {{ getTranslatedProperty(lastPreviousItem, 'name') }}
                             </template>
-
                             <template v-else>
                                 {{ $t('general.categories') }}
                             </template>
                         </slot>
                     </LazyUiSheetTitle>
 
-                    <LazyUiSheetDescription class="text-initial text-base">
+                    <LazyUiSheetDescription :class="descriptionStyles">
                         <slot name="mobile-menu-description">
-                            <div v-auto-animate class="grid gap-2">
-                                <!-- display a back link -->
+                            <div v-auto-animate :class="categoryListStyles">
+                                <!-- Back -->
                                 <slot name="mobile-menu-back">
-                                    <div v-if="lastPreviousItem" class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3" @click="$emit('back')">
-                                        <Icon name="mdi:chevron-left" class="size-5" />
+                                    <div
+                                        v-if="lastPreviousItem"
+                                        :class="backLinkStyles"
+                                        @click="$emit('back')"
+                                    >
+                                        <Icon name="mdi:chevron-left" :class="iconStyles" />
                                         {{ $t('general.back') }}
                                     </div>
                                 </slot>
 
-                                <!-- display a link to the current category with all items snippet (if its not a folder) -->
+                                <!-- Show all in current category -->
                                 <slot name="mobile-menu-current">
                                     <LazyLayoutHeaderNavigationLink
                                         v-if="lastPreviousItem && (lastPreviousItem.type === 'link' || lastPreviousItem.type === 'page')"
                                         :navigation-element="lastPreviousItem"
                                         :alternative-name="$t('general.showAll')"
-                                        :classes="{ 'border-b-2 border-gray-100 py-3': true }"
+                                        :classes="categoryItemStyles"
                                         @click="(navigationElement, categoryLink, options) => $emit('click', lastPreviousItem, categoryLink, options)"
                                     />
                                 </slot>
 
-                                <!-- display the currently visible categories -->
+                                <!-- Visible categories -->
                                 <slot name="mobile-menu-categories">
                                     <LazyLayoutHeaderNavigationLink
                                         v-for="navigationElement in navigationElements"
                                         :key="navigationElement.id"
-                                        class="border-b-2 border-gray-100 py-3"
+                                        :class="categoryItemStyles"
                                         :navigation-element="navigationElement"
                                         :show-as-link="navigationElement.visibleChildCount === 0"
                                         @click="(navigationElement, categoryLink, options) => $emit('click', navigationElement, categoryLink, options)"

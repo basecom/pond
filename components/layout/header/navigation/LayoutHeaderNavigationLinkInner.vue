@@ -48,13 +48,19 @@ const handleClick = () => {
     const options =linkNewTab ? { open: { target: '_blank' } } : undefined;
     emits('click', props.navigationElement, categoryLink.value, options);
 };
+
+const { getStyle } = usePondStyle();
+const linkStyles = getStyle('header.navigation.linkItem.link');
+const itemStyles = getStyle('header.navigation.linkItem.item');
+const iconWrapperStyles = getStyle('header.navigation.linkItem.iconWrapper');
+const iconStyles = getStyle('header.navigation.linkItem.icon');
 </script>
 
 <template>
     <LazyNuxtLinkLocale
         v-if="showAsLink && categoryLink"
         :to="categoryLink"
-        :class="[classes]"
+        :class="linkStyles"
         @click.prevent="handleClick"
     >
         <slot name="link-name">
@@ -64,16 +70,14 @@ const handleClick = () => {
 
     <div
         v-else
-        :class="[classes, {
-            'flex cursor-pointer items-center': showIcon,
-        }]"
+        :class="[itemStyles, showIcon ? iconWrapperStyles : '']"
         @click="$emit('click', navigationElement, undefined)"
     >
         <slot name="item-name">
             {{ getTranslatedProperty(navigationElement, 'name') }}
         </slot>
 
-        <span v-if="showIcon" class="ml-auto">
+        <span v-if="showIcon" :class="iconStyles">
             <slot name="item-icon">
                 <Icon name="mdi:chevron-right" class="size-5" />
             </slot>

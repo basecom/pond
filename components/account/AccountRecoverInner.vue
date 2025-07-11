@@ -32,6 +32,15 @@ export type RecoverData = z.infer<typeof schema>;
 const recover = (recoverData: RecoverData) => {
     emits('recover', recoverData);
 };
+
+const { getStyle } = usePondStyle();
+const alertOuterStyles = getStyle('account.recover.alert.outer');
+const alertIconStyles = getStyle('account.recover.alert.icon');
+const descriptionStyles = getStyle('account.recover.description');
+const formOuterStyles = getStyle('account.recover.form.outer');
+const formButtonsOuterStyles = getStyle('account.recover.form.buttons.outer');
+const formButtonsCancelStyles = getStyle('account.recover.form.buttons.cancel');
+const formButtonsSubmitStyles = getStyle('account.recover.form.buttons.submit');
 </script>
 
 <template>
@@ -39,9 +48,9 @@ const recover = (recoverData: RecoverData) => {
         <div v-auto-animate>
             <slot name="success-message">
                 <template v-if="showSuccessMessage">
-                    <UiAlert variant="successful" class="mb-4 flex gap-4">
+                    <UiAlert variant="successful" :class="alertOuterStyles">
                         <slot name="alert-icon">
-                            <Icon name="mdi:check" class="size-4 shrink-0" />
+                            <Icon name="mdi:check" :class="alertIconStyles" />
                         </slot>
 
                         <div>
@@ -55,16 +64,16 @@ const recover = (recoverData: RecoverData) => {
             </slot>
 
             <slot name="header">
-                <h1 class="text-lg font-semibold">{{ $t('account.recover.header') }}</h1>
+                <h1>{{ $t('account.recover.header') }}</h1>
             </slot>
 
             <slot name="info-text">
-                <p class="pb-4 pt-2 text-sm">{{ $t('account.recover.information') }}</p>
+                <p :class="descriptionStyles">{{ $t('account.recover.information') }}</p>
             </slot>
 
             <slot name="form">
                 <UiAutoForm
-                    class="space-y-6"
+                    :class="formOuterStyles"
                     :schema="schema"
                     :field-config="{
                         email: {
@@ -78,15 +87,15 @@ const recover = (recoverData: RecoverData) => {
                     @submit="recover"
                 >
                     <slot name="buttons">
-                        <div class="flex flex-wrap gap-4">
+                        <div :class="formButtonsOuterStyles">
                             <slot name="back-button">
-                                <UiButton variant="outline" class="w-fit grow sm:grow-0">
+                                <UiButton variant="outline" :class="formButtonsCancelStyles">
                                     <NuxtLinkLocale to="/account/login">{{ $t('account.recover.backButton') }}</NuxtLinkLocale>
                                 </UiButton>
                             </slot>
 
                             <slot name="submit-button">
-                                <UiButton type="submit" :is-loading="isLoading" class="min-w-52 grow">
+                                <UiButton type="submit" :is-loading="isLoading" :class="formButtonsSubmitStyles">
                                     {{ $t('account.recover.submitButton') }}
                                 </UiButton>
                             </slot>

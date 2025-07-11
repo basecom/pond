@@ -34,17 +34,26 @@ const onUpdate = async (selectedId: AcceptableValue) => {
                 title: t('general.currencySwitch', { currency: currency.isoCode }),
             });
         } catch {
-            handleError('[Pond][LayoutCurrencySwitcher]: Currency switch failed');
+            handleError('[Pond][LayoutFooterCurrencySwitcher]: Currency switch failed');
         }
     }
 };
+
+const { getStyle } = usePondStyle();
+
+const triggerStyles = getStyle('footer.currencySwitcherComponent.trigger');
+const itemStyles = getStyle('footer.currencySwitcherComponent.item');
 </script>
 
 <template>
     <UiSelect :model-value="selectedCurrencyId" @update:model-value="onUpdate">
         <slot name="currency-switcher-trigger">
-            <UiSelectTrigger id="currency-switch" class="border-none shadow-none p-0" aria-label="currency-switch">
-                <UiSelectValue  />
+            <UiSelectTrigger
+                id="currency-switch"
+                :class="triggerStyles"
+                aria-label="currency-switch"
+            >
+                <UiSelectValue />
             </UiSelectTrigger>
         </slot>
 
@@ -56,7 +65,7 @@ const onUpdate = async (selectedId: AcceptableValue) => {
                             v-for="availableCurrency in availableCurrencies"
                             :key="availableCurrency.id"
                             :value="availableCurrency.id"
-                            class="cursor-pointer"
+                            :class="itemStyles"
                         >
                             {{ availableCurrency.symbol }}
                             {{ availableCurrency.shortName }}

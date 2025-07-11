@@ -8,35 +8,52 @@ defineProps<{
 const { getFormattedPrice } = usePrice();
 const configStore = useConfigStore();
 const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.productFallBackCover') as string;
+
+const { getStyle } = usePondStyle();
+
+const orderItemWrapperStyle = getStyle('order.lineItem.wrapper');
+const lineItemBaseStyle = getStyle('order.lineItem.base');
+const coverImageStyle = getStyle('order.lineItem.cover');
+const promotionCoverStyle = getStyle('order.lineItem.promotion.wrapper');
+const promotionIconStyle = getStyle('order.lineItem.promotion.icon');
+const lineItemInfoStyle = getStyle('order.lineItem.info');
+const itemLabelStyle = getStyle('order.lineItem.label');
+const quantityStyle = getStyle('order.lineItem.quantity.wrapper');
+const quantityLabelStyle = getStyle('order.lineItem.quantity.label');
+const unitPriceStyle = getStyle('order.lineItem.unitPrice');
+const totalPriceStyle = getStyle('order.lineItem.totalPrice');
 </script>
 
 <template>
-    <div class="flex flex-col md:grid md:grid-cols-5 gap-5 border-b  border-gray-100 p-2">
+    <div :class="orderItemWrapperStyle">
         <slot name="line-item">
-            <div class="flex col-span-2 gap-2.5">
+            <div :class="lineItemBaseStyle">
                 <slot name="line-item-cover">
                     <img
                         v-if="lineItem.cover?.url"
                         :src="lineItem.cover.url"
                         :alt="lineItem.cover.translated?.alt"
                         :title="lineItem.cover.translated?.title"
-                        class="object-center object-contain h-16 aspect-square"
+                        :class="coverImageStyle"
                     >
                     <img
                         v-else-if="lineItem.type !== 'promotion' && productFallBackCover"
                         :src="productFallBackCover"
                         alt=""
                         title=""
-                        class="object-center h-16 aspect-square object-contain"
+                        :class="coverImageStyle"
                     >
-                    <div v-else-if="lineItem.type === 'promotion'" class="h-16 w-16 border border-gray-300 items-center flex justify-center">
-                        <Icon name="mdi:percent" class="size-4 shrink-0" />
+                    <div
+                        v-else-if="lineItem.type === 'promotion'"
+                        :class="promotionCoverStyle"
+                    >
+                        <Icon name="mdi:percent" :class="promotionIconStyle" />
                     </div>
                 </slot>
 
                 <slot name="line-item-information">
-                    <div class="flex flex-col">
-                        <span class="font-bold">
+                    <div :class="lineItemInfoStyle">
+                        <span :class="itemLabelStyle">
                             {{ lineItem.label }}
                         </span>
                         <span>
@@ -48,20 +65,22 @@ const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.
         </slot>
 
         <slot name="quantity">
-            <span class="w-full md:col-start-3 flex justify-between md:justify-center">
-                <span class="font-bold md:hidden">{{ $t('order.lineItem.quantity') }} </span>
+            <span :class="quantityStyle">
+                <span :class="quantityLabelStyle">
+                    {{ $t('order.lineItem.quantity') }}
+                </span>
                 {{ lineItem.quantity }}
             </span>
         </slot>
 
         <slot name="unit-price">
-            <span class="justify-center hidden md:flex">
+            <span :class="unitPriceStyle">
                 {{ getFormattedPrice(lineItem.unitPrice) }}
             </span>
         </slot>
 
         <slot name="total-price">
-            <span class="flex justify-center font-bold">
+            <span :class="totalPriceStyle">
                 {{ getFormattedPrice(lineItem.totalPrice) }}
             </span>
         </slot>

@@ -15,7 +15,7 @@ defineEmits<{
 }>();
 
 const { getStyle } = usePondStyle();
-const actionLinkStyle = getStyle('account.actionLink');
+const actionLinkStyles = getStyle('account.actionLink');
 </script>
 
 <template>
@@ -27,7 +27,7 @@ const actionLinkStyle = getStyle('account.actionLink');
             @click="() => $emit('click')"
         >
             <slot name="account-action-link-inner">
-                <div :class="actionLinkStyle">
+                <div :class="actionLinkStyles">
                     {{ label }}
                 </div>
             </slot>

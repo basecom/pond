@@ -33,25 +33,35 @@ const getBadgeVariant = (stateMachineTechnicalName: string, paymentStateMachineT
 };
 
 const displayCompletePaymentLink = (paymentStateMachineTechnicalName: string) => paymentStateMachineTechnicalName === 'failed' || paymentStateMachineTechnicalName === 'cancelled' || paymentStateMachineTechnicalName === 'reminded' || paymentStateMachineTechnicalName === 'unconfirmed';
+
+const { getStyle } = usePondStyle();
+const outerStyles = getStyle('account.order.detail.outer');
+const skeletonOuterStyles = getStyle('account.order.detail.skeleton.outer');
+const skeletonInnerStyles = getStyle('account.order.detail.skeleton.inner');
+const triggerStyles = getStyle('account.order.detail.trigger');
+const headlineOuterStyles = getStyle('account.order.detail.headline.outer');
+const headlineInnerStyles = getStyle('account.order.detail.headline.inner');
+const headlineOrderNumberStyles = getStyle('account.order.detail.headline.orderNumber');
+const contentStyles = getStyle('account.order.detail.content');
+const paginationStyles = getStyle('account.order.detail.pagination');
+const alertOuterStyles = getStyle('account.order.detail.alert.outer');
+const alertIconStyles = getStyle('account.order.detail.alert.icon');
+const alertTitleStyles = getStyle('account.order.detail.alert.title');
 </script>
 
 <template>
-    <div class="gap-2.5 flex flex-col">
+    <div :class="outerStyles">
         <slot name="headline">
-            <h1>
-                {{ $t('order.headline') }}
-            </h1>
+            <h1>{{ $t('order.headline') }}</h1>
         </slot>
         <slot name="sub-headline">
-            <h2>
-                {{ $t('order.subHeadline') }}
-            </h2>
+            <h2>{{ $t('order.subHeadline') }}</h2>
         </slot>
 
         <template v-if="isLoading">
             <slot name="loading-skeleton">
-                <div v-for="n in 10" :key="n" class="flex flex-col gap-5">
-                    <UiSkeleton class="w-full h-30" />
+                <div v-for="n in 10" :key="n" :class="skeletonOuterStyles">
+                    <UiSkeleton :class="skeletonInnerStyles" />
                 </div>
             </slot>
         </template>
@@ -63,9 +73,9 @@ const displayCompletePaymentLink = (paymentStateMachineTechnicalName: string) =>
                         <UiAccordion type="single" collapsible>
                             <UiAccordionItem value="my-account-order">
                                 <slot name="account-order-details-trigger">
-                                    <UiAccordionTrigger class="text-lg font-bold">
-                                        <div class="flex flex-col items-start w-full gap-2.5">
-                                            <div class="flex items-center gap-5 text-left">
+                                    <UiAccordionTrigger :class="triggerStyles">
+                                        <div :class="headlineOuterStyles">
+                                            <div :class="headlineInnerStyles">
                                                 {{ $t('order.orderDate') }} {{ formatLocaleDate(order?.orderDate) }}
                                                 <UiBadge v-if="order && order.transactions" :variant="getBadgeVariant(order?.stateMachineState.technicalName, order?.transactions[0]?.stateMachineState?.technicalName ?? '')">
                                                     <NuxtLinkLocale
@@ -74,28 +84,32 @@ const displayCompletePaymentLink = (paymentStateMachineTechnicalName: string) =>
                                                     >
                                                         {{ $t('payment.completePayment') }}
                                                     </NuxtLinkLocale>
+
                                                     <span v-else>
                                                         {{ order?.stateMachineState.name }}
                                                     </span>
                                                 </UiBadge>
                                             </div>
-                                            <span class="font-normal">
+
+                                            <span :class="headlineOrderNumberStyles">
                                                 {{ $t('order.orderNumber') }} {{ order?.orderNumber }}
                                             </span>
                                         </div>
                                     </UiAccordionTrigger>
                                 </slot>
+
                                 <slot name="account-order-details-content">
-                                    <UiAccordionContent class="text-base">
-                                        <AccountOrderDetails :order-id="order?.id" />
+                                    <UiAccordionContent :class="contentStyles">
+                                        <AccountPageOrderDetails :order-id="order?.id" />
                                     </UiAccordionContent>
                                 </slot>
                             </UiAccordionItem>
                         </UiAccordion>
                     </div>
                 </slot>
+
                 <slot name="pagination">
-                    <div class="flex w-full justify-center mt-5 gap-2.5">
+                    <div :class="paginationStyles">
                         <SwPagination
                             :total="totalPages"
                             :current="currentPage"
@@ -104,11 +118,12 @@ const displayCompletePaymentLink = (paymentStateMachineTechnicalName: string) =>
                     </div>
                 </slot>
             </template>
+
             <template v-else>
                 <slot name="account-no-orders">
-                    <UiAlert class="flex gap-4 items-center">
-                        <Icon name="mdi:alert-circle-outline" class="size-4 shrink-0" />
-                        <UiAlertTitle class="mb-0"> {{ $t('order.noOrders') }} </UiAlertTitle>
+                    <UiAlert :class="alertOuterStyles">
+                        <Icon name="mdi:alert-circle-outline" :class="alertIconStyles" />
+                        <UiAlertTitle :class="alertTitleStyles"> {{ $t('order.noOrders') }} </UiAlertTitle>
                     </UiAlert>
                 </slot>
             </template>

@@ -9,18 +9,33 @@ withDefaults(
         cartItems: undefined,
     },
 );
+
+const { getStyle } = usePondStyle();
+const triggerStyles = getStyle('header.actions.cart.trigger');
+const iconStyles = getStyle('header.actions.cart.icon');
+const badgeStyles = getStyle('header.actions.cart.badge');
 </script>
 
 <template>
     <UiSheet>
         <slot name="cart-trigger">
-            <UiSheetTrigger id="open-offcanvas-cart" class="size-5" aria-label="open-offcanvas-cart">
+            <UiSheetTrigger
+                id="open-offcanvas-cart"
+                :class="triggerStyles"
+                aria-label="open-offcanvas-cart"
+            >
                 <slot name="cart-icon">
-                    <Icon name="mdi:cart-outline" class="size-5" />
+                    <Icon
+                        name="mdi:cart-outline"
+                        :class="iconStyles"
+                    />
                 </slot>
 
                 <slot name="cart-badge">
-                    <UiBadge v-if="cartItems?.length > 0" class="absolute -right-2 -top-1.5 px-1 py-0 text-xs font-normal">
+                    <UiBadge
+                        v-if="cartItems?.length > 0"
+                        :class="badgeStyles"
+                    >
                         {{ cartItems.length }}
                     </UiBadge>
                 </slot>

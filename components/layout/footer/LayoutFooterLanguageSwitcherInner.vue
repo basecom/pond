@@ -26,19 +26,29 @@ const onUpdate = async (selectedValue: AcceptableValue): Promise<void> =>  {
             const redirectUrl = response.redirectUrl;
             window.location.replace(replaceToDevStorefront(redirectUrl));
         } catch {
-            handleError('[Pond][LayoutLanguageSwitchInner] Language switch failed');
+            handleError('[Pond][LayoutFooterLanguageSwitchInner] Language switch failed');
         }
     }
 };
+
+const { getStyle } = usePondStyle();
+
+const triggerStyles = getStyle('footer.languageSwitcherComponent.trigger');
+const valueWrapperStyles = getStyle('footer.languageSwitcherComponent.valueWrapper');
+const itemStyles = getStyle('footer.languageSwitcherComponent.item');
 </script>
 
 <template>
     <UiSelect :model-value="selectedLanguageId" @update:model-value="onUpdate">
         <slot name="language-switcher-trigger">
-            <UiSelectTrigger id="language-switch" class="border-none shadow-none p-0" aria-label="language-switch">
+            <UiSelectTrigger
+                id="language-switch"
+                :class="triggerStyles"
+                aria-label="language-switch"
+            >
                 <UiSelectValue>
                     <template v-if="selectedLanguage">
-                        <div class="flex items-center gap-1">
+                        <div :class="valueWrapperStyles">
                             <Icon :name="`custom-icons:${selectedLanguage?.translationCode?.code}`" />
                             {{ selectedLanguage?.name }}
                         </div>
@@ -55,7 +65,7 @@ const onUpdate = async (selectedValue: AcceptableValue): Promise<void> =>  {
                         :key="language.id"
                         :value="language.id"
                     >
-                        <div class="flex items-center gap-1 cursor-pointer">
+                        <div :class="itemStyles">
                             <template v-if="language.translationCode.code">
                                 <Icon :name="`custom-icons:${language.translationCode.code}`" />
                             </template>

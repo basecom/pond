@@ -17,14 +17,28 @@ const dialogOpen = ref<boolean>(false);
 provide('closeDialog', () => {
     dialogOpen.value = false;
 });
+
+const { getStyle } = usePondStyle();
+
+const triggerStyles = getStyle('header.actions.account.trigger');
+const iconStyles = getStyle('header.actions.account.icon');
+const logoutItemStyles = getStyle('header.actions.account.logoutItem');
+const loginTriggerStyles = getStyle('header.actions.account.loginTrigger');
 </script>
 
 <template>
     <UiDropdownMenu>
         <slot name="action-login-menu">
-            <UiDropdownMenuTrigger id="header-account-action" class="size-5" aria-label="header-account-action">
+            <UiDropdownMenuTrigger
+                id="header-account-action"
+                :class="triggerStyles"
+                aria-label="header-account-action"
+            >
                 <slot name="icon">
-                    <Icon name="mdi:account-outline" class="size-5" />
+                    <Icon
+                        name="mdi:account-outline"
+                        :class="iconStyles"
+                    />
                 </slot>
             </UiDropdownMenuTrigger>
         </slot>
@@ -97,7 +111,10 @@ provide('closeDialog', () => {
                     </UiDropdownMenuItem>
 
                     <UiDropdownMenuSeparator />
-                    <UiDropdownMenuItem class="cursor-pointer" @click="$emit('logout')">
+                    <UiDropdownMenuItem
+                        :class="logoutItemStyles"
+                        @click="$emit('logout')"
+                    >
                         <slot name="logout">
                             {{ $t('account.auth.logout') }}
                         </slot>
@@ -109,7 +126,7 @@ provide('closeDialog', () => {
             <template v-else>
                 <slot name="guest">
                     <UiDialog v-model:open="dialogOpen">
-                        <UiDialogTrigger class="w-full">
+                        <UiDialogTrigger :class="loginTriggerStyles">
                             <slot name="action-login">
                                 <UiDropdownMenuItem @select.prevent="">
                                     <slot name="login">

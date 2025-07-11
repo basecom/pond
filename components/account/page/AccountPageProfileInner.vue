@@ -64,16 +64,19 @@ const possibleBirthdayYears = computed(() => {
 const changePersonalData = async (personalDataForm: PersonalDataForm) => {
     emits('update-personal-data', personalDataForm);
 };
+
+const { getStyle } = usePondStyle();
+const subHeadlineStyles = getStyle('account.personalData.subHeadline');
 </script>
 
 <template>
     <slot name="introduction">
-        <h1 class="mb-4 text-xl font-bold md:mb-6 md:text-2xl">{{ $t('account.profile') }}</h1>
+        <h1>{{ $t('account.profile') }}</h1>
     </slot>
 
     <!-- personal data -->
     <slot name="personal-data-headline">
-        <h3 class="mb-2 border-b border-gray-100 pb-2 text-lg font-bold md:mb-4">
+        <h3 :class="subHeadlineStyles">
             {{ $t('account.overview.personalData') }}
         </h3>
     </slot>

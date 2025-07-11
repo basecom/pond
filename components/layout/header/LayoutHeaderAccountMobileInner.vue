@@ -21,14 +21,26 @@ const dialogOpen = ref(false);
 provide('closeDialog', () => {
     dialogOpen.value = false;
 });
+
+const { getStyle } = usePondStyle();
+const triggerStyles = getStyle('header.actions.account.mobile.trigger');
+const iconStyles = getStyle('header.actions.account.mobile.icon');
+const descriptionStyles = getStyle('header.actions.account.mobile.description');
+const logoutStyles = getStyle('header.actions.account.mobile.logoutWrapper');
+const logoutButtonStyles = getStyle('header.actions.account.mobile.logout');
+const loginTriggerStyles = getStyle('header.actions.account.mobile.loginTrigger');
 </script>
 
 <template>
     <UiSheet :open="open" @update:open="(value: boolean) => $emit('open', value)">
         <slot name="mobile-account-trigger">
-            <UiSheetTrigger id="open-account-menu-mobile" class="size-5" aria-label="open-account-menu">
+            <UiSheetTrigger
+                id="open-account-menu-mobile"
+                :class="triggerStyles"
+                aria-label="open-account-menu"
+            >
                 <slot name="account-icon">
-                    <Icon name="mdi:account-outline" class="size-5" />
+                    <Icon name="mdi:account-outline" :class="iconStyles" />
                 </slot>
             </UiSheetTrigger>
         </slot>
@@ -36,25 +48,21 @@ provide('closeDialog', () => {
         <UiSheetContent>
             <UiSheetHeader>
                 <UiSheetTitle>{{ $t('account.myAccount') }}</UiSheetTitle>
-                <LazyUiSheetDescription class="text-initial text-base text-start grid gap-2">
+
+                <LazyUiSheetDescription :class="descriptionStyles">
                     <!-- user view -->
                     <template v-if="signedIn">
                         <slot name="signed-in">
                             <AccountActionLink link="/account" :label="$t('account.account')" @click="() => $emit('click')" />
-
                             <AccountActionLink link="/account/profile" :label="$t('account.profile')" @click="() => $emit('click')" />
-
                             <AccountActionLink link="/account/address" :label="$t('account.address')" @click="() => $emit('click')" />
-
                             <AccountActionLink link="/account/payment" :label="$t('account.payment')" @click="() => $emit('click')" />
-
                             <AccountActionLink link="/account/order" :label="$t('account.order')" @click="() => $emit('click')" />
-
                             <AccountActionLink link="/account/wishlist" :label="$t('account.wishlist')" @click="() => $emit('click')" />
 
-                            <div class="cursor-pointer" @click="$emit('logout')">
+                            <div :class="logoutStyles" @click="$emit('logout')">
                                 <slot name="logout">
-                                    <div class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3">
+                                    <div :class="logoutButtonStyles">
                                         {{ $t('account.auth.logout') }}
                                     </div>
                                 </slot>
@@ -66,10 +74,10 @@ provide('closeDialog', () => {
                     <template v-else>
                         <slot name="guest">
                             <UiDialog v-model:open="dialogOpen">
-                                <UiDialogTrigger class="w-full text-start">
+                                <UiDialogTrigger :class="loginTriggerStyles">
                                     <slot name="action-login">
                                         <slot name="login">
-                                            <div class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3">
+                                            <div :class="logoutButtonStyles">
                                                 {{ $t('account.auth.login') }}
                                             </div>
                                         </slot>
@@ -82,7 +90,6 @@ provide('closeDialog', () => {
                                             {{ $t('account.auth.login') }}
                                         </UiDialogTitle>
                                     </UiDialogHeader>
-
                                     <AccountLogin :redirect-to="null" />
                                 </UiDialogContent>
                             </UiDialog>
