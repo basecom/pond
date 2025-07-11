@@ -39,7 +39,7 @@ console.log('product', product.value);
         <div
             class="relative sw-product-card not-prose group relative flex max-w-full flex-col justify-between rounded-lg border border-gray-200 bg-white transition duration-300 hover:shadow-lg"
         >
-            <slot name="badges">
+            <slot name="product-badges">
                 <div class="absolute top-0 flex flex-col gap-1 p-2 z-2">
                     <ProductBadges :is-new="product.isNew" :is-topseller="product.markAsTopseller" :is-sale="isListPrice" />
                 </div>
