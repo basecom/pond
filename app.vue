@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { changeLanguage, getLanguageIdFromCode, getAvailableLanguages } = useInternationalization();
 const { locale } = useI18n();
+const { cmsTranslations } = usePondCmsTranslations();
 const url = useRequestURL();
 const route = useRoute();
 
@@ -11,6 +12,7 @@ const updateSessionWithLanguage = async () => {
 };
 
 await updateSessionWithLanguage();
+provide('cmsTranslations', cmsTranslations.value);
 
 const { refreshCart } = useCart();
 const { getWishlistProducts } = useWishlist();

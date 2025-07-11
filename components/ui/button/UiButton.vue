@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<Props>(), {
         :class="cn(buttonVariants({ variant, size }), props.class)"
         :disabled="isLoading"
     >
-        <Loader2 v-if="isLoading" class="mr-2 size-4 animate-spin" />
+        <Loader2 v-if="isLoading" class="absolute size-4 animate-spin" />
         <slot />
     </Primitive>
 </template>
