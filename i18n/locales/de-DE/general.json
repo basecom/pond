@@ -11,7 +11,8 @@
         "button": {
             "acceptLabel": "Akzeptieren"
         },
-        "currencySwitch": "Währung umgestellt auf {currency}"
+        "currencySwitch": "Währung umgestellt auf {currency}",
+        "imageNotFound": "Kein Bild gefunden"
     },
 
     "image": {
