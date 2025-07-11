@@ -31,7 +31,7 @@ const onUpdate = async (selectedId: AcceptableValue) => {
             await setCurrency(currency);
             selectedCurrencyId.value = selectedId;
             toast({
-                title: t('general.currencySwitch', { currency: currency.isoCode }),
+                title: t('general.currencySwitch', {currency: currency.isoCode}),
             });
         } catch {
             handleError('[Pond][LayoutCurrencySwitcher]: Currency switch failed');

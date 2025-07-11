@@ -1,0 +1,141 @@
+<script setup lang="ts">
+// set onMounted flag, otherwise hydration mismatched may occur
+const isMounted = ref(false);
+
+onMounted(() => isMounted.value = true);
+</script>
+
+<template>
+    <div class="grid gap-4">
+        <h1> I'm a Vue form, which marks required fields with * </h1>
+        <Vueform
+            v-if="isMounted"
+            id="story-form-required-fields"
+            :show-required="['label']"
+            :display-errors="false"
+        >
+            <FormTextElement
+                id="required-text-element"
+                label="I'm a required text element"
+                name="text-element"
+                placeholder="Enter Text ..."
+                :messages="{ required: 'I am required' }"
+                rules="required"
+            />
+
+            <FormSelectElement
+                id="required-select-element"
+                name="select-element"
+                label="I'm a required select element"
+                rules="required"
+                :messages="{ required: 'I am required' }"
+                :items="[{ value: 'private', label: $t('account.customer.accountType.private') }, { value: 'business', label: $t('account.customer.accountType.business') }]"
+            />
+
+            <FormCheckboxElement
+                id="required-checkbox-element"
+                name="checkbox-element"
+                label="I'm a required checkbox"
+                rules="required"
+                :messages="{ required: 'I am required' }"
+            />
+
+            <UiButton
+                id="form-submit-button"
+                name="form-submit"
+                label="Submit"
+                type="submit"
+            >
+                Submit
+            </UiButton>
+        </Vueform>
+
+        <h1> I'm a Vue form, which displays all errors </h1>
+        <Vueform
+            v-if="isMounted"
+            id="story-form-display-errors"
+            :show-required="['label']"
+            :display-errors="true"
+        >
+            <FormTextElement
+                id="fomr-2-required-text-element"
+                label="I'm a required text element"
+                name="text-element"
+                placeholder="Enter Text ..."
+                :messages="{ required: 'Text field is required' }"
+                rules="required"
+            />
+
+            <FormSelectElement
+                id="form-2-required-select-element"
+                name="select-element"
+                label="I'm a required select element"
+                rules="required"
+                :messages="{ required: 'Select field is required' }"
+                :items="[{ value: 'private', label: $t('account.customer.accountType.private') }, { value: 'business', label: $t('account.customer.accountType.business') }]"
+            />
+
+            <FormCheckboxElement
+                id="form-2-required-checkbox-element"
+                name="checkbox-element"
+                label="I'm a required checkbox"
+                rules="required"
+                :messages="{ required: 'Checkbox is required' }"
+            />
+
+            <UiButton
+                id="form-2-submit-button"
+                name="form-submit"
+                label="Submit"
+                type="submit"
+            >
+                Submit
+            </UiButton>
+        </Vueform>
+
+        <h1> I'm a Vue form (Grid with 12 col span), which uses different cols for form field and uses group elements </h1>
+        <Vueform v-if="isMounted" id="story-form-cols-and-group-elements">
+            <FormTextElement
+                id="text-element-col-6"
+                label="I'm a text element with 6 cols"
+                name="text-element"
+                placeholder="Enter Text ..."
+                :columns="{ md: 6 }"
+            />
+
+            <GroupElement name="select-element" label="I'm a group element with a singular form field, to force the first element to start at col-span-1">
+                <FormSelectElement
+                    id="select-element-col-3"
+                    name="select-element"
+                    label="I'm a select element with 3 cols"
+                    :columns="{ md: 3 }"
+                    :items="[{ value: 'private', label: $t('account.customer.accountType.private') }, { value: 'business', label: $t('account.customer.accountType.business') }]"
+                />
+            </GroupElement>
+
+            <GroupElement name="checkboxes" label="I'm a group element with 2 checkboxes">
+                <FormCheckboxElement
+                    id="first-checkbox-element"
+                    name="first-checkbox"
+                    label="I'm a checkbox"
+                    :columns="{ md: 6 }"
+                />
+                <FormCheckboxElement
+                    id="second-checkbox-element"
+                    name="second-checkbox"
+                    label="I'm another checkbox"
+                    :columns="{ md: 6 }"
+                />
+            </GroupElement>
+
+            <UiButton
+                id="form-3-submit-button"
+                name="form-submit"
+                label="Submit"
+                type="submit"
+            >
+                Submit
+            </UiButton>
+        </Vueform>
+    </div>
+</template>
