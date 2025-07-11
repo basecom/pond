@@ -1,6 +1,8 @@
 import config from '~/pond.config';
 
 export const usePondStyle = () => {
+    const { handleError } = usePondHandleError();
+
     const getStyle = (path: string): string => {
         const keys = path.split('.');
         let currentStyle: any = config.styles;
@@ -9,9 +11,9 @@ export const usePondStyle = () => {
             if (currentStyle && key in currentStyle) {
                 currentStyle = currentStyle[key];
                 continue;
-            } 
-            
-            console.warn(`[Pond][getStyle] '${path}' could not be loaded`);
+            }
+
+            handleError(`[Pond][getStyle] '${path}' could not be loaded`);
             return '';
         }
 
