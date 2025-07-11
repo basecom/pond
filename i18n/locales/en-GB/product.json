@@ -3,6 +3,10 @@
         "addToCart": "Add to cart",
         "details": "Show details",
         "productAddedToCart": "{product} added to cart",
-        "image": "Product cover"
+        "image": "Product cover",
+        "badge": {
+            "new": "New",
+            "topseller": "Tip"
+        }
     }
 }

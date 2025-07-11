@@ -6,7 +6,7 @@
         "image": "Produktbild",
         "badge": {
             "new": "Neu",
-            "topseller": "Tipp",
+            "topseller": "Tipp"
         }
     }
 }
