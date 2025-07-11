@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
 import type { AcceptableValue } from 'reka-ui';
+import { useToast } from '@/components/ui/toast/use-toast';
 
 const { currency, setCurrency } = useSessionContext();
 const { getAvailableCurrencies } = usePondSalesChannel();
+const { toast } = useToast();
+const { handleError } = usePondHandleError();
+const { t } = useI18n();
 
 const availableCurrencies: Ref<undefined | Schemas['Currency'][]> = ref(undefined);
 const selectedCurrencyId: Ref<undefined | AcceptableValue> = ref(undefined);
@@ -23,8 +27,15 @@ const onUpdate = async (selectedId: AcceptableValue) => {
     const arrayOfAvailableCurrencies = availableCurrencies.value ? Object.values(availableCurrencies.value) : [];
     const currency = arrayOfAvailableCurrencies.find(availableCurrency => availableCurrency.id === selectedId);
     if (currency) {
-        await setCurrency(currency);
-        selectedCurrencyId.value = selectedId;
+        try {
+            await setCurrency(currency);
+            selectedCurrencyId.value = selectedId;
+            toast({
+                title: t('general.currencySwitch', {currency: currency.isoCode}),
+            });
+        } catch {
+            handleError('[Pond][LayoutCurrencySwitcher]: Currency switch failed');
+        }
     }
 };
 </script>
@@ -32,7 +43,7 @@ const onUpdate = async (selectedId: AcceptableValue) => {
 <template>
     <UiSelect :model-value="selectedCurrencyId" @update:model-value="onUpdate">
         <slot name="currency-switcher-trigger">
-            <UiSelectTrigger class="border-none shadow-none p-0">
+            <UiSelectTrigger id="currency-switch" class="border-none shadow-none p-0" aria-label="currency-switch">
                 <UiSelectValue  />
             </UiSelectTrigger>
         </slot>
@@ -45,6 +56,7 @@ const onUpdate = async (selectedId: AcceptableValue) => {
                             v-for="availableCurrency in availableCurrencies"
                             :key="availableCurrency.id"
                             :value="availableCurrency.id"
+                            class="cursor-pointer"
                         >
                             {{ availableCurrency.symbol }}
                             {{ availableCurrency.shortName }}

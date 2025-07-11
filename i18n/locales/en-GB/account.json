@@ -3,9 +3,9 @@
         "myAccount": "My Account",
         "account": "Overview",
         "profile": "Personal Profile",
-        "addresses": "Addresses",
-        "paymentMethods": "Payment Methods",
-        "orders": "Orders",
+        "address": "Addresses",
+        "payment": "Payment Methods",
+        "order": "Orders",
         "wishlist": "Wishlist",
         "welcome": "Hello {name}",
         "auth": {
