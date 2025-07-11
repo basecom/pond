@@ -7,12 +7,14 @@ withDefaults(
       showRequired?: string[];
       isLoading?: boolean;
       errorMessage?: string;
+      floatPlaceholders?: boolean;
     }>(),
     {
         displayVueFormErrors: false,
         showRequired: () => ['label'],
         isLoading: false,
         errorMessage: undefined,
+        floatPlaceholders: false,
     },
 );
 
@@ -109,6 +111,7 @@ const onSubmit = (data: VueFormRequestData) => {
                 :show-required="showRequired"
                 :loading="isLoading"
                 :endpoint="false"
+                :float-placeholders="floatPlaceholders"
                 @submit="(value: VueFormSubmitData) => onSubmit(value.data)"
             >
                 <slot name="register-customer-info-and-billing-address">
