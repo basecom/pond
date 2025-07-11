@@ -3,10 +3,13 @@ const { formatLink } = useInternationalization();
 const route = useRoute();
 
 const breadcrumbs = computed(() => route.path.split('/').filter((breadcrumb: string) => breadcrumb !== ''));
+
+const { getStyle } = usePondStyle();
+const breadcrumbStyle = getStyle('account.breadcrumb');
 </script>
 
 <template>
-    <UiBreadcrumb class="mt-4 md:mt-6">
+    <UiBreadcrumb :class="breadcrumbStyle">
         <UiBreadcrumbList>
             <UiBreadcrumbItem>
                 <slot name="breadcrumb-home">

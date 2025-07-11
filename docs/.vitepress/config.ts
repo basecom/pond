@@ -33,6 +33,7 @@ export default defineConfig({
                     { text: 'CMS System', link: '/how-to/cms-system' },
                     { text: 'Error Handling', link: '/how-to/error-handling' },
                     { text: 'Account Management', link: '/how-to/account-management' },
+                    { text: 'Pond Style', link: '/how-to/pond-style' },
                 ],
             },
         ],
