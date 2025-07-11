@@ -1,7 +1,7 @@
 <script setup lang="ts">
-const { formatLink } = useInternationalization();
 const customerStore = useCustomerStore();
 const { customer } = storeToRefs(customerStore);
+const { logout } = usePondAuthentication();
 
 const accountLinks: {name: string, link: string}[] = [
     {
@@ -29,11 +29,6 @@ const accountLinks: {name: string, link: string}[] = [
         link: '/account/wishlist',
     },
 ];
-
-const logout = async () => {
-    await customerStore.logout();
-    navigateTo(formatLink('/'));
-};
 </script>
 
 <template>

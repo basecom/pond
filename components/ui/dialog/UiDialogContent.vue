@@ -33,7 +33,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
             v-bind="forwarded"
             :class="
                 cn(
-                    'fixed md:left-1/2 md:top-1/2 z-50 grid w-full md:max-w-lg md:-translate-x-1/2 md:-translate-y-1/2 gap-4 border border-gray-200 bg-white p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 md:data-[state=closed]:slide-out-to-left-1/2 md:data-[state=closed]:slide-out-to-top-[48%] md:data-[state=open]:slide-in-from-left-1/2 md:data-[state=open]:slide-in-from-top-[48%] rounded-t-lg md:rounded-b-lg inset-x-0 bottom-0 md:bottom-auto border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
+                    'fixed md:left-1/2 md:top-1/2 z-50 grid w-full md:max-w-lg md:-translate-x-1/2 md:-translate-y-1/2 gap-4 border border-gray-200 bg-white p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 rounded-t-lg md:rounded-b-lg inset-x-0 bottom-0 md:bottom-auto border-t',
                     props.class,
                 )"
             aria-describedby="dialog-description"

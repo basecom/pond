@@ -1,7 +1,12 @@
+import { useToast } from '@/components/ui/toast/use-toast';
+
 export function usePondAuthentication() {
     const customerStore = useCustomerStore();
     const { signedIn, loading } = storeToRefs(customerStore);
     const { formatLink } = useInternationalization();
+    const { toast } = useToast();
+    const { t } = useI18n();
+    const { handleError } = usePondHandleError();
 
     const rerouteIfLoggedOut = async (targetRoute: string = '/account/login') => {
         await sessionContextLoaded();
@@ -32,8 +37,21 @@ export function usePondAuthentication() {
         }
     };
 
+    const logout = async (redirectTo: string = '/') => {
+        try {
+            await navigateTo(formatLink(redirectTo));
+            await customerStore.logout();
+            toast({
+                title: t('account.auth.logoutSuccess'),
+            });
+        } catch (error) {
+            handleError(error);
+        }
+    };
+
     return {
         rerouteIfLoggedOut,
         rerouteIfLoggedIn,
+        logout,
     };
 }
