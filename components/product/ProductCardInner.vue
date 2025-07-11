@@ -31,7 +31,6 @@ const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.
 const srcPath = computed(() => getSmallestThumbnailUrl(
     product.value?.cover?.media,
 ) ?? product.value?.cover?.media?.url);
-console.log('product', product.value);
 </script>
 
 <template>
