@@ -1,5 +1,12 @@
 {
   "address": {
+    "accountHeadline": "Addresses",
+    "accountDescription": "Change your default addresses or add new ones.",
+    "addNewAddress": "Add new address",
+    "defaultBillingAddress": "Standard billing address",
+    "defaultShippingAddress": "Default shipping address",
+    "availableAddresses": "Available addresses",
+    "editAddress": "Edit address",
     "headline": "Your Address",
     "differentShippingAddress": "Shipping address differs from billing address.",
     "street": {

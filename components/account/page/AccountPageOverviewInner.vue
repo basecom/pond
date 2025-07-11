@@ -7,8 +7,6 @@ defineProps<{
 
 const configStore = useConfigStore();
 const showTitle = configStore.get('core.loginRegistration.showTitleField') as boolean;
-const showAdditionalAddressField1 = configStore.get('core.loginRegistration.showAdditionalAddressField1') as boolean;
-const showAdditionalAddressField2 = configStore.get('core.loginRegistration.showAdditionalAddressField2') as boolean;
 </script>
 
 <template>
@@ -73,86 +71,20 @@ const showAdditionalAddressField2 = configStore.get('core.loginRegistration.show
 
         <!-- default billing address -->
         <slot name="billing-address">
-            <div v-if="customer.defaultBillingAddress">
-                <slot name="billing-address-headline">
-                    <h3 class="mb-2 border-b border-gray-100 pb-2 text-lg font-bold">
-                        {{ $t('account.overview.defaultBillingAddress') }}
-                    </h3>
-                </slot>
-
-                <slot name="billing-address-content">
-                    <div class="space-y-2">
-                        <p v-if="customer.accountType === 'business' && (customer.defaultBillingAddress.company || customer.defaultBillingAddress.department)" class="font-bold">
-                            {{ customer.defaultBillingAddress.company }}
-                            <template v-if="customer.defaultBillingAddress.department">
-                                - {{ customer.defaultBillingAddress.department }}
-                            </template>
-                        </p>
-                        <p>{{ customer.defaultBillingAddress.firstName }} {{ customer.defaultBillingAddress.lastName }}</p>
-                        <p>{{ customer.defaultBillingAddress.street }}</p>
-                        <p v-if="showAdditionalAddressField1 && customer.defaultBillingAddress.additionalAddressLine1">
-                            {{ customer.defaultBillingAddress.additionalAddressLine1 }}
-                        </p>
-                        <p v-if="showAdditionalAddressField2 && customer.defaultBillingAddress.additionalAddressLine2">
-                            {{ customer.defaultBillingAddress.additionalAddressLine2 }}
-                        </p>
-                        <p>{{ customer.defaultBillingAddress.zipcode }} {{ customer.defaultBillingAddress.city }}</p>
-                        <p>
-                            <template v-if="customer.defaultBillingAddress.countryState">
-                                {{ customer.defaultBillingAddress.countryState.name }},
-                            </template>
-                            {{ customer.defaultBillingAddress.country?.name }}
-                        </p>
-                    </div>
-                </slot>
-            </div>
+            <template v-if="customer.defaultBillingAddress">
+              <AddressCard :headline="$t('account.overview.defaultBillingAddress')" :address="customer.defaultBillingAddress" />
+            </template>
         </slot>
 
         <!-- default shipping address -->
         <slot name="shipping-address">
-            <div v-if="customer.defaultShippingAddress">
-                <slot name="shipping-address-headline">
-                    <h3 class="mb-2 border-b border-gray-100 pb-2 text-lg font-bold">
-                        {{ $t('account.overview.defaultShippingAddress') }}
-                    </h3>
-                </slot>
-
-                <slot name="shipping-address-content">
-                    <div class="space-y-2">
-                        <template v-if="customer.defaultBillingAddressId === customer.defaultShippingAddressId">
-                            <slot name="shipping-address-identical">
-                                {{ $t('account.overview.addressesIdentical') }}
-                            </slot>
-                        </template>
-
-                        <template v-else>
-                            <slot name="shipping-address-not-identical">
-                                <p v-if="customer.accountType === 'business' && (customer.defaultShippingAddress.company || customer.defaultShippingAddress.department)" class="font-bold">
-                                    {{ customer.defaultShippingAddress.company }}
-                                    <template v-if="customer.defaultShippingAddress.department">
-                                        - {{ customer.defaultShippingAddress.department }}
-                                    </template>
-                                </p>
-                                <p>{{ customer.defaultShippingAddress.firstName }} {{ customer.defaultShippingAddress.lastName }}</p>
-                                <p>{{ customer.defaultShippingAddress.street }}</p>
-                                <p v-if="showAdditionalAddressField1 && customer.defaultShippingAddress.additionalAddressLine1">
-                                    {{ customer.defaultShippingAddress.additionalAddressLine1 }}
-                                </p>
-                                <p v-if="showAdditionalAddressField2 && customer.defaultShippingAddress.additionalAddressLine2">
-                                    {{ customer.defaultShippingAddress.additionalAddressLine2 }}
-                                </p>
-                                <p>{{ customer.defaultShippingAddress.zipcode }} {{ customer.defaultShippingAddress.city }}</p>
-                                <p>
-                                    <template v-if="customer.defaultShippingAddress.countryState">
-                                        {{ customer.defaultShippingAddress.countryState.name }},
-                                    </template>
-                                    {{ customer.defaultShippingAddress.country?.name }}
-                                </p>
-                            </slot>
-                        </template>
-                    </div>
-                </slot>
-            </div>
+            <template v-if="customer.defaultShippingAddress">
+              <AddressCard
+                  :headline="$t('account.overview.defaultShippingAddress')"
+                  :address="customer.defaultShippingAddress"
+                  :description="customer.defaultBillingAddressId === customer.defaultShippingAddressId ? $t('account.overview.addressesIdentical') : undefined"
+              />
+            </template>
         </slot>
     </div>
 </template>

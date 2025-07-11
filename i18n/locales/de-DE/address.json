@@ -1,5 +1,12 @@
 {
   "address": {
+    "accountHeadline": "Adressen",
+    "accountDescription": "Ändern Sie Ihre Standard-Adressen oder fügen Sie neue hinzu.",
+    "addNewAddress": "Neue Adresse hinzufügen",
+    "defaultBillingAddress": "Standard-Rechnungsadresse",
+    "defaultShippingAddress": "Standard-Lieferadresse",
+    "availableAddresses": "Verfügbare Adressen",
+    "editAddress": "Adresse bearbeiten",
     "headline": "Ihre Adresse",
     "differentShippingAddress": "Lieferadresse weicht von Rechnungsadresse ab.",
     "street": {
