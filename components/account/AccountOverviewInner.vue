@@ -29,25 +29,25 @@ const showAdditionalAddressField2 = configStore.get('core.loginRegistration.show
 
                 <slot name="personal-data-content">
                     <div class="grid grid-cols-[4fr_8fr] gap-2">
-                        <span v-if="customer.salutation" class="font-semibold">{{ $t('account.customer.salutation') }}</span>
+                        <span v-if="customer.salutation" class="font-semibold">{{ $t('account.customer.salutation.label') }}</span>
                         <span>{{ customer.salutation?.displayName }}</span>
 
                         <template v-if="showTitle && customer.title">
-                            <span class="font-semibold">{{ $t('account.customer.title') }}</span>
+                            <span class="font-semibold">{{ $t('account.customer.title.label') }}</span>
                             <span>{{ customer.title }}</span>
                         </template>
 
                         <span class="font-semibold">{{ $t('account.customer.name') }}</span>
                         <span>{{ customer.firstName }} {{ customer.lastName }}</span>
 
-                        <span class="font-semibold">{{ $t('account.customer.mail') }}</span>
+                        <span class="font-semibold">{{ $t('account.customer.email.label') }}</span>
                         <span>{{ customer.email }}</span>
 
                         <template v-if="customer.accountType === 'business'">
-                            <span class="font-semibold">{{ $t('account.customer.companyName') }}</span>
+                            <span class="font-semibold">{{ $t('account.customer.company.label') }}</span>
                             <span>{{ customer.company }}</span>
 
-                            <span class="font-semibold">{{ $t('account.customer.vat') }}</span>
+                            <span class="font-semibold">{{ $t('account.customer.vatId.label') }}</span>
                             <span>{{ customer.vatIds?.join(', ') }}</span>
                         </template>
                     </div>
