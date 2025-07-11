@@ -13,5 +13,13 @@
         },
         "currencySwitch": "Currency switched to {currency}",
         "imageNotFound": "No image found"
+    },
+    "image": {
+        "altText": "Image",
+        "altSliderText": "Image slider element {currentSlide} of {totalSlides}"
+    },
+    "video": {
+        "vimeoTitle": "Vimeo Video",
+        "youtubeTitle": "YouTube Video"
     }
 }
