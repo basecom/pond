@@ -38,12 +38,19 @@ export type LoginData = z.infer<typeof schema>;
 const login = async (loginData: LoginData) => {
     emits('login', loginData);
 };
+
+const { getStyle } = usePondStyle();
+const loginFormStyles = getStyle('account.login.form');
+const outerStyles = getStyle('account.login.outer');
+const passwordForgottenStyles = getStyle('account.login.passwordForgotten');
+const alertOuterStyles = getStyle('account.login.alert.outer');
+const alertIconStyles = getStyle('account.login.alert.icon');
 </script>
 
 <template>
     <slot name="headline" />
     <UiAutoForm
-        class="space-y-6"
+        :class="loginFormStyles"
         :schema="schema"
         :field-config="{
             username: {
@@ -65,11 +72,11 @@ const login = async (loginData: LoginData) => {
         }"
         @submit="login"
     >
-        <div class="mt-0! grid">
+        <div :class="outerStyles">
             <slot name="password-forgotten">
                 <NuxtLinkLocale
                     to="/account/recover"
-                    class="mb-6 justify-self-start py-2 text-sm underline underline-offset-4"
+                    :class="passwordForgottenStyles"
                     @click="closeDialog?.()"
                 >
                     {{ $t('account.password.forgotten') }}
@@ -77,9 +84,9 @@ const login = async (loginData: LoginData) => {
             </slot>
 
             <slot name="alert">
-                <UiAlert v-if="errorMessage" variant="destructive" class="mb-4 flex gap-4">
+                <UiAlert v-if="errorMessage" variant="destructive" :class="alertOuterStyles">
                     <slot name="alert-icon">
-                        <Icon name="mdi:alert-circle-outline" class="size-4 text-red-500" />
+                        <Icon name="mdi:alert-circle-outline" :class="alertIconStyles" />
                     </slot>
 
                     <div>

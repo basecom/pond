@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ApiClientError } from '@shopware/api-client';
-import type {RegisterFormData} from '~/types/vueForm/Register';
+import type { RegisterFormData } from '~/types/vueForm/Register';
 import { useToast } from '@/components/ui/toast/use-toast';
 
 const customerStore = useCustomerStore();

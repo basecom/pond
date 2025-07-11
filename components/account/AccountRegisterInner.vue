@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { VueFormRequestData, RegisterFormData, VueFormSubmitData} from '~/types/vueForm/Register';
+import type { VueFormRequestData, RegisterFormData, VueFormSubmitData } from '~/types/vueForm/Register';
 
 withDefaults(
     defineProps<{

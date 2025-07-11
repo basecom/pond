@@ -28,36 +28,66 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.s
     // Check if product is physical
     Object.values(lineItem.states).includes('is-physical'),
 ));
+
+const { getStyle } = usePondStyle();
+// skeleton styles
+const skeletonOuterStyles = getStyle('account.skeleton.outer');
+const skeletonWrapperStyles = getStyle('account.skeleton.wrapper');
+const skeletonLargeStyles = getStyle('account.skeleton.large');
+const skeletonCollectionOuterStyles = getStyle('account.skeleton.collection.outer');
+const skeletonCollectionInnerStyles = getStyle('account.skeleton.collection.inner');
+const skeletonMediumStyles = getStyle('account.skeleton.medium');
+
+// order styles
+const headerOuterStyles = getStyle('account.header.outer');
+const headerInnerStyles = getStyle('account.header.inner');
+const productHeaderStyles = getStyle('account.header.product');
+const quantityHeaderStyles = getStyle('account.header.quantity');
+const unitPriceHeaderStyles = getStyle('account.header.unitPrice');
+const totalPriceHeaderStyles = getStyle('account.header.totalPrice');
+const separatorHeaderStyles = getStyle('account.header.separator');
+
+const informationOuterStyles = getStyle('account.information.outer');
+const generalInformationOuterStyles = getStyle('account.information.general.outer');
+const generalInformationLabelStyles = getStyle('account.information.general.label');
+const generalInformationValueStyles = getStyle('account.information.general.value');
+
+const priceOuterStyles = getStyle('account.price.outer');
+const priceLabelStyles = getStyle('account.price.label');
+const priceValueStyles = getStyle('account.price.value');
 </script>
 
 <template>
     <template v-if="isLoading">
         <slot name="loading-skeleton">
-            <div v-for="n in 2" :key="n" class="flex flex-col gap-5">
-                <div class="flex gap-5">
-                    <UiSkeleton class="w-20 h-25" />
-                    <div class="space-y-2 w-full">
-                        <UiSkeleton class="h-4 w-full" />
-                        <UiSkeleton class="h-4 w-full" />
-                        <UiSkeleton class="h-4 w-full" />
-                        <UiSkeleton class="h-4 w-full" />
+            <div v-for="n in 2" :key="n" :class="skeletonOuterStyles">
+                <div :class="skeletonWrapperStyles">
+                    <UiSkeleton :class="skeletonLargeStyles" />
+                    
+                    <div :class="skeletonCollectionOuterStyles">
+                        <UiSkeleton :class="skeletonCollectionInnerStyles" />
+                        <UiSkeleton :class="skeletonCollectionInnerStyles" />
+                        <UiSkeleton :class="skeletonCollectionInnerStyles" />
+                        <UiSkeleton :class="skeletonCollectionInnerStyles" />
                     </div>
                 </div>
-                <UiSkeleton class="w-full h-15" />
+                
+                <UiSkeleton :class="skeletonMediumStyles" />
             </div>
         </slot>
     </template>
 
     <template v-else>
-        <div class="flex flex-col gap-2 p-4 pb-0 md:pb-4">
+        <div :class="headerOuterStyles">
             <slot name="line-items-header">
-                <div class="hidden md:grid grid-cols-5 gap-5">
-                    <span class="col-span-2 font-bold">{{ $t('order.lineItem.product') }}</span>
-                    <span class="col-start-3 flex justify-center font-bold"> {{ $t('order.lineItem.quantity') }}</span>
-                    <span class="flex justify-center font-bold"> {{ $t('order.lineItem.unitPrice') }} </span>
-                    <span class="flex justify-center font-bold">{{ $t('order.lineItem.totalPrice') }}</span>
+                <div :class="headerInnerStyles">
+                    <span :class="productHeaderStyles">{{ $t('order.lineItem.product') }}</span>
+                    <span :class="quantityHeaderStyles"> {{ $t('order.lineItem.quantity') }}</span>
+                    <span :class="unitPriceHeaderStyles"> {{ $t('order.lineItem.unitPrice') }} </span>
+                    <span :class="totalPriceHeaderStyles">{{ $t('order.lineItem.totalPrice') }}</span>
                 </div>
-                <hr class="md:mt-2.5 text-gray-300">
+
+                <hr :class="separatorHeaderStyles">
             </slot>
 
             <slot name="line-items">
@@ -68,62 +98,68 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.s
         </div>
 
         <slot name="order-information">
-            <div class="flex flex-col md:flex-row justify-between bg-gray-100 p-4">
+            <div :class="informationOuterStyles">
                 <slot name="general-order-information">
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                    <div :class="generalInformationOuterStyles">
                         <slot name="order-date">
-                            <span class="font-bold col-start-1">
+                            <span :class="generalInformationLabelStyles">
                                 {{ $t('order.orderDate') }}
                             </span>
-                            <span class="md:col-span-2 text-end md:text-start">
+                            <span :class="generalInformationValueStyles">
                                 {{ formatLocaleDate(order?.orderDate) }}
                             </span>
                         </slot>
+
                         <slot name="order-number">
-                            <span class="font-bold col-start-1">
+                            <span :class="generalInformationLabelStyles">
                                 {{ $t('order.orderNumber') }}
                             </span>
-                            <span class="text-end md:text-start md:col-span-2">
+                            <span :class="generalInformationValueStyles">
                                 {{ order?.orderNumber }}
                             </span>
                         </slot>
+
                         <slot name="payment-method">
-                            <span class="font-bold col-start-1">
+                            <span :class="generalInformationLabelStyles">
                                 {{ $t('order.paymentMethod') }}
                             </span>
-                            <span class="md:col-span-2 text-end md:text-start">
+                            <span :class="generalInformationValueStyles">
                                 {{ paymentMethodName }}
                             </span>
                         </slot>
+
                         <slot name="payment-state">
-                            <span class="font-bold col-start-1">
+                            <span :class="generalInformationLabelStyles">
                                 {{ $t('order.paymentState') }}
                             </span>
-                            <span class="md:col-span-2 text-end md:text-start">
+                            <span :class="generalInformationValueStyles">
                                 {{ paymentState }}
                             </span>
                         </slot>
+
                         <slot name="shipping-method">
-                            <span v-if="orderHasPhysicalProductsInOrder" class="font-bold col-start-1">
+                            <span v-if="orderHasPhysicalProductsInOrder" :class="generalInformationLabelStyles">
                                 {{ $t('order.shippingMethod') }}
                             </span>
-                            <span v-if="orderHasPhysicalProductsInOrder" class="md:col-span-2 text-end md:text-start">
+                            <span v-if="orderHasPhysicalProductsInOrder" :class="generalInformationValueStyles">
                                 {{ shippingMethodName }}
                             </span>
                         </slot>
+
                         <slot name="shipping-state">
-                            <span v-if="orderHasPhysicalProductsInOrder" class="font-bold col-start-1">
+                            <span v-if="orderHasPhysicalProductsInOrder" :class="generalInformationLabelStyles">
                                 {{ $t('order.shippingState') }}
                             </span>
-                            <span v-if="orderHasPhysicalProductsInOrder" class="md:col-span-2 text-end md:text-start">
+                            <span v-if="orderHasPhysicalProductsInOrder" :class="generalInformationValueStyles">
                                 {{ shippingState }}
                             </span>
                         </slot>
+
                         <slot name="tracking">
-                            <span v-if="orderHasPhysicalProductsInOrder" class="font-bold col-start-1">
+                            <span v-if="orderHasPhysicalProductsInOrder" :class="generalInformationLabelStyles">
                                 {{ $t('order.tracking') }}
                             </span>
-                            <span v-if="orderHasPhysicalProductsInOrder" class="md:col-span-2 text-end md:text-start">
+                            <span v-if="orderHasPhysicalProductsInOrder" :class="generalInformationValueStyles">
                                 <template v-if="trackingCodes && trackingCodes.length > 0">
                                     <template v-for="(trackingCode, index)  in trackingCodes" :key="trackingCode">
                                         {{ trackingCode }} <span v-if="index !== trackingCodes.length - 1">, </span>
@@ -136,31 +172,32 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.s
                         </slot>
                     </div>
                 </slot>
+
                 <slot name="price-order-information">
-                    <div class="grid grid-cols-2 gap-2 h-fit">
+                    <div :class="priceOuterStyles">
                         <slot name="shipping-costs">
-                            <span v-if="orderHasPhysicalProductsInOrder" class="font-bold">
+                            <span v-if="orderHasPhysicalProductsInOrder" :class="priceLabelStyles">
                                 {{ $t('order.shipping') }}
                             </span>
-                            <span v-if="orderHasPhysicalProductsInOrder" class="flex justify-end col-start-2">
+                            <span v-if="orderHasPhysicalProductsInOrder" :class="priceValueStyles">
                                 {{ getFormattedPrice(shippingCosts ?? 0) }}
                             </span>
                         </slot>
                         <slot name="tax">
                             <template v-for="calculatedTax in order?.price.calculatedTaxes" :key="calculatedTax.taxRate">
-                                <span class="font-bold">
+                                <span :class="priceLabelStyles">
                                     {{ $t('order.tax', { taxRate: calculatedTax.taxRate }) }}
                                 </span>
-                                <span class="flex justify-end col-start-2">
+                                <span :class="priceValueStyles">
                                     {{ getFormattedPrice(calculatedTax.tax) }}
                                 </span>
                             </template>
                         </slot>
                         <slot name="total">
-                            <span class="font-bold">
+                            <span :class="priceLabelStyles">
                                 {{ $t('order.total') }}
                             </span>
-                            <span class="flex justify-end col-start-2">
+                            <span :class="priceValueStyles">
                                 {{ getFormattedPrice(total ?? 0) }}
                             </span>
                         </slot>

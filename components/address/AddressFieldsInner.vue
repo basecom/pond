@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type {Columns} from '~/types/vueForm/Columns';
+import type { Columns } from '~/types/vueForm/Columns';
 
 withDefaults(
     defineProps<{
@@ -67,7 +67,7 @@ withDefaults(
 );
 
 const configStore = useConfigStore();
-const { getCountries: countries, getStatesForCountry, fetchCountries} = useCountries();
+const { getCountries: countries, getStatesForCountry, fetchCountries } = useCountries();
 
 const formattedCountries: Ref<undefined | { value: string; label: string; }[]> = ref(undefined);
 const states: Ref<undefined | { value: string; label: string; }[]> = ref(undefined);
