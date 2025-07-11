@@ -21,6 +21,7 @@ withDefaults(
 
 const configStore = useConfigStore();
 const { product } = useProduct();
+const { isListPrice } = useProductPrice(product);
 const { getUrlPrefix } = useUrlResolver();
 
 const mediaType = product.value?.cover?.media?.mimeType?.split('/')[0];
@@ -30,13 +31,19 @@ const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.
 const srcPath = computed(() => getSmallestThumbnailUrl(
     product.value?.cover?.media,
 ) ?? product.value?.cover?.media?.url);
+console.log('product', product.value);
 </script>
 
 <template>
     <slot name="wrapper">
         <div
-            class="sw-product-card not-prose group relative flex max-w-full flex-col justify-between rounded-lg border border-gray-200 bg-white transition duration-300 hover:shadow-lg"
+            class="relative sw-product-card not-prose group relative flex max-w-full flex-col justify-between rounded-lg border border-gray-200 bg-white transition duration-300 hover:shadow-lg"
         >
+            <slot name="badges">
+                <div class="absolute top-0 flex flex-col gap-1 p-2 z-2">
+                    <ProductBadges :is-new="product.isNew" :is-topseller="product.markAsTopseller" :is-sale="isListPrice" />
+                </div>
+            </slot>
             <slot name="product-image">
                 <RouterLink
                     :to="buildUrlPrefix(getProductRoute(product), getUrlPrefix())"

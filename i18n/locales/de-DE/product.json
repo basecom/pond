@@ -3,6 +3,10 @@
         "addToCart": "In den Warenkorb",
         "details": "Details",
         "productAddedToCart": "{product} zum Warenkorb hinzugefügt",
-        "image": "Produktbild"
+        "image": "Produktbild",
+        "badge": {
+            "new": "Neu",
+            "topseller": "Tipp",
+        }
     }
 }
