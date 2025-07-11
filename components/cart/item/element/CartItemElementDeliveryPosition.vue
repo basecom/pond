@@ -10,7 +10,7 @@ withDefaults(
     },
 );
 </script>
-<template>
-    <CartItemElementDeliveryPositionInner :cart-item-delivery-position="cartItemDeliveryPosition" />
 
+<template>
+    <CartItemElementDeliveryPositionInner v-bind="$props" />
 </template>

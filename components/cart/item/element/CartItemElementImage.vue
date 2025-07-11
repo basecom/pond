@@ -16,9 +16,7 @@ withDefaults(
 <template>
 
     <CartItemElementImageInner
-        :cart-item-image="cartItemImage"
-        :product-url="productUrl"
-        :fallback="fallback"
+        v-bind="$props"
     />
 
 </template>

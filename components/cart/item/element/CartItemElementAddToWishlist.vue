@@ -25,8 +25,7 @@ const addProductToWishlist = () => {
 </script>
 <template>
     <CartItemElementAddToWishlistInner
-        :is-in-wishlist="isInWishlist"
-        :is-loading="isLoading"
+        v-bind="$props"
         @remove-product-from-wishlist="removeProductFromWishlist"
         @add-product-to-wishlist="addProductToWishlist"
     />

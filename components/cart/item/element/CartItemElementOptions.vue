@@ -10,6 +10,5 @@ withDefaults(
 );
 </script>
 <template>
-    <CartItemElementOptionsInner :cart-item-options="cartItemOptions" />
-
+    <CartItemElementOptionsInner v-bind="$props" />
 </template>

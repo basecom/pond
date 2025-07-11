@@ -12,17 +12,15 @@ const props = withDefaults(
         itemQuantity: 1,
     },
 );
-const {cartItem, quantity} = toRefs(props);
 
 const emits = defineEmits<{
   changeCartItemQuantity: [number]
 }>();
 </script>
+
 <template>
     <CartItemElementQuantityInner
-        :cart-item="cartItem"
-        :quantity="quantity"
-        :item-quantity="itemQuantity"
-        @change-cart-item-quantity="(quantityInput: number) => emits('changeCartItemQuantity', quantityInput)"
+        v-bind="props"
+        @change-cart-item-quantity="emits('changeCartItemQuantity', $event)"
     />
 </template>
