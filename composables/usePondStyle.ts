@@ -1,4 +1,4 @@
-import config from '../pond.config';
+import config from '#pond-config'
 
 export const usePondStyle = () => {
     const { handleError } = usePondHandleError();
