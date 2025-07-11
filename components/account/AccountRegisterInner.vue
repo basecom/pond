@@ -126,8 +126,11 @@ const onSubmit = (data: VueFormRequestData) => {
                     <FormCheckboxElement
                         id="differentShippingAddress"
                         name="differentShippingAddress"
-                        :label="$t('address.differentShippingAddress')"
-                    />
+                    >
+                        <template #checkbox-element-content>
+                            {{ $t('address.differentShippingAddress') }}
+                        </template>
+                    </FormCheckboxElement>
                 </slot>
 
                 <slot name="shipping-address">
@@ -147,9 +150,12 @@ const onSubmit = (data: VueFormRequestData) => {
                         id="acceptedDataProtection"
                         name="acceptedDataProtection"
                         :rules="isDataProtectionCheckboxRequired ? 'required' : ''"
-                        :label="$t('account.register.acceptedDataProtection.label')"
-                        :messages="{ required: $t('account.register.acceptedDataProtection.errorRequired') }"
-                    />
+                        :messages="{ required: $t('account.register.dataProtection.errorRequired') }"
+                    >
+                        <template #checkbox-element-content>
+                            <AccountDataProtection />
+                        </template>
+                    </FormCheckboxElement>
                 </slot>
 
                 <slot name="alert">
