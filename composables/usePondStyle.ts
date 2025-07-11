@@ -13,7 +13,7 @@ export const usePondStyle = () => {
                 continue;
             }
 
-            handleError(`[Pond][getStyle] '${path}' could not be loaded`);
+            handleError(`[Pond][getStyle] '${path}' could not be loaded`, false);
             return '';
         }
 
