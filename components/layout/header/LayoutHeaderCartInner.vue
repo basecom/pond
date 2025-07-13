@@ -13,6 +13,9 @@ const props = withDefaults(
         cartPriceTotal: '',
     },
 );
+defineEmits<{
+  open: [value: boolean];
+}>();
 
 const getCartCount = (items: Schemas['LineItem'][] = []) => items.length;
 const cartCount = computed(() => getCartCount(props.cartItems));
@@ -20,13 +23,22 @@ const hasLineItems = computed(() => cartCount.value > 0);
 </script>
 
 <template>
-    <UiSheet>
+    <UiSheet @update:open="(value: boolean) => $emit('open', value)">
         <slot name="cart-trigger">
             <UiSheetTrigger id="open-offcanvas-cart" class="size-5 cursor-pointer" aria-label="open-offcanvas-cart">
                 <div class="relative">
-                    <slot name="cart-icon">
-                        <Icon name="mdi:cart-outline" class="size-5" />
-                    </slot>
+                    <span class="flex">
+                        <slot name="cart-icon">
+                            <span> <Icon name="mdi:cart-outline" class="size-5" /> </span>
+                        </slot>
+                        <slot name="cart-amount">
+                            <ClientOnly>
+                                <span v-if="props.cartPriceTotal" class="text-gray-900 cursor-pointer pl-4">
+                                    {{ props.cartPriceTotal }}*
+                                </span>
+                            </ClientOnly>
+                        </slot>
+                    </span>
                     <slot name="cart-badge">
                         <ClientOnly>
                             <UiBadge v-if="hasLineItems" class="absolute -right-2 -top-1.5 px-1 py-0 text-xs font-normal" aria-label="$t('checkout.itemsInCart', { count: cartCount })">
@@ -34,16 +46,8 @@ const hasLineItems = computed(() => cartCount.value > 0);
                             </UiBadge>
                         </ClientOnly>
                     </slot>
+                    
                 </div>
-            </UiSheetTrigger>
-            <UiSheetTrigger>
-                <slot name="cart-amount">
-                    <ClientOnly>
-                        <span v-if="props.cartPriceTotal" class="text-gray-900 underline underline-offset-4 cursor-pointer">
-                            {{ props.cartPriceTotal }}*
-                        </span>
-                    </ClientOnly>
-                </slot>
             </UiSheetTrigger>
         </slot>
 
@@ -51,10 +55,10 @@ const hasLineItems = computed(() => cartCount.value > 0);
             <UiSheetHeader>
                 <UiSheetTitle>
                     <slot name="offcanvasHeader">
-                        <div class="mt-4 flex w-full items-center justify-between">
+                        <div class="mt-2 flex w-full items-end justify-between">
                             <slot name="cartTitle">
                                 <span>{{ $t('checkout.cart') }}</span>
-                                <span class="pr-2">{{ cartCount }} {{ $t('checkout.items') }}</span>
+                                <span class="pr-4">{{ cartCount }} {{ $t('checkout.items') }}</span>
                             </slot>
                         </div>
                     </slot>

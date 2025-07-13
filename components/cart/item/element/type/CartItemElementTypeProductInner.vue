@@ -11,12 +11,12 @@ const props = withDefaults(
       itemOptions?: Schemas['LineItem']['payload']['options'];
       quantity?: number;
       itemQuantity?: number;
-      isInWishlist: boolean;
-      isLoading: {
+      isInWishlist?: boolean;
+      isLoading?: {
         wishlist: boolean,
         container: boolean
       };
-      productUrl?: string
+      productUrl?: string;
     }>(),
     {
         cartDeliveryPosition: undefined,
@@ -25,25 +25,27 @@ const props = withDefaults(
         itemOptions: undefined,
         quantity: 0,
         itemQuantity: 0,
+        isLoading: () => ({
+            wishlist: false,
+            container: false,
+        }),
         productUrl: undefined,
     },
 );
 const {cartItem, quantity} = toRefs(props);
-const {getFormattedPrice} = usePrice();
 
-const configStore = useConfigStore();
-const showDeliveryTime = configStore.get('core.cart.showDeliveryTime') as boolean;
-const wishlistEnabled = configStore.get('core.cart.wishlistEnabled') as boolean;
-
-const emits = defineEmits<{
-  isLoading: [boolean],
+defineEmits<{
   changeCartItemQuantity: [number],
   removeProductFromWishlist: [],
   addProductToWishlist: [],
 }>();
 
+const {getFormattedPrice} = usePrice();
+const configStore = useConfigStore();
 
-
+const showDeliveryTime = configStore.get('core.cart.showDeliveryTime') as boolean;
+const wishlistEnabled = configStore.get('core.cart.wishlistEnabled') as boolean;
+const cartItemFallbackCover = configStore.get('BasecomPondCompanionPlugin.config.productFallBackCover') as string;
 </script>
 
 <template>
@@ -52,7 +54,12 @@ const emits = defineEmits<{
             <div class="order-1 mb-4 flex w-5/6 flex-col">
                 <div class="mb-2 w-auto">
                     <slot name="cart-image">
-                        <CartItemElementImage :cart-item-image="getMainImageUrl(cartItem)" fallback="mdi:image" :product-url="productUrl" />
+                        <CartItemElementImage
+                            :cart-item-image="getMainImageUrl(cartItem)"
+                            fallback="mdi:image"
+                            :product-url="productUrl"
+                            :cart-item-fallback-cover="cartItemFallbackCover"
+                        />
                     </slot>
                 </div>
                 <slot name="label-wrapper">
@@ -91,8 +98,8 @@ const emits = defineEmits<{
                             <CartItemElementAddToWishlist
                                 :is-in-wishlist="isInWishlist"
                                 :is-loading="isLoading.wishlist"
-                                @remove-product-from-wishlist="emits('removeProductFromWishlist')"
-                                @add-product-to-wishlist="emits('addProductToWishlist')"
+                                @remove-product-from-wishlist="$emit('removeProductFromWishlist')"
+                                @add-product-to-wishlist="$emit('addProductToWishlist')"
                             />
                         </slot>
                     </div>
@@ -107,13 +114,13 @@ const emits = defineEmits<{
                         :cart-item="cartItem"
                         :quantity="quantity"
                         :item-quantity="itemQuantity"
-                        @change-cart-item-quantity="(quantityInput: number) => emits('changeCartItemQuantity', quantityInput)"
+                        @change-cart-item-quantity="(quantityInput: number) => $emit('changeCartItemQuantity', quantityInput)"
                     />
                 </slot>
             </div>
         </slot>
         <slot name="unit-price-wrapper">
-            <div class="order-5 flex w-full justify-end text-xs">
+            <div v-if="itemQuantity > 1" class="order-5 flex w-full justify-end text-xs">
                 <slot name="unitPrice">
                     <CartItemElementPriceUnit :cart-item-unit-price="getFormattedPrice(itemRegularPrice)" />
                 </slot>

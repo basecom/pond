@@ -5,6 +5,7 @@
     "deliveryPeriod": "Delivery period",
     "quantity": "Quantity",
     "lineItemUnitPriceDescriptor": "Unit",
+    "lineItemUnitPriceSeperator": "/",
     "removeFromWishlist": "Remove from wishlist",
     "addToWishlist": "Add to wishlist",
     "addPromotionPlaceholder": "Enter promo code...",
@@ -20,6 +21,7 @@
     "addToWishlistSuccess": "Product was successfully added to wishlist.",
     "removeFromWishlistSuccess": "Product was successfully removed from wishlist.",
     "removeSuccess": "Product was successfully removed.",
-    "promotionSuccess": "Promotion was successfully added."
+    "promotionSuccess": "Promotion was successfully added.",
+    "removeCartItem": "Remove product"
   }
 }

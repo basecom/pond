@@ -5,17 +5,17 @@ import {getMainImageUrl} from '@shopware-pwa/helpers-next';
 const props = withDefaults(
     defineProps<{
       cartItem: Schemas['LineItem'];
-      itemTotalPrice?: number,
+      itemTotalPrice?: number;
     }>(),
     {
         itemTotalPrice: 0,
     },
 );
+const {cartItem } = toRefs(props);
 
 const { getFormattedPrice } = usePrice();
 
 const imageUrl = computed(() => props.cartItem ? getMainImageUrl(props.cartItem) : undefined);
-const label = computed(() => props.cartItem?.label || '');
 </script>
 
 <template>
@@ -24,12 +24,12 @@ const label = computed(() => props.cartItem?.label || '');
             <div class="order-1 mb-4 flex w-5/6 flex-col">
                 <div class="mb-2 w-auto">
                     <slot name="image">
-                        <CartItemElementImage :cart-item-image="imageUrl" />
+                        <CartItemElementImage :cart-item-image="imageUrl" fallback="mdi:percent" />
                     </slot>
                 </div>
                 <div class="font-bold">
                     <slot name="label">
-                        {{ label }}
+                        {{ cartItem?.label }}
                     </slot>
                 </div>
             </div>

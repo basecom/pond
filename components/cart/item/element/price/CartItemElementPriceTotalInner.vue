@@ -8,11 +8,11 @@ withDefaults(
     },
 );
 </script>
+
 <template>
     <span class="font-bold">
         <slot name="total-price">
             {{ cartItemTotalPrice }}*
         </slot>
     </span>
-
 </template>

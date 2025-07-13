@@ -14,7 +14,7 @@ withDefaults(
         promo: boolean,
         select: boolean
       };
-      isLoggedIn?: boolean
+      isLoggedIn?: boolean;
     }>(),
     {
         cart: undefined,
@@ -35,16 +35,8 @@ const emits = defineEmits<{
   setSelectedShippingMethod: [shippingMethodId: AcceptableValue];
   addSelectedPromotionCode: [promotionCode: string];
 }>();
-
-const setSelectedShippingMethod = (shippingMethodId: AcceptableValue) => {
-    emits('setSelectedShippingMethod', shippingMethodId);
-};
-
-const addSelectedPromotionCode = (promotionCode: string) => {
-    emits('addSelectedPromotionCode', promotionCode);
-};
-
 </script>
+
 <template>
     <CheckoutOffcanvasCartSummaryInner
         :cart="cart"
@@ -55,8 +47,8 @@ const addSelectedPromotionCode = (promotionCode: string) => {
         :subtotal="subtotal"
         :is-loading="isLoading"
         :is-logged-in="isLoggedIn"
-        @add-selected-promotion-code="(promotionCode: string) => addSelectedPromotionCode(promotionCode)"
-        @set-selected-shipping-method="(shippingMethodId: AcceptableValue) => setSelectedShippingMethod(shippingMethodId)"
+        @add-selected-promotion-code="(promotionCode: string) => emits('addSelectedPromotionCode', promotionCode)"
+        @set-selected-shipping-method="(shippingMethodId: AcceptableValue) =>  emits('setSelectedShippingMethod', shippingMethodId)"
     />
 
 </template>

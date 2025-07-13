@@ -18,7 +18,6 @@ const props = withDefaults(
       isLoggedIn?: boolean
     }>(),
     {
-        isLoggedIn: false,
         cartItems: undefined,
         cartDeliveries: undefined,
         cart: undefined,
@@ -30,11 +29,18 @@ const props = withDefaults(
             promo: false,
             select: false,
         }),
+        isLoggedIn: false,
     },
 );
-
 const {cartDeliveries, cartItems} = toRefs(props);
+
+const emits = defineEmits<{
+  setSelectedShippingMethod: [shippingMethodId: AcceptableValue];
+  addSelectedPromotionCode: [promotionCode: string];
+}>();
+
 const hasLineItems = (items?: Schemas['LineItem'][]): boolean => !!items && items.length > 0;
+
 const getCartDeliveryPositions = (deliveries?: Schemas['CartDelivery'][]): Schemas['CartDeliveryPosition'][] | undefined => {
     if (!deliveries || deliveries.length === 0) return undefined;
     return deliveries[0]?.positions;
@@ -46,20 +52,8 @@ const getCartDeliveryPosition = (id: string, cartDeliveryPositions?: Schemas['Ca
         (cartDeliveryPosition) => cartDeliveryPosition.lineItem?.id === id,
     );
 };
-const emits = defineEmits<{
-  setSelectedShippingMethod: [shippingMethodId: AcceptableValue];
-  addSelectedPromotionCode: [promotionCode: string];
-}>();
-
-const setSelectedShippingMethod = (shippingMethodId: AcceptableValue) => {
-    emits('setSelectedShippingMethod', shippingMethodId);
-};
-
-const addSelectedPromotionCode = (promotionCode: string) => {
-    emits('addSelectedPromotionCode', promotionCode);
-};
-
 </script>
+
 <template>
     <slot name="offcanvas-content">
         <div class="mb-4">
@@ -94,8 +88,8 @@ const addSelectedPromotionCode = (promotionCode: string) => {
                     :shipping-cost="shippingCost"
                     :subtotal="subtotal"
                     :is-loading="isLoading"
-                    @add-selected-promotion-code="(promotionCode: string) => addSelectedPromotionCode(promotionCode)"
-                    @set-selected-shipping-method="(shippingMethodId: AcceptableValue) => setSelectedShippingMethod(shippingMethodId)"
+                    @add-selected-promotion-code="(promotionCode: string) => emits('addSelectedPromotionCode', promotionCode)"
+                    @set-selected-shipping-method="(shippingMethodId: AcceptableValue) => emits('setSelectedShippingMethod', shippingMethodId)"
                 />
             </div>
         </slot>

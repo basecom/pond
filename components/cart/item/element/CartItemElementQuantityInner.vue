@@ -2,20 +2,19 @@
 import type {Schemas} from '@shopware/api-client/api-types';
 const props = withDefaults(
     defineProps<{
-      cartItem?: Schemas['LineItem'],
-      itemQuantity?: number,
-      quantity?: number,
+      cartItem: Schemas['LineItem'];
+      itemQuantity?: number;
+      quantity?: number;
 
     }>(),
     {
-        cartItem: undefined,
         itemQuantity: 1,
         quantity: 1,
     },
 );
 const {cartItem, quantity} = toRefs(props);
 
-const emits = defineEmits<{
+defineEmits<{
   changeCartItemQuantity: [quantityInput: number]
 }>();
 
@@ -27,26 +26,25 @@ const isDigital = computed(() => cartItem.value?.states?.includes('is-download')
 </script>
 
 <template>
-    <slot name="quantity-label">
-        <label class="flex font-bold">{{ $t('checkout.quantity') }}</label>
-    </slot>
     <slot name="quantity-container">
-        <div class="w-1/3">
-            <UiNumberField
-                :model-value="quantity"
-                :max="cartItem?.payload?.maxPurchase ?? maxQuantityConfig"
-                :min="cartItem?.payload?.minPurchase ?? 1"
-                :step="cartItem?.payload?.purchaseSteps"
-                :disabled="!cartItem?.stackable || isDigital"
-                :default-value="itemQuantity"
-                @update:model-value="emits('changeCartItemQuantity', $event)"
-            >
-                <UiNumberFieldContent>
-                    <UiNumberFieldDecrement />
-                    <UiNumberFieldInput />
-                    <UiNumberFieldIncrement />
-                </UiNumberFieldContent>
-            </UiNumberField>
-        </div>
+        <UiNumberField
+            class="w-full flex justify-between items-center"
+            :model-value="quantity"
+            :max="cartItem?.payload?.maxPurchase ?? maxQuantityConfig"
+            :min="cartItem?.payload?.minPurchase ?? 1"
+            :step="cartItem?.payload?.purchaseSteps ?? 1"
+            :disabled="!cartItem?.stackable || isDigital"
+            :default-value="itemQuantity"
+            @update:model-value="(val) => { if (val !== quantity) $emit('changeCartItemQuantity', val) }"
+        >
+            <slot name="quantity-label">
+                <UiLabel class="flex font-bold" :for="cartItem.id+'-quantity'">{{ $t('checkout.quantity') }}</UiLabel>
+            </slot>
+            <UiNumberFieldContent class="w-1/3">
+                <UiNumberFieldDecrement class="cursor-pointer" />
+                <UiNumberFieldInput :id="cartItem.id+'-quantity'" />
+                <UiNumberFieldIncrement  class="cursor-pointer" />
+            </UiNumberFieldContent>
+        </UiNumberField>
     </slot>
 </template>

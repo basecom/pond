@@ -26,19 +26,6 @@ const isLoading = ref({
 });
 const shippingMethods = ref<Schemas['ShippingMethod'][]>([]);
 
-onMounted(async () => {
-    isLoading.value.select = true;
-    try {
-        const result = await getShippingMethods();
-        shippingMethods.value = result.value;
-    } catch (error) {
-        handleError(error);
-    } finally {
-        isLoading.value.select = false;
-    }
-});
-
-
 const findSelectedShippingCost = (shippingCosts: Schemas['CartDelivery'][]) => shippingCosts.find((shippingCost) => shippingCost?.shippingMethod?.id === selectedShippingMethod.value.id);
 const shippingCost = ref(findSelectedShippingCost(shippingCosts.value));
 
@@ -59,12 +46,14 @@ const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
             });
         }
     } catch (error) {
-        handleError(error,true, {show: true});
+        handleError(error, true, {show: true});
+    } finally {
+        await refreshCart();
+        shippingCost.value = findSelectedShippingCost(shippingCosts.value);
+        isLoading.value.select = false;
     }
-    await refreshCart();
-    shippingCost.value = findSelectedShippingCost(shippingCosts.value);
-    isLoading.value.select = false;
 };
+
 const addSelectedPromotionCode = async (promotionCode: string) => {
     isLoading.value.promo = true;
     try {
@@ -92,7 +81,19 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
     }
 };
 
+onMounted(async () => {
+    isLoading.value.select = true;
+    try {
+        const result = await getShippingMethods();
+        shippingMethods.value = result.value;
+    } catch (error) {
+        handleError(error);
+    } finally {
+        isLoading.value.select = false;
+    }
+});
 </script>
+
 <template>
     <CheckoutOffcanvasCartInner
         :cart-items="cartItems"

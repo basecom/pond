@@ -1,8 +1,8 @@
 <script setup lang="ts">
 withDefaults(
     defineProps<{
-      isInWishlist?: boolean,
-      isLoading?: boolean
+      isInWishlist?: boolean;
+      isLoading?: boolean;
     }>(),
     {
         isInWishlist: false,
@@ -10,24 +10,17 @@ withDefaults(
     },
 );
 
-const emits = defineEmits<{
+defineEmits<{
   removeProductFromWishlist: [];
   addProductToWishlist: [];
 }>();
-
-const removeProductFromWishlist = () => {
-    emits('removeProductFromWishlist');
-};
-
-const addProductToWishlist = () => {
-    emits('addProductToWishlist');
-};
 </script>
+
 <template>
     <CartItemElementAddToWishlistInner
         v-bind="$props"
-        @remove-product-from-wishlist="removeProductFromWishlist"
-        @add-product-to-wishlist="addProductToWishlist"
+        @remove-product-from-wishlist="$emit('removeProductFromWishlist')"
+        @add-product-to-wishlist="$emit('addProductToWishlist')"
     />
 
 </template>

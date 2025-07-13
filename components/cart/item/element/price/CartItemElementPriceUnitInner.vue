@@ -8,6 +8,7 @@ withDefaults(
     },
 );
 </script>
+
 <template>
     <slot name="unit-price">
         <span v-if="cartItemUnitPrice">
@@ -15,6 +16,6 @@ withDefaults(
         </span>
     </slot>
     <slot name="unit-price-descriptor">
-        <span> / {{ $t('checkout.lineItemUnitPriceDescriptor') }}</span>
+        <span> {{ $t('checkout.lineItemUnitPriceSeperator') }} {{ $t('checkout.lineItemUnitPriceDescriptor') }}</span>
     </slot>
 </template>

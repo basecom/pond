@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-const props = defineProps<{
-      cartItem: Schemas['LineItem']; }>();
-const {cartItem} = toRefs(props);
-const {
-    itemTotalPrice,
-} = useCartItem(cartItem);
+withDefaults(
+    defineProps<{
+      cartItem: Schemas['LineItem'];
+      itemTotalPrice?: number;
+    }>(),
+    {
+        itemTotalPrice: 0,
+    },
+);
 </script>
+
 <template>
-    <CartItemElementTypeDiscountInner :cart-item="cartItem" :item-total-price="itemTotalPrice" />
+    <CartItemElementTypeDiscountInner 
+        v-bind="$props"
+    />
 </template>

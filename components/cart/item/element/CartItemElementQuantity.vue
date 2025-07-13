@@ -2,18 +2,17 @@
 import type { Schemas } from '@shopware/api-client/api-types';
 const props = withDefaults(
     defineProps<{
-      cartItem?: Schemas['LineItem'],
-      quantity?: number,
-      itemQuantity?: number
+      cartItem: Schemas['LineItem'];
+      quantity?: number;
+      itemQuantity?: number;
     }>(),
     {
-        cartItem: undefined,
         quantity: 1,
         itemQuantity: 1,
     },
 );
 
-const emits = defineEmits<{
+defineEmits<{
   changeCartItemQuantity: [number]
 }>();
 </script>
@@ -21,6 +20,6 @@ const emits = defineEmits<{
 <template>
     <CartItemElementQuantityInner
         v-bind="props"
-        @change-cart-item-quantity="emits('changeCartItemQuantity', $event)"
+        @change-cart-item-quantity="$emit('changeCartItemQuantity', $event)"
     />
 </template>

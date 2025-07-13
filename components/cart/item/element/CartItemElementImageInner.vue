@@ -1,17 +1,20 @@
 <script setup lang="ts">
 withDefaults(
     defineProps<{
-      cartItemImage?: string,
-      fallback?: string,
-      productUrl?: string
+      cartItemImage?: string;
+      cartItemFallbackCover?: string;
+      fallback?: string;
+      productUrl?: string;
     }>(),
     {
         cartItemImage: undefined,
-        fallback: 'mdi:duck',
+        cartItemFallbackCover: undefined,
+        fallback: 'mdi:image',
         productUrl: undefined,
     },
 );
 </script>
+
 <template>
     <slot name="container">
         <div>
@@ -26,9 +29,17 @@ withDefaults(
                     </slot>
                 </div>
             </template>
-
+            <template v-else-if="cartItemFallbackCover">
+                <slot name="fallback-container-cover">
+                    <NuxtLinkLocale :to="productUrl">
+                        <slot name="cart-image">
+                            <img :src="cartItemFallbackCover" alt="image" class="h-20 border object-contain p-1">
+                        </slot>
+                    </NuxtLinkLocale>
+                </slot>
+            </template>
             <template v-else>
-                <slot name="fallback-container">
+                <slot name="fallback-container-icon">
                     <div class="flex size-20 items-center justify-center border text-center">
                         <slot name="fallback-link">
                             <NuxtLinkLocale :to="productUrl">

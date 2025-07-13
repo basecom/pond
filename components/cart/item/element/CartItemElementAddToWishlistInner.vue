@@ -9,27 +9,26 @@ withDefaults(
         isLoading: false,
     },
 );
-const emits = defineEmits<{
+
+defineEmits<{
   removeProductFromWishlist: [];
   addProductToWishlist: [];
 }>();
 
-const removeProductFromWishlist = () => {
-    emits('removeProductFromWishlist');
-};
-
-const addProductToWishlist = () => {
-    emits('addProductToWishlist');
-};
-
+const { t } = useI18n();
 </script>
 
 <template>
     <slot name="wishlist-content">
         <slot name="wishlist-wrapper">
-            <div class="flex" @click="isInWishlist ? removeProductFromWishlist() : addProductToWishlist()">
+            <div class="flex" @click="isInWishlist ? $emit('removeProductFromWishlist') : $emit('addProductToWishlist')">
                 <slot name="wishlist-button">
-                    <UiButton variant="ghost" size="icon" class="pl-0 pr-2">
+                    <UiButton
+                        variant="ghost"
+                        size="icon"
+                        class="pl-0 pr-2"
+                        :aria-label="t(isInWishlist ? 'checkout.removeFromWishlist' : 'checkout.addToWishlist')"
+                    >
                         <slot :name="isInWishlist ? 'icon-in-wishlist' : 'icon-not-in-wishlist'">
                             <Icon :name="isInWishlist ? 'mdi:heart' : 'mdi:heart-outline'" class="size-5" />
                         </slot>

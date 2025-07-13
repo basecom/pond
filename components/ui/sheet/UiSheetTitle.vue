@@ -21,7 +21,8 @@ const delegatedProps = computed(() => {
         <slot />
 
         <DialogClose
-            class="rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-gray-950 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-gray-100"
+            aria-label="Close"
+            class="rounded-sm self-start opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-gray-950 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-gray-100 cursor-pointer"
         >
             <X class="size-4" />
         </DialogClose>

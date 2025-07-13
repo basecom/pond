@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import type {Schemas} from '@shopware/api-client/api-types';
-import {Loader2} from 'lucide-vue-next';
 import type {AcceptableValue} from 'reka-ui';
-
-const {getFormattedPrice} = usePrice();
-const showSelectionSelect = ref(false);
 
 withDefaults(
     defineProps<{
@@ -34,41 +30,44 @@ withDefaults(
         isLoggedIn: false,
     },
 );
-const inputPromotionCode = ref('');
 
 const emits = defineEmits<{
   setSelectedShippingMethod: [shippingMethodId: AcceptableValue];
   addSelectedPromotionCode: [promotionCode: string];
 }>();
 
-const setSelectedShippingMethod = (shippingMethodId: AcceptableValue) => {
-    emits('setSelectedShippingMethod', shippingMethodId);
-};
+const {getFormattedPrice} = usePrice();
+
+const { t } = useI18n();
+
+const showSelectionSelect = ref(false);
+
+const inputPromotionCode = ref('');
 
 const addSelectedPromotionCode = (promotionCode: string) => {
     emits('addSelectedPromotionCode', promotionCode);
     inputPromotionCode.value = '';
 };
-
 </script>
+
 <template>
-    <template v-if="true">
-        <slot name="wrapper">
-            <div>
-                <slot name="subTotal">
-                    <div class="flex justify-between">
-                        <div class="font-bold">
-                            {{ $t("checkout.subTotal") }}
-                        </div>
-                        <div>
-                            {{ getFormattedPrice(subtotal) }}*
-                        </div>
+    <slot name="wrapper">
+        <div>
+            <slot name="subTotal">
+                <div class="flex justify-between">
+                    <div class="font-bold">
+                        {{ $t("checkout.subTotal") }}
                     </div>
-                </slot>
-                <slot name="shipping">
-                    <div class="mb-4">
-                        <template v-if="!isLoading.select">
-                            <div class="flex justify-between">
+                    <div>
+                        {{ getFormattedPrice(subtotal) }}*
+                    </div>
+                </div>
+            </slot>
+            <slot name="shipping">
+                <div class="mb-4">
+                    <LayoutLoader :is-loading="isLoading.select" :spinner-classes="{ 'mr-2 size-8!': true }">
+                        <template #loading-spinner-content>
+                            <div class="flex justify-between w-full">
                                 <slot name="shipping-label">
                                     <div>
                                         <span>{{ $t('checkout.summaryShipping') }}</span>
@@ -92,7 +91,7 @@ const addSelectedPromotionCode = (promotionCode: string) => {
                                 <template v-if="showSelectionSelect">
                                     <UiSelect
                                         :model-value="selectedShippingMethod.id"
-                                        @update:model-value="setSelectedShippingMethod"
+                                        @update:model-value="(shippingMethodId: AcceptableValue) => emits('setSelectedShippingMethod', shippingMethodId)"
                                     >
                                         <UiSelectTrigger>
                                             <UiSelectValue />
@@ -112,42 +111,40 @@ const addSelectedPromotionCode = (promotionCode: string) => {
                                 </template>
                             </slot>
                         </template>
-                        <template v-else>
-                            <Loader2 class="mr-2 size-4 animate-spin" />
-                        </template>
-                    </div>
-                </slot>
-            </div>
-        </slot>
-        <slot name="tax-information">
-            <div class="mb-4 text-xs">
-                <template v-if="cart.price?.taxStatus === 'net'">
-                    *{{ $t('general.netTaxInformation') }}
-                </template>
-                <template v-else>
-                    *{{ $t('general.grossTaxInformation') }}
-                </template>
-            </div>
-        </slot>
-        <slot name="promotion">
-            <div class="mb-4">
-                <slot name="promotion-label"><UiLabel>{{ $t('checkout.promoLabel') }}</UiLabel></slot>
-                <slot name="promotion-input-button">
-                    <div class="flex w-full max-w-sm">
-                        <UiInput
-                            v-model="inputPromotionCode"
-                            class="w-full"
-                            type="text"
-                            :placeholder="$t('checkout.addPromotionPlaceholder')"
-                        />
-                        <slot name="promotion-button">
-                            <UiButton :is-loading="isLoading.promo" @click="addSelectedPromotionCode(inputPromotionCode)">
-                                <Icon name="mdi:check" class="size-4" />
-                            </UiButton>
-                        </slot>
-                    </div>
-                </slot>
-            </div>
-        </slot>
-    </template>
+                    </LayoutLoader>
+                </div>
+            </slot>
+        </div>
+    </slot>
+    <slot name="tax-information">
+        <div class="mb-4 text-xs">
+            <template v-if="cart.price?.taxStatus === 'net'">
+                *{{ $t('general.netTaxInformation') }}
+            </template>
+            <template v-else>
+                *{{ $t('general.grossTaxInformation') }}
+            </template>
+        </div>
+    </slot>
+    <slot name="promotion">
+        <div class="mb-4">
+            <slot name="promotion-label"><UiLabel :for="t('checkout.promoLabel')">{{ $t('checkout.promoLabel') }}</UiLabel></slot>
+            <slot name="promotion-input-button">
+                <div class="flex w-full max-w-sm">
+                    <UiInput
+                        :id="t('checkout.promoLabel')"
+                        v-model="inputPromotionCode"
+                        class="w-full"
+                        type="text"
+                        :placeholder="$t('checkout.addPromotionPlaceholder')"
+                    />
+                    <slot name="promotion-button">
+                        <UiButton :aria-label="t('checkout.addPromotionPlaceholder')" :is-loading="isLoading.promo" @click="addSelectedPromotionCode(inputPromotionCode)">
+                            <Icon name="mdi:check" class="size-4" />
+                        </UiButton>
+                    </slot>
+                </div>
+            </slot>
+        </div>
+    </slot>
 </template>

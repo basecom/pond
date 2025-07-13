@@ -2,21 +2,22 @@
 
 withDefaults(
     defineProps<{
-      cartItemImage?: string,
-      fallback?: string,
-      productUrl?: string
+      cartItemImage?: string;
+      cartItemFallbackCover?: string;
+      fallback?: string;
+      productUrl?: string;
     }>(),
     {
         cartItemImage: undefined,
-        fallback: 'mdi:duck',
+        cartItemFallbackCover: undefined,
+        fallback: 'mdi:image',
         productUrl: undefined,
     },
 );
 </script>
-<template>
 
+<template>
     <CartItemElementImageInner
         v-bind="$props"
     />
-
 </template>

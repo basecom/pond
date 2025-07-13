@@ -6,7 +6,7 @@ import {getProductUrl} from '@shopware-pwa/helpers-next';
 const props = withDefaults(
     defineProps<{
       cartItem: Schemas['LineItem'];
-      cartDeliveryPosition?: Schemas['CartDeliveryPosition']
+      cartDeliveryPosition?: Schemas['CartDeliveryPosition'];
     }>(),
     {
         cartDeliveryPosition: undefined,
@@ -17,15 +17,12 @@ const { cartItem } = toRefs(props);
 
 const {addToWishlist, isInWishlist, removeFromWishlist } = useProductWishlist(cartItem.value?.referencedId ?? '');
 
-
 const {removeItem} = useCartItem(cartItem);
 const { t } = useI18n();
 
-const isLoading = ref({
-    wishlist: false,
-    container: false,
-});
+const {getWishlistProducts} = useWishlist();
 
+const {refreshCart} = useCart();
 
 const {
     itemOptions,
@@ -35,9 +32,10 @@ const {
     changeItemQuantity,
 } = useCartItem(cartItem);
 
-const {getWishlistProducts} = useWishlist();
-
-const {refreshCart} = useCart();
+const isLoading = ref({
+    wishlist: false,
+    container: false,
+});
 
 const quantity = ref();
 
@@ -74,38 +72,40 @@ const changeCartItemQuantity = async (quantityInput: number) => {
         });
     } catch (error) {
         handleError(error, true, {show: true, description: 'DEFAULT'});
-    }
-    finally {
-      isLoading.value.container = false;
-      quantity.value = itemQuantity.value;
+    } finally {
+        isLoading.value.container = false;
+        quantity.value = itemQuantity.value;
     }
 };
 const addProductToWishlist = async () => {
+    isLoading.value.wishlist = true;
     try {
-        isLoading.value.wishlist = true;
         await addToWishlist();
         toast({
             description: t('checkout.addToWishlistSuccess'),
         });
     } catch(error) {
         handleError(error, true, {show: true});
+    } finally {
+        isLoading.value.wishlist = false;
     }
-    isLoading.value.wishlist = false;
 };
+
 const removeProductFromWishlist = async () => {
+    isLoading.value.wishlist = true;
     try {
-        isLoading.value.wishlist = true;
         await removeFromWishlist();
         toast({
             description: t('checkout.removeFromWishlistSuccess'),
         });
     } catch(error) {
         handleError(error, true, {show: true});
+    } finally {
+        isLoading.value.wishlist = false;
     }
-    isLoading.value.wishlist = false;
 };
-
 </script>
+
 <template>
     <CartItemInner
         :cart-item="cartItem"
@@ -119,7 +119,7 @@ const removeProductFromWishlist = async () => {
         :is-loading="isLoading"
         :is-in-wishlist="isInWishlist"
         @remove-cart-item="removeCartItem"
-        @change-cart-item-quantity="(quantityInput: number)=> changeCartItemQuantity(quantityInput)"
+        @change-cart-item-quantity="(quantityInput: number) => changeCartItemQuantity(quantityInput)"
         @add-product-to-wishlist="addProductToWishlist"
         @remove-product-from-wishlist="removeProductFromWishlist"
     />

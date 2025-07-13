@@ -1,14 +1,14 @@
 <script setup lang="ts">
 withDefaults(
     defineProps<{
-      cartItemTotalPrice?: string
+      cartItemTotalPrice?: string;
     }>(),
     {
-        cartItemTotalPrice: undefined,
+        cartItemTotalPrice: '',
     },
 );
 </script>
-<template>
-    <CartItemElementPriceTotalInner :cart-item-total-price="cartItemTotalPrice" />
 
+<template>
+    <CartItemElementPriceTotalInner v-bind="$props" />
 </template>

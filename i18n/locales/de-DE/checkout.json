@@ -5,6 +5,7 @@
     "deliveryPeriod": "Lieferzeitraum",
     "quantity": "Menge",
     "lineItemUnitPriceDescriptor": "Stück",
+    "lineItemUnitPriceSeperator": "/",
     "removeFromWishlist": "Vom Merkzettel entfernen",
     "addToWishlist": "Zum Merkzettel hinzufügen",
     "addPromotionPlaceholder": "Promocode hinzufügen...",
@@ -17,9 +18,10 @@
     "items": "Produkte",
     "success": "Aktion war erfolgreich",
     "promoLabel": "Promocode",
-    "addToWishlistSuccess": "Produkt wurde erfolgreich zur Wunschliste hinzugefügt.",
-    "removeFromWishlistSuccess": "Produkt wurde erfolgreich von der Wunschliste entfernt.",
-    "removeSuccess": "Product wurde erfolgreich entfernt.",
-    "promotionSuccess": "Promocode wurde erfolgreich hinzugefügt."
+    "addToWishlistSuccess": "Produkt wurde erfolgreich zum Merkzettel hinzugefügt.",
+    "removeFromWishlistSuccess": "Produkt wurde erfolgreich vom Merkzettel entfernt.",
+    "removeSuccess": "Produkt wurde erfolgreich entfernt.",
+    "promotionSuccess": "Promocode wurde erfolgreich hinzugefügt.",
+    "removeCartItem": "Produkt entfernen"
   }
 }
