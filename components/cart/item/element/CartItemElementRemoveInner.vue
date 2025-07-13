@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const emits = defineEmits<{
-  removeCartItem: [];
+  'remove-cart-item': [];
 }>();
 
 const { t } = useI18n();
@@ -12,7 +12,7 @@ const { t } = useI18n();
             variant="outline"
             size="icon"
             :aria-label="t('checkout.removeCartItem')" 
-            @click="emits('removeCartItem')"
+            @click="emits('remove-cart-item')"
         >
             <slot name="remove-icon">
                 <Icon name="mdi-close" class="size-4" />

@@ -32,8 +32,8 @@ withDefaults(
 );
 
 const emits = defineEmits<{
-  setSelectedShippingMethod: [shippingMethodId: AcceptableValue];
-  addSelectedPromotionCode: [promotionCode: string];
+  'set-selected-shipping-method': [shippingMethodId: AcceptableValue];
+  'add-selected-promotion-code': [promotionCode: string];
 }>();
 </script>
 
@@ -47,8 +47,8 @@ const emits = defineEmits<{
         :subtotal="subtotal"
         :is-loading="isLoading"
         :is-logged-in="isLoggedIn"
-        @add-selected-promotion-code="(promotionCode: string) => emits('addSelectedPromotionCode', promotionCode)"
-        @set-selected-shipping-method="(shippingMethodId: AcceptableValue) =>  emits('setSelectedShippingMethod', shippingMethodId)"
+        @add-selected-promotion-code="(promotionCode: string) => emits('add-selected-promotion-code', promotionCode)"
+        @set-selected-shipping-method="(shippingMethodId: AcceptableValue) =>  emits('set-selected-shipping-method', shippingMethodId)"
     />
 
 </template>

@@ -32,8 +32,8 @@ withDefaults(
 );
 
 const emits = defineEmits<{
-  setSelectedShippingMethod: [shippingMethodId: AcceptableValue];
-  addSelectedPromotionCode: [promotionCode: string];
+  'set-selected-shipping-method': [shippingMethodId: AcceptableValue];
+  'add-selected-promotion-code': [promotionCode: string];
 }>();
 
 const {getFormattedPrice} = usePrice();
@@ -45,7 +45,7 @@ const showSelectionSelect = ref(false);
 const inputPromotionCode = ref('');
 
 const addSelectedPromotionCode = (promotionCode: string) => {
-    emits('addSelectedPromotionCode', promotionCode);
+    emits('add-selected-promotion-code', promotionCode);
     inputPromotionCode.value = '';
 };
 </script>
@@ -91,7 +91,7 @@ const addSelectedPromotionCode = (promotionCode: string) => {
                                 <template v-if="showSelectionSelect">
                                     <UiSelect
                                         :model-value="selectedShippingMethod.id"
-                                        @update:model-value="(shippingMethodId: AcceptableValue) => emits('setSelectedShippingMethod', shippingMethodId)"
+                                        @update:model-value="(shippingMethodId: AcceptableValue) => emits('set-selected-shipping-method', shippingMethodId)"
                                     >
                                         <UiSelectTrigger>
                                             <UiSelectValue />

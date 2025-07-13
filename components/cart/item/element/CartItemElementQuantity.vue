@@ -14,13 +14,13 @@ const props = withDefaults(
 );
 
 defineEmits<{
-  changeCartItemQuantity: [number]
+  'change-cart-item-quantity': [number]
 }>();
 </script>
 
 <template>
     <CartItemElementQuantityInner
         v-bind="props"
-        @change-cart-item-quantity="$emit('changeCartItemQuantity', $event)"
+        @change-cart-item-quantity="$emit('change-cart-item-quantity', $event)"
     />
 </template>

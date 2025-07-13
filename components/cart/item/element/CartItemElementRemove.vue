@@ -1,11 +1,11 @@
 <script setup lang="ts">
 const emits = defineEmits<{
-  removeCartItem: [],
+  'remove-cart-item': [],
 }>();
 
 </script>
 <template>
     <CartItemElementRemoveInner
-        @remove-cart-item="emits('removeCartItem')"
+        @remove-cart-item="emits('remove-cart-item')"
     />
 </template>

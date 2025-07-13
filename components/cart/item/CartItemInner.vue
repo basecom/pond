@@ -34,10 +34,10 @@ const props = withDefaults(
 );
 
 const emits = defineEmits<{
-  removeCartItem: [],
-  changeCartItemQuantity: [number],
-  removeProductFromWishlist: [],
-  addProductToWishlist: [],
+  'remove-cart-item': [],
+  'change-cart-item-quantity': [number],
+  'remove-product-from-wishlist': [],
+  'add-product-to-wishlist': [],
 }>();
 
 const { cartItem, isLoading } = toRefs(props);
@@ -85,9 +85,9 @@ const currentProps = computed(() => {
 
 const eventHandlers = computed(() => {
     if(!isDiscount.value) return {
-        'changeCartItemQuantity': (quantityInput: number) => emits('changeCartItemQuantity', quantityInput),
-        'removeProductFromWishlist': () => emits('removeProductFromWishlist'),
-        'addProductToWishlist': () => emits('addProductToWishlist'),
+        'change-cart-item-quantity': (quantityInput: number) => emits('change-cart-item-quantity', quantityInput),
+        'remove-product-from-wishlist': () => emits('remove-product-from-wishlist'),
+        'add-product-to-wishlist': () => emits('add-product-to-wishlist'),
     };
     return {};
 });
@@ -109,7 +109,7 @@ const eventHandlers = computed(() => {
                         <slot name="generic-remove">
                             <CartItemElementRemove
                                 v-if="cartItem.removable"
-                                @remove-cart-item="emits('removeCartItem')"
+                                @remove-cart-item="emits('remove-cart-item')"
                             />
                         </slot>
                     </div>

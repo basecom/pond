@@ -35,17 +35,17 @@ withDefaults(
 );
 
 defineEmits<{
-  changeCartItemQuantity: [number],
-  removeProductFromWishlist: [],
-  addProductToWishlist: [],
+  'change-cart-item-quantity': [number],
+  'remove-product-from-wishlist': [],
+  'add-product-to-wishlist': [],
 }>();
 </script>
 
 <template>
     <CartItemElementTypeProductInner
         v-bind="$props"
-        @change-cart-item-quantity="(quantityInput: number) => $emit('changeCartItemQuantity', quantityInput)"
-        @remove-product-from-wishlist="$emit('removeProductFromWishlist')"
-        @add-product-to-wishlist="$emit('addProductToWishlist')"
+        @change-cart-item-quantity="(quantityInput: number) => $emit('change-cart-item-quantity', quantityInput)"
+        @remove-product-from-wishlist="$emit('remove-product-from-wishlist')"
+        @add-product-to-wishlist="$emit('add-product-to-wishlist')"
     />
 </template>

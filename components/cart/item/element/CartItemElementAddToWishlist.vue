@@ -11,16 +11,16 @@ withDefaults(
 );
 
 defineEmits<{
-  removeProductFromWishlist: [];
-  addProductToWishlist: [];
+  'remove-product-from-wishlist': [];
+  'add-product-to-wishlist': [];
 }>();
 </script>
 
 <template>
     <CartItemElementAddToWishlistInner
         v-bind="$props"
-        @remove-product-from-wishlist="$emit('removeProductFromWishlist')"
-        @add-product-to-wishlist="$emit('addProductToWishlist')"
+        @remove-product-from-wishlist="$emit('remove-product-from-wishlist')"
+        @add-product-to-wishlist="$emit('add-product-to-wishlist')"
     />
 
 </template>

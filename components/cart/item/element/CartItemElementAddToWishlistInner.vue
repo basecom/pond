@@ -11,8 +11,8 @@ withDefaults(
 );
 
 defineEmits<{
-  removeProductFromWishlist: [];
-  addProductToWishlist: [];
+  'remove-product-from-wishlist': [];
+  'add-product-to-wishlist': [];
 }>();
 
 const { t } = useI18n();
@@ -21,7 +21,7 @@ const { t } = useI18n();
 <template>
     <slot name="wishlist-content">
         <slot name="wishlist-wrapper">
-            <div class="flex" @click="isInWishlist ? $emit('removeProductFromWishlist') : $emit('addProductToWishlist')">
+            <div class="flex" @click="isInWishlist ? $emit('remove-product-from-wishlist') : $emit('add-product-to-wishlist')">
                 <slot name="wishlist-button">
                     <UiButton
                         variant="ghost"

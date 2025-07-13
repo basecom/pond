@@ -35,9 +35,9 @@ const props = withDefaults(
 const {cartItem, quantity} = toRefs(props);
 
 defineEmits<{
-  changeCartItemQuantity: [number],
-  removeProductFromWishlist: [],
-  addProductToWishlist: [],
+  'change-cart-item-quantity': [number],
+  'remove-product-from-wishlist': [],
+  'add-product-to-wishlist': [],
 }>();
 
 const {getFormattedPrice} = usePrice();
@@ -98,8 +98,8 @@ const cartItemFallbackCover = configStore.get('BasecomPondCompanionPlugin.config
                             <CartItemElementAddToWishlist
                                 :is-in-wishlist="isInWishlist"
                                 :is-loading="isLoading.wishlist"
-                                @remove-product-from-wishlist="$emit('removeProductFromWishlist')"
-                                @add-product-to-wishlist="$emit('addProductToWishlist')"
+                                @remove-product-from-wishlist="$emit('remove-product-from-wishlist')"
+                                @add-product-to-wishlist="$emit('add-product-to-wishlist')"
                             />
                         </slot>
                     </div>
@@ -114,7 +114,7 @@ const cartItemFallbackCover = configStore.get('BasecomPondCompanionPlugin.config
                         :cart-item="cartItem"
                         :quantity="quantity"
                         :item-quantity="itemQuantity"
-                        @change-cart-item-quantity="(quantityInput: number) => $emit('changeCartItemQuantity', quantityInput)"
+                        @change-cart-item-quantity="(quantityInput: number) => $emit('change-cart-item-quantity', quantityInput)"
                     />
                 </slot>
             </div>

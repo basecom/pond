@@ -16,7 +16,7 @@ const props = withDefaults(
 const {cartItem, quantity} = toRefs(props);
 
 defineEmits<{
-  changeCartItemQuantity: [quantityInput: number]
+  'change-cart-item-quantity': [quantityInput: number]
 }>();
 
 const configStore = useConfigStore();
@@ -36,7 +36,7 @@ const isDigital = computed(() => cartItem.value?.states?.includes('is-download')
             :step="cartItem?.payload?.purchaseSteps ?? 1"
             :disabled="!cartItem?.stackable || isDigital"
             :default-value="itemQuantity"
-            @update:model-value="(val) => { if (val !== quantity) $emit('changeCartItemQuantity', val) }"
+            @update:model-value="(val) => { if (val !== quantity) $emit('change-cart-item-quantity', val) }"
         >
             <slot name="quantity-label">
                 <UiLabel class="flex font-bold" :for="cartItem.id+'-quantity'">{{ $t('checkout.quantity') }}</UiLabel>

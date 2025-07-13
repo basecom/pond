@@ -35,8 +35,8 @@ const props = withDefaults(
 const {cartDeliveries, cartItems} = toRefs(props);
 
 const emits = defineEmits<{
-  setSelectedShippingMethod: [shippingMethodId: AcceptableValue];
-  addSelectedPromotionCode: [promotionCode: string];
+  'set-selected-shipping-method': [shippingMethodId: AcceptableValue];
+  'add-selected-promotion-code': [promotionCode: string];
 }>();
 
 const hasLineItems = (items?: Schemas['LineItem'][]): boolean => !!items && items.length > 0;
@@ -88,8 +88,8 @@ const getCartDeliveryPosition = (id: string, cartDeliveryPositions?: Schemas['Ca
                     :shipping-cost="shippingCost"
                     :subtotal="subtotal"
                     :is-loading="isLoading"
-                    @add-selected-promotion-code="(promotionCode: string) => emits('addSelectedPromotionCode', promotionCode)"
-                    @set-selected-shipping-method="(shippingMethodId: AcceptableValue) => emits('setSelectedShippingMethod', shippingMethodId)"
+                    @add-selected-promotion-code="(promotionCode: string) => emits('add-selected-promotion-code', promotionCode)"
+                    @set-selected-shipping-method="(shippingMethodId: AcceptableValue) => emits('set-selected-shipping-method', shippingMethodId)"
                 />
             </div>
         </slot>
