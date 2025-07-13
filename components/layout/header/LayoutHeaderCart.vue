@@ -8,6 +8,6 @@ const {getFormattedPrice} = usePrice();
         :cart-items="cartItems" 
         :cart-deliveries="cart?.deliveries" 
         :cart-price-total="getFormattedPrice(cart?.price?.totalPrice)"
-        @open="(value: boolean) => {if(value) refreshCart; }"
+        @open="(value: boolean) => {if(value) refreshCart(); }"
     />
 </template>
