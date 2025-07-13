@@ -65,7 +65,7 @@ const removeCartItem = async () => {
 const changeCartItemQuantity = async (quantityInput: number) => {
     isLoading.value.container = true;
     try {
-        const response = await changeItemQuantity(Number(quantityInput));
+        const response = await changeItemQuantity(quantityInput);
         await refreshCart(response);
         toast({
             description: t('checkout.success'),
