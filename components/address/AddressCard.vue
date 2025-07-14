@@ -2,5 +2,5 @@
 </script>
 
 <template>
-  <AddressCardInner v-bind="$props" />
+    <AddressCardInner v-bind="$props" />
 </template>

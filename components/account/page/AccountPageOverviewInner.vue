@@ -72,18 +72,18 @@ const showTitle = configStore.get('core.loginRegistration.showTitleField') as bo
         <!-- default billing address -->
         <slot name="billing-address">
             <template v-if="customer.defaultBillingAddress">
-              <AddressCard :headline="$t('account.overview.defaultBillingAddress')" :address="customer.defaultBillingAddress" />
+                <AddressCard :headline="$t('account.overview.defaultBillingAddress')" :address="customer.defaultBillingAddress" />
             </template>
         </slot>
 
         <!-- default shipping address -->
         <slot name="shipping-address">
             <template v-if="customer.defaultShippingAddress">
-              <AddressCard
-                  :headline="$t('account.overview.defaultShippingAddress')"
-                  :address="customer.defaultShippingAddress"
-                  :description="customer.defaultBillingAddressId === customer.defaultShippingAddressId ? $t('account.overview.addressesIdentical') : undefined"
-              />
+                <AddressCard
+                    :headline="$t('account.overview.defaultShippingAddress')"
+                    :address="customer.defaultShippingAddress"
+                    :description="customer.defaultBillingAddressId === customer.defaultShippingAddressId ? $t('account.overview.addressesIdentical') : undefined"
+                />
             </template>
         </slot>
     </div>

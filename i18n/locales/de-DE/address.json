@@ -2,11 +2,23 @@
   "address": {
     "accountHeadline": "Adressen",
     "accountDescription": "Ändern Sie Ihre Standard-Adressen oder fügen Sie neue hinzu.",
-    "addNewAddress": "Neue Adresse hinzufügen",
-    "defaultBillingAddress": "Standard-Rechnungsadresse",
-    "defaultShippingAddress": "Standard-Lieferadresse",
+    "createAddress": "Neue Adresse hinzufügen",
+    "defaultBillingAddress": {
+      "label": "Standard-Rechnungsadresse",
+      "setAsDefault": "Als Standard-Rechnungsadresse verwenden",
+      "success": "Adresse wurde erfolgreich als Standard-Rechnungsadresse gespeichert"
+    },
+    "defaultShippingAddress": {
+      "label": "Standard-Lieferadresse",
+      "setAsDefault": "Als Standard-Lieferadresse verwenden",
+      "success": "Adresse wurde erfolgreich als Standard-Lieferadresse gespeichert"
+    },
     "availableAddresses": "Verfügbare Adressen",
     "editAddress": "Adresse bearbeiten",
+    "deleteAddress": "Adresse löschen",
+    "addedAddress": "Die Adresse wurde erfolgreich hinzugefügt",
+    "deletedAddress": "Die Adresse wurde erfolgreich gelöscht",
+    "updatedAddress": "Die Adresse wurde erfolgreich aktualisiert",
     "headline": "Ihre Adresse",
     "differentShippingAddress": "Lieferadresse weicht von Rechnungsadresse ab.",
     "street": {

@@ -2,5 +2,5 @@
 </script>
 
 <template>
-  <AccountPageAddressInner />
+    <AccountPageAddressInner />
 </template>
