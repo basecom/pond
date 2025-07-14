@@ -27,7 +27,7 @@ const onUpdate = async (selectedValue: AcceptableValue): Promise<void> =>  {
             const redirectUrl = response.redirectUrl;
             window.location.replace(replaceToDevStorefront(redirectUrl));
         } catch {
-            handleError('[Pond][LayoutFooterLanguageSwitchInner] Language switch failed');
+            handleError('Language switch failed');
         }
     }
 };

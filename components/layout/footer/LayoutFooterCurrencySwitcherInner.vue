@@ -34,7 +34,7 @@ const onUpdate = async (selectedId: AcceptableValue) => {
                 title: t('general.currencySwitch', { currency: currency.isoCode }),
             });
         } catch {
-            handleError('[Pond][LayoutFooterCurrencySwitcher]: Currency switch failed');
+            handleError('Currency switch failed');
         }
     }
 };
