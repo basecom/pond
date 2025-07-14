@@ -37,7 +37,6 @@ const showPhoneNumberField = configStore.get('core.loginRegistration.showPhoneNu
         </slot>
 
         <slot name="address-card-fields">
-            <!-- ToDo: Diese Komponente auch in AccountPageProfileInner nutzen -->
             <div v-if="address && !description" class="space-y-1">
                 <p v-if="address.salutationId">
                     {{ getTranslatedProperty(address.salutation, 'displayName') }}

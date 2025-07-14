@@ -26,7 +26,7 @@ const createAddress = async (value: AddressData) => {
         await refreshSessionContext();
         await loadCustomerAddresses();
         toast({
-            title: t('address.addedAddress'),
+            title: t('address.createdAddress'),
         });
     } catch (error) {
         handleError(error);
@@ -185,7 +185,7 @@ const editAddress = async (address: AddressData, addressId: string) => {
 
                         <div class="flex gap-2">
                             <UiDialog class="w-full">
-                                <slot name="create-address-trigger">
+                                <slot name="edit-address-trigger">
                                     <UiDialogTrigger class="flex flex-start w-1/2">
                                         <UiButton>
                                             <Icon name="mdi:pencil" class="size-4" />
@@ -194,7 +194,7 @@ const editAddress = async (address: AddressData, addressId: string) => {
                                     </UiDialogTrigger>
                                 </slot>
 
-                                <slot name="create-address-content">
+                                <slot name="edit-address-content">
                                     <UiDialogContent class="max-h-4/5 overflow-scroll">
                                         <UiDialogHeader>
                                             <UiDialogTitle>
@@ -223,27 +223,31 @@ const editAddress = async (address: AddressData, addressId: string) => {
                             </slot>
                         </div>
 
-                        <UiButton
-                            v-if="defaultBillingAddressId !== customerAddress.id"
-                            variant="link"
-                            class="pl-0 justify-start"
-                            :is-loading="isLoading"
-                            @click="setAsDefaultBillingAddress(customerAddress.id)"
-                        >
-                            <Icon name="mdi:truck-outline" class="size-4" />
-                            {{ $t('address.defaultBillingAddress.setAsDefault') }}
-                        </UiButton>
+                        <slot name="set-as-default-billing-address">
+                            <UiButton
+                                v-if="defaultBillingAddressId !== customerAddress.id"
+                                variant="link"
+                                class="pl-0 justify-start"
+                                :is-loading="isLoading"
+                                @click="setAsDefaultBillingAddress(customerAddress.id)"
+                            >
+                                <Icon name="mdi:truck-outline" class="size-4" />
+                                {{ $t('address.defaultBillingAddress.setAsDefault') }}
+                            </UiButton>
+                        </slot>
 
-                        <UiButton
-                            v-if="defaultShippingAddressId !== customerAddress.id"
-                            variant="link"
-                            class="pl-0 justify-start"
-                            :is-loading="isLoading"
-                            @click="setAsDefaultShippingAddress(customerAddress.id)"
-                        >
-                            <Icon name="mdi:delete-forever-outline" class="size-4" />
-                            {{ $t('address.defaultShippingAddress.setAsDefault') }}
-                        </UiButton>
+                        <slot name="set-as-default-shipping-address">
+                            <UiButton
+                                v-if="defaultShippingAddressId !== customerAddress.id"
+                                variant="link"
+                                class="pl-0 justify-start"
+                                :is-loading="isLoading"
+                                @click="setAsDefaultShippingAddress(customerAddress.id)"
+                            >
+                                <Icon name="mdi:delete-forever-outline" class="size-4" />
+                                {{ $t('address.defaultShippingAddress.setAsDefault') }}
+                            </UiButton>
+                        </slot>
                     </div>
                 </template>
 

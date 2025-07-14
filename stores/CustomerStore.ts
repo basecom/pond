@@ -2,7 +2,7 @@ import type { Schemas } from '@shopware/api-client/api-types';
 
 export const useCustomerStore = defineStore('customer', () => {
     const { refreshSessionContext, sessionContext } = useSessionContext();
-    const { login, logout, register, defaultBillingAddressId, defaultShippingAddressId } = useUser();
+    const { login, logout, register} = useUser();
     const { resetPassword } = useCustomerPassword();
     const loading = ref(true);
 
@@ -24,7 +24,5 @@ export const useCustomerStore = defineStore('customer', () => {
         loading,
         register,
         resetPassword,
-        defaultBillingAddressId,
-        defaultShippingAddressId,
     };
 });
