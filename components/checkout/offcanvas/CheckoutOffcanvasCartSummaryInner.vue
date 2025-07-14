@@ -45,6 +45,10 @@ const showSelectionSelect = ref(false);
 const inputPromotionCode = ref('');
 
 const addSelectedPromotionCode = (promotionCode: string) => {
+    if(!inputPromotionCode.value.trim()) {
+        return;
+    }
+
     emits('add-selected-promotion-code', promotionCode);
     inputPromotionCode.value = '';
 };
@@ -127,7 +131,6 @@ const addSelectedPromotionCode = (promotionCode: string) => {
     </slot>
     <slot name="promotion">
         <div class="mb-4">
-            <slot name="promotion-label"><UiLabel :for="t('checkout.promoLabel')">{{ $t('checkout.promoLabel') }}</UiLabel></slot>
             <slot name="promotion-input-button">
                 <div class="flex w-full max-w-sm">
                     <UiInput
@@ -138,7 +141,12 @@ const addSelectedPromotionCode = (promotionCode: string) => {
                         :placeholder="$t('checkout.addPromotionPlaceholder')"
                     />
                     <slot name="promotion-button">
-                        <UiButton :aria-label="t('checkout.addPromotionPlaceholder')" :is-loading="isLoading.promotion" @click="addSelectedPromotionCode(inputPromotionCode)">
+                        <UiButton
+                            :aria-label="t('checkout.addPromotionPlaceholder')" 
+                            :is-loading="isLoading.promotion"
+                            :disabled="!inputPromotionCode.trim()"
+                            @click="addSelectedPromotionCode(inputPromotionCode)"
+                        >
                             <Icon name="mdi:check" class="size-4" />
                         </UiButton>
                     </slot>
