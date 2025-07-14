@@ -63,20 +63,6 @@ export default defineNuxtConfig({
     },
 
     routeRules: {
-        // nitro caching can be enabled here to be used as a proxy to cache certain predefined store-api routes
-        // supported routes: /navigation, /config
-        // e.g.: cache every proxy api route for five minutes:
-        // '/api/proxy/**': {
-        //     swr: 60 * 5,
-        // },
-        // e.g.: cache specific sub-route for five minutes:
-        '/api/proxy/navigation/**': {
-            swr: 60 * 5,
-        },
-        // e.g.: cache a specific route for five minutes:
-        '/api/proxy/config': {
-            swr: 60 * 5,
-        },
         // add redirects
         '/newsletter-subscribe': { redirect: '/newsletter/confirm' },
         '/registration/confirm': { redirect: '/account/register/confirm' },
@@ -86,6 +72,21 @@ export default defineNuxtConfig({
         '/newsletter/**': { ssr: false },
         '/search/**': { ssr: false },
         '/wishlist/**': { ssr: false },
+        // nitro caching
+        // can be enabled here to be used as a proxy to cache certain predefined store-api routes
+        // supported routes: /navigation, /config
+        // cache every proxy api route:
+        // '/api/proxy/**': {
+        //     swr: 60 * 5,
+        // },
+        // cache a specific route:
+        // '/api/proxy/config': {
+        //     swr: 60 * 5,
+        // },
+        // cache a specific sub-route:
+        // '/api/proxy/navigation/**': {
+        //     swr: 60 * 5,
+        // },
     },
 
     extends: ['@shopware-pwa/composables-next/nuxt-layer'],
