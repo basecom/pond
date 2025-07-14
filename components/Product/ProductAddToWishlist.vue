@@ -42,12 +42,10 @@ const handleWishlistButtonClicked = async () => {
         class="cursor-pointer select-none p-2"
         @click="handleWishlistButtonClicked"
     >
-        <ClientOnly>
-            <FormKitIcon
-                class="block size-6"
-                :icon="isInWishlist ? 'heart' : 'empty-heart'"
-                :title="isInWishlist ? t('icon.removeFromWishlist') : t('icon.addToWishlist')"
-            />
-        </ClientOnly>
+        <FormKitIcon
+            class="block size-6"
+            :icon="isInWishlist ? 'heart' : 'empty-heart'"
+            :title="isInWishlist ? t('icon.removeFromWishlist') : t('icon.addToWishlist')"
+        />
     </div>
 </template>

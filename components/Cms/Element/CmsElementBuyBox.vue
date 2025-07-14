@@ -22,17 +22,22 @@ const wishlistEnabled = configStore.get('core.cart.wishlistEnabled');
 
         <ProductAvailability :product="product" />
 
-        <div class="flex w-full flex-row gap-4">
-            <ProductAddToCart
-                :product="product"
-                :label="true"
-            />
-            <div
-                v-if="wishlistEnabled"
-                class="rounded-md border border-gray-medium bg-white"
-            >
+        <ProductAddToCart
+            :product="product"
+            :label="true"
+        />
+
+        <div
+            v-if="wishlistEnabled"
+            class="content-center rounded-md border border-gray-medium bg-white"
+        >
+            <ClientOnly>
                 <ProductAddToWishlist :product="product" />
-            </div>
+
+                <template #fallback>
+                    <div class="size-[42px] animate-pulse rounded bg-gray-medium" />
+                </template>
+            </ClientOnly>
         </div>
     </div>
 </template>

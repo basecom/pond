@@ -76,6 +76,8 @@ const ssrId = () => useId();
 </script>
 
 <template>
+    <NuxtLoadingIndicator class="!bg-brand-primary !bg-none" :throttle="100" />
+
     <ConfigProvider :use-id="ssrId">
         <NuxtLayout />
     </ConfigProvider>

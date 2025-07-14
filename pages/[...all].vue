@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { pascalCase } from 'scule';
+import { ApiClientError } from '@shopware/api-client';
 
 const { clearBreadcrumbs } = useBreadcrumbs();
 
@@ -21,25 +22,41 @@ const routePath =
         : route.path;
 
 const { data: seoResult } = await useAsyncData(`seoPath${routePath}`, async () => {
-    // For client links if the history state contains seo url information we can omit the api call
-    if (import.meta.client) {
-        if (history.state?.routeName) {
+    try {
+        // if the history state contains seo url information, we can omit the api call
+        if (import.meta.client && history.state?.routeName) {
             return {
                 routeName: history.state?.routeName,
                 foreignKey: history.state?.foreignKey,
             };
         }
-    }
 
-    return await resolvePath(routePath);
+        const result = await resolvePath(routePath);
+
+        if (!result?.routeName) {
+            throw createError({
+                statusCode: 404,
+                message: t('error.404.detail'),
+            });
+        }
+
+        return result;
+    } catch (error) {
+        if (error instanceof Error || typeof error === 'string') {
+            return showError(error);
+        }
+
+        if (error instanceof ApiClientError) {
+            return showError(error.details);
+        }
+    }
 });
 
 const { routeName, foreignKey } = useNavigationContext(seoResult);
 const { componentExists } = useCmsUtils();
 
-if (!routeName.value) {
-    throw createError({ statusCode: 404, message: t('error.404.detail') });
-}
+const componentName = computed(() => pascalCase(routeName.value));
+const componentExistsWithName = computed(() => componentExists(componentName.value));
 
 onBeforeRouteLeave(() => {
     clearBreadcrumbs();
@@ -48,8 +65,8 @@ onBeforeRouteLeave(() => {
 
 <template>
     <component
-        :is="pascalCase(routeName)"
-        v-if="componentExists(pascalCase(routeName))"
+        :is="componentName"
+        v-if="componentExistsWithName"
         :navigation-id="foreignKey"
     />
 </template>

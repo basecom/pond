@@ -6,6 +6,10 @@ const { t } = useI18n();
 defineProps<{
     error: NuxtError;
 }>();
+
+useHead(() => ({
+    title: t('error.unknown.heading'),
+}));
 </script>
 
 <template>

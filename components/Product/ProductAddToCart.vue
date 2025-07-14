@@ -39,52 +39,50 @@ const handleAddToCart = async () => {
 </script>
 
 <template>
-    <div class="p-4 pt-0">
+    <FormKit
+        v-if="product.availableStock > 0"
+        id="productAddToCartForm"
+        name="productAddToCartForm"
+        type="form"
+        :actions="false"
+        :classes="{
+            form: 'w-full flex gap-4',
+            outer: 'w-20',
+        }"
+        @keydown.enter.prevent
+        @submit="handleAddToCart"
+    >
+        <SharedQuantityInput
+            v-model="quantity"
+            :min-purchase="product.minPurchase"
+            :max-purchase="product.maxPurchase ?? product.availableStock"
+            :steps="product.purchaseSteps"
+            :initial-value="product.minPurchase"
+            @on-enter="handleAddToCart"
+        />
+
         <FormKit
-            v-if="product.availableStock > 0"
-            id="productAddToCartForm"
-            name="productAddToCartForm"
-            type="form"
-            :actions="false"
+            id="addToCart"
+            name="addToCart"
+            type="submit"
             :classes="{
-                form: 'w-full flex gap-4',
-                outer: 'w-20',
+                outer: 'w-full',
             }"
-            @keydown.enter.prevent
-            @submit="handleAddToCart"
-        >
-            <SharedQuantityInput
-                v-model="quantity"
-                :min-purchase="product.minPurchase"
-                :max-purchase="product.maxPurchase ?? product.availableStock"
-                :steps="product.purchaseSteps"
-                :initial-value="product.minPurchase"
-                @on-enter="handleAddToCart"
-            />
+            :label="props.label ? $t('product.addToCart.submitLabel') : ' '"
+            :prefix-icon="props.icon ? 'cart-shopping' : ''"
+            :title="props.icon ? t('product.addToCart.submitLabel') : ''"
+        />
+    </FormKit>
 
-            <FormKit
-                id="addToCart"
-                name="addToCart"
-                type="submit"
-                :classes="{
-                    outer: 'w-full',
-                }"
-                :label="props.label ? $t('product.addToCart.submitLabel') : ' '"
-                :prefix-icon="props.icon ? 'cart-shopping' : ''"
-                :title="props.icon ? t('product.addToCart.submitLabel') : ''"
-            />
-        </FormKit>
-
-        <div
-            v-else
-            class="flex w-full items-center gap-1 rounded bg-gray-light px-4 py-2 text-sm text-gray"
-        >
-            <FormKitIcon
-                icon="info"
-                :title="t('icon.info')"
-                class="block size-3.5"
-            />
-            <span>{{ $t('product.addToCart.notAvailable') }}</span>
-        </div>
+    <div
+        v-else
+        class="flex w-full items-center gap-1 rounded bg-gray-light px-4 py-2 text-sm text-gray"
+    >
+        <FormKitIcon
+            icon="info"
+            :title="t('icon.info')"
+            class="block size-3.5"
+        />
+        <span>{{ $t('product.addToCart.notAvailable') }}</span>
     </div>
 </template>

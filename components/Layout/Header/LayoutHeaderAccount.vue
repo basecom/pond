@@ -17,7 +17,7 @@ const closeModal = () => {
     >
         <template #trigger>
             <FormKitIcon
-                class="block size-6"
+                class="block size-6 cursor-pointer"
                 :title="t('icon.user')"
                 icon="user"
             />

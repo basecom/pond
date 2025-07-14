@@ -13,6 +13,10 @@ const props = defineProps<{
 const config = useCmsElementConfig(props.element);
 const { getCmsElementData } = useCmsUtils();
 const crossSellings = getCmsElementData(props.element, 'crossSellings') ?? [];
+const filteredCrossSellings = computed(() =>
+    // filter out crossSellings that are empty
+    crossSellings.filter((cs: Schemas['CrossSellingElement']) => cs.products?.length),
+);
 const { trackSelectItem } = useAnalytics();
 
 const boxLayout = config.getConfigValue('boxLayout');
@@ -33,25 +37,27 @@ const breakpoints = {
     },
 };
 
-const navigationArrowsMap = crossSellings.map((crossSelling: Schemas['CrossSellingElement']) => {
-    const crossSellingProducts = computed(() => crossSelling.products);
+const navigationArrowsMap = computed(() =>
+    filteredCrossSellings.value.map((crossSelling: Schemas['CrossSellingElement']) => {
+        const crossSellingProducts = computed(() => crossSelling.products);
 
-    const { showNavigationArrows } = useComputeSliderConfig({
-        slidesPerView,
-        slides: crossSellingProducts,
-        breakpoints,
-        showNavigation: true,
-        autoSlide: false,
-    });
+        const { showNavigationArrows } = useComputeSliderConfig({
+            slidesPerView,
+            slides: crossSellingProducts,
+            breakpoints,
+            showNavigation: true,
+            autoSlide: false,
+        });
 
-    return {
-        id: crossSelling.crossSelling.id,
-        showNavigationArrows,
-    };
-});
+        return {
+            id: crossSelling.crossSelling.id,
+            showNavigationArrows,
+        };
+    }),
+);
 
 const showNavigationArrowForCrossSelling = (crossSellingId: string) => {
-    const item = navigationArrowsMap.find((item: NavigationArrowItem) => item.id === crossSellingId);
+    const item = navigationArrowsMap.value.find((item: NavigationArrowItem) => item.id === crossSellingId);
     return item ? item.showNavigationArrows.value : false;
 };
 
@@ -64,15 +70,15 @@ const shouldPreloadImage = shouldPreloadElement(props.element);
 </script>
 
 <template>
-    <ClientOnly>
-        <template
-            v-for="(crossSelling, index) in crossSellings"
-            :key="crossSelling.crossSelling.id"
-        >
-            <h3 class="mt-8 font-bold">
-                {{ crossSelling.crossSelling.translated.name }}
-            </h3>
+    <template
+        v-for="(crossSelling, index) in filteredCrossSellings"
+        :key="crossSelling.crossSelling.id"
+    >
+        <h3 class="mt-8 font-bold">
+            {{ crossSelling.crossSelling.translated.name }}
+        </h3>
 
+        <ClientOnly>
             <LayoutSlider
                 :slides-counter="crossSelling.products.length"
                 :navigation-arrows="showNavigationArrowForCrossSelling(crossSelling.crossSelling.id)"
@@ -95,6 +101,10 @@ const shouldPreloadImage = shouldPreloadElement(props.element);
                     />
                 </LayoutSliderSlide>
             </LayoutSlider>
-        </template>
-    </ClientOnly>
+
+            <template #fallback>
+                <LayoutSkeletonProductSlider :slides="crossSelling.products" />
+            </template>
+        </ClientOnly>
+    </template>
 </template>

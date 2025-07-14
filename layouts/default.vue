@@ -1,5 +1,4 @@
 <template>
-    <NuxtLoadingIndicator class="!bg-brand-primary !bg-none" />
     <NuxtRouteAnnouncer />
 
     <LayoutHeader />

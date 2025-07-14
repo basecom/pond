@@ -63,13 +63,30 @@ export default defineNuxtConfig({
     },
 
     routeRules: {
+        // add redirects
         '/newsletter-subscribe': { redirect: '/newsletter/confirm' },
         '/registration/confirm': { redirect: '/account/register/confirm' },
+        // disable ssr for specific routes
         '/account/**': { ssr: false },
         '/checkout/**': { ssr: false },
         '/newsletter/**': { ssr: false },
         '/search/**': { ssr: false },
         '/wishlist/**': { ssr: false },
+        // nitro caching
+        // can be enabled here to be used as a proxy to cache certain predefined store-api routes
+        // supported routes: /navigation, /config
+        // cache every proxy api route:
+        // '/api/proxy/**': {
+        //     swr: 60 * 5,
+        // },
+        // cache a specific route:
+        // '/api/proxy/config': {
+        //     swr: 60 * 5,
+        // },
+        // cache a specific sub-route:
+        // '/api/proxy/navigation/**': {
+        //     swr: 60 * 5,
+        // },
     },
 
     extends: ['@shopware-pwa/composables-next/nuxt-layer'],
