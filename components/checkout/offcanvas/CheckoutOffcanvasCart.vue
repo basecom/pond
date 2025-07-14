@@ -27,7 +27,7 @@ const isLoading = ref({
 const shippingMethods = ref<Schemas['ShippingMethod'][]>([]);
 
 const findSelectedShippingCost = (shippingCosts: Schemas['CartDelivery'][]) => shippingCosts.find((shippingCost) => shippingCost?.shippingMethod?.id === selectedShippingMethod.value.id);
-const shippingCost = ref(findSelectedShippingCost(shippingCosts.value));
+const shippingCost = computed(() => findSelectedShippingCost(shippingCosts.value));
 
 const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
     isLoading.value.select = true;

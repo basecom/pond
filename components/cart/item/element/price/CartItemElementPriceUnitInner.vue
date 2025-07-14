@@ -16,6 +16,6 @@ withDefaults(
         </span>
     </slot>
     <slot name="unit-price-descriptor">
-        <span> {{ $t('checkout.lineItemUnitPriceSeperator') }} {{ $t('checkout.lineItemUnitPriceDescriptor') }}</span>
+        <span> {{ $t('checkout.lineItemUnitPriceSeparator') }} {{ $t('checkout.lineItemUnitPriceDescriptor') }}</span>
     </slot>
 </template>

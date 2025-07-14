@@ -43,6 +43,11 @@ const emits = defineEmits<{
 const { cartItem, isLoading } = toRefs(props);
 
 const isProduct = computed(() => cartItem.value?.type === 'product');
+
+// Determines if an item should be treated as a discount based on:
+// - Not being a "good" (physical product)
+// - Having negative or zero price
+// - Explicitly being a discount type
 const isDiscount = computed(() => {
     const isNotGood = !cartItem.value?.good;
     const hasNegativeOrZeroPrice = (cartItem.value?.price?.totalPrice ?? 0) <= 0;
@@ -108,7 +113,7 @@ const eventHandlers = computed(() => {
                     <div class="order-2 flex w-1/6 justify-end">
                         <slot name="generic-remove">
                             <CartItemElementRemove
-                                v-if="cartItem.removable"
+                                v-if="cartItem?.removable"
                                 @remove-cart-item="emits('remove-cart-item')"
                             />
                         </slot>

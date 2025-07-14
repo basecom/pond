@@ -72,10 +72,9 @@ const addSelectedPromotionCode = (promotionCode: string) => {
                                     <div>
                                         <span>{{ $t('checkout.summaryShipping') }}</span>
                                         <UiButton variant="ghost" class="p-1" @click="showSelectionSelect = !showSelectionSelect">({{
-                                            selectedShippingMethod.translated.name
+                                            selectedShippingMethod?.translated?.name || $t('checkout.noShippingMethod')
                                         }})
-                                        </UiButton>
-                                    </div>
+                                        </uibutton></div>
                                 </slot>
                                 <slot name="shipping-cost">
                                     <div class="flex items-center">
@@ -90,7 +89,7 @@ const addSelectedPromotionCode = (promotionCode: string) => {
                             <slot name="shipping-selection">
                                 <template v-if="showSelectionSelect">
                                     <UiSelect
-                                        :model-value="selectedShippingMethod.id"
+                                        :model-value="selectedShippingMethod?.id"
                                         @update:model-value="(shippingMethodId: AcceptableValue) => emits('set-selected-shipping-method', shippingMethodId)"
                                     >
                                         <UiSelectTrigger>
@@ -118,7 +117,7 @@ const addSelectedPromotionCode = (promotionCode: string) => {
     </slot>
     <slot name="tax-information">
         <div class="mb-4 text-xs">
-            <template v-if="cart.price?.taxStatus === 'net'">
+            <template v-if="cart?.price?.taxStatus === 'net'">
                 *{{ $t('general.netTaxInformation') }}
             </template>
             <template v-else>

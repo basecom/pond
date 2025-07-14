@@ -7,7 +7,7 @@ withDefaults(
       isLoading?: boolean;
     }>(),
     {
-        spinnerClasses: undefined,
+        spinnerClasses: () => ({}),
         isLoading: false,
     },
 );

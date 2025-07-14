@@ -5,7 +5,7 @@
     "deliveryPeriod": "Lieferzeitraum",
     "quantity": "Menge",
     "lineItemUnitPriceDescriptor": "Stück",
-    "lineItemUnitPriceSeperator": "/",
+    "lineItemUnitPriceSeparator": "/",
     "removeFromWishlist": "Vom Merkzettel entfernen",
     "addToWishlist": "Zum Merkzettel hinzufügen",
     "addPromotionPlaceholder": "Promocode hinzufügen...",

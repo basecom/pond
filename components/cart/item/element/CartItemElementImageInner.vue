@@ -5,12 +5,14 @@ withDefaults(
       cartItemFallbackCover?: string;
       fallback?: string;
       productUrl?: string;
+      altText?: string;
     }>(),
     {
         cartItemImage: undefined,
         cartItemFallbackCover: undefined,
         fallback: 'mdi:image',
         productUrl: undefined,
+        altText: 'Product image',
     },
 );
 </script>
@@ -23,7 +25,7 @@ withDefaults(
                     <slot name="link">
                         <NuxtLinkLocale :to="productUrl">
                             <slot name="cart-image">
-                                <img :src="cartItemImage" alt="image" class="h-20 border object-contain p-1">
+                                <img :src="cartItemImage" :alt="altText" class="h-20 border object-contain p-1">
                             </slot>
                         </NuxtLinkLocale>
                     </slot>
@@ -33,7 +35,7 @@ withDefaults(
                 <slot name="fallback-container-cover">
                     <NuxtLinkLocale :to="productUrl">
                         <slot name="cart-image">
-                            <img :src="cartItemFallbackCover" alt="image" class="h-20 border object-contain p-1">
+                            <img :src="cartItemFallbackCover" :alt="altText" class="h-20 border object-contain p-1">
                         </slot>
                     </NuxtLinkLocale>
                 </slot>

@@ -5,7 +5,7 @@
     "deliveryPeriod": "Delivery period",
     "quantity": "Quantity",
     "lineItemUnitPriceDescriptor": "Unit",
-    "lineItemUnitPriceSeperator": "/",
+    "lineItemUnitPriceSeparator": "/",
     "removeFromWishlist": "Remove from wishlist",
     "addToWishlist": "Add to wishlist",
     "addPromotionPlaceholder": "Enter promo code...",

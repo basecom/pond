@@ -6,7 +6,6 @@ export function usePondHandleError() {
     const t = $i18n.t;
     const handleError = (error: unknown | string, showAsError: boolean = true, toastMessage:
         { show?: boolean, title?: string, description?: string } = {show: false, description: undefined, title: ''}) => {
-        if (process.env.NODE_ENV !== 'development') return;
 
         if (error instanceof ApiClientError) {
             showToastError(toastMessage, error.details.errors[0]?.code);
@@ -19,6 +18,7 @@ export function usePondHandleError() {
     };
 
     const showError = (errorMessage: unknown | string, showAsError: boolean = true) => {
+        if (process.env.NODE_ENV !== 'development') return;
         if (showAsError) {
             console.error(errorMessage);
             return;
