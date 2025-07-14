@@ -11,7 +11,7 @@ withDefaults(
       shippingCost?: Schemas['CartDelivery'];
       subtotal?: number;
       isLoading?: {
-        promo: boolean,
+        promotion: boolean,
         select: boolean
       };
       isLoggedIn?: boolean
@@ -24,7 +24,7 @@ withDefaults(
         shippingCost: undefined,
         subtotal: undefined,
         isLoading: () => ({
-            promo: false,
+            promotion: false,
             select: false,
         }),
         isLoggedIn: false,
@@ -138,7 +138,7 @@ const addSelectedPromotionCode = (promotionCode: string) => {
                         :placeholder="$t('checkout.addPromotionPlaceholder')"
                     />
                     <slot name="promotion-button">
-                        <UiButton :aria-label="t('checkout.addPromotionPlaceholder')" :is-loading="isLoading.promo" @click="addSelectedPromotionCode(inputPromotionCode)">
+                        <UiButton :aria-label="t('checkout.addPromotionPlaceholder')" :is-loading="isLoading.promotion" @click="addSelectedPromotionCode(inputPromotionCode)">
                             <Icon name="mdi:check" class="size-4" />
                         </UiButton>
                     </slot>

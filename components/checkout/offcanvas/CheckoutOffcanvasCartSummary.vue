@@ -11,7 +11,7 @@ withDefaults(
       shippingCost?: Schemas['CartDelivery'];
       subtotal?: number;
       isLoading?: {
-        promo: boolean,
+        promotion: boolean,
         select: boolean
       };
       isLoggedIn?: boolean;
@@ -24,7 +24,7 @@ withDefaults(
         shippingCost: undefined,
         subtotal: undefined,
         isLoading: () => ({
-            promo: false,
+            promotion: false,
             select: false,
         }),
         isLoggedIn: false,

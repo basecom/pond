@@ -12,7 +12,7 @@ const props = withDefaults(
       shippingCost?: Schemas['CartDelivery'];
       subtotal?: number;
       isLoading?: {
-        promo: boolean,
+        promotion: boolean,
         select: boolean
       };
       isLoggedIn?: boolean
@@ -26,7 +26,7 @@ const props = withDefaults(
         shippingCost: undefined,
         subtotal: undefined,
         isLoading: () => ({
-            promo: false,
+            promotion: false,
             select: false,
         }),
         isLoggedIn: false,

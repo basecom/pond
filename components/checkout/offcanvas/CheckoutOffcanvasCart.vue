@@ -21,13 +21,13 @@ const {getShippingMethods, setShippingMethod, selectedShippingMethod} = useCheck
 const {handleError} = usePondHandleError();
 
 const isLoading = ref({
-    promo: false,
+    promotion: false,
     select: false,
 });
 const shippingMethods = ref<Schemas['ShippingMethod'][]>([]);
 
 const findSelectedShippingCost = (shippingCosts: Schemas['CartDelivery'][]) => shippingCosts.find((shippingCost) => shippingCost?.shippingMethod?.id === selectedShippingMethod.value.id);
-const shippingCost = computed(() => findSelectedShippingCost(shippingCosts.value));
+const shippingCost = ref(findSelectedShippingCost(shippingCosts.value));
 
 const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
     isLoading.value.select = true;
@@ -55,7 +55,7 @@ const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
 };
 
 const addSelectedPromotionCode = async (promotionCode: string) => {
-    isLoading.value.promo = true;
+    isLoading.value.promotion = true;
     try {
         const result = await addPromotionCode(promotionCode);
         const errorKeys = Object.keys(result.errors);
@@ -77,7 +77,7 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
     } catch (error) {
         handleError(error,true, {show: true});
     } finally {
-        isLoading.value.promo = false;
+        isLoading.value.promotion = false;
     }
 };
 

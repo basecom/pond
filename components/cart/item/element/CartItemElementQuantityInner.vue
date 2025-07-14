@@ -42,9 +42,9 @@ const isDigital = computed(() => cartItem.value?.states?.includes('is-download')
                 <UiLabel class="flex font-bold" :for="`${cartItem.id}-quantity`">{{ $t('checkout.quantity') }}</UiLabel>
             </slot>
             <UiNumberFieldContent class="w-1/3">
-                <UiNumberFieldDecrement class="cursor-pointer" />
+                <UiNumberFieldDecrement />
                 <UiNumberFieldInput :id="cartItem.id+'-quantity'" />
-                <UiNumberFieldIncrement  class="cursor-pointer" />
+                <UiNumberFieldIncrement />
             </UiNumberFieldContent>
         </UiNumberField>
     </slot>
