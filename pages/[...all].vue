@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { pascalCase } from 'scule';
+import { ApiClientError } from '@shopware/api-client';
 
 const { clearBreadcrumbs } = useBreadcrumbs();
 
@@ -41,7 +42,13 @@ const { data: seoResult } = await useAsyncData(`seoPath${routePath}`, async () =
 
         return result;
     } catch (error) {
-        return showError(error);
+        if (error instanceof Error || typeof error === 'string') {
+            return showError(error);
+        }
+
+        if (error instanceof ApiClientError) {
+            return showError(error.details);
+        }
     }
 });
 
