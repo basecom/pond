@@ -1,18 +1,26 @@
 {
-  "general": {
-    "save": "Save",
-    "close": "Close",
-    "homepage": "Home",
-    "copyright": "© 2025 {companyName}",
-    "back": "Back",
-    "showAll": "Show all",
-    "categories": "Categories",
-    "privacyNoticeText": "I have acknowledged the privacy policy and accept it.",
-    "button": {
-      "acceptLabel": "Accept"
+    "general": {
+        "save": "Save",
+        "close": "Close",
+        "homepage": "Home",
+        "copyright": "© 2025 {companyName}",
+        "back": "Back",
+        "showAll": "Show all",
+        "categories": "Categories",
+        "privacyNoticeText": "I have acknowledged the privacy policy and accept it.",
+        "button": {
+            "acceptLabel": "Accept"
+        },
+        "currencySwitch": "Currency switched to {currency}",
+        "grossTaxInformation": "Prices incl. VAT plus shipping costs",
+        "netTaxInformation": "Prices excl. VAT plus shipping costs"
     },
-    "currencySwitch": "Currency switched to {currency}",
-    "grossTaxInformation": "Prices incl. VAT plus shipping costs",
-    "netTaxInformation": "Prices excl. VAT plus shipping costs"
-  }
+    "image": {
+        "altText": "Image",
+        "altSliderText": "Image slider element {currentSlide} of {totalSlides}"
+    },
+    "video": {
+        "vimeoTitle": "Vimeo Video",
+        "youtubeTitle": "YouTube Video"
+    }
 }

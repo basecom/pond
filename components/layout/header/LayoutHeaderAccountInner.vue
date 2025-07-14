@@ -111,7 +111,7 @@ provide('closeDialog', () => {
                     <UiDialog v-model:open="dialogOpen">
                         <UiDialogTrigger class="w-full">
                             <slot name="action-login">
-                                <UiDropdownMenuItem class="cursor-pointer" @select.prevent="">
+                                <UiDropdownMenuItem @select.prevent="">
                                     <slot name="login">
                                         {{ $t('account.auth.login') }}
                                     </slot>
