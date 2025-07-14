@@ -22,5 +22,4 @@ defineEmits<{
         @remove-product-from-wishlist="$emit('remove-product-from-wishlist')"
         @add-product-to-wishlist="$emit('add-product-to-wishlist')"
     />
-
 </template>

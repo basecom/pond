@@ -16,7 +16,6 @@ withDefaults(
         container: boolean
       };
       productUrl?: string;
-
     }>(),
     {
         cartDeliveryPosition: undefined,

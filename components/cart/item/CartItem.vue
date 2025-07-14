@@ -18,11 +18,11 @@ const { cartItem } = toRefs(props);
 const {addToWishlist, isInWishlist, removeFromWishlist } = useProductWishlist(cartItem.value?.referencedId ?? '');
 
 const {removeItem} = useCartItem(cartItem);
-const { t } = useI18n();
-
 const {getWishlistProducts} = useWishlist();
-
 const {refreshCart} = useCart();
+
+const {handleError} = usePondHandleError();
+const { t } = useI18n();
 
 const {
     itemOptions,
@@ -37,7 +37,7 @@ const isLoading = ref({
     container: false,
 });
 
-const quantity = ref();
+const quantity = ref(1);
 
 const productUrl = cartItem?.value?.referencedId && cartItem?.value?.type === 'product' ?
     getProductUrl({id: cartItem?.value?.referencedId}) : '';
@@ -45,8 +45,6 @@ const productUrl = cartItem?.value?.referencedId && cartItem?.value?.type === 'p
 syncRefs(itemQuantity, quantity);
 
 getWishlistProducts();
-
-const {handleError} = usePondHandleError();
 
 const removeCartItem = async () => {
     isLoading.value.container = true;
@@ -74,9 +72,10 @@ const changeCartItemQuantity = async (quantityInput: number) => {
         handleError(error, true, {show: true, description: 'DEFAULT'});
     } finally {
         isLoading.value.container = false;
-        quantity.value = itemQuantity.value;
+        quantity.value = itemQuantity.value ?? 1;
     }
 };
+
 const addProductToWishlist = async () => {
     isLoading.value.wishlist = true;
     try {
@@ -123,5 +122,4 @@ const removeProductFromWishlist = async () => {
         @add-product-to-wishlist="addProductToWishlist"
         @remove-product-from-wishlist="removeProductFromWishlist"
     />
-
 </template>

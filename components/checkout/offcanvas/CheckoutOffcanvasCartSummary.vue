@@ -50,5 +50,4 @@ const emits = defineEmits<{
         @add-selected-promotion-code="(promotionCode: string) => emits('add-selected-promotion-code', promotionCode)"
         @set-selected-shipping-method="(shippingMethodId: AcceptableValue) =>  emits('set-selected-shipping-method', shippingMethodId)"
     />
-
 </template>

@@ -39,7 +39,7 @@ const isDigital = computed(() => cartItem.value?.states?.includes('is-download')
             @update:model-value="(val) => { if (val !== quantity) $emit('change-cart-item-quantity', val) }"
         >
             <slot name="quantity-label">
-                <UiLabel class="flex font-bold" :for="cartItem.id+'-quantity'">{{ $t('checkout.quantity') }}</UiLabel>
+                <UiLabel class="flex font-bold" :for="`${cartItem.id}-quantity`">{{ $t('checkout.quantity') }}</UiLabel>
             </slot>
             <UiNumberFieldContent class="w-1/3">
                 <UiNumberFieldDecrement class="cursor-pointer" />
