@@ -9,12 +9,11 @@ withDefaults(
 );
 
 const { getStyle } = usePondStyle();
-const wrapperStyles = getStyle('header.actions.wrapper');
 </script>
 
 <template>
     <slot name="wrapper">
-        <div :class="wrapperStyles">
+        <div :class="getStyle('header.actions.wrapper')">
             <slot name="search">
                 <LayoutHeaderSearch />
             </slot>

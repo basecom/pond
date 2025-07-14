@@ -19,6 +19,7 @@ const emits = defineEmits<{
 const closeDialog = inject<() => void>('closeDialog');
 
 const { t } = useI18n();
+const { getStyle } = usePondStyle();
 
 const schema = z.object({
     username: z
@@ -38,19 +39,12 @@ export type LoginData = z.infer<typeof schema>;
 const login = async (loginData: LoginData) => {
     emits('login', loginData);
 };
-
-const { getStyle } = usePondStyle();
-const loginFormStyles = getStyle('account.login.form');
-const outerStyles = getStyle('account.login.outer');
-const passwordForgottenStyles = getStyle('account.login.passwordForgotten');
-const alertOuterStyles = getStyle('account.login.alert.outer');
-const alertIconStyles = getStyle('account.login.alert.icon');
 </script>
 
 <template>
     <slot name="headline" />
     <UiAutoForm
-        :class="loginFormStyles"
+        :class="getStyle('account.login.form')"
         :schema="schema"
         :field-config="{
             username: {
@@ -72,11 +66,11 @@ const alertIconStyles = getStyle('account.login.alert.icon');
         }"
         @submit="login"
     >
-        <div :class="outerStyles">
+        <div :class="getStyle('account.login.outer')">
             <slot name="password-forgotten">
                 <NuxtLinkLocale
                     to="/account/recover"
-                    :class="passwordForgottenStyles"
+                    :class="getStyle('account.login.passwordForgotten')"
                     @click="closeDialog?.()"
                 >
                     {{ $t('account.password.forgotten') }}
@@ -84,9 +78,9 @@ const alertIconStyles = getStyle('account.login.alert.icon');
             </slot>
 
             <slot name="alert">
-                <UiAlert v-if="errorMessage" variant="destructive" :class="alertOuterStyles">
+                <UiAlert v-if="errorMessage" variant="destructive" :class="getStyle('account.login.alert.outer')">
                     <slot name="alert-icon">
-                        <Icon name="mdi:alert-circle-outline" :class="alertIconStyles" />
+                        <Icon name="mdi:alert-circle-outline" :class="getStyle('account.login.alert.icon')" />
                     </slot>
 
                     <div>

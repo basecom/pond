@@ -5,48 +5,40 @@ defineProps<{
     navigationElements?: Schemas['Category'][];
 }>();
 
+const { getStyle } = usePondStyle();
 const configStore = useConfigStore();
 const shopName = configStore.get('core.basicInformation.shopName') as string|null ?? 'pond';
-
-const { getStyle } = usePondStyle();
-const serviceOuterStyles = getStyle('footer.serviceNavigation.outer');
-const serviceLeftStyles = getStyle('footer.serviceNavigation.left');
-const copyrightStyles = getStyle('footer.serviceNavigation.copyright');
-const languageSwitcherStyles = getStyle('footer.serviceNavigation.languageSwitcher');
-const currencySwitcherStyles = getStyle('footer.serviceNavigation.currencySwitcher');
-const serviceLinksStyles = getStyle('footer.serviceNavigation.links');
-const serviceLinkStyles = getStyle('footer.serviceNavigation.link');
 </script>
 
 <template>
-    <div :class="serviceOuterStyles">
-        <div :class="serviceLeftStyles">
+    <div :class="getStyle('footer.serviceNavigation.outer')">
+        <div :class="getStyle('footer.serviceNavigation.left')">
             <slot name="copyright">
-                <span :class="copyrightStyles">
+                <span :class="getStyle('footer.serviceNavigation.copyright')">
                     {{ $t('general.copyright', { 'companyName': shopName }) }}
                 </span>
             </slot>
             <slot name="language-switcher">
-                <div :class="languageSwitcherStyles">
+                <div :class="getStyle('footer.serviceNavigation.languageSwitcher')">
                     <LayoutFooterLanguageSwitcher />
                 </div>
             </slot>
             <slot name="currency-switcher">
-                <div :class="currencySwitcherStyles">
+                <div :class="getStyle('footer.serviceNavigation.currencySwitcher')">
                     <LayoutFooterCurrencySwitcher />
                 </div>
             </slot>
         </div>
 
         <slot name="navigation-elements">
-            <div :class="serviceLinksStyles">
+            <div :class="getStyle('footer.serviceNavigation.links')">
                 <template
                     v-for="navigationElement in navigationElements"
                     :key="navigationElement.id"
                 >
                     <LazyLayoutHeaderNavigationLink
                         :navigation-element="navigationElement"
-                        :classes="{ [serviceLinkStyles]: true }"
+                        :classes="{ [getStyle('footer.serviceNavigation.link')]: true }"
                         :show-as-link="navigationElement.type === 'link' || navigationElement.type === 'page'"
                         :show-icon="false"
                     />

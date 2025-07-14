@@ -16,19 +16,12 @@ defineEmits<{
   click: [];
 }>();
 
+const { getStyle } = usePondStyle();
 const dialogOpen = ref(false);
 
 provide('closeDialog', () => {
     dialogOpen.value = false;
 });
-
-const { getStyle } = usePondStyle();
-const triggerStyles = getStyle('header.actions.account.mobile.trigger');
-const iconStyles = getStyle('header.actions.account.mobile.icon');
-const descriptionStyles = getStyle('header.actions.account.mobile.description');
-const logoutStyles = getStyle('header.actions.account.mobile.logoutWrapper');
-const logoutButtonStyles = getStyle('header.actions.account.mobile.logout');
-const loginTriggerStyles = getStyle('header.actions.account.mobile.loginTrigger');
 </script>
 
 <template>
@@ -36,11 +29,11 @@ const loginTriggerStyles = getStyle('header.actions.account.mobile.loginTrigger'
         <slot name="mobile-account-trigger">
             <UiSheetTrigger
                 id="open-account-menu-mobile"
-                :class="triggerStyles"
+                :class="getStyle('header.actions.account.mobile.trigger')"
                 aria-label="open-account-menu"
             >
                 <slot name="account-icon">
-                    <Icon name="mdi:account-outline" :class="iconStyles" />
+                    <Icon name="mdi:account-outline" :class="getStyle('header.actions.account.mobile.icon')" />
                 </slot>
             </UiSheetTrigger>
         </slot>
@@ -49,7 +42,7 @@ const loginTriggerStyles = getStyle('header.actions.account.mobile.loginTrigger'
             <UiSheetHeader>
                 <UiSheetTitle>{{ $t('account.myAccount') }}</UiSheetTitle>
 
-                <LazyUiSheetDescription :class="descriptionStyles">
+                <LazyUiSheetDescription :class="getStyle('header.actions.account.mobile.description')">
                     <!-- user view -->
                     <template v-if="signedIn">
                         <slot name="signed-in">
@@ -60,9 +53,9 @@ const loginTriggerStyles = getStyle('header.actions.account.mobile.loginTrigger'
                             <AccountActionLink link="/account/order" :label="$t('account.order')" @click="() => $emit('click')" />
                             <AccountActionLink link="/account/wishlist" :label="$t('account.wishlist')" @click="() => $emit('click')" />
 
-                            <div :class="logoutStyles" @click="$emit('logout')">
+                            <div :class="getStyle('header.actions.account.mobile.logoutWrapper')" @click="$emit('logout')">
                                 <slot name="logout">
-                                    <div :class="logoutButtonStyles">
+                                    <div :class="getStyle('header.actions.account.mobile.logout')">
                                         {{ $t('account.auth.logout') }}
                                     </div>
                                 </slot>
@@ -74,10 +67,10 @@ const loginTriggerStyles = getStyle('header.actions.account.mobile.loginTrigger'
                     <template v-else>
                         <slot name="guest">
                             <UiDialog v-model:open="dialogOpen">
-                                <UiDialogTrigger :class="loginTriggerStyles">
+                                <UiDialogTrigger :class="getStyle('header.actions.account.mobile.loginTrigger')">
                                     <slot name="action-login">
                                         <slot name="login">
-                                            <div :class="logoutButtonStyles">
+                                            <div :class="getStyle('header.actions.account.mobile.logout')">
                                                 {{ $t('account.auth.login') }}
                                             </div>
                                         </slot>

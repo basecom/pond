@@ -1,22 +1,16 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import { navigationMenuTriggerStyle } from '~/components/ui/navigation-menu';
 
 defineProps<{
   navigationElements?: Schemas['Category'][];
 }>();
 
 const { getStyle } = usePondStyle();
-
-const menuStyles = getStyle('header.navigation.menu');
-const triggerStyles = getStyle('header.navigation.trigger');
-const contentStyles = getStyle('header.navigation.content');
-const listStyles = getStyle('header.navigation.list');
 </script>
 
 <template>
     <slot name="header-navigation">
-        <UiNavigationMenu :class="menuStyles">
+        <UiNavigationMenu :class="getStyle('header.navigation.menu')">
             <UiNavigationMenuList>
                 <UiNavigationMenuItem
                     v-for="navigationElement in navigationElements"
@@ -24,7 +18,7 @@ const listStyles = getStyle('header.navigation.list');
                 >
                     <UiNavigationMenuLink
                         v-if="navigationElement.visibleChildCount === 0"
-                        :class="navigationMenuTriggerStyle()"
+                        :class="getStyle('ui.navigationMenu.triggerStyle')"
                     >
                         <slot name="header-navigation-link">
                             <LazyLayoutHeaderNavigationLink :navigation-element="navigationElement" />
@@ -33,7 +27,7 @@ const listStyles = getStyle('header.navigation.list');
 
                     <template v-else>
                         <slot name="header-navigation-parent">
-                            <UiNavigationMenuTrigger :class="triggerStyles">
+                            <UiNavigationMenuTrigger :class="getStyle('header.navigation.trigger')">
                                 <LazyLayoutHeaderNavigationLink
                                     :navigation-element="navigationElement"
                                     :show-as-link="navigationElement.type === 'link' || navigationElement.type === 'page'"
@@ -41,8 +35,8 @@ const listStyles = getStyle('header.navigation.list');
                                 />
                             </UiNavigationMenuTrigger>
 
-                            <UiNavigationMenuContent :class="contentStyles">
-                                <ul :class="listStyles">
+                            <UiNavigationMenuContent :class="getStyle('header.navigation.content')">
+                                <ul :class="getStyle('header.navigation.list')">
                                     <LayoutHeaderNavigationRecursiveLink :navigation-element="navigationElement" />
                                 </ul>
                             </UiNavigationMenuContent>

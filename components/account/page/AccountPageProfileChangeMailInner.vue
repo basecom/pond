@@ -21,6 +21,7 @@ const emits = defineEmits<{
 }>();
 
 const { t } = useI18n();
+const { getStyle } = usePondStyle();
 
 const schema = z.object({
     email: z
@@ -76,18 +77,11 @@ watch(() => props.resetForm, (newValue) => {
         }
     }
 });
-
-const { getStyle } = usePondStyle();
-const subHeadlineStyles = getStyle('account.personalData.subHeadline');
-const accordionOuterStyles = getStyle('account.personalData.accordion.outer');
-const accordionItemStyles = getStyle('account.personalData.accordion.item');
-const accordionTriggerStyles = getStyle('account.personalData.accordion.trigger');
-const accordionContentStyles = getStyle('account.personalData.accordion.content');
 </script>
 
 <template>
     <slot name="headline">
-        <h3 :class="subHeadlineStyles">
+        <h3 :class="getStyle('account.personalData.subHeadline')">
             {{ $t('account.personalProfile.changeMailAddress.headline') }}
         </h3>
     </slot>
@@ -97,13 +91,13 @@ const accordionContentStyles = getStyle('account.personalData.accordion.content'
     </slot>
 
     <slot name="change-mail">
-        <UiAccordion type="single" :class="accordionOuterStyles" collapsible>
-            <UiAccordionItem value="mail" :class="accordionItemStyles">
-                <UiAccordionTrigger :class="accordionTriggerStyles">
+        <UiAccordion type="single" :class="getStyle('account.personalData.accordion.outer')" collapsible>
+            <UiAccordionItem value="mail" :class="getStyle('account.personalData.accordion.item')">
+                <UiAccordionTrigger :class="getStyle('account.personalData.accordion.trigger')">
                     {{ $t('account.personalProfile.changeMailAddress.headline') }}
                 </UiAccordionTrigger>
 
-                <UiAccordionContent :class="accordionContentStyles">
+                <UiAccordionContent :class="getStyle('account.personalData.accordion.content')">
                     <slot name="change-mail-form">
                         <UiAutoForm
                             v-auto-animate

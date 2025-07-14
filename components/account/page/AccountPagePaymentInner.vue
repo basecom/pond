@@ -8,6 +8,7 @@ const emits = defineEmits<{
 
 const { paymentMethods, getPaymentMethods } = useCheckout();
 const { selectedPaymentMethod } = useSessionContext();
+const { getStyle } = usePondStyle();
 
 const schema = z.object({
     paymentId: z.string(),
@@ -21,15 +22,14 @@ const changePaymentMethod = (paymentMethodForm: PaymentMethodDataForm) => {
 onMounted(async () => {
     await getPaymentMethods();
 });
-
-const { getStyle } = usePondStyle();
-const pageDescriptionStyles = getStyle('account.pageDescription');
 </script>
 
 <template>
     <slot name="introduction">
         <h1>{{ $t('account.payment') }}</h1>
-        <p :class="pageDescriptionStyles">{{ $t('account.defaultPaymentMethod.description') }}</p>
+        <p :class="getStyle('account.pageDescription')">
+            {{ $t('account.defaultPaymentMethod.description') }}
+        </p>
     </slot>
 
     <UiAutoForm

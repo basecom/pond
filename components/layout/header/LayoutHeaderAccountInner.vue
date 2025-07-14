@@ -12,18 +12,12 @@ defineEmits<{
   logout: [];
 }>();
 
+const { getStyle } = usePondStyle();
 const dialogOpen = ref<boolean>(false);
 
 provide('closeDialog', () => {
     dialogOpen.value = false;
 });
-
-const { getStyle } = usePondStyle();
-
-const triggerStyles = getStyle('header.actions.account.trigger');
-const iconStyles = getStyle('header.actions.account.icon');
-const logoutItemStyles = getStyle('header.actions.account.logoutItem');
-const loginTriggerStyles = getStyle('header.actions.account.loginTrigger');
 </script>
 
 <template>
@@ -31,13 +25,13 @@ const loginTriggerStyles = getStyle('header.actions.account.loginTrigger');
         <slot name="action-login-menu">
             <UiDropdownMenuTrigger
                 id="header-account-action"
-                :class="triggerStyles"
+                :class="getStyle('header.actions.account.trigger')"
                 aria-label="header-account-action"
             >
                 <slot name="icon">
                     <Icon
                         name="mdi:account-outline"
-                        :class="iconStyles"
+                        :class="getStyle('header.actions.account.icon')"
                     />
                 </slot>
             </UiDropdownMenuTrigger>
@@ -112,7 +106,7 @@ const loginTriggerStyles = getStyle('header.actions.account.loginTrigger');
 
                     <UiDropdownMenuSeparator />
                     <UiDropdownMenuItem
-                        :class="logoutItemStyles"
+                        :class="getStyle('header.actions.account.logoutItem')"
                         @click="$emit('logout')"
                     >
                         <slot name="logout">
@@ -126,7 +120,7 @@ const loginTriggerStyles = getStyle('header.actions.account.loginTrigger');
             <template v-else>
                 <slot name="guest">
                     <UiDialog v-model:open="dialogOpen">
-                        <UiDialogTrigger :class="loginTriggerStyles">
+                        <UiDialogTrigger :class="getStyle('header.actions.account.loginTrigger')">
                             <slot name="action-login">
                                 <UiDropdownMenuItem @select.prevent="">
                                     <slot name="login">

@@ -7,35 +7,26 @@ defineProps<{
 }>();
 
 const { getStyle } = usePondStyle();
-const wrapperStyles = getStyle('footer.wrapper');
-const outerStyles = getStyle('footer.outer');
-const containerStyles = getStyle('footer.container');
-
-const navigationWrapperStyles = getStyle('footer.navigation.wrapper');
-const navigationListStyles = getStyle('footer.navigation.list');
-const mainElementStyles = getStyle('footer.navigation.mainElement');
-const mainLinkStyles = getStyle('footer.navigation.mainLink');
-const childLinkStyles = getStyle('footer.navigation.childLink');
 </script>
 
 <template>
-    <footer :class="wrapperStyles">
-        <div :class="outerStyles">
+    <footer :class="getStyle('footer.wrapper')">
+        <div :class="getStyle('footer.outer')">
             <slot name="container">
-                <div :class="containerStyles">
+                <div :class="getStyle('footer.container')">
                     <!-- footer navigation -->
                     <slot name="footer-navigation">
-                        <div :class="navigationWrapperStyles">
+                        <div :class="getStyle('footer.navigation.wrapper')">
                             <template
                                 v-for="navigationElement in navigationElements"
                                 :key="navigationElement.id"
                             >
-                                <ul :class="navigationListStyles">
+                                <ul :class="getStyle('footer.navigation.list')">
                                     <slot name="footer-navigation-main-element">
-                                        <li :class="mainElementStyles">
+                                        <li :class="getStyle('footer.navigation.mainElement')">
                                             <LazyLayoutHeaderNavigationLink
                                                 :navigation-element="navigationElement"
-                                                :classes="{ [mainLinkStyles]: true }"
+                                                :classes="{ [getStyle('footer.navigation.mainLink')]: true }"
                                                 :show-as-link="navigationElement.type === 'link' || navigationElement.type === 'page'"
                                                 :show-icon="false"
                                             />
@@ -49,7 +40,7 @@ const childLinkStyles = getStyle('footer.navigation.childLink');
                                         >
                                             <LazyLayoutHeaderNavigationLink
                                                 :navigation-element="navigationChild"
-                                                :classes="{ [childLinkStyles]: true }"
+                                                :classes="{ [getStyle('footer.navigation.childLink')]: true }"
                                                 :show-as-link="navigationChild.type === 'link' || navigationChild.type === 'page'"
                                                 :show-icon="false"
                                             />

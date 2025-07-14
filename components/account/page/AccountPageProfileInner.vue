@@ -37,6 +37,7 @@ const emits = defineEmits<{
     'update-password': [passwordForm: ChangePasswordForm];
 }>();
 
+const { getStyle } = usePondStyle();
 const { getPersonalDataForm, getPersonalDataDependencies } = usePondForm();
 const { getSalutations: salutations } = useSalutations();
 const schema = getPersonalDataForm(props.customer);
@@ -64,9 +65,6 @@ const possibleBirthdayYears = computed(() => {
 const changePersonalData = async (personalDataForm: PersonalDataForm) => {
     emits('update-personal-data', personalDataForm);
 };
-
-const { getStyle } = usePondStyle();
-const subHeadlineStyles = getStyle('account.personalData.subHeadline');
 </script>
 
 <template>
@@ -76,7 +74,7 @@ const subHeadlineStyles = getStyle('account.personalData.subHeadline');
 
     <!-- personal data -->
     <slot name="personal-data-headline">
-        <h3 :class="subHeadlineStyles">
+        <h3 :class="getStyle('account.personalData.subHeadline')">
             {{ $t('account.overview.personalData') }}
         </h3>
     </slot>

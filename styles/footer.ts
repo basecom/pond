@@ -22,12 +22,12 @@ export default {
     },
 
     currencySwitcherComponent: {
-        trigger: 'border-none shadow-none p-0',
+        trigger: 'border-none !shadow-none p-0',
         item: 'cursor-pointer',
     },
 
     languageSwitcherComponent: {
-        trigger: 'border-none shadow-none p-0',
+        trigger: 'border-none !shadow-none p-0',
         valueWrapper: 'flex items-center gap-1',
         item: 'flex items-center gap-1 cursor-pointer',
     },

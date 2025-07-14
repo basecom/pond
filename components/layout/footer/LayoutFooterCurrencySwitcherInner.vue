@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
 import type { AcceptableValue } from 'reka-ui';
-import { useToast } from '@/components/ui/toast/use-toast';
 
 const { currency, setCurrency } = useSessionContext();
 const { getAvailableCurrencies } = usePondSalesChannel();
-const { toast } = useToast();
+const { toast } = usePondToast();
+const { getStyle } = usePondStyle();
 const { handleError } = usePondHandleError();
 const { t } = useI18n();
 
@@ -38,11 +38,6 @@ const onUpdate = async (selectedId: AcceptableValue) => {
         }
     }
 };
-
-const { getStyle } = usePondStyle();
-
-const triggerStyles = getStyle('footer.currencySwitcherComponent.trigger');
-const itemStyles = getStyle('footer.currencySwitcherComponent.item');
 </script>
 
 <template>
@@ -50,7 +45,7 @@ const itemStyles = getStyle('footer.currencySwitcherComponent.item');
         <slot name="currency-switcher-trigger">
             <UiSelectTrigger
                 id="currency-switch"
-                :class="triggerStyles"
+                :class="getStyle('footer.currencySwitcherComponent.trigger')"
                 aria-label="currency-switch"
             >
                 <UiSelectValue />
@@ -65,7 +60,7 @@ const itemStyles = getStyle('footer.currencySwitcherComponent.item');
                             v-for="availableCurrency in availableCurrencies"
                             :key="availableCurrency.id"
                             :value="availableCurrency.id"
-                            :class="itemStyles"
+                            :class="getStyle('footer.currencySwitcherComponent.item')"
                         >
                             {{ availableCurrency.symbol }}
                             {{ availableCurrency.shortName }}

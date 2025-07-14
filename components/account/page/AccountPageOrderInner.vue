@@ -18,6 +18,7 @@ defineEmits<{
 }>();
 
 const { formatLocaleDate } = usePondDate();
+const { getStyle } = usePondStyle();
 
 const getBadgeVariant = (stateMachineTechnicalName: string, paymentStateMachineTechnicalName: string) => {
     if(paymentStateMachineTechnicalName === 'failed' || paymentStateMachineTechnicalName === 'cancelled' || paymentStateMachineTechnicalName === 'reminded' || paymentStateMachineTechnicalName === 'unconfirmed') {
@@ -33,24 +34,10 @@ const getBadgeVariant = (stateMachineTechnicalName: string, paymentStateMachineT
 };
 
 const displayCompletePaymentLink = (paymentStateMachineTechnicalName: string) => paymentStateMachineTechnicalName === 'failed' || paymentStateMachineTechnicalName === 'cancelled' || paymentStateMachineTechnicalName === 'reminded' || paymentStateMachineTechnicalName === 'unconfirmed';
-
-const { getStyle } = usePondStyle();
-const outerStyles = getStyle('account.order.detail.outer');
-const skeletonOuterStyles = getStyle('account.order.detail.skeleton.outer');
-const skeletonInnerStyles = getStyle('account.order.detail.skeleton.inner');
-const triggerStyles = getStyle('account.order.detail.trigger');
-const headlineOuterStyles = getStyle('account.order.detail.headline.outer');
-const headlineInnerStyles = getStyle('account.order.detail.headline.inner');
-const headlineOrderNumberStyles = getStyle('account.order.detail.headline.orderNumber');
-const contentStyles = getStyle('account.order.detail.content');
-const paginationStyles = getStyle('account.order.detail.pagination');
-const alertOuterStyles = getStyle('account.order.detail.alert.outer');
-const alertIconStyles = getStyle('account.order.detail.alert.icon');
-const alertTitleStyles = getStyle('account.order.detail.alert.title');
 </script>
 
 <template>
-    <div :class="outerStyles">
+    <div :class="getStyle('account.order.detail.outer')">
         <slot name="headline">
             <h1>{{ $t('order.headline') }}</h1>
         </slot>
@@ -60,8 +47,12 @@ const alertTitleStyles = getStyle('account.order.detail.alert.title');
 
         <template v-if="isLoading">
             <slot name="loading-skeleton">
-                <div v-for="n in 10" :key="n" :class="skeletonOuterStyles">
-                    <UiSkeleton :class="skeletonInnerStyles" />
+                <div
+                    v-for="n in 10"
+                    :key="n"
+                    :class="getStyle('account.order.detail.skeleton.outer')"
+                >
+                    <UiSkeleton :class="getStyle('account.order.detail.skeleton.inner')" />
                 </div>
             </slot>
         </template>
@@ -73,11 +64,17 @@ const alertTitleStyles = getStyle('account.order.detail.alert.title');
                         <UiAccordion type="single" collapsible>
                             <UiAccordionItem value="my-account-order">
                                 <slot name="account-order-details-trigger">
-                                    <UiAccordionTrigger :class="triggerStyles">
-                                        <div :class="headlineOuterStyles">
-                                            <div :class="headlineInnerStyles">
+                                    <UiAccordionTrigger :class="getStyle('account.order.detail.trigger')">
+                                        <div :class="getStyle('account.order.detail.headline.outer')">
+                                            <div :class="getStyle('account.order.detail.headline.inner')">
                                                 {{ $t('order.orderDate') }} {{ formatLocaleDate(order?.orderDate) }}
-                                                <UiBadge v-if="order && order.transactions" :variant="getBadgeVariant(order?.stateMachineState.technicalName, order?.transactions[0]?.stateMachineState?.technicalName ?? '')">
+                                                <UiBadge
+                                                    v-if="order && order.transactions"
+                                                    :variant="getBadgeVariant(
+                                                        order?.stateMachineState.technicalName,
+                                                        order?.transactions[0]?.stateMachineState?.technicalName ?? ''
+                                                    )"
+                                                >
                                                     <NuxtLinkLocale
                                                         v-if="order && order.transactions && displayCompletePaymentLink(order.transactions[0]?.stateMachineState?.technicalName ?? '')"
                                                         to="/"
@@ -91,7 +88,7 @@ const alertTitleStyles = getStyle('account.order.detail.alert.title');
                                                 </UiBadge>
                                             </div>
 
-                                            <span :class="headlineOrderNumberStyles">
+                                            <span :class="getStyle('account.order.detail.headline.orderNumber')">
                                                 {{ $t('order.orderNumber') }} {{ order?.orderNumber }}
                                             </span>
                                         </div>
@@ -99,7 +96,7 @@ const alertTitleStyles = getStyle('account.order.detail.alert.title');
                                 </slot>
 
                                 <slot name="account-order-details-content">
-                                    <UiAccordionContent :class="contentStyles">
+                                    <UiAccordionContent :class="getStyle('account.order.detail.content')">
                                         <AccountPageOrderDetails :order-id="order?.id" />
                                     </UiAccordionContent>
                                 </slot>
@@ -109,7 +106,7 @@ const alertTitleStyles = getStyle('account.order.detail.alert.title');
                 </slot>
 
                 <slot name="pagination">
-                    <div :class="paginationStyles">
+                    <div :class="getStyle('account.order.detail.pagination')">
                         <SwPagination
                             :total="totalPages"
                             :current="currentPage"
@@ -121,9 +118,11 @@ const alertTitleStyles = getStyle('account.order.detail.alert.title');
 
             <template v-else>
                 <slot name="account-no-orders">
-                    <UiAlert :class="alertOuterStyles">
-                        <Icon name="mdi:alert-circle-outline" :class="alertIconStyles" />
-                        <UiAlertTitle :class="alertTitleStyles"> {{ $t('order.noOrders') }} </UiAlertTitle>
+                    <UiAlert :class="getStyle('account.order.detail.alert.outer')">
+                        <Icon name="mdi:alert-circle-outline" :class="getStyle('account.order.detail.alert.icon')" />
+                        <UiAlertTitle :class="getStyle('account.order.detail.alert.title')">
+                            {{ $t('order.noOrders') }}
+                        </UiAlertTitle>
                     </UiAlert>
                 </slot>
             </template>

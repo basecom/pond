@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import type { FieldProps } from './interface';
 import { FormField } from '@/components/ui/form';
-import { UiInput } from '@/components/ui/input';
-import { UiTextarea } from '@/components/ui/textarea';
 import { beautifyObjectName } from './utils';
 
 const props = defineProps<FieldProps>();
+// @ts-expect-error ui form will be deleted in another ticket
 const inputComponent = computed(() => props.config?.component === 'textarea' ? UiTextarea : UiInput);
 </script>
 

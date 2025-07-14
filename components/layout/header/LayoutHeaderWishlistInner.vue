@@ -9,9 +9,6 @@ withDefaults(
 );
 
 const { getStyle } = usePondStyle();
-const triggerStyles = getStyle('header.actions.wishlist.trigger');
-const iconStyles = getStyle('header.actions.wishlist.icon');
-const badgeStyles = getStyle('header.actions.wishlist.badge');
 </script>
 
 <template>
@@ -19,20 +16,20 @@ const badgeStyles = getStyle('header.actions.wishlist.badge');
         <NuxtLinkLocale
             id="wishlist"
             to="/wishlist"
-            :class="triggerStyles"
+            :class="getStyle('header.actions.wishlist.trigger')"
             aria-label="wishlist"
         >
             <slot name="wishlist-icon">
                 <Icon
                     name="mdi:cards-heart-outline"
-                    :class="iconStyles"
+                    :class="getStyle('header.actions.wishlist.icon')"
                 />
             </slot>
 
             <slot name="wishlist-badge">
                 <UiBadge
                     v-if="wishlistItemsCount > 0"
-                    :class="badgeStyles"
+                    :class="getStyle('header.actions.wishlist.badge')"
                 >
                     {{ wishlistItemsCount }}
                 </UiBadge>

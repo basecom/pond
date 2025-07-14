@@ -20,7 +20,9 @@ const emits = defineEmits<{
   click: [navigationElement?: Schemas['Category'], categoryLink?: string, options?: {open: {target: string}}];
 }>();
 
+const { getStyle } = usePondStyle();
 const { isExternalLink, isInternalLink, externalLink, loadInternalLink, path, linkNewTab } = usePondNavigationUtils(props.navigationElement);
+
 if (isInternalLink) {
     await loadInternalLink();
 }
@@ -48,19 +50,13 @@ const handleClick = () => {
     const options =linkNewTab ? { open: { target: '_blank' } } : undefined;
     emits('click', props.navigationElement, categoryLink.value, options);
 };
-
-const { getStyle } = usePondStyle();
-const linkStyles = getStyle('header.navigation.linkItem.link');
-const itemStyles = getStyle('header.navigation.linkItem.item');
-const iconWrapperStyles = getStyle('header.navigation.linkItem.iconWrapper');
-const iconStyles = getStyle('header.navigation.linkItem.icon');
 </script>
 
 <template>
     <LazyNuxtLinkLocale
         v-if="showAsLink && categoryLink"
         :to="categoryLink"
-        :class="linkStyles"
+        :class="getStyle('header.navigation.linkItem.link')"
         @click.prevent="handleClick"
     >
         <slot name="link-name">
@@ -70,14 +66,14 @@ const iconStyles = getStyle('header.navigation.linkItem.icon');
 
     <div
         v-else
-        :class="[itemStyles, showIcon ? iconWrapperStyles : '']"
+        :class="[getStyle('header.navigation.linkItem.item'), showIcon ? getStyle('header.navigation.linkItem.iconWrapper') : '']"
         @click="$emit('click', navigationElement, undefined)"
     >
         <slot name="item-name">
             {{ getTranslatedProperty(navigationElement, 'name') }}
         </slot>
 
-        <span v-if="showIcon" :class="iconStyles">
+        <span v-if="showIcon" :class="getStyle('header.navigation.linkItem.icon')">
             <slot name="item-icon">
                 <Icon name="mdi:chevron-right" class="size-5" />
             </slot>

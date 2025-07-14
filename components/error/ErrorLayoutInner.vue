@@ -1,26 +1,22 @@
 <script setup lang="ts">
 const { getStyle } = usePondStyle();
-const outerStyles = getStyle('error.outer');
-const headlineStyles = getStyle('error.headline');
-const descriptionStyles = getStyle('error.description');
-const buttonStyles = getStyle('error.button');
 </script>
 
 <template>
     <slot name="wrapper">
-        <div :class="outerStyles">
+        <div :class="getStyle('error.outer')">
             <slot name="container">
-                <h1 :class="headlineStyles">
+                <h1 :class="getStyle('error.headline')">
                     <slot name="headline">{{ $t('error.generalHeadline') }}</slot>
                 </h1>
 
-                <p :class="descriptionStyles">
+                <p :class="getStyle('error.description')">
                     <slot name="description" />
                 </p>
 
                 <slot name="button">
                     <NuxtLinkLocale to="/">
-                        <UiButton variant="link" :class="buttonStyles">
+                        <UiButton variant="link" :class="getStyle('error.button')">
                             {{ $t('error.generalButton') }}
                         </UiButton>
                     </NuxtLinkLocale>

@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { ApiClientError } from '@shopware/api-client';
 import type { RegisterFormData } from '~/types/vueForm/Register';
-import { useToast } from '@/components/ui/toast/use-toast';
 
 const customerStore = useCustomerStore();
 const { t } = useI18n();
 const { handleError } = usePondHandleError();
-const { toast } = useToast();
+const { toast } = usePondToast();
 
 const isLoading = ref(false);
 const errorMessage: Ref<string|undefined> = ref(undefined);

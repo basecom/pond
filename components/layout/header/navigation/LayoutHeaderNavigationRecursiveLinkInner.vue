@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import { navigationMenuTriggerStyle } from '~/components/ui/navigation-menu';
 
 withDefaults(
     defineProps<{
@@ -11,12 +10,14 @@ withDefaults(
         classes: undefined,
     },
 );
+
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
     <li v-for="children in navigationElement.children" :key="children.id" :class="classes">
         <slot>
-            <UiNavigationMenuLink :class="navigationMenuTriggerStyle()">
+            <UiNavigationMenuLink :class="getStyle('ui.navigationMenu.triggerStyle')">
                 <LazyLayoutHeaderNavigationLink :navigation-element="children" />
             </UiNavigationMenuLink>
 

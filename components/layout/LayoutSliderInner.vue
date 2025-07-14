@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ChevronRight, ChevronLeft  } from 'lucide-vue-next';
 import type { Swiper } from 'swiper';
 import type { SliderNavigationOptions } from '~/types/cms/SliderNavigationOptions';
 import type { SliderBreakpointOptions } from '~/types/cms/SliderBreakpointOptions';
@@ -48,6 +47,7 @@ const props = withDefaults(
 );
 
 defineEmits(['slides-change']);
+const { getStyle } = usePondStyle();
 
 const swiperContainer: Ref<Swiper|null> = ref(null);
 const prevSlide = ref<HTMLElement | null>(null);
@@ -67,54 +67,31 @@ onMounted(async () => {
         }
     }
 });
-
-const { getStyle } = usePondStyle();
-
-const containerBaseStyle = getStyle('slider.container.base');
-const cursorGrabStyle = getStyle('slider.container.cursorGrab');
-const paddingStyle = getStyle('slider.container.padding');
-
-const navBaseStyle = getStyle('slider.navigation.base');
-const prevButtonStyle = getStyle('slider.navigation.prev.base');
-const prevButtonOutside = getStyle('slider.navigation.prev.outside');
-const prevButtonInside = getStyle('slider.navigation.prev.inside');
-
-const nextButtonStyle = getStyle('slider.navigation.next.base');
-const nextButtonOutside = getStyle('slider.navigation.next.outside');
-const nextButtonInside = getStyle('slider.navigation.next.inside');
-
-const iconStyle = getStyle('slider.navigation.icon');
-
-const paginationWrapperStyle = getStyle('slider.pagination.wrapper');
-const paginationInsideStyle = getStyle('slider.pagination.inside');
-const paginationContainerStyle = getStyle('slider.pagination.container');
-const paginationBulletStyle = getStyle('slider.pagination.bullet');
-const paginationBulletActiveStyle = getStyle('slider.pagination.bulletActive');
 </script>
 
 <template>
     <ClientOnly>
         <slot name="swiper-container">
             <div
-                :class="[containerBaseStyle, classes, { [cursorGrabStyle]: slidesCounter > 1, [paddingStyle]: isOutsideNavigation }]"
+                :class="[getStyle('slider.container.base'), classes, { [getStyle('slider.container.cursorGrab')]: slidesCounter > 1, [getStyle('slider.container.padding')]: isOutsideNavigation }]"
             >
                 <slot name="navigation-buttons">
                     <template v-if="hasNavigation">
                         <slot name="previous-slide">
                             <button
                                 ref="prevSlide"
-                                :class="[navBaseStyle, prevButtonStyle, isOutsideNavigation ? prevButtonOutside : prevButtonInside]"
+                                :class="[getStyle('slider.navigation.base'), getStyle('slider.navigation.prev.base'), isOutsideNavigation ? getStyle('slider.navigation.prev.outside') : getStyle('slider.navigation.prev.inside')]"
                             >
-                                <ChevronLeft :class="iconStyle" />
+                                <Icon name="custom-icons:chevron-left" :class="getStyle('slider.navigation.icon')" />
                             </button>
                         </slot>
 
                         <slot name="next-slide">
                             <button
                                 ref="nextSlide"
-                                :class="[navBaseStyle, nextButtonStyle, isOutsideNavigation ? nextButtonOutside : nextButtonInside]"
+                                :class="[getStyle('slider.navigation.base'), getStyle('slider.navigation.next.base'), isOutsideNavigation ? getStyle('slider.navigation.next.outside') : getStyle('slider.navigation.next.inside')]"
                             >
-                                <ChevronRight :class="iconStyle" />
+                                <Icon name="custom-icons:chevron-right" :class="getStyle('slider.navigation.icon')" />
                             </button>
                         </slot>
                     </template>
@@ -138,8 +115,8 @@ const paginationBulletActiveStyle = getStyle('slider.pagination.bulletActive');
                         :pagination="hasPagination ? {
                             el: paginationEl,
                             clickable: true,
-                            bulletClass: paginationBulletStyle,
-                            bulletActiveClass: paginationBulletActiveStyle
+                            bulletClass: getStyle('slider.pagination.bullet'),
+                            bulletActiveClass: getStyle('slider.pagination.bulletActive')
                         } : false"
                         @swiperslideslengthchange="$emit('slides-change')"
                     >
@@ -150,9 +127,9 @@ const paginationBulletActiveStyle = getStyle('slider.pagination.bulletActive');
                 <slot name="pagination">
                     <div
                         v-if="hasPagination"
-                        :class="[paginationWrapperStyle, { [paginationInsideStyle]: !isOutsidePagination }]"
+                        :class="[getStyle('slider.pagination.wrapper'), { [getStyle('slider.pagination.inside')]: !isOutsidePagination }]"
                     >
-                        <div ref="paginationEl" :class="paginationContainerStyle" />
+                        <div ref="paginationEl" :class="getStyle('slider.pagination.container')" />
                     </div>
                 </slot>
             </div>

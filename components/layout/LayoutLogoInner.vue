@@ -12,7 +12,6 @@ withDefaults(
 );
 
 const { getStyle } = usePondStyle();
-const logoStyle = getStyle('header.logo');
 </script>
 
 <template>
@@ -24,7 +23,7 @@ const logoStyle = getStyle('header.logo');
                         src="/logo.svg"
                         :alt="shopName"
                         :title="shopName"
-                        :class="[logoStyle, logoClasses]"
+                        :class="[getStyle('header.logo'), logoClasses]"
                     >
                 </slot>
             </NuxtLinkLocale>
@@ -37,7 +36,7 @@ const logoStyle = getStyle('header.logo');
                 src="/logo.svg"
                 :alt="shopName"
                 :title="shopName"
-                :class="[logoStyle, logoClasses]"
+                :class="[getStyle('header.logo'), logoClasses]"
             >
         </slot>
     </template>

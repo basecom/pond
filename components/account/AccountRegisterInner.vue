@@ -21,6 +21,7 @@ const emits = defineEmits<{
 }>();
 
 // Admin configs
+const { getStyle } = usePondStyle();
 const configStore = useConfigStore();
 const isDataProtectionCheckboxRequired = ref(configStore.get('core.loginRegistration.requireDataProtectionCheckbox') as boolean);
 
@@ -93,17 +94,10 @@ const onSubmit = (data: VueFormRequestData) => {
         emits('register', registerData.value);
     }
 };
-
-const { getStyle } = usePondStyle();
-const outerStyles = getStyle('account.register.outer');
-const addressHeadlineStyles = getStyle('account.register.addressHeadline');
-const alertOuterStyles = getStyle('account.register.alert.outer');
-const alertIconStyles = getStyle('account.register.alert.inner');
-const submitStyles = getStyle('account.register.submit');
 </script>
 
 <template>
-    <div :class="outerStyles">
+    <div :class="getStyle('account.register.outer')">
         <slot name="headline">
             <h1>{{ $t('account.register.headline') }}</h1>
         </slot>
@@ -121,7 +115,7 @@ const submitStyles = getStyle('account.register.submit');
                         <AddressFields
                             :is-detail="true"
                             :account-type-conditions="[['billing-address.account-type.accountType', 'business']]"
-                            :headline-classes="addressHeadlineStyles"
+                            :headline-classes="getStyle('account.register.addressHeadline')"
                             :headline="$t('address.headline')"
                         />
                     </GroupElement>
@@ -158,9 +152,9 @@ const submitStyles = getStyle('account.register.submit');
                 </slot>
 
                 <slot name="alert">
-                    <UiAlert v-if="errorMessage" variant="destructive" :class="alertOuterStyles">
+                    <UiAlert v-if="errorMessage" variant="destructive" :class="getStyle('account.register.alert.outer')">
                         <slot name="alert-icon">
-                            <Icon name="mdi:alert-circle-outline" :class="alertIconStyles" />
+                            <Icon name="mdi:alert-circle-outline" :class="getStyle('account.register.alert.inner')" />
                         </slot>
 
                         <div>
@@ -178,7 +172,7 @@ const submitStyles = getStyle('account.register.submit');
                         type="submit"
                         name="register-submit"
                         :is-loading="isLoading"
-                        :class="submitStyles"
+                        :class="getStyle('account.register.submit')"
                     >
                         {{ $t('account.auth.register') }}
                     </UiButton>

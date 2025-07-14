@@ -5,55 +5,42 @@ defineProps<{
   lineItem: Schemas['OrderLineItem'];
 }>();
 
+const { getStyle } = usePondStyle();
 const { getFormattedPrice } = usePrice();
 const configStore = useConfigStore();
 const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.productFallBackCover') as string;
-
-const { getStyle } = usePondStyle();
-
-const orderItemWrapperStyle = getStyle('order.lineItem.wrapper');
-const lineItemBaseStyle = getStyle('order.lineItem.base');
-const coverImageStyle = getStyle('order.lineItem.cover');
-const promotionCoverStyle = getStyle('order.lineItem.promotion.wrapper');
-const promotionIconStyle = getStyle('order.lineItem.promotion.icon');
-const lineItemInfoStyle = getStyle('order.lineItem.info');
-const itemLabelStyle = getStyle('order.lineItem.label');
-const quantityStyle = getStyle('order.lineItem.quantity.wrapper');
-const quantityLabelStyle = getStyle('order.lineItem.quantity.label');
-const unitPriceStyle = getStyle('order.lineItem.unitPrice');
-const totalPriceStyle = getStyle('order.lineItem.totalPrice');
 </script>
 
 <template>
-    <div :class="orderItemWrapperStyle">
+    <div :class="getStyle('order.lineItem.wrapper')">
         <slot name="line-item">
-            <div :class="lineItemBaseStyle">
+            <div :class="getStyle('order.lineItem.base')">
                 <slot name="line-item-cover">
                     <img
                         v-if="lineItem.cover?.url"
                         :src="lineItem.cover.url"
                         :alt="lineItem.cover.translated?.alt"
                         :title="lineItem.cover.translated?.title"
-                        :class="coverImageStyle"
+                        :class="getStyle('order.lineItem.cover')"
                     >
                     <img
                         v-else-if="lineItem.type !== 'promotion' && productFallBackCover"
                         :src="productFallBackCover"
                         alt=""
                         title=""
-                        :class="coverImageStyle"
+                        :class="getStyle('order.lineItem.cover')"
                     >
                     <div
                         v-else-if="lineItem.type === 'promotion'"
-                        :class="promotionCoverStyle"
+                        :class="getStyle('order.lineItem.promotion.wrapper')"
                     >
-                        <Icon name="mdi:percent" :class="promotionIconStyle" />
+                        <Icon name="mdi:percent" :class="getStyle('order.lineItem.promotion.icon')" />
                     </div>
                 </slot>
 
                 <slot name="line-item-information">
-                    <div :class="lineItemInfoStyle">
-                        <span :class="itemLabelStyle">
+                    <div :class="getStyle('order.lineItem.info')">
+                        <span :class="getStyle('order.lineItem.label')">
                             {{ lineItem.label }}
                         </span>
                         <span>
@@ -65,8 +52,8 @@ const totalPriceStyle = getStyle('order.lineItem.totalPrice');
         </slot>
 
         <slot name="quantity">
-            <span :class="quantityStyle">
-                <span :class="quantityLabelStyle">
+            <span :class="getStyle('order.lineItem.quantity.wrapper')">
+                <span :class="getStyle('order.lineItem.quantity.label')">
                     {{ $t('order.lineItem.quantity') }}
                 </span>
                 {{ lineItem.quantity }}
@@ -74,13 +61,13 @@ const totalPriceStyle = getStyle('order.lineItem.totalPrice');
         </slot>
 
         <slot name="unit-price">
-            <span :class="unitPriceStyle">
+            <span :class="getStyle('order.lineItem.unitPrice')">
                 {{ getFormattedPrice(lineItem.unitPrice) }}
             </span>
         </slot>
 
         <slot name="total-price">
-            <span :class="totalPriceStyle">
+            <span :class="getStyle('order.lineItem.totalPrice')">
                 {{ getFormattedPrice(lineItem.totalPrice) }}
             </span>
         </slot>

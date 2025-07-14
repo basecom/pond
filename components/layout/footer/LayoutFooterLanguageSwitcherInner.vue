@@ -6,6 +6,7 @@ const { languages, changeLanguage, replaceToDevStorefront, getAvailableLanguages
     useInternationalization();
 const { languageIdChain } = useSessionContext();
 const { handleError } = usePondHandleError();
+const { getStyle } = usePondStyle();
 
 const selectedLanguage: Ref<undefined | Schemas['Language']> = ref(undefined);
 const selectedLanguageId = ref(languageIdChain);
@@ -30,12 +31,6 @@ const onUpdate = async (selectedValue: AcceptableValue): Promise<void> =>  {
         }
     }
 };
-
-const { getStyle } = usePondStyle();
-
-const triggerStyles = getStyle('footer.languageSwitcherComponent.trigger');
-const valueWrapperStyles = getStyle('footer.languageSwitcherComponent.valueWrapper');
-const itemStyles = getStyle('footer.languageSwitcherComponent.item');
 </script>
 
 <template>
@@ -43,12 +38,12 @@ const itemStyles = getStyle('footer.languageSwitcherComponent.item');
         <slot name="language-switcher-trigger">
             <UiSelectTrigger
                 id="language-switch"
-                :class="triggerStyles"
+                :class="getStyle('footer.languageSwitcherComponent.trigger')"
                 aria-label="language-switch"
             >
                 <UiSelectValue>
                     <template v-if="selectedLanguage">
-                        <div :class="valueWrapperStyles">
+                        <div :class="getStyle('footer.languageSwitcherComponent.valueWrapper')">
                             <Icon :name="`custom-icons:${selectedLanguage?.translationCode?.code}`" />
                             {{ selectedLanguage?.name }}
                         </div>
@@ -65,7 +60,7 @@ const itemStyles = getStyle('footer.languageSwitcherComponent.item');
                         :key="language.id"
                         :value="language.id"
                     >
-                        <div :class="itemStyles">
+                        <div :class="getStyle('footer.languageSwitcherComponent.item')">
                             <template v-if="language.translationCode.code">
                                 <Icon :name="`custom-icons:${language.translationCode.code}`" />
                             </template>
