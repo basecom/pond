@@ -44,8 +44,6 @@ const productUrl = cartItem?.value?.referencedId && cartItem?.value?.type === 'p
 
 syncRefs(itemQuantity, quantity);
 
-getWishlistProducts();
-
 const removeCartItem = async () => {
     isLoading.value.container = true;
     try {
