@@ -60,7 +60,6 @@ const setAsDefaultBillingAddress = async (addressId: string) => {
         await setDefaultCustomerBillingAddress(addressId);
         await loadCustomerAddresses();
         await refreshSessionContext();
-        console.log('customer', defaultBillingAddressId);
         toast({
             title: t('address.defaultBillingAddress.success'),
         });
@@ -186,8 +185,8 @@ const editAddress = async (address: AddressData, addressId: string) => {
                         <div class="flex gap-2">
                             <UiDialog class="w-full">
                                 <slot name="edit-address-trigger">
-                                    <UiDialogTrigger class="flex flex-start w-1/2">
-                                        <UiButton>
+                                    <UiDialogTrigger class="flex flex-start w-full">
+                                        <UiButton class="w-full">
                                             <Icon name="mdi:pencil" class="size-4" />
                                             {{ $t('address.editAddress') }}
                                         </UiButton>
@@ -213,7 +212,7 @@ const editAddress = async (address: AddressData, addressId: string) => {
                             <slot name="delete-address">
                                 <UiButton
                                     v-if="defaultShippingAddressId !== customerAddress.id && defaultBillingAddressId !== customerAddress.id"
-                                    class="w-1/2"
+                                    class="w-full"
                                     :is-loading="isLoading"
                                     @click="deleteAddress(customerAddress.id)"
                                 >
@@ -231,7 +230,7 @@ const editAddress = async (address: AddressData, addressId: string) => {
                                 :is-loading="isLoading"
                                 @click="setAsDefaultBillingAddress(customerAddress.id)"
                             >
-                                <Icon name="mdi:truck-outline" class="size-4" />
+                                <Icon name="mdi:list-box-outline" class="size-4" />
                                 {{ $t('address.defaultBillingAddress.setAsDefault') }}
                             </UiButton>
                         </slot>
@@ -244,7 +243,7 @@ const editAddress = async (address: AddressData, addressId: string) => {
                                 :is-loading="isLoading"
                                 @click="setAsDefaultShippingAddress(customerAddress.id)"
                             >
-                                <Icon name="mdi:delete-forever-outline" class="size-4" />
+                                <Icon name="mdi:truck-outline" class="size-4" />
                                 {{ $t('address.defaultShippingAddress.setAsDefault') }}
                             </UiButton>
                         </slot>

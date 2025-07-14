@@ -5,9 +5,9 @@ export type AddressVueFormSubmitValue = {
 export type AddressData = {
     accountType?: string,
     additionalAddressLine1?: string | null,
-    additionalAddressLine2?: string| null
+    additionalAddressLine2?: string | null
     city: string,
-    company?: string| null
+    company?: string | null
     countryId: string,
     department?: string | null
     firstName: string,
