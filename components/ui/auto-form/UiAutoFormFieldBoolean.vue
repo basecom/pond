@@ -2,10 +2,11 @@
 import type { FieldProps } from './interface';
 import { computed } from 'vue';
 import { beautifyObjectName, maybeBooleanishToBoolean } from './utils';
+import { UiSwitch } from '~/components/ui/switch';
+import { UiCheckbox } from '~/components/ui/checkbox';
 
 const props = defineProps<FieldProps>();
 
-// @ts-expect-error ui form will be deleted in another ticket
 const booleanComponent = computed(() => props.config?.component === 'switch' ? UiSwitch : UiCheckbox);
 </script>
 

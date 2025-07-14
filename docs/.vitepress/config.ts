@@ -34,6 +34,7 @@ export default defineConfig({
                     { text: 'Error Handling', link: '/how-to/error-handling' },
                     { text: 'Account Management', link: '/how-to/account-management' },
                     { text: 'Pond Style', link: '/how-to/pond-style' },
+                    { text: 'Shadcn', link: '/how-to/shadcn' },
                 ],
             },
         ],
