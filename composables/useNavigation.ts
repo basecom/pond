@@ -48,7 +48,7 @@ export function useNavigation(params?: {
 
     async function loadNavigationElements({ depth }: { depth: number }) {
         try {
-            // CUSTOM: instead of calling the apiClient directly, use the proxy route which can be cached
+            // CUSTOM: instead of calling the apiClient directly, use the proxy route which can be cached when enabled in the nuxt.config.ts routeRules
             const navigationResponse = await useFetch(`/api/proxy/navigation/${type}`, {
                 method: 'POST',
                 body: {

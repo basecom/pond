@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     }
 
     const shopwareEndpoint =
-        `${runtimeConfig.public?.pond?.shopwareEndpoint  }/store-api/`;
+        `${runtimeConfig.public?.pond?.shopwareEndpoint}/store-api/`;
 
     const apiClient = createAPIClient({
         accessToken: shopwareAccessToken,

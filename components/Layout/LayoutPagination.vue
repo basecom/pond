@@ -56,19 +56,19 @@ const { t } = useI18n();
                 />
             </PaginationPrev>
 
-            <template v-for="(page, index) in items">
+            <template v-for="(item, index) in items">
                 <PaginationListItem
-                    v-if="page.type === 'page'"
+                    v-if="item.type === 'page'"
                     :key="index"
                     class="data-[selected]:gray size-6 rounded transition focus-within:outline focus-within:outline-1 focus-within:outline-offset-1 hover:bg-gray/10 data-[selected]:font-bold data-[selected]:text-brand-primary"
-                    :value="page.value"
+                    :value="item.value"
                 >
-                    {{ page.value }}
+                    {{ item.value }}
                 </PaginationListItem>
 
                 <PaginationEllipsis
                     v-else
-                    :key="page.type"
+                    :key="item.type"
                     :index="index"
                     class="flex size-4 items-center justify-center"
                 >
