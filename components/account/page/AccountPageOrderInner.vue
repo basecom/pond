@@ -69,7 +69,7 @@ const displayCompletePaymentLink = (paymentStateMachineTechnicalName: string) =>
                                                 {{ $t('order.orderDate') }} {{ formatLocaleDate(order?.orderDate) }}
                                                 <UiBadge v-if="order && order.transactions" :variant="getBadgeVariant(order?.stateMachineState.technicalName, order?.transactions[0]?.stateMachineState?.technicalName ?? '')">
                                                     <NuxtLinkLocale
-                                                        v-if="order && order.transactions && displayCompletePaymentLink(order.transactions[0]?.stateMachineState?.technicalName ?? '')"
+                                                        v-if="order && order.transactions && order.stateMachineState.technicalName !== 'cancelled' && displayCompletePaymentLink(order.transactions[0]?.stateMachineState?.technicalName ?? '')"
                                                         to="/"
                                                     >
                                                         {{ $t('payment.completePayment') }}

@@ -25,8 +25,15 @@ const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.
                     <img
                         v-else-if="lineItem.type !== 'promotion' && productFallBackCover"
                         :src="productFallBackCover"
-                        alt=""
-                        title=""
+                        :alt="$t('product.fallback.alt', { product: lineItem.label })"
+                        :title="$t('product.fallback.title', { product: lineItem.label })"
+                        class="object-center h-16 aspect-square object-contain"
+                    >
+                    <img
+                        v-else-if="lineItem.type !== 'promotion' && !productFallBackCover"
+                        src="/fallback-product-cover.svg"
+                        :alt="$t('product.fallback.alt', { product: lineItem.label })"
+                        :title="$t('product.fallback.title', { product: lineItem.label })"
                         class="object-center h-16 aspect-square object-contain"
                     >
                     <div v-else-if="lineItem.type === 'promotion'" class="h-16 w-16 border border-gray-300 items-center flex justify-center">
@@ -61,7 +68,7 @@ const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.
         </slot>
 
         <slot name="total-price">
-            <span class="flex justify-center font-bold">
+            <span class="flex justify-end md:justify-center font-bold">
                 {{ getFormattedPrice(lineItem.totalPrice) }}
             </span>
         </slot>
