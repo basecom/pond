@@ -26,24 +26,17 @@ const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.
                     <img
                         v-else-if="lineItem.type !== 'promotion' && productFallBackCover"
                         :src="productFallBackCover"
-                        alt=""
-                        title=""
+                        :alt="$t('product.fallback.alt', { product: lineItem.label })"
+                        :title="$t('product.fallback.title', { product: lineItem.label })"
                         :class="getStyle('account.order.lineItem.cover')"
                     >
-                  <img
-                      v-else-if="lineItem.type !== 'promotion' && productFallBackCover"
-                      :src="productFallBackCover"
-                      :alt="$t('product.fallback.alt', { product: lineItem.label })"
-                      :title="$t('product.fallback.title', { product: lineItem.label })"
-                      class="object-center h-16 aspect-square object-contain"
-                  >
-                  <img
-                      v-else-if="lineItem.type !== 'promotion' && !productFallBackCover"
-                      src="/fallback-product-cover.svg"
-                      :alt="$t('product.fallback.alt', { product: lineItem.label })"
-                      :title="$t('product.fallback.title', { product: lineItem.label })"
-                      class="object-center h-16 aspect-square object-contain"
-                  >
+                    <img
+                        v-else-if="lineItem.type !== 'promotion' && !productFallBackCover"
+                        src="/fallback-product-cover.svg"
+                        :alt="$t('product.fallback.alt', { product: lineItem.label })"
+                        :title="$t('product.fallback.title', { product: lineItem.label })"
+                        :class="getStyle('account.order.lineItem.cover')"
+                    >
                     <div
                         v-else-if="lineItem.type === 'promotion'"
                         :class="getStyle('account.order.lineItem.promotion.wrapper')"
