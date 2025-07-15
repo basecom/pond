@@ -35,18 +35,76 @@
             "successMessage": "Eine Bestätigungs-E-Mail mit einem Link zum Zurücksetzen des Passworts wurde versandt, wenn die angegebene E-Mail-Adresse registriert ist."
         },
         "customer": {
-            "accountType": "Accounttyp",
-            "salutation": "Anrede",
-            "firstName": "Vorname",
-            "lastName": "Nachname",
+            "accountType": {
+                "label": "Accounttyp",
+                "errorRequired": "Bitte wählen Sie einen Accounttyp aus",
+                "business": "Gewerblich",
+                "private": "Privat"
+            },
+            "salutation": {
+                "label": "Anrede",
+                "errorRequired": "Bitte wählen Sie eine Anrede aus",
+                "placeholder": "Anrede auswählen ..."
+            },
+            "firstName": {
+                "label": "Vorname",
+                "placeholder": "Vornamen eingeben ...",
+                "errorRequired": "Bitte geben Sie einen Vornamen ein"
+            },
+            "lastName": {
+                "label": "Nachname",
+                "placeholder": "Nachnamen eingeben ...",
+                "errorRequired": "Bitte geben Sie einen Nachnamen ein"
+            },
             "name": "Name",
-            "mail": "E-Mail",
-            "title": "Titel",
-            "companyName": "Unternehmen",
-            "vat": "USt-IdNr.",
-            "birthday": "Geburtstag",
+            "email": {
+                "label": "E-Mail",
+                "placeholder": "E-Mail eingeben ...",
+                "confirm": {
+                    "label": "E-Mail Bestätigung",
+                    "placeholder": "E-Mail erneut eingeben ..."
+                },
+                "errorRequired": "Bitte geben Sie eine E-Mail ein",
+                "errorInvalid": "Bitte geben Sie eine valide E-Mail ein",
+                "errorConfirmed": "Die E-Mail-Adressen stimmen nicht überein."
+            },
+            "title": {
+                "label": "Titel",
+                "placeholder": "Titel eingeben ..."
+            },
+            "company": {
+                "label": "Unternehmen",
+                "placeholder": "Unternehmen eingeben ...",
+                "errorRequired": "Bitte geben Sie ein Unternehmen ein"
+            },
+            "department": {
+                "label": "Abteilung",
+                "placeholder": "Abteilung eingeben ..."
+            },
+            "vatId": {
+                "label": "Umsatzsteuer-ID",
+                "placeholder": "Umsatzsteuer-ID eingeben ..."
+            },
+            "birthday": {
+                "label": "Geburtstag {required}",
+                "day": "Tag",
+                "month": "Monat",
+                "year": "Jahr",
+                "errorRequired": "Bitte geben Sie Ihren Geburtstag an"
+            },
             "birthdayMonth": "Monat des Geburtstages",
-            "birthdayYear": "Jahr des Geburtstages"
+            "birthdayYear": "Jahr des Geburtstages",
+            "password": {
+                "label": "Passwort",
+                "placeholder": "Passwort eingeben ...",
+                "errorRequired": "Bitte geben Sie ein Passwort ein",
+                "errorConfirmed": "Die Passwörter stimmen nicht überein.",
+                "errorMin": "Das Passwort muss mindestens {number} Zeichen lang sein",
+                "confirm": {
+                    "label": "Passwort Bestätigung",
+                    "placeholder": "Passwort erneut eingeben ..."
+                }
+            }
         },
         "overview": {
             "description": "Hier haben Sie direkten Zugriff auf Ihre Profilinformationen, hinterlegte Adressen und die Standard-Zahlungsart.",
@@ -92,6 +150,14 @@
                     "description": "Ihre Standard-Zahlungsart wurde erfolgreich geändert"
                 }
             }
+        },
+        "register": {
+            "headline": "Registrierung",
+            "acceptedDataProtection": {
+                "label": "Ich habe die Datenschutzbestimmungen zur Kenntnis genommen und die AGB gelesen und bin mit ihnen einverstanden.",
+                "errorRequired": "Bitte stimmen Sie den Datenschutzbestimmungen zu"
+            },
+            "success": "Du hast dich erfolgreich registriert."
         }
     }
 }

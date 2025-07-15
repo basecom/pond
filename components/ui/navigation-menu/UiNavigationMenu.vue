@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
 import {
     NavigationMenuRoot,
     type NavigationMenuRootEmits,
     type NavigationMenuRootProps,
     useForwardPropsEmits,
 } from 'reka-ui';
-import { computed, type HTMLAttributes } from 'vue';
+import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<NavigationMenuRootProps & { class?: HTMLAttributes['class'] }>();
 
 const emits = defineEmits<NavigationMenuRootEmits>();
+
+const { getStyle } = usePondStyle();
 
 const delegatedProps = computed(() => {
     const { class: _, ...delegated } = props;
@@ -24,7 +25,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 <template>
     <NavigationMenuRoot
         v-bind="forwarded"
-        :class="cn('relative z-10 flex w-full flex-1 items-center justify-center', props.class)"
+        :class="[getStyle('ui.navigationMenu.root'), props.class]"
     >
         <slot />
         <UiNavigationMenuViewport />

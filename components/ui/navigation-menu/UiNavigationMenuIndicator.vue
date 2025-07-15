@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
 import { NavigationMenuIndicator, type NavigationMenuIndicatorProps, useForwardProps } from 'reka-ui';
-import { computed, type HTMLAttributes } from 'vue';
+import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<NavigationMenuIndicatorProps & { class?: HTMLAttributes['class'] }>();
+
+const { getStyle } = usePondStyle();
 
 const delegatedProps = computed(() => {
     const { class: _, ...delegated } = props;
@@ -17,8 +18,8 @@ const forwardedProps = useForwardProps(delegatedProps);
 <template>
     <NavigationMenuIndicator
         v-bind="forwardedProps"
-        :class="cn('top-full z-1 flex h-1.5 items-end justify-center overflow-hidden data-[state=visible]:animate-in data-[state=hidden]:animate-out data-[state=hidden]:fade-out data-[state=visible]:fade-in', props.class)"
+        :class="[getStyle('ui.navigationMenu.indicator.outer'), props.class]"
     >
-        <div class="relative top-[60%] size-2 rotate-45 rounded-tl-sm bg-gray-200 shadow-md" />
+        <div :class="getStyle('ui.navigationMenu.indicator.inner')" />
     </NavigationMenuIndicator>
 </template>

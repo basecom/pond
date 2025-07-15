@@ -3,11 +3,13 @@ import { DropdownMenuTrigger, type DropdownMenuTriggerProps, useForwardProps } f
 
 const props = defineProps<DropdownMenuTriggerProps>();
 
+const { getStyle } = usePondStyle();
+
 const forwardedProps = useForwardProps(props);
 </script>
 
 <template>
-    <DropdownMenuTrigger class="outline-none cursor-pointer" v-bind="forwardedProps">
+    <DropdownMenuTrigger :class="getStyle('ui.dropdown.menuTrigger')" v-bind="forwardedProps">
         <slot />
     </DropdownMenuTrigger>
 </template>

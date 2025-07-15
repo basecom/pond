@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
-import { Check } from 'lucide-vue-next';
 import {
     SelectItem,
     SelectItemIndicator,
@@ -8,9 +6,11 @@ import {
     SelectItemText,
     useForwardProps,
 } from 'reka-ui';
-import { computed, type HTMLAttributes } from 'vue';
+import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<SelectItemProps & { class?: HTMLAttributes['class'] }>();
+
+const { getStyle } = usePondStyle();
 
 const delegatedProps = computed(() => {
     const { class: _, ...delegated } = props;
@@ -24,16 +24,11 @@ const forwardedProps = useForwardProps(delegatedProps);
 <template>
     <SelectItem
         v-bind="forwardedProps"
-        :class="
-            cn(
-                'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-gray-100 focus:text-gray-900 data-disabled:pointer-events-none data-disabled:opacity-50',
-                props.class,
-            )
-        "
+        :class="[getStyle('ui.select.item.outer'), props.class]"
     >
-        <span class="absolute right-2 flex size-3.5 items-center justify-center">
+        <span :class="getStyle('ui.select.item.inner')">
             <SelectItemIndicator>
-                <Check class="size-4" />
+                <Icon name="mdi:check" :class="getStyle('ui.select.item.icon')" />
             </SelectItemIndicator>
         </span>
 

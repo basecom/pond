@@ -2,10 +2,11 @@
 import { DialogTrigger, type DialogTriggerProps } from 'reka-ui';
 
 const props = defineProps<DialogTriggerProps>();
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
-    <DialogTrigger v-bind="props" class="cursor-pointer">
+    <DialogTrigger v-bind="props" :class="getStyle('ui.sheet.trigger')">
         <slot />
     </DialogTrigger>
 </template>

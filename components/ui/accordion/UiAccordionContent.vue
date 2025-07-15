@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
 import { AccordionContent, type AccordionContentProps } from 'reka-ui';
-import { computed, type HTMLAttributes } from 'vue';
+import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<AccordionContentProps & { class?: HTMLAttributes['class'] }>();
 
+const { getStyle } = usePondStyle();
 const delegatedProps = computed(() => {
     const { class: _, ...delegated } = props;
 
@@ -15,9 +15,9 @@ const delegatedProps = computed(() => {
 <template>
     <AccordionContent
         v-bind="delegatedProps"
-        class="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+        :class="getStyle('ui.accordion.content.outer')"
     >
-        <div :class="cn('pb-4 pt-0', props.class)">
+        <div :class="[getStyle('ui.accordion.content.inner'), props.class]">
             <slot />
         </div>
     </AccordionContent>

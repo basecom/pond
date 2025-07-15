@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 @import "tw-animate-css";
+@import '@vueform/vueform/dist/vueform.css';
+
 @plugin '@tailwindcss/typography';
 @source "../../stories";
 @source "../../layers/cms-base-layer";
@@ -51,6 +53,14 @@
     & :where(img):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
       @apply m-0
     }
+  }
+
+  h1 {
+    @apply text-xl font-bold md:text-2xl;
+  }
+
+  h3 {
+    @apply text-lg font-bold;
   }
 }
 

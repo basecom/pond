@@ -12,6 +12,7 @@ defineEmits<{
   logout: [];
 }>();
 
+const { getStyle } = usePondStyle();
 const dialogOpen = ref<boolean>(false);
 
 provide('closeDialog', () => {
@@ -22,9 +23,16 @@ provide('closeDialog', () => {
 <template>
     <UiDropdownMenu>
         <slot name="action-login-menu">
-            <UiDropdownMenuTrigger id="header-account-action" class="size-5" aria-label="header-account-action">
+            <UiDropdownMenuTrigger
+                id="header-account-action"
+                :class="getStyle('header.actions.account.trigger')"
+                aria-label="header-account-action"
+            >
                 <slot name="icon">
-                    <Icon name="mdi:account-outline" class="size-5" />
+                    <Icon
+                        name="mdi:account-outline"
+                        :class="getStyle('header.actions.account.icon')"
+                    />
                 </slot>
             </UiDropdownMenuTrigger>
         </slot>
@@ -97,7 +105,10 @@ provide('closeDialog', () => {
                     </UiDropdownMenuItem>
 
                     <UiDropdownMenuSeparator />
-                    <UiDropdownMenuItem class="cursor-pointer" @click="$emit('logout')">
+                    <UiDropdownMenuItem
+                        :class="getStyle('header.actions.account.logoutItem')"
+                        @click="$emit('logout')"
+                    >
                         <slot name="logout">
                             {{ $t('account.auth.logout') }}
                         </slot>
@@ -109,7 +120,7 @@ provide('closeDialog', () => {
             <template v-else>
                 <slot name="guest">
                     <UiDialog v-model:open="dialogOpen">
-                        <UiDialogTrigger class="w-full">
+                        <UiDialogTrigger :class="getStyle('header.actions.account.loginTrigger')">
                             <slot name="action-login">
                                 <UiDropdownMenuItem @select.prevent="">
                                     <slot name="login">
