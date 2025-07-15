@@ -67,6 +67,20 @@ export default {
         },
     },
 
+    dataProtection: {
+        policy: {
+            trigger: 'underline underline-offset-2 cursor-pointer mx-1',
+            content: 'max-h-3/4 overflow-scroll',
+            skeleton: 'w-full h-50 mt-2.5',
+        },
+        termsAndConditions: {
+            trigger: 'underline underline-offset-2 cursor-pointer mx-1',
+            content: 'max-h-3/4 overflow-scroll',
+            skeleton: 'w-full h-50 mt-2.5',
+        },
+
+    },
+
     order,
     personalData,
 };

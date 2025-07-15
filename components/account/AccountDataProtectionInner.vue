@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const configStore = useConfigStore();
 const { getCmsPageById } = usePondCms();
+const { getStyle } = usePondStyle();
 
 const privacyPage = configStore.get('core.basicInformation.privacyPage') as string | null;
 const tosPage = configStore.get('core.basicInformation.tosPage') as string | null;
@@ -13,7 +14,7 @@ onMounted(async () => {
     // Fetch cms page for privacy page, if layout is set in admin
     if (privacyPage) {
         const privacyPageResponse = await getCmsPageById(privacyPage);
-        if(privacyPageResponse) {
+        if (privacyPageResponse) {
             privacyPageLayout.value = privacyPageResponse.data?.value;
         }
         isPrivacyPageLayoutLoading.value = false;
@@ -22,7 +23,7 @@ onMounted(async () => {
     // Fetch cms page for terms and conditions, if layout is set in admin
     if (tosPage) {
         const tosPageResponse = await getCmsPageById(tosPage);
-        if(tosPageResponse) {
+        if (tosPageResponse) {
             tosPageLayout.value = tosPageResponse.data?.value;
         }
         isTosPageLayoutLoading.value = false;
@@ -39,15 +40,20 @@ onMounted(async () => {
         <slot name="data-protection-policy-dialog">
             <UiDialog>
                 <slot name="data-protection-policy-trigger">
-                    <UiDialogTrigger class="underline underline-offset-2 cursor-pointer mx-1">
+                    <UiDialogTrigger :class="getStyle('account.dataProtection.policy.trigger')">
                         {{ $t('account.register.dataProtection.policy.trigger') }}
                     </UiDialogTrigger>
                 </slot>
 
                 <slot name="data-protection-policy-content">
-                    <UiDialogContent class="max-h-3/4 overflow-scroll">
+                    <UiDialogContent :class="getStyle('account.dataProtection.policy.content')">
+                        <slot name="data-protection-policy-header">
+                            <UiDialogHeader>
+                                <UiDialogTitle />
+                            </UiDialogHeader>
+                        </slot>
                         <template v-if="isPrivacyPageLayoutLoading">
-                            <UiSkeleton class="w-full h-50 mt-2.5" />
+                            <UiSkeleton :class="getStyle('account.dataProtection.policy.skeleton')" />
                         </template>
                         <template v-if="privacyPageLayout && !isPrivacyPageLayoutLoading">
                             <CmsPage :content="privacyPageLayout" />
@@ -64,15 +70,20 @@ onMounted(async () => {
         <slot name="data-protection-terms-and-conditions-dialog">
             <UiDialog>
                 <slot name="data-protection-terms-and-conditions-trigger">
-                    <UiDialogTrigger class="underline underline-offset-2 cursor-pointer mx-1">
+                    <UiDialogTrigger :class="getStyle('account.dataProtection.termsAndConditions.trigger')">
                         {{ $t('account.register.dataProtection.termsAndConditions.trigger') }}
                     </UiDialogTrigger>
                 </slot>
 
                 <slot name="data-protection-terms-and-conditions-content">
-                    <UiDialogContent class="max-h-3/4 overflow-scroll">
+                    <UiDialogContent :class="getStyle('account.dataProtection.termsAndConditions.content')">
+                        <slot name="data-protection-terms-and-conditions-header">
+                            <UiDialogHeader>
+                                <UiDialogTitle />
+                            </UiDialogHeader>
+                        </slot>
                         <template v-if="isTosPageLayoutLoading">
-                            <UiSkeleton class="w-full h-50 mt-2.5" />
+                            <UiSkeleton :class="getStyle('account.dataProtection.termsAndConditions.skeleton')" />
                         </template>
                         <template v-if="tosPageLayout && !isTosPageLayoutLoading">
                             <CmsPage :content="tosPageLayout" />
