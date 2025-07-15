@@ -10,9 +10,9 @@ const props = defineProps<{
 const { getStyle } = usePondStyle();
 const configStore = useConfigStore();
 
-const { getNewsletterStatus, newsletterSubscribe, newsletterUnsubscribe} = useNewsletter();
+const { getNewsletterStatus, newsletterSubscribe, newsletterUnsubscribe } = useNewsletter();
 const { handleError } = usePondHandleError();
-const { toast } = useToast();
+const { toast } = usePondToast();
 const { t } = useI18n();
 
 const showTitle = configStore.get('core.loginRegistration.showTitleField') as boolean;
@@ -62,27 +62,29 @@ const onChange = async (formData: NewsletterFormData) => {
         return;
     }
 
-    // Otherwise, subscribe to newsletter
-    try {
-        await newsletterSubscribe({email: props.customer.email, option: 'subscribe'});
-        toast({
-            title: t('newsletter.subscribed.headline'),
-        });
+    // Otherwise, subscribe to newsletter (only if not already subscribed to the newsletter)
+    if(newsletterStatus.value?.status !== 'direct' && newsletterStatus.value?.status !== 'optIn' && newsletterStatus.value?.status !== 'notSet') {
+        try {
+            await newsletterSubscribe({ email: props.customer.email, option: 'subscribe' });
+            toast({
+                title: t('newsletter.subscribed.headline'),
+            });
 
-        // Depending on the newsletter status, the alert display is set
-        newsletterStatus.value = await getNewsletterStatus();
-        if (newsletterStatus.value?.status === 'notSet') {
-            displayDoubleNewsletterRegistrationAlert.value = true;
-            return;
+            // Depending on the newsletter status, the alert display is set
+            newsletterStatus.value = await getNewsletterStatus();
+            if (newsletterStatus.value?.status === 'notSet') {
+                displayDoubleNewsletterRegistrationAlert.value = true;
+                return;
+            }
+
+            displayDoubleNewsletterRegistrationAlert.value = false;
+        } catch (error) {
+            toast({
+                title: t('general.errorHeadline'),
+                description: t('general.errorMessage'),
+            });
+            handleError(error);
         }
-
-        displayDoubleNewsletterRegistrationAlert.value = false;
-    } catch (error) {
-        toast({
-            title: t('general.errorHeadline'),
-            description: t('general.errorMessage'),
-        });
-        handleError(error);
     }
 };
 </script>
@@ -164,43 +166,46 @@ const onChange = async (formData: NewsletterFormData) => {
             </div>
         </slot>
 
-      <!-- newsletter subscription -->
-      <slot name="newsletter">
-        <div class="col-start-1 col-span-2">
-          <slot name="newsletter-headline">
-            <h3 class="mb-2 border-b border-gray-100 pb-2 text-lg font-bold">
-              {{ $t('newsletter.headline') }}
-            </h3>
-          </slot>
+        <!-- newsletter subscription -->
+        <slot name="newsletter">
+            <div :class="getStyle('account.newsletter.wrapper')">
+                <slot name="newsletter-headline">
+                    <h3 :class="getStyle('account.newsletter.headline')">
+                        {{ $t('newsletter.headline') }}
+                    </h3>
+                </slot>
 
-          <slot name="newsletter-double-registration">
-            <UiAlert v-if="displayDoubleNewsletterRegistrationAlert" class="mb-4 flex gap-4">
-              <slot name="alert-icon">
-                <Icon name="mdi:info" class="size-4 shrink-0" />
-              </slot>
+                <slot name="newsletter-double-registration">
+                    <UiAlert v-if="displayDoubleNewsletterRegistrationAlert" :class="getStyle('account.newsletter.alert')">
+                        <slot name="alert-icon">
+                            <Icon name="mdi:info" :class="getStyle('account.newsletter.alertIcon')" />
+                        </slot>
 
-              <slot name="alert-content">
-                <div>
-                  <UiAlertTitle>{{ $t('newsletter.subscribed.headline') }}</UiAlertTitle>
-                  <UiAlertDescription>
-                    {{ $t('newsletter.subscribed.message') }}
-                  </UiAlertDescription>
-                </div>
-              </slot>
-            </UiAlert>
-          </slot>
+                        <slot name="alert-content">
+                            <div>
+                                <UiAlertTitle>{{ $t('newsletter.subscribed.headline') }}</UiAlertTitle>
+                                <UiAlertDescription>
+                                    {{ $t('newsletter.subscribed.message') }}
+                                </UiAlertDescription>
+                            </div>
+                        </slot>
+                    </UiAlert>
+                </slot>
 
-          <slot name="newsletter-content">
-            <Vueform ref="form$" @change="(data: NewsletterFormData) => onChange(data)">
-              <FormCheckboxElement
-                  id="newsletter"
-                  name="newsletter"
-                  :label="$t('newsletter.subscribeToNewsletterLabel')"
-              />
-            </Vueform>
-          </slot>
-        </div>
-      </slot>
+                <slot name="newsletter-content">
+                    <Vueform ref="form$" @change="(data: NewsletterFormData) => onChange(data)">
+                        <FormCheckboxElement
+                            id="newsletter"
+                            name="newsletter"
+                        >
+                            <template #checkbox-element-content>
+                                {{ $t('newsletter.subscribeToNewsletterLabel') }}
+                            </template>
+                        </FormCheckboxElement>
+                    </Vueform>
+                </slot>
+            </div>
+        </slot>
 
         <!-- default billing address -->
         <slot name="billing-address">
