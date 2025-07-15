@@ -13,15 +13,13 @@ const props = withDefaults(
 );
 const {cartItem } = toRefs(props);
 
-const { getFormattedPrice } = usePrice();
-
 const imageUrl = computed(() => props.cartItem ? getMainImageUrl(props.cartItem) : undefined);
 </script>
 
 <template>
     <slot name="discount-content">
         <slot name="image-container">
-            <div class="order-1 mb-4 flex w-5/6 flex-col">
+            <div class="order-1 mb-4 flex w-5/6 flex-col text-left">
                 <div class="mb-2 w-auto">
                     <slot name="image">
                         <CartItemElementImage :cart-item-image="imageUrl" fallback="mdi:percent" />
@@ -37,7 +35,7 @@ const imageUrl = computed(() => props.cartItem ? getMainImageUrl(props.cartItem)
         <slot name="total-price-wrapper">
             <div class="order-4 flex w-full justify-end">
                 <slot name="total-price">
-                    <CartItemElementPriceTotal :cart-item-total-price="getFormattedPrice(itemTotalPrice)" />
+                    <CartItemElementPriceTotal :cart-item-total-price="itemTotalPrice" />
                 </slot>
             </div>
         </slot>

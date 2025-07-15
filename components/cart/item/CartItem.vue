@@ -7,9 +7,11 @@ const props = withDefaults(
     defineProps<{
       cartItem: Schemas['LineItem'];
       cartDeliveryPosition?: Schemas['CartDeliveryPosition'];
+      isLoggedIn?: boolean;
     }>(),
     {
         cartDeliveryPosition: undefined,
+        isLoggedIn: false,
     },
 );
 
@@ -115,6 +117,7 @@ const removeProductFromWishlist = async () => {
         :product-url="productUrl"
         :is-loading="isLoading"
         :is-in-wishlist="isInWishlist"
+        :is-logged-in="props.isLoggedIn"
         @remove-cart-item="removeCartItem"
         @change-cart-item-quantity="(quantityInput: number) => changeCartItemQuantity(quantityInput)"
         @add-product-to-wishlist="addProductToWishlist"

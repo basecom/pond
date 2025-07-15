@@ -63,6 +63,7 @@ const getCartDeliveryPosition = (id: string, cartDeliveryPositions?: Schemas['Ca
                         <CartItem
                             :cart-item="cartItem"
                             :cart-delivery-position="getCartDeliveryPosition(cartItem.id, getCartDeliveryPositions(cartDeliveries))"
+                            :is-logged-in="isLoggedIn"
                         />
                     </slot>
                 </template>

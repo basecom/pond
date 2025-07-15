@@ -1,10 +1,10 @@
 <script setup lang="ts">
 withDefaults(
     defineProps<{
-      cartItemUnitPrice?: string;
+      cartItemUnitPrice?: number;
     }>(),
     {
-        cartItemUnitPrice: undefined,
+        cartItemUnitPrice: 0,
     },
 );
 </script>

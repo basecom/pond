@@ -16,6 +16,7 @@ const props = withDefaults(
         wishlist: boolean,
         container: boolean
       };
+      isLoggedIn?: boolean;
       productUrl?: string;
     }>(),
     {
@@ -25,6 +26,8 @@ const props = withDefaults(
         itemOptions: undefined,
         quantity: 1,
         itemQuantity: 1,
+        isInWishlist: false,
+        isLoggedIn: false,
         isLoading: () => ({
             wishlist: false,
             container: false,
@@ -40,7 +43,6 @@ defineEmits<{
   'add-product-to-wishlist': [],
 }>();
 
-const {getFormattedPrice} = usePrice();
 const configStore = useConfigStore();
 
 const showDeliveryTime = configStore.get('core.cart.showDeliveryTime') as boolean;
@@ -51,7 +53,7 @@ const cartItemFallbackCover = configStore.get('BasecomPondCompanionPlugin.config
 <template>
     <slot name="product-content">
         <slot name="wrapper">
-            <div class="order-1 mb-4 flex w-5/6 flex-col">
+            <div class="order-1 mb-4 flex w-5/6 flex-col text-left">
                 <div class="mb-2 w-auto">
                     <slot name="cart-image">
                         <CartItemElementImage
@@ -93,7 +95,7 @@ const cartItemFallbackCover = configStore.get('BasecomPondCompanionPlugin.config
                     </div>
                 </slot>
                 <slot name="wishlist-wrapper">
-                    <div v-if="wishlistEnabled" class="mt-2 text-xs">
+                    <div v-if="wishlistEnabled && isLoggedIn" class="mt-2 text-xs">
                         <slot name="wishlist">
                             <CartItemElementAddToWishlist
                                 :is-in-wishlist="isInWishlist"
@@ -122,14 +124,14 @@ const cartItemFallbackCover = configStore.get('BasecomPondCompanionPlugin.config
         <slot name="unit-price-wrapper">
             <div v-if="itemQuantity > 1" class="order-5 flex w-full justify-end text-xs">
                 <slot name="unitPrice">
-                    <CartItemElementPriceUnit :cart-item-unit-price="getFormattedPrice(itemRegularPrice)" />
+                    <CartItemElementPriceUnit :cart-item-unit-price="itemRegularPrice" />
                 </slot>
             </div>
         </slot>
         <slot name="total-price-wrapper">
             <div class="order-4 flex w-full justify-end">
                 <slot name="total-price">
-                    <CartItemElementPriceTotal :cart-item-total-price="getFormattedPrice(itemTotalPrice)" />
+                    <CartItemElementPriceTotal :cart-item-total-price="itemTotalPrice" />
                 </slot>
             </div>
         </slot>

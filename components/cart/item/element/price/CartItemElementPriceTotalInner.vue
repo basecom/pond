@@ -1,18 +1,19 @@
 <script setup lang="ts">
 withDefaults(
     defineProps<{
-      cartItemTotalPrice?: string
+      cartItemTotalPrice?: number
     }>(),
     {
-        cartItemTotalPrice: '',
+        cartItemTotalPrice: 0,
     },
 );
+const { getFormattedPrice } = usePrice();
 </script>
 
 <template>
     <span class="font-bold">
         <slot name="total-price">
-            {{ cartItemTotalPrice }}*
+            {{ getFormattedPrice(cartItemTotalPrice) }}*
         </slot>
     </span>
 </template>

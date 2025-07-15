@@ -11,8 +11,6 @@ withDefaults(
 );
 
 const { formatLocaleDate } = usePondDate();
-
-const formatDate = (date: string ) => formatLocaleDate(date);
 </script>
 
 <template>
@@ -25,9 +23,9 @@ const formatDate = (date: string ) => formatLocaleDate(date);
             </slot>
             <slot name="delivery-dates">
                 <span>
-                    {{ formatDate(cartItemDeliveryPosition.deliveryDate.earliest || '') }}
+                    {{ formatLocaleDate(cartItemDeliveryPosition.deliveryDate.earliest || '') }}
                     -
-                    {{ formatDate(cartItemDeliveryPosition.deliveryDate.latest || '') }}
+                    {{ formatLocaleDate(cartItemDeliveryPosition.deliveryDate.latest || '') }}
                 </span>
             </slot>
         </template>

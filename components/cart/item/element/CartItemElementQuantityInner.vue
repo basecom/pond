@@ -4,15 +4,16 @@ import type {Schemas} from '@shopware/api-client/api-types';
 const props = withDefaults(
     defineProps<{
       cartItem: Schemas['LineItem'];
-      itemQuantity?: number;
       quantity?: number;
+      itemQuantity?: number;
 
     }>(),
     {
-        itemQuantity: 1,
         quantity: 1,
+        itemQuantity: 1,
     },
 );
+
 const {cartItem, quantity} = toRefs(props);
 
 defineEmits<{

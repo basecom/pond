@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { NuxtLinkLocale } from '#components';
 withDefaults(
     defineProps<{
       cartItemImage?: string;
@@ -20,7 +21,7 @@ withDefaults(
 <template>
     <slot name="container">
         <div class="w-20 text-center">
-            <NuxtLinkLocale :to="productUrl">
+            <component :is="productUrl ? NuxtLinkLocale : 'div'" :to="productUrl">
                 <template v-if="cartItemImage">
                     <slot name="image">
                         <img :src="cartItemImage" :alt="altText" class="h-20 border object-contain p-1">
@@ -38,7 +39,7 @@ withDefaults(
                         </div>
                     </slot>
                 </template>
-            </NuxtLinkLocale>
+            </component>
         </div>
     </slot>
 </template>

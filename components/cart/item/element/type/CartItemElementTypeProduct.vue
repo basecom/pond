@@ -11,6 +11,7 @@ withDefaults(
       quantity?: number;
       itemQuantity?: number;
       isInWishlist?: boolean;
+      isLoggedIn?: boolean;
       isLoading?: {
         wishlist: boolean,
         container: boolean
@@ -21,10 +22,11 @@ withDefaults(
         cartDeliveryPosition: undefined,
         itemTotalPrice: 0,
         itemRegularPrice: 0,
+        itemOptions: undefined,
         quantity: 1,
         itemQuantity: 1,
-        itemOptions: undefined,
         isInWishlist: false,
+        isLoggedIn: false,
         isLoading: () => ({
             wishlist: false,
             container: false,

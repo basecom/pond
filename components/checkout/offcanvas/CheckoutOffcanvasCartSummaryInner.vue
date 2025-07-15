@@ -14,7 +14,6 @@ withDefaults(
         promotion: boolean,
         select: boolean
       };
-      isLoggedIn?: boolean
     }>(),
     {
         cart: undefined,
@@ -27,7 +26,6 @@ withDefaults(
             promotion: false,
             select: false,
         }),
-        isLoggedIn: false,
     },
 );
 

@@ -12,6 +12,7 @@ const props = withDefaults(
       itemQuantity?: number;
       productUrl?: string
       isInWishlist?: boolean;
+      isLoggedIn?: boolean;
       isLoading?: {
         wishlist: boolean,
         container: boolean
@@ -22,10 +23,11 @@ const props = withDefaults(
         itemTotalPrice: 0,
         itemRegularPrice: 0,
         itemOptions: undefined,
-        quantity: 0,
-        itemQuantity: 0,
+        quantity: 1,
+        itemQuantity: 1,
         productUrl: undefined,
         isInWishlist: false,
+        isLoggedIn: false,
         isLoading: () => ({
             wishlist: false,
             container: false,
@@ -84,6 +86,7 @@ const currentProps = computed(() => {
         'quantity': props.quantity,
         'item-quantity': props.itemQuantity,
         'is-in-wishlist': props.isInWishlist,
+        'is-logged-in': props.isLoggedIn,
         'is-loading': props.isLoading,
     };
 });

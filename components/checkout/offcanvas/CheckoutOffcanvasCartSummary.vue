@@ -14,7 +14,6 @@ withDefaults(
         promotion: boolean,
         select: boolean
       };
-      isLoggedIn?: boolean;
     }>(),
     {
         cart: undefined,
@@ -27,7 +26,6 @@ withDefaults(
             promotion: false,
             select: false,
         }),
-        isLoggedIn: false,
     },
 );
 
@@ -46,7 +44,6 @@ const emits = defineEmits<{
         :shipping-cost="shippingCost"
         :subtotal="subtotal"
         :is-loading="isLoading"
-        :is-logged-in="isLoggedIn"
         @add-selected-promotion-code="(promotionCode: string) => emits('add-selected-promotion-code', promotionCode)"
         @set-selected-shipping-method="(shippingMethodId: AcceptableValue) =>  emits('set-selected-shipping-method', shippingMethodId)"
     />

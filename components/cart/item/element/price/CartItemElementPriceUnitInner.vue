@@ -1,18 +1,19 @@
 <script setup lang="ts">
 withDefaults(
     defineProps<{
-      cartItemUnitPrice?: string
+      cartItemUnitPrice?: number
     }>(),
     {
-        cartItemUnitPrice: undefined,
+        cartItemUnitPrice: 0,
     },
 );
+const { getFormattedPrice } = usePrice();
 </script>
 
 <template>
     <slot name="unit-price">
         <span v-if="cartItemUnitPrice">
-            {{ cartItemUnitPrice }}*
+            {{ getFormattedPrice(cartItemUnitPrice) }}*
         </span>
     </slot>
     <slot name="unit-price-descriptor">
