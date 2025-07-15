@@ -77,4 +77,10 @@ const { t } = useI18n();
             </li>
         </ol>
     </nav>
+
+    <template v-if="!breadcrumbs">
+        <div class="container mx-auto my-8 flex">
+            <LayoutSkeletonBreadcrumbs />
+        </div>
+    </template>
 </template>
