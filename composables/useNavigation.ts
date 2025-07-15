@@ -47,7 +47,8 @@ export function useNavigation(params?: {
     const navigationElements = computed(() => sharedElements.value);
 
     // CUSTOM: instead of calling the apiClient directly, use the proxy route which can be cached when enabled in the nuxt.config.ts routeRules
-    const depthRef = ref(1); // initial depth - will be updated by loadNavigationElements
+    // initial placeholder - will be updated by loadNavigationElements
+    const depthRef = ref(1);
     // useFetch needs to be at the top level, otherwise it breaks SSR/CSR payload data transfer and reactivity
     // an explicit key should be passed to ensure consistency between server and client, regardless of file structure or runtime context
     const { data, execute } = useFetch(`/api/proxy/navigation/${type}`, {
@@ -70,11 +71,9 @@ export function useNavigation(params?: {
     });
 
     async function loadNavigationElements({ depth }: { depth: number }) {
-        // update value
         depthRef.value = depth;
 
         try {
-            // CUSTOM: execute the fetching from the proxy route
             await execute();
 
             sharedElements.value = data.value || [];
