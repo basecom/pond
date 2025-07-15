@@ -5,16 +5,20 @@ import type { Schemas } from '@shopware/api-client/api-types';
 // We can't use the useCheckout composable to get the paymentMethods because it always uses the parameter 'onlyAvailable'
 // This means that it applies rules from e.g. the rule builder depending on the current context
 // We want to show ALL possible payment methods here though, not just the ones currently available for the customer / cart
-// This causes load on the server due to the api call being made - if the payment methods do not change frequently it is advised to define them statically
+// This can cause load on the server due to the api call being made - if the payment methods do not change frequently, defining them statically can reduce the amount of calls
 const { apiClient } = useShopwareContext();
-const { data: paymentMethods } = await apiClient.invoke(
-    'readPaymentMethod post /payment-method',
-    {
-        body: { onlyAvailable: false },
-    },
+const { data: paymentMethods } = await useAsyncData(
+    'all-available-payment-methods',
+    async () =>
+        await apiClient.invoke(
+            'readPaymentMethod post /payment-method',
+            {
+                body: { onlyAvailable: false },
+            },
+        ),
 );
 
-const paymentMethodsWithMedia = computed(() => paymentMethods.elements.filter((method: Schemas['PaymentMethod']) => method.media?.path));
+const paymentMethodsWithMedia = computed(() => paymentMethods.value.data.elements.filter((method: Schemas['PaymentMethod']) => method.media?.path));
 </script>
 
 <template>
