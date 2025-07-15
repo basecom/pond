@@ -14,6 +14,8 @@ const updateSessionWithLanguage = async () => {
 await updateSessionWithLanguage();
 provide('cmsTranslations', cmsTranslations.value);
 
+console.log(cmsTranslations.value);
+
 const { refreshCart } = useCart();
 const { getWishlistProducts } = useWishlist();
 const { fetchSalutations } = useSalutations();
