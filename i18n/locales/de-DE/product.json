@@ -1,0 +1,8 @@
+{
+  "product": {
+    "fallback": {
+      "alt": "Produktbild für {product} nicht gefunden",
+      "title": "Fallback Bild für {product}"
+    }
+  }
+}

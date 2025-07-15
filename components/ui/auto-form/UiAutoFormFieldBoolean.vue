@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { FieldProps } from './interface';
-import { UiCheckbox } from '@/components/ui/checkbox';
-import { UiSwitch } from '@/components/ui/switch';
 import { computed } from 'vue';
 import { beautifyObjectName, maybeBooleanishToBoolean } from './utils';
+import { UiSwitch } from '~/components/ui/switch';
+import { UiCheckbox } from '~/components/ui/checkbox';
 
 const props = defineProps<FieldProps>();
 

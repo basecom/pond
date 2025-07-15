@@ -37,6 +37,7 @@ const emits = defineEmits<{
     'update-password': [passwordForm: ChangePasswordForm];
 }>();
 
+const { getStyle } = usePondStyle();
 const { getPersonalDataForm, getPersonalDataDependencies } = usePondForm();
 const { getSalutations: salutations } = useSalutations();
 const schema = getPersonalDataForm(props.customer);
@@ -68,12 +69,12 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
 
 <template>
     <slot name="introduction">
-        <h1 class="mb-4 text-xl font-bold md:mb-6 md:text-2xl">{{ $t('account.profile') }}</h1>
+        <h1>{{ $t('account.profile') }}</h1>
     </slot>
 
     <!-- personal data -->
     <slot name="personal-data-headline">
-        <h3 class="mb-2 border-b border-gray-100 pb-2 text-lg font-bold md:mb-4">
+        <h3 :class="getStyle('account.personalData.subHeadline')">
             {{ $t('account.overview.personalData') }}
         </h3>
     </slot>
@@ -85,14 +86,14 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
             :schema="schema"
             :dependencies="dependencies"
             :field-config="{
-                accountType: { label: $t('account.customer.accountType') },
-                salutationId: { label: $t('account.customer.salutation') },
-                title: { label: $t('account.customer.title') },
-                firstName: { label: $t('account.customer.firstName') },
-                lastName: { label: $t('account.customer.lastName') },
-                company: { label: $t('account.customer.companyName') },
-                vatIds: { label: $t('account.customer.vat') },
-                birthdayDay: { label: $t('account.customer.birthday') },
+                accountType: { label: $t('account.customer.accountType.label') },
+                salutationId: { label: $t('account.customer.salutation.label') },
+                title: { label: $t('account.customer.title.label') },
+                firstName: { label: $t('account.customer.firstName.label') },
+                lastName: { label: $t('account.customer.lastName.label') },
+                company: { label: $t('account.customer.company.label') },
+                vatIds: { label: $t('account.customer.vatId.label') },
+                birthdayDay: { label: $t('account.customer.birthday.label') },
             }"
             @submit="changePersonalData"
         >
@@ -106,7 +107,7 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
                 <div class="col-span-12">
                     <FormField v-slot="{ componentField }" v-bind="slotProps" name="salutationId">
                         <UiFormItem>
-                            <UiAutoFormLabel>{{ $t('account.customer.salutation') }}</UiAutoFormLabel>
+                            <UiAutoFormLabel>{{ $t('account.customer.salutation.label') }}</UiAutoFormLabel>
                             <UiSelect v-bind="componentField" :default-value="customer.salutationId">
                                 <UiFormControl>
                                     <UiSelectTrigger>
@@ -166,7 +167,7 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
                 <div class="col-span-4">
                     <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayDay">
                         <UiFormItem>
-                            <UiAutoFormLabel>{{ $t('account.customer.birthday') }}</UiAutoFormLabel>
+                            <UiAutoFormLabel>{{ $t('account.customer.birthday.label') }}</UiAutoFormLabel>
                             <UiSelect v-bind="componentField" :default-value="birthday.getDate()">
                                 <UiFormControl>
                                     <UiSelectTrigger>

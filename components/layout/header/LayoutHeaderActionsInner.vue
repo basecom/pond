@@ -7,11 +7,13 @@ withDefaults(
         wishlistEnabled: false,
     },
 );
+
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
     <slot name="wrapper">
-        <div class="flex items-center gap-3.5">
+        <div :class="getStyle('header.actions.wrapper')">
             <slot name="search">
                 <LayoutHeaderSearch />
             </slot>
@@ -34,3 +36,4 @@ withDefaults(
         </div>
     </slot>
 </template>
+

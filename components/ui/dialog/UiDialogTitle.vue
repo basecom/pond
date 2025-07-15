@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
 import { DialogTitle, type DialogTitleProps, useForwardProps } from 'reka-ui';
-import { computed, type HTMLAttributes } from 'vue';
+import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<DialogTitleProps & { class?: HTMLAttributes['class'] }>();
+
+const { getStyle } = usePondStyle();
 
 const delegatedProps = computed(() => {
     const { class: _, ...delegated } = props;
@@ -17,12 +18,7 @@ const forwardedProps = useForwardProps(delegatedProps);
 <template>
     <DialogTitle
         v-bind="forwardedProps"
-        :class="
-            cn(
-                'text-lg font-semibold leading-none tracking-tight',
-                props.class,
-            )
-        "
+        :class="[getStyle('ui.dialog.title'), props.class]"
     >
         <slot />
     </DialogTitle>
