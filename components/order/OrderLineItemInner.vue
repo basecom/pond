@@ -24,7 +24,7 @@ const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.
                         :class="getStyle('account.order.lineItem.cover')"
                     >
                     <video
-                        v-if="lineItem.cover?.url && lineItem.cover?.mimeType?.includes('video')"
+                        v-else-if="lineItem.cover?.url && lineItem.cover?.mimeType?.includes('video')"
                         :src="lineItem.cover.url"
                         :title="lineItem.cover.translated?.title"
                         :class="getStyle('account.order.lineItem.cover')"
