@@ -25,7 +25,7 @@ const showPhoneNumberField = configStore.get('core.loginRegistration.showPhoneNu
 <template>
     <div>
         <slot name="address-card-headline">
-            <h3 v-if="headline" class="mb-2 border-b border-gray-100 pb-2 text-lg font-bold">
+            <h3 v-if="headline">
                 {{ headline }}
             </h3>
         </slot>
