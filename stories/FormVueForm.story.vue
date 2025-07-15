@@ -35,10 +35,15 @@ onMounted(() => isMounted.value = true);
             <FormCheckboxElement
                 id="required-checkbox-element"
                 name="checkbox-element"
-                label="I'm a required checkbox"
                 rules="required"
                 :messages="{ required: 'I am required' }"
-            />
+            >
+                <template #checkbox-element-content>
+                    <span>
+                        I'm a required checkbox
+                    </span>
+                </template>
+            </FormCheckboxElement>
 
             <UiButton
                 id="form-submit-button"
@@ -78,10 +83,15 @@ onMounted(() => isMounted.value = true);
             <FormCheckboxElement
                 id="form-2-required-checkbox-element"
                 name="checkbox-element"
-                label="I'm a required checkbox"
                 rules="required"
                 :messages="{ required: 'Checkbox is required' }"
-            />
+            >
+                <template #checkbox-element-content>
+                    <span>
+                        I'm a required checkbox
+                    </span>
+                </template>
+            </FormCheckboxElement>
 
             <UiButton
                 id="form-2-submit-button"
@@ -119,13 +129,25 @@ onMounted(() => isMounted.value = true);
                     name="first-checkbox"
                     label="I'm a checkbox"
                     :columns="{ md: 6 }"
-                />
+                >
+                    <template #checkbox-element-content>
+                        <span>
+                            I'm a checkbox
+                        </span>
+                    </template>
+                </FormCheckboxElement>
                 <FormCheckboxElement
                     id="second-checkbox-element"
                     name="second-checkbox"
                     label="I'm another checkbox"
                     :columns="{ md: 6 }"
-                />
+                >
+                    <template #checkbox-element-content>
+                        <span>
+                            I'm another checkbox
+                        </span>
+                    </template>
+                </FormCheckboxElement>
             </GroupElement>
 
             <UiButton

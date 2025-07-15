@@ -1,6 +1,5 @@
 <script setup lang="ts" generic="T extends z.ZodAny">
 import type { Config, ConfigItem } from './interface';
-import { PlusIcon, TrashIcon } from 'lucide-vue-next';
 import { FieldArray, FieldContextKey, useField } from 'vee-validate';
 import * as z from 'zod';
 import { beautifyObjectName, getBaseType } from './utils';
@@ -76,9 +75,7 @@ provide(FieldContextKey, fieldContext);
                                             size="icon"
                                             variant="secondary"
                                             @click="remove(index)"
-                                        >
-                                            <TrashIcon :size="16" />
-                                        </UiButton>
+                                        />
                                     </div>
                                     <UiSeparator v-if="!field.isLast" />
                                 </div>
@@ -90,7 +87,6 @@ provide(FieldContextKey, fieldContext);
                                 class="mt-4 flex items-center"
                                 @click="push(null)"
                             >
-                                <PlusIcon class="mr-2" :size="16" />
                                 Add
                             </UiButton>
                         </UiAccordionContent>
