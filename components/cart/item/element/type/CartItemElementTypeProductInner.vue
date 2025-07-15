@@ -23,8 +23,8 @@ const props = withDefaults(
         itemTotalPrice: 0,
         itemRegularPrice: 0,
         itemOptions: undefined,
-        quantity: 0,
-        itemQuantity: 0,
+        quantity: 1,
+        itemQuantity: 1,
         isLoading: () => ({
             wishlist: false,
             container: false,

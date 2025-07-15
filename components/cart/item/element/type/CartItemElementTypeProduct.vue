@@ -21,8 +21,8 @@ withDefaults(
         cartDeliveryPosition: undefined,
         itemTotalPrice: 0,
         itemRegularPrice: 0,
-        quantity: 0,
-        itemQuantity: 0,
+        quantity: 1,
+        itemQuantity: 1,
         itemOptions: undefined,
         isInWishlist: false,
         isLoading: () => ({

@@ -18,7 +18,7 @@ const { cartItem } = toRefs(props);
 const {addToWishlist, isInWishlist, removeFromWishlist } = useProductWishlist(cartItem.value?.referencedId ?? '');
 
 const {removeItem} = useCartItem(cartItem);
-const {getWishlistProducts} = useWishlist();
+
 const {refreshCart} = useCart();
 
 const {handleError} = usePondHandleError();
