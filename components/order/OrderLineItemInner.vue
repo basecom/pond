@@ -17,17 +17,31 @@ const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.
             <div :class="getStyle('account.order.lineItem.base')">
                 <slot name="line-item-cover">
                     <img
-                        v-if="lineItem.cover?.url"
+                        v-if="lineItem.cover?.url && !lineItem.cover?.mimeType?.includes('video')"
                         :src="lineItem.cover.url"
                         :alt="lineItem.cover.translated?.alt"
                         :title="lineItem.cover.translated?.title"
                         :class="getStyle('account.order.lineItem.cover')"
                     >
+                    <video
+                        v-if="lineItem.cover?.url && lineItem.cover?.mimeType?.includes('video')"
+                        :src="lineItem.cover.url"
+                        :title="lineItem.cover.translated?.title"
+                        :class="getStyle('account.order.lineItem.cover')"
+                        :aria-label="`product-video-${lineItem.label}`"
+                    />
                     <img
                         v-else-if="lineItem.type !== 'promotion' && productFallBackCover"
                         :src="productFallBackCover"
-                        alt=""
-                        title=""
+                        :alt="$t('product.fallback.alt', { product: lineItem.label })"
+                        :title="$t('product.fallback.title', { product: lineItem.label })"
+                        :class="getStyle('account.order.lineItem.cover')"
+                    >
+                    <img
+                        v-else-if="lineItem.type !== 'promotion' && !productFallBackCover"
+                        src="/fallback-product-cover.svg"
+                        :alt="$t('product.fallback.alt', { product: lineItem.label })"
+                        :title="$t('product.fallback.title', { product: lineItem.label })"
                         :class="getStyle('account.order.lineItem.cover')"
                     >
                     <div

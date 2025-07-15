@@ -99,7 +99,7 @@ const onSubmit = (data: VueFormRequestData) => {
 <template>
     <div :class="getStyle('account.register.outer')">
         <slot name="headline">
-            <h1>{{ $t('account.register.headline') }}</h1>
+            <h1 :class="getStyle('account.register.headline')">{{ $t('account.register.headline') }}</h1>
         </slot>
 
         <slot name="register-form">

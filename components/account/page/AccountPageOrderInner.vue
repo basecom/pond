@@ -76,7 +76,7 @@ const displayCompletePaymentLink = (paymentStateMachineTechnicalName: string) =>
                                                     )"
                                                 >
                                                     <NuxtLinkLocale
-                                                        v-if="order && order.transactions && displayCompletePaymentLink(order.transactions[0]?.stateMachineState?.technicalName ?? '')"
+                                                        v-if="order && order.transactions && order.stateMachineState.technicalName !== 'cancelled' && displayCompletePaymentLink(order.transactions[0]?.stateMachineState?.technicalName ?? '')"
                                                         to="/"
                                                     >
                                                         {{ $t('payment.completePayment') }}
