@@ -1,10 +1,8 @@
-import { useToast } from '@/components/ui/toast/use-toast';
-
 export function usePondAuthentication() {
     const customerStore = useCustomerStore();
     const { signedIn, loading } = storeToRefs(customerStore);
     const { formatLink } = useInternationalization();
-    const { toast } = useToast();
+    const { toast } = usePondToast();
     const { t } = useI18n();
     const { handleError } = usePondHandleError();
 
