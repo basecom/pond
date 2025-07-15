@@ -9,8 +9,8 @@
         <template #title>
             <slot name="title" />
         </template>
-        <template #subTitle>
-            <slot name="subTitle" />
+        <template #description>
+            <slot name="description" />
         </template>
         <template #button>
             <slot name="button" />

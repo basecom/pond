@@ -1,18 +1,25 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import { navigationMenuTriggerStyle } from '~/components/ui/navigation-menu';
 
 defineProps<{
   navigationElements?: Schemas['Category'][];
 }>();
+
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
     <slot name="header-navigation">
-        <UiNavigationMenu class="static! justify-start!">
+        <UiNavigationMenu :class="getStyle('header.navigation.menu')">
             <UiNavigationMenuList>
-                <UiNavigationMenuItem v-for="navigationElement in navigationElements" :key="navigationElement.id">
-                    <UiNavigationMenuLink v-if="navigationElement.visibleChildCount === 0" :class="navigationMenuTriggerStyle()">
+                <UiNavigationMenuItem
+                    v-for="navigationElement in navigationElements"
+                    :key="navigationElement.id"
+                >
+                    <UiNavigationMenuLink
+                        v-if="navigationElement.visibleChildCount === 0"
+                        :class="getStyle('ui.navigationMenu.triggerStyle')"
+                    >
                         <slot name="header-navigation-link">
                             <LazyLayoutHeaderNavigationLink :navigation-element="navigationElement" />
                         </slot>
@@ -20,7 +27,7 @@ defineProps<{
 
                     <template v-else>
                         <slot name="header-navigation-parent">
-                            <UiNavigationMenuTrigger>
+                            <UiNavigationMenuTrigger :class="getStyle('header.navigation.trigger')">
                                 <LazyLayoutHeaderNavigationLink
                                     :navigation-element="navigationElement"
                                     :show-as-link="navigationElement.type === 'link' || navigationElement.type === 'page'"
@@ -28,8 +35,8 @@ defineProps<{
                                 />
                             </UiNavigationMenuTrigger>
 
-                            <UiNavigationMenuContent>
-                                <ul class="grid w-max gap-3 p-6 text-sm lg:grid-cols-2">
+                            <UiNavigationMenuContent :class="getStyle('header.navigation.content')">
+                                <ul :class="getStyle('header.navigation.list')">
                                     <LayoutHeaderNavigationRecursiveLink :navigation-element="navigationElement" />
                                 </ul>
                             </UiNavigationMenuContent>

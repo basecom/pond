@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ApiClientError } from '@shopware/api-client';
-import type {RegisterFormData} from '~/types/vueForm/Register';
+import type { RegisterFormData } from '~/types/vueForm/Register';
 
 const customerStore = useCustomerStore();
 const { t } = useI18n();
 const { handleError } = usePondHandleError();
+const { toast } = usePondToast();
 
 const isLoading = ref(false);
 const errorMessage: Ref<string|undefined> = ref(undefined);
@@ -15,6 +16,9 @@ const register = async (registerData: RegisterFormData) => {
 
     try {
         await customerStore.register(registerData);
+        toast({
+            title: t('account.register.success'),
+        });
     } catch (error) {
         if (error instanceof ApiClientError) {
             const firstError = error.details.errors?.[0];

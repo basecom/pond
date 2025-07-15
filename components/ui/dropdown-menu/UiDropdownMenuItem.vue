@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
 import { DropdownMenuItem, type DropdownMenuItemProps, useForwardProps } from 'reka-ui';
-import { computed, type HTMLAttributes } from 'vue';
+import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<DropdownMenuItemProps & { class?: HTMLAttributes['class'], inset?: boolean }>();
+
+const { getStyle } = usePondStyle();
 
 const delegatedProps = computed(() => {
     const { class: _, ...delegated } = props;
@@ -17,11 +18,9 @@ const forwardedProps = useForwardProps(delegatedProps);
 <template>
     <DropdownMenuItem
         v-bind="forwardedProps"
-        :class="cn(
-            'relative flex cursor-default select-none items-center rounded-sm gap-2 px-2 py-1.5 text-sm outline-none transition-colors focus:bg-gray-100 focus:text-gray-900 data-disabled:pointer-events-none data-disabled:opacity-50  [&>svg]:size-4 [&>svg]:shrink-0',
-            inset && 'pl-8',
-            props.class,
-        )"
+        :class="[{
+            [getStyle('ui.dropdown.inset')]: inset
+        }, getStyle('ui.dropdown.menuItem'), props.class]"
     >
         <slot />
     </DropdownMenuItem>

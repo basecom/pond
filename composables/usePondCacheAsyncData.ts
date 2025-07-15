@@ -1,6 +1,6 @@
 import type { NuxtApp, NuxtError } from '#app';
 import type { AsyncData, KeysOf, PickFrom } from '#app/composables/asyncData';
-import type {AsyncDataOptions} from '~/types/AsyncDataOptions';
+import type { AsyncDataOptions } from '~/types/AsyncDataOptions';
 
 /**
  * @param forceRefresh - if true, the data will be fetched from the server and any cached data will be ignored

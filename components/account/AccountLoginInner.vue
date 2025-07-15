@@ -19,6 +19,7 @@ const emits = defineEmits<{
 const closeDialog = inject<() => void>('closeDialog');
 
 const { t } = useI18n();
+const { getStyle } = usePondStyle();
 
 const schema = z.object({
     username: z
@@ -43,7 +44,7 @@ const login = async (loginData: LoginData) => {
 <template>
     <slot name="headline" />
     <UiAutoForm
-        class="space-y-6"
+        :class="getStyle('account.login.form')"
         :schema="schema"
         :field-config="{
             username: {
@@ -65,11 +66,11 @@ const login = async (loginData: LoginData) => {
         }"
         @submit="login"
     >
-        <div class="mt-0! grid">
+        <div :class="getStyle('account.login.outer')">
             <slot name="password-forgotten">
                 <NuxtLinkLocale
                     to="/account/recover"
-                    class="mb-6 justify-self-start py-2 text-sm underline underline-offset-4"
+                    :class="getStyle('account.login.passwordForgotten')"
                     @click="closeDialog?.()"
                 >
                     {{ $t('account.password.forgotten') }}
@@ -77,9 +78,9 @@ const login = async (loginData: LoginData) => {
             </slot>
 
             <slot name="alert">
-                <UiAlert v-if="errorMessage" variant="destructive" class="mb-4 flex gap-4">
+                <UiAlert v-if="errorMessage" variant="destructive" :class="getStyle('account.login.alert.outer')">
                     <slot name="alert-icon">
-                        <Icon name="mdi:alert-circle-outline" class="size-4 text-red-500" />
+                        <Icon name="mdi:alert-circle-outline" :class="getStyle('account.login.alert.icon')" />
                     </slot>
 
                     <div>
