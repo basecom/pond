@@ -44,6 +44,7 @@ const limit = ref(
 
 // Corrected defu usage
 const initalRoute = defu({}, route);
+console.log(initalRoute);
 
 const isLoading = ref(true);
 
