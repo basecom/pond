@@ -14,6 +14,7 @@ const props = withDefaults(
         size: 'default',
         class: '',
         isLoading: false,
+        as: 'button',
     },
 );
 
