@@ -16,7 +16,7 @@ export default {
         product: 'col-span-2 font-bold',
         quantity: 'col-start-3 flex justify-center font-bold',
         unitPrice: 'flex justify-center font-bold',
-        totalPrice: 'flex justify-center font-bold',
+        totalPrice: 'flex justify-end font-bold',
         separator: 'md:mt-2.5 text-gray-300',
     },
 
@@ -54,5 +54,24 @@ export default {
             icon: 'mdi:alert-circle-outline" class="size-4 shrink-0',
             title: 'mb-0',
         },
+    },
+
+    lineItem: {
+        wrapper: 'flex flex-col md:grid md:grid-cols-5 gap-5 border-b border-gray-100 py-2',
+        base: 'flex col-span-2 gap-2.5',
+        cover: 'object-center object-contain h-16 aspect-square',
+        promotion: {
+            wrapper: 'h-16 w-16 border border-gray-300 items-center flex justify-center',
+            icon: 'size-4 shrink-0',
+        },
+        info: 'flex flex-col',
+        label: 'font-bold',
+        description: 'text-gray-600 text-sm',
+        quantity: {
+            wrapper: 'w-full md:col-start-3 flex justify-between md:justify-center',
+            label: 'font-bold md:hidden',
+        },
+        unitPrice: 'justify-center hidden md:flex',
+        totalPrice: 'flex justify-end font-bold',
     },
 };

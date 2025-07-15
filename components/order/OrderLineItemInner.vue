@@ -12,38 +12,39 @@ const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.
 </script>
 
 <template>
-    <div :class="getStyle('order.lineItem.wrapper')">
+    <div :class="getStyle('account.order.lineItem.wrapper')">
         <slot name="line-item">
-            <div :class="getStyle('order.lineItem.base')">
+            <div :class="getStyle('account.order.lineItem.base')">
                 <slot name="line-item-cover">
                     <img
                         v-if="lineItem.cover?.url"
                         :src="lineItem.cover.url"
                         :alt="lineItem.cover.translated?.alt"
                         :title="lineItem.cover.translated?.title"
-                        :class="getStyle('order.lineItem.cover')"
+                        :class="getStyle('account.order.lineItem.cover')"
                     >
                     <img
                         v-else-if="lineItem.type !== 'promotion' && productFallBackCover"
                         :src="productFallBackCover"
                         alt=""
                         title=""
-                        :class="getStyle('order.lineItem.cover')"
+                        :class="getStyle('account.order.lineItem.cover')"
                     >
                     <div
                         v-else-if="lineItem.type === 'promotion'"
-                        :class="getStyle('order.lineItem.promotion.wrapper')"
+                        :class="getStyle('account.order.lineItem.promotion.wrapper')"
                     >
-                        <Icon name="mdi:percent" :class="getStyle('order.lineItem.promotion.icon')" />
+                        <Icon name="mdi:percent" :class="getStyle('account.order.lineItem.promotion.icon')" />
                     </div>
                 </slot>
 
                 <slot name="line-item-information">
-                    <div :class="getStyle('order.lineItem.info')">
-                        <span :class="getStyle('order.lineItem.label')">
+                    <div :class="getStyle('account.order.lineItem.info')">
+                        <span :class="getStyle('account.order.lineItem.label')">
                             {{ lineItem.label }}
                         </span>
-                        <span>
+
+                        <span :class="getStyle('account.order.lineItem.description')">
                             {{ lineItem.payload?.productNumber }}
                         </span>
                     </div>
@@ -52,8 +53,8 @@ const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.
         </slot>
 
         <slot name="quantity">
-            <span :class="getStyle('order.lineItem.quantity.wrapper')">
-                <span :class="getStyle('order.lineItem.quantity.label')">
+            <span :class="getStyle('account.order.lineItem.quantity.wrapper')">
+                <span :class="getStyle('account.order.lineItem.quantity.label')">
                     {{ $t('order.lineItem.quantity') }}
                 </span>
                 {{ lineItem.quantity }}
@@ -61,13 +62,13 @@ const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.
         </slot>
 
         <slot name="unit-price">
-            <span :class="getStyle('order.lineItem.unitPrice')">
+            <span :class="getStyle('account.order.lineItem.unitPrice')">
                 {{ getFormattedPrice(lineItem.unitPrice) }}
             </span>
         </slot>
 
         <slot name="total-price">
-            <span :class="getStyle('order.lineItem.totalPrice')">
+            <span :class="getStyle('account.order.lineItem.totalPrice')">
                 {{ getFormattedPrice(lineItem.totalPrice) }}
             </span>
         </slot>

@@ -1,6 +1,5 @@
 import config from '#pond-config';
 
-
 // helper types for type generation
 type Join<K, P> = K extends string | number
     ? P extends string | number
@@ -25,6 +24,7 @@ export const usePondStyle = () => {
     const getStyle = (path: StylePaths): string => {
         const keys = path.split('.');
         let current: unknown = config.styles;
+        console.log(current);
 
         for (const key of keys) {
             if (typeof current === 'object' && current && key in current) {

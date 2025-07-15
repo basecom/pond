@@ -22,9 +22,10 @@ export function usePondHandleError() {
     const showError = (errorMessage: unknown | string, showAsError: boolean = true) => {
         if (showAsError) {
             console.error(errorMessage);
-        } else {
-            console.warn(errorMessage);
+            return;
         }
+
+        console.warn(errorMessage);
     };
 
     const extractFileNameFromStack = (): string => {
