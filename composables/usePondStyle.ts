@@ -24,7 +24,6 @@ export const usePondStyle = () => {
     const getStyle = (path: StylePaths): string => {
         const keys = path.split('.');
         let current: unknown = config.styles;
-        console.log(current);
 
         for (const key of keys) {
             if (typeof current === 'object' && current && key in current) {

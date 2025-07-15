@@ -29,7 +29,7 @@ export default {
         cart: {
             trigger: 'size-5 relative',
             icon: 'size-5',
-            badge: 'absolute -right-2 -top-1.5 px-1 py-0 text-xs font-normal',
+            badge: 'absolute -right-2 -top-1.5 !px-1 !py-0 text-xs font-normal',
         },
 
         search: '!size-5 cursor-pointer',
@@ -37,7 +37,7 @@ export default {
         wishlist: {
             trigger: 'relative h-5',
             icon: 'size-5',
-            badge: 'absolute -right-2 -top-1.5 px-1 py-0 text-xs font-normal',
+            badge: 'absolute -right-2 -top-1.5 !px-1 !py-0 text-xs font-normal',
         },
     },
     navigation,
