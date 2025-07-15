@@ -53,6 +53,7 @@ export const usePondCmsTranslations = () => {
         messages.value[defaultLocale];
 
     const cmsTranslations = computed(() => {
+        console.log('messages', messages.value);
             console.log('message', messagesForCurrentLocale);
             return mapCompiledToOldFormat(messagesForCurrentLocale);
     }
