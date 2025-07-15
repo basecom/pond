@@ -13,19 +13,13 @@ const isTosPageLayoutLoading = ref(true);
 onMounted(async () => {
     // Fetch cms page for privacy page, if layout is set in admin
     if (privacyPage) {
-        const privacyPageResponse = await getCmsPageById(privacyPage);
-        if (privacyPageResponse) {
-            privacyPageLayout.value = privacyPageResponse.data?.value;
-        }
+        privacyPageLayout.value = await getCmsPageById(privacyPage);
         isPrivacyPageLayoutLoading.value = false;
     }
 
     // Fetch cms page for terms and conditions, if layout is set in admin
     if (tosPage) {
-        const tosPageResponse = await getCmsPageById(tosPage);
-        if (tosPageResponse) {
-            tosPageLayout.value = tosPageResponse.data?.value;
-        }
+        tosPageLayout.value = await getCmsPageById(tosPage);
         isTosPageLayoutLoading.value = false;
     }
 });
