@@ -21,6 +21,7 @@ const emits = defineEmits<{
 }>();
 
 const { t } = useI18n();
+const { getStyle } = usePondStyle();
 
 const schema = z.object({
     email: z
@@ -80,7 +81,7 @@ watch(() => props.resetForm, (newValue) => {
 
 <template>
     <slot name="headline">
-        <h3 class="mb-2 mt-6 border-b border-gray-100 pb-2 text-lg font-bold md:mb-4 md:mt-8">
+        <h3 :class="getStyle('account.personalData.subHeadline')">
             {{ $t('account.personalProfile.changeMailAddress.headline') }}
         </h3>
     </slot>
@@ -90,13 +91,13 @@ watch(() => props.resetForm, (newValue) => {
     </slot>
 
     <slot name="change-mail">
-        <UiAccordion type="single" class="w-full" collapsible>
-            <UiAccordionItem value="mail" class="border-gray-100">
-                <UiAccordionTrigger class="text-base">
+        <UiAccordion type="single" :class="getStyle('account.personalData.accordion.outer')" collapsible>
+            <UiAccordionItem value="mail" :class="getStyle('account.personalData.accordion.item')">
+                <UiAccordionTrigger :class="getStyle('account.personalData.accordion.trigger')">
                     {{ $t('account.personalProfile.changeMailAddress.headline') }}
                 </UiAccordionTrigger>
 
-                <UiAccordionContent class="px-px text-base">
+                <UiAccordionContent :class="getStyle('account.personalData.accordion.content')">
                     <slot name="change-mail-form">
                         <UiAutoForm
                             v-auto-animate

@@ -1,12 +1,25 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
-import { ToastRoot, type ToastRootEmits, useForwardPropsEmits } from 'reka-ui';
-import { computed } from 'vue';
-import { type ToastProps, toastVariants } from '.';
+import { ToastRoot, type ToastRootEmits, type ToastRootProps, useForwardPropsEmits } from 'reka-ui';
+import type { HTMLAttributes } from 'vue';
 
-const props = defineProps<ToastProps>();
+export interface ToastProps extends ToastRootProps {
+    class?: HTMLAttributes['class']
+    variant?: 'default'|'destructive'
+    onOpenChange?: ((value: boolean) => void) | undefined
+}
+
+const props = withDefaults(
+    defineProps<ToastProps>(),
+    {
+        variant: 'default',
+        class: '',
+        onOpenChange: undefined,
+    },
+);
 
 const emits = defineEmits<ToastRootEmits>();
+
+const { getStyle } = usePondStyle();
 
 const delegatedProps = computed(() => {
     const { class: _, ...delegated } = props;
@@ -20,7 +33,10 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 <template>
     <ToastRoot
         v-bind="forwarded"
-        :class="cn(toastVariants({ variant }), props.class)"
+        :class="[{
+            [getStyle('ui.toast.base.variants.default')]: variant === 'default',
+            [getStyle('ui.toast.base.variants.destructive')]: variant === 'destructive'
+        }, getStyle('ui.toast.base'), props.class]"
         @update:open="onOpenChange"
     >
         <slot />

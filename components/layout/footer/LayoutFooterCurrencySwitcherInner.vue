@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
 import type { AcceptableValue } from 'reka-ui';
-import { useToast } from '@/components/ui/toast/use-toast';
 
 const { currency, setCurrency } = useSessionContext();
 const { getAvailableCurrencies } = usePondSalesChannel();
-const { toast } = useToast();
+const { toast } = usePondToast();
+const { getStyle } = usePondStyle();
 const { handleError } = usePondHandleError();
 const { t } = useI18n();
 
@@ -31,10 +31,10 @@ const onUpdate = async (selectedId: AcceptableValue) => {
             await setCurrency(currency);
             selectedCurrencyId.value = selectedId;
             toast({
-                title: t('general.currencySwitch', {currency: currency.isoCode}),
+                title: t('general.currencySwitch', { currency: currency.isoCode }),
             });
         } catch {
-            handleError('[Pond][LayoutCurrencySwitcher]: Currency switch failed');
+            handleError('Currency switch failed');
         }
     }
 };
@@ -43,8 +43,12 @@ const onUpdate = async (selectedId: AcceptableValue) => {
 <template>
     <UiSelect :model-value="selectedCurrencyId" @update:model-value="onUpdate">
         <slot name="currency-switcher-trigger">
-            <UiSelectTrigger id="currency-switch" class="border-none shadow-none p-0" aria-label="currency-switch">
-                <UiSelectValue  />
+            <UiSelectTrigger
+                id="currency-switch"
+                :class="getStyle('footer.currencySwitcherComponent.trigger')"
+                aria-label="currency-switch"
+            >
+                <UiSelectValue />
             </UiSelectTrigger>
         </slot>
 
@@ -56,7 +60,7 @@ const onUpdate = async (selectedId: AcceptableValue) => {
                             v-for="availableCurrency in availableCurrencies"
                             :key="availableCurrency.id"
                             :value="availableCurrency.id"
-                            class="cursor-pointer"
+                            :class="getStyle('footer.currencySwitcherComponent.item')"
                         >
                             {{ availableCurrency.symbol }}
                             {{ availableCurrency.shortName }}

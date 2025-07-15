@@ -5,7 +5,9 @@ defineProps<{
   customer: Schemas['Customer'];
 }>();
 
+const { getStyle } = usePondStyle();
 const configStore = useConfigStore();
+
 const showTitle = configStore.get('core.loginRegistration.showTitleField') as boolean;
 const showAdditionalAddressField1 = configStore.get('core.loginRegistration.showAdditionalAddressField1') as boolean;
 const showAdditionalAddressField2 = configStore.get('core.loginRegistration.showAdditionalAddressField2') as boolean;
@@ -13,41 +15,56 @@ const showAdditionalAddressField2 = configStore.get('core.loginRegistration.show
 
 <template>
     <slot name="introduction">
-        <h1 class="text-xl font-bold md:text-2xl">{{ $t('account.account') }}</h1>
-        <p class="my-2">{{ $t('account.overview.description') }}</p>
+        <h1>{{ $t('account.account') }}</h1>
+        <p :class="getStyle('account.pageDescription')">{{ $t('account.overview.description') }}</p>
     </slot>
 
-    <div class="mt-8 grid gap-8 md:grid-cols-2">
+    <div :class="getStyle('account.personalData.outer')">
         <!-- personal data -->
         <slot name="personal-data">
             <div>
                 <slot name="personal-data-headline">
-                    <h3 class="mb-2 border-b border-gray-100 pb-2 text-lg font-bold">
+                    <h3 :class="getStyle('account.personalData.headline')">
                         {{ $t('account.overview.personalData') }}
                     </h3>
                 </slot>
 
                 <slot name="personal-data-content">
-                    <div class="grid grid-cols-[4fr_8fr] gap-2">
-                        <span v-if="customer.salutation" class="font-semibold">{{ $t('account.customer.salutation.label') }}</span>
+                    <div :class="getStyle('account.personalData.general.outer')">
+                        <span
+                            v-if="customer.salutation"
+                            :class="getStyle('account.personalData.general.label')"
+                        >
+                            {{ $t('account.customer.salutation.label') }}
+                        </span>
                         <span>{{ customer.salutation?.displayName }}</span>
 
                         <template v-if="showTitle && customer.title">
-                            <span class="font-semibold">{{ $t('account.customer.title.label') }}</span>
+                            <span :class="getStyle('account.personalData.general.label')">
+                                {{ $t('account.customer.title.label') }}
+                            </span>
                             <span>{{ customer.title }}</span>
                         </template>
 
-                        <span class="font-semibold">{{ $t('account.customer.name') }}</span>
+                        <span :class="getStyle('account.personalData.general.label')">
+                            {{ $t('account.customer.name') }}
+                        </span>
                         <span>{{ customer.firstName }} {{ customer.lastName }}</span>
 
-                        <span class="font-semibold">{{ $t('account.customer.email.label') }}</span>
+                        <span :class="getStyle('account.personalData.general.label')">
+                            {{ $t('account.customer.email.label') }}
+                        </span>
                         <span>{{ customer.email }}</span>
 
                         <template v-if="customer.accountType === 'business'">
-                            <span class="font-semibold">{{ $t('account.customer.company.label') }}</span>
+                            <span :class="getStyle('account.personalData.general.label')">
+                                {{ $t('account.customer.company.label') }}
+                            </span>
                             <span>{{ customer.company }}</span>
 
-                            <span class="font-semibold">{{ $t('account.customer.vatId.label') }}</span>
+                            <span :class="getStyle('account.personalData.general.label')">
+                                {{ $t('account.customer.vatId.label') }}
+                            </span>
                             <span>{{ customer.vatIds?.join(', ') }}</span>
                         </template>
                     </div>
@@ -59,14 +76,16 @@ const showAdditionalAddressField2 = configStore.get('core.loginRegistration.show
         <slot name="payment-method">
             <div>
                 <slot name="payment-method-headline">
-                    <h3 class="mb-2 border-b border-gray-100 pb-2 text-lg font-bold">
+                    <h3 :class="getStyle('account.personalData.headline')">
                         {{ $t('account.overview.defaultPaymentMethod') }}
                     </h3>
                 </slot>
 
                 <slot name="payment-method-content">
                     <b>{{ customer.defaultPaymentMethod?.translated.name }}</b>
-                    <p class="text-sm">{{ customer.defaultPaymentMethod?.translated.description }}</p>
+                    <p :class="getStyle('account.personalData.paymentMethod.description')">
+                        {{ customer.defaultPaymentMethod?.translated.description }}
+                    </p>
                 </slot>
             </div>
         </slot>
@@ -75,14 +94,17 @@ const showAdditionalAddressField2 = configStore.get('core.loginRegistration.show
         <slot name="billing-address">
             <div v-if="customer.defaultBillingAddress">
                 <slot name="billing-address-headline">
-                    <h3 class="mb-2 border-b border-gray-100 pb-2 text-lg font-bold">
+                    <h3 :class="getStyle('account.personalData.headline')">
                         {{ $t('account.overview.defaultBillingAddress') }}
                     </h3>
                 </slot>
 
                 <slot name="billing-address-content">
-                    <div class="space-y-2">
-                        <p v-if="customer.accountType === 'business' && (customer.defaultBillingAddress.company || customer.defaultBillingAddress.department)" class="font-bold">
+                    <div :class="getStyle('account.personalData.formPadding')">
+                        <p
+                            v-if="customer.accountType === 'business' && (customer.defaultBillingAddress.company || customer.defaultBillingAddress.department)"
+                            class="font-bold"
+                        >
                             {{ customer.defaultBillingAddress.company }}
                             <template v-if="customer.defaultBillingAddress.department">
                                 - {{ customer.defaultBillingAddress.department }}
@@ -112,13 +134,13 @@ const showAdditionalAddressField2 = configStore.get('core.loginRegistration.show
         <slot name="shipping-address">
             <div v-if="customer.defaultShippingAddress">
                 <slot name="shipping-address-headline">
-                    <h3 class="mb-2 border-b border-gray-100 pb-2 text-lg font-bold">
+                    <h3 :class="getStyle('account.personalData.headline')">
                         {{ $t('account.overview.defaultShippingAddress') }}
                     </h3>
                 </slot>
 
                 <slot name="shipping-address-content">
-                    <div class="space-y-2">
+                    <div :class="getStyle('account.personalData.formPadding')">
                         <template v-if="customer.defaultBillingAddressId === customer.defaultShippingAddressId">
                             <slot name="shipping-address-identical">
                                 {{ $t('account.overview.addressesIdentical') }}
@@ -127,7 +149,10 @@ const showAdditionalAddressField2 = configStore.get('core.loginRegistration.show
 
                         <template v-else>
                             <slot name="shipping-address-not-identical">
-                                <p v-if="customer.accountType === 'business' && (customer.defaultShippingAddress.company || customer.defaultShippingAddress.department)" class="font-bold">
+                                <p
+                                    v-if="customer.accountType === 'business' && (customer.defaultShippingAddress.company || customer.defaultShippingAddress.department)"
+                                    class="font-bold"
+                                >
                                     {{ customer.defaultShippingAddress.company }}
                                     <template v-if="customer.defaultShippingAddress.department">
                                         - {{ customer.defaultShippingAddress.department }}

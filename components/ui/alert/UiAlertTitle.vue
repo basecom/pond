@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
-import { cn } from '@/lib/utils';
 
 const props = defineProps<{
   class?: HTMLAttributes['class']
 }>();
+
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
-    <h5 :class="cn('mb-1 font-bold leading-none tracking-tight', props.class)">
+    <h5 :class="[getStyle('ui.alert.title'), props.class]">
         <slot />
     </h5>
 </template>

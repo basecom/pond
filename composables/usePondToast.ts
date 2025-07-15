@@ -1,6 +1,5 @@
 import type { Component, VNode } from 'vue';
-import type { ToastProps } from '.';
-import { computed, ref } from 'vue';
+import type { ToastProps } from '~/components/ui/toast/UiToast.vue';
 
 const TOAST_LIMIT = 1;
 const TOAST_REMOVE_DELAY = 1000000;
@@ -26,10 +25,10 @@ const actionTypes = {
 
 let count = 0;
 
-function genId() {
+const genId = () => {
     count = (count + 1) % Number.MAX_VALUE;
     return count.toString();
-}
+};
 
 type ActionType = typeof actionTypes
 
@@ -76,7 +75,7 @@ const state = ref<State>({
     toasts: [],
 });
 
-function dispatch(action: Action) {
+const dispatch = (action: Action) => {
     switch (action.type) {
     case actionTypes.ADD_TOAST:
         state.value.toasts = [action.toast, ...state.value.toasts].slice(0, TOAST_LIMIT);
@@ -118,26 +117,24 @@ function dispatch(action: Action) {
 
         break;
     }
-}
+};
 
-function clearToasts() {
+const clearToasts = () => {
     toastTimeouts.forEach((timeout) => clearTimeout(timeout));
     toastTimeouts.clear();
     state.value.toasts = [];
-}
+};
 
-function useToast() {
-    return {
-        toasts: computed(() => state.value.toasts),
-        toast,
-        dismiss: (toastId?: string) => dispatch({ type: actionTypes.DISMISS_TOAST, toastId }),
-        clearToasts,
-    };
-}
+const usePondToast = () => ({
+    toasts: computed(() => state.value.toasts),
+    toast,
+    dismiss: (toastId?: string) => dispatch({ type: actionTypes.DISMISS_TOAST, toastId }),
+    clearToasts,
+});
 
 type Toast = Omit<ToasterToast, 'id'>
 
-function toast(props: Toast) {
+const toast = (props: Toast) => {
     const id = genId();
 
     const update = (props: ToasterToast) =>
@@ -166,6 +163,6 @@ function toast(props: Toast) {
         dismiss,
         update,
     };
-}
+};
 
-export { toast, useToast };
+export { toast, usePondToast };

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { VueFormRequestData, RegisterFormData, VueFormSubmitData} from '~/types/vueForm/Register';
+import type { VueFormRequestData, RegisterFormData, VueFormSubmitData } from '~/types/vueForm/Register';
 
 withDefaults(
     defineProps<{
@@ -21,6 +21,7 @@ const emits = defineEmits<{
 }>();
 
 // Admin configs
+const { getStyle } = usePondStyle();
 const configStore = useConfigStore();
 const isDataProtectionCheckboxRequired = ref(configStore.get('core.loginRegistration.requireDataProtectionCheckbox') as boolean);
 
@@ -96,11 +97,9 @@ const onSubmit = (data: VueFormRequestData) => {
 </script>
 
 <template>
-    <div class="flex flex-col justify-center gap-5">
+    <div :class="getStyle('account.register.outer')">
         <slot name="headline">
-            <h1 class="text-center">
-                {{ $t('account.register.headline') }}
-            </h1>
+            <h1>{{ $t('account.register.headline') }}</h1>
         </slot>
 
         <slot name="register-form">
@@ -116,7 +115,7 @@ const onSubmit = (data: VueFormRequestData) => {
                         <AddressFields
                             :is-detail="true"
                             :account-type-conditions="[['billing-address.account-type.accountType', 'business']]"
-                            headline-classes="col-span-12"
+                            :headline-classes="getStyle('account.register.addressHeadline')"
                             :headline="$t('address.headline')"
                         />
                     </GroupElement>
@@ -153,9 +152,9 @@ const onSubmit = (data: VueFormRequestData) => {
                 </slot>
 
                 <slot name="alert">
-                    <UiAlert v-if="errorMessage" variant="destructive" class="mb-4 flex gap-4 col-span-12">
+                    <UiAlert v-if="errorMessage" variant="destructive" :class="getStyle('account.register.alert.outer')">
                         <slot name="alert-icon">
-                            <Icon name="mdi:alert-circle-outline" class="size-4 text-red-500" />
+                            <Icon name="mdi:alert-circle-outline" :class="getStyle('account.register.alert.inner')" />
                         </slot>
 
                         <div>
@@ -173,7 +172,7 @@ const onSubmit = (data: VueFormRequestData) => {
                         type="submit"
                         name="register-submit"
                         :is-loading="isLoading"
-                        class="col-span-12"
+                        :class="getStyle('account.register.submit')"
                     >
                         {{ $t('account.auth.register') }}
                     </UiButton>
