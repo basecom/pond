@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import type { HTMLAttributes } from 'vue';
-import { cn } from '@/lib/utils';
 
 const props = defineProps<{
   class?: HTMLAttributes['class']
 }>();
+
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
@@ -12,7 +13,7 @@ const props = defineProps<{
         role="link"
         aria-disabled="true"
         aria-current="page"
-        :class="cn('font-normal text-gray-950', props.class)"
+        :class="[getStyle('ui.breadcrumb.page'), props.class]"
     >
         <slot />
     </span>

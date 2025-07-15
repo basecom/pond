@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type {Columns} from '~/types/vueForm/Columns';
+import type { Columns } from '~/types/vueForm/Columns';
 
 withDefaults(
     defineProps<{
@@ -28,7 +28,7 @@ const possibleBirthdayYears = computed(() => {
 
 <template>
     <slot name="birthday">
-        <GroupElement name="birthday" :label="$t('account.customer.birthday.label')">
+        <GroupElement name="birthday" :label="$t('account.customer.birthday.label', { required: isBirthdayRequired ? '*' : '' })">
             <slot name="birthday-day">
                 <FormSelectElement
                     :id="`${prefix}birthdayDay`"

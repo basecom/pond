@@ -1,5 +1,6 @@
 import tailwindcss from '@tailwindcss/vite';
 import { autoInjectTWTheme } from './vite/autoInjectTWTheme';
+import { fileURLToPath } from 'node:url';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -16,6 +17,7 @@ export default defineNuxtConfig({
         'shadcn-nuxt',
         '@shopware/nuxt-module',
         '@therealironduck/ducktory',
+        'nuxt-swiper',
         '@vueform/nuxt',
     ],
 
@@ -128,5 +130,9 @@ export default defineNuxtConfig({
     ducktory: {
         path: '/styleguide',
         debug: true,
+    },
+
+    alias: {
+        '#pond-config': fileURLToPath(new URL('./pond.config.ts', import.meta.url)),
     },
 });

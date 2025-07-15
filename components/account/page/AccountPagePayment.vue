@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import type { PaymentMethodDataForm } from '~/components/account/page/AccountPagePaymentInner.vue';
-import { useToast } from '@/components/ui/toast/use-toast';
 import { ApiClientError } from '@shopware/api-client';
 
 const { setPaymentMethod, refreshSessionContext } = useSessionContext();
-const { toast } = useToast();
+const { toast } = usePondToast();
 const { t } = useI18n();
 
 const updatePaymentMethod = async (paymentMethodForm: PaymentMethodDataForm) => {

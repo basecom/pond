@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type {Columns} from '~/types/vueForm/Columns';
+import type { Columns } from '~/types/vueForm/Columns';
 
 withDefaults(
     defineProps<{
       id?: string;
+      label?: string;
       name?: string;
       rules?: string[] | string;
       messages?: {[key: string]: string};
@@ -12,6 +13,7 @@ withDefaults(
     }>(),
     {
         id: undefined,
+        label: undefined,
         name: undefined,
         rules: undefined,
         messages: undefined,
@@ -31,7 +33,7 @@ withDefaults(
             :class="classes"
             :columns="columns"
         >
-            <slot name="checkbox-element-content" />
+            {{ label }}
         </CheckboxElement>
     </slot>
 </template>

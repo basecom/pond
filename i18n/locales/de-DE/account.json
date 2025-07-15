@@ -38,7 +38,7 @@
             "accountType": {
                 "label": "Accounttyp",
                 "errorRequired": "Bitte wählen Sie einen Accounttyp aus",
-                "business": "Business",
+                "business": "Gewerblich",
                 "private": "Privat"
             },
             "salutation": {
@@ -86,7 +86,7 @@
                 "placeholder": "Umsatzsteuer-ID eingeben ..."
             },
             "birthday": {
-                "label": "Geburtstag",
+                "label": "Geburtstag {required}",
                 "day": "Tag",
                 "month": "Monat",
                 "year": "Jahr",
@@ -163,7 +163,8 @@
                     "trigger": "allgemeinen Geschäftsbedingungen"
                 },
                 "errorRequired": "Bitte stimmen Sie den Datenschutzbestimmungen zu"
-            }
+            },
+            "success": "Du hast dich erfolgreich registriert."
         }
     }
 }

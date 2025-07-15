@@ -86,7 +86,7 @@
                 "placeholder": "Enter VAT ID ..."
             },
             "birthday": {
-                "label": "Birthday",
+                "label": "Birthday {required}",
                 "day": "Day",
                 "month": "Month",
                 "year": "Year",
@@ -164,7 +164,8 @@
                     "trigger": "general terms and conditions"
                 },
                 "errorRequired": "Please agree to the data protection regulations."
-            }
+            },
+            "success": "You have successfully registered."
         }
     }
 }

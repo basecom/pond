@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
 import { ToastDescription, type ToastDescriptionProps } from 'reka-ui';
-import { computed, type HTMLAttributes } from 'vue';
+import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<ToastDescriptionProps & { class?: HTMLAttributes['class'] }>();
+
+const { getStyle } = usePondStyle();
 
 const delegatedProps = computed(() => {
     const { class: _, ...delegated } = props;
@@ -13,7 +14,7 @@ const delegatedProps = computed(() => {
 </script>
 
 <template>
-    <ToastDescription :class="cn('text-sm opacity-90', props.class)" v-bind="delegatedProps">
+    <ToastDescription :class="[getStyle('ui.toast.description'), props.class]" v-bind="delegatedProps">
         <slot />
     </ToastDescription>
 </template>

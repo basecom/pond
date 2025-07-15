@@ -10,10 +10,7 @@ onMounted(() => isMounted.value = true);
         <FormCheckboxElement
             id="form-checkbox-element-default"
             name="form-checkbox-element-default"
-        >
-            <template #checkbox-element-content>
-                <span> I'm a checkbox </span>
-            </template>
-        </FormCheckboxElement>
+            label="I'm a checkbox"
+        />
     </Vueform>
 </template>
