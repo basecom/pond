@@ -87,6 +87,15 @@ export default {
         trigger: 'underline underline-offset-2 cursor-pointer mx-1',
     },
 
+    newsletter: {
+        outer: 'col-start-1 col-span-2',
+        headline: 'mb-2 border-b border-gray-100 pb-2',
+        alert: {
+            outer: 'mb-4 flex gap-4',
+            icon: 'size-4 shrink-0',
+        },
+    },
+
     order,
     personalData,
 };
