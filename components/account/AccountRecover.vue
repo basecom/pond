@@ -6,6 +6,7 @@ const showSuccessMessage = ref(false);
 
 const customerStore = useCustomerStore();
 const { getStorefrontUrl } = useInternationalization();
+const { getStyle } = usePondStyle();
 
 const recover = async (recoverData: RecoverData) => {
     isLoading.value = true;
@@ -26,9 +27,13 @@ const recover = async (recoverData: RecoverData) => {
 </script>
 
 <template>
-    <AccountRecoverInner
-        :is-loading="isLoading"
-        :show-success-message="showSuccessMessage"
-        @recover="(recoverData: RecoverData) => recover(recoverData)"
-    />
+    <div :class="getStyle('account.recover.page.outer')">
+        <div :class="getStyle('account.recover.page.inner')">
+            <AccountRecoverInner
+                :is-loading="isLoading"
+                :show-success-message="showSuccessMessage"
+                @recover="(recoverData: RecoverData) => recover(recoverData)"
+            />
+        </div>
+    </div>
 </template>
