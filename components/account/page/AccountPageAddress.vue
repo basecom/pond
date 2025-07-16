@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import type { AddressData } from '~/types/vueForm/Address';
-import { useToast } from '@/components/ui/toast/use-toast';
 
 const { loadCustomerAddresses, customerAddresses, createCustomerAddress, deleteCustomerAddress, setDefaultCustomerBillingAddress, setDefaultCustomerShippingAddress, updateCustomerAddress } = useAddress();
 const { defaultBillingAddressId, defaultShippingAddressId, userDefaultBillingAddress, userDefaultShippingAddress } = useUser();
 const { refreshSessionContext } = useSessionContext();
 const { handleError } = usePondHandleError();
-const { toast } = useToast();
+const { toast } = usePondToast();
 const { t } = useI18n();
 
 const isLoading = ref(false);

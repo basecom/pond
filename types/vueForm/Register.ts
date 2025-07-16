@@ -1,4 +1,4 @@
-import type {AddressData} from '~/types/vueForm/Address';
+import type { AddressData } from '~/types/vueForm/Address';
 
 export type VueFormSubmitData = {
     data: VueFormRequestData;
