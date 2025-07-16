@@ -13,13 +13,13 @@
         },
         "currencySwitch": "Währung umgestellt auf {currency}",
         "imageNotFound": "Kein Bild gefunden"
+        "errorHeadline": "Es ist ein Fehler aufgetreten.",
+        "errorMessage": "Versuchen Sie es später erneut."
     },
-
     "image": {
         "altText": "Bild",
         "altSliderText": "Bild-Slider Element {currentSlide} von {totalSlides}"
     },
-
     "video": {
         "vimeoTitle": "Vimeo Video",
         "youtubeTitle": "YouTube Video"

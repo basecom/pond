@@ -11,7 +11,9 @@
         "auth": {
             "login": "Anmelden",
             "register": "Registrieren",
-            "logout": "Abmelden"
+            "logout": "Abmelden",
+            "loginSuccess": "Erfolgreich angemeldet",
+            "logoutSuccess": "Erfolgreich abgemeldet"
         },
         "email": {
             "label": "Ihre E-Mail-Adresse",
@@ -32,7 +34,21 @@
             "submitButton": "E-Mail anfordern",
             "backButton": "Zurück zum Login",
             "successHeader": "E-Mail gesendet",
-            "successMessage": "Eine Bestätigungs-E-Mail mit einem Link zum Zurücksetzen des Passworts wurde versandt, wenn die angegebene E-Mail-Adresse registriert ist."
+            "successMessage": "Eine Bestätigungs-E-Mail mit einem Link zum Zurücksetzen des Passworts wurde versandt, wenn die angegebene E-Mail-Adresse registriert ist.",
+            "errorMessage": "Der Link zum Zurücksetzen des Passworts scheint defekt zu sein.",
+            "successResetHeader": "Passwort Änderung erfolgreich",
+            "successResetMessage": "Sie können sich nun mit Ihrem neuen Passwort anmelden",
+            "password": {
+                "new": {
+                    "label": "Neues Passwort",
+                    "placeholder": "Neues Passwort eingeben ..."
+                },
+                "newConfirm": {
+                    "label": "Passwort-Bestätigung",
+                    "placeholder": "Passwort-Bestätigung eingeben ..."
+                }
+            },
+            "submitRecoverButton": "Passwort ändern"
         },
         "customer": {
             "accountType": {
@@ -153,8 +169,15 @@
         },
         "register": {
             "headline": "Registrierung",
-            "acceptedDataProtection": {
-                "label": "Ich habe die Datenschutzbestimmungen zur Kenntnis genommen und die AGB gelesen und bin mit ihnen einverstanden.",
+            "dataProtection": {
+                "policy": {
+                    "label": "Mit der Auswahl akzeptieren Sie unsere",
+                    "trigger": "Datenschutzinformationen"
+                },
+                "termsAndConditions": {
+                    "label": "und unsere",
+                    "trigger": "allgemeinen Geschäftsbedingungen"
+                },
                 "errorRequired": "Bitte stimmen Sie den Datenschutzbestimmungen zu"
             },
             "success": "Du hast dich erfolgreich registriert."

@@ -12,6 +12,8 @@
             "acceptLabel": "Accept"
         },
         "currencySwitch": "Currency switched to {currency}",
+        "errorHeadline": "An error has occurred.",
+        "errorMessage": "Please try again later."
         "imageNotFound": "No image found"
     },
     "image": {

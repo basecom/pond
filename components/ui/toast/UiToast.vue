@@ -34,8 +34,8 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
     <ToastRoot
         v-bind="forwarded"
         :class="[{
-            [getStyle('ui.toast.base.variants.default')]: variant === 'default',
-            [getStyle('ui.toast.base.variants.destructive')]: variant === 'destructive'
+            [getStyle('ui.toast.variants.default')]: variant === 'default',
+            [getStyle('ui.toast.variants.destructive')]: variant === 'destructive'
         }, getStyle('ui.toast.base'), props.class]"
         @update:open="onOpenChange"
     >

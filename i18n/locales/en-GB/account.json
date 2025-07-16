@@ -11,7 +11,9 @@
         "auth": {
             "login": "Sign in",
             "register": "Sign up",
-            "logout": "Logout"
+            "logout": "Logout",
+            "loginSuccess": "Successfully logged in",
+            "logoutSuccess": "Successfully logged out"
         },
         "email": {
             "label": "Your email address",
@@ -32,7 +34,21 @@
             "submitButton": "Request email",
             "backButton": "Back to login",
             "successHeader": "Email sent",
-            "successMessage": "A confirmation email with a password reset link has been sent if the email address provided is registered."
+            "successMessage": "A confirmation email with a password reset link has been sent if the email address provided is registered.",
+            "successResetHeader": "Password change successful",
+            "successResetMessage": "You can now log in with your new password",
+            "errorMessage": "The password reset link appears to be invalid.",
+            "password": {
+                "new": {
+                    "label": "New password",
+                    "placeholder": "Enter new password ..."
+                },
+                "newConfirm": {
+                    "label": "Password confirmation",
+                    "placeholder": "Enter password confirmation ..."
+                }
+            },
+            "submitRecoverButton": "Change password"
         },
         "customer": {
             "accountType": {
@@ -154,8 +170,15 @@
         },
         "register": {
             "headline": "Registration",
-            "acceptedDataProtection": {
-                "label": "I have read the data protection regulations and the terms and conditions and agree to them.",
+            "dataProtection": {
+                "policy": {
+                    "label": "By selecting continue you confirm that you have read our",
+                    "trigger": "data protection information"
+                },
+                "termsAndConditions": {
+                    "label": "and accepted our",
+                    "trigger": "general terms and conditions"
+                },
                 "errorRequired": "Please agree to the data protection regulations."
             },
             "success": "You have successfully registered."

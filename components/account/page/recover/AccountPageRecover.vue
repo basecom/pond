@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type { RecoverData } from './AccountRecoverInner.vue';
+import type { RecoverData } from './AccountPageRecoverInner.vue';
 
 const isLoading = ref(false);
 const showSuccessMessage = ref(false);
 
 const customerStore = useCustomerStore();
 const { getStorefrontUrl } = useInternationalization();
+const { handleError } = usePondHandleError();
 
 const recover = async (recoverData: RecoverData) => {
     isLoading.value = true;
@@ -15,9 +16,8 @@ const recover = async (recoverData: RecoverData) => {
             ...recoverData,
             storefrontUrl: getStorefrontUrl(),
         });
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-        // catch but do nothing
+        handleError(error);
     } finally {
         showSuccessMessage.value = true;
         isLoading.value = false;
@@ -26,7 +26,7 @@ const recover = async (recoverData: RecoverData) => {
 </script>
 
 <template>
-    <AccountRecoverInner
+    <AccountPageRecoverInner
         :is-loading="isLoading"
         :show-success-message="showSuccessMessage"
         @recover="(recoverData: RecoverData) => recover(recoverData)"
