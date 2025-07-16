@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { RecoverPasswordFormData } from '~/types/vueForm/RecoverPassword';
-import { useToast } from '@/components/ui/toast/use-toast';
 
 const props = withDefaults(
     defineProps<{
@@ -14,7 +13,7 @@ const props = withDefaults(
 const isLoading = ref(false);
 const { formatLink } = useInternationalization();
 const { recoverPasswordConfirm } = usePondCustomer();
-const { toast } = useToast();
+const { toast } = usePondToast();
 const { t } = useI18n();
 
 onMounted(() => {

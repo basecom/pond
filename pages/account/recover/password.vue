@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { useToast } from '@/components/ui/toast/use-toast';
-
-const { toast } = useToast();
+const { toast } = usePondToast();
 const route = useRoute();
 const { t } = useI18n();
 
