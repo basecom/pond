@@ -19,8 +19,7 @@ defineEmits<{
   open: [value: boolean];
 }>();
 
-const getCartCount = (items: Schemas['LineItem'][] = []) => items.length;
-const cartCount = computed(() => getCartCount(props.cartItems));
+const cartCount = computed(() => props?.cartItems?.length);
 const hasLineItems = computed(() => cartCount.value > 0);
 </script>
 
