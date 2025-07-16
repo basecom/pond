@@ -46,12 +46,13 @@ const onChange = async (formData: NewsletterFormData) => {
     // Unsubscribe, if checkbox value is unchecked
     if (!formData.newsletter) {
         try {
-            newsletterUnsubscribe(props.customer.email);
+            await newsletterUnsubscribe(props.customer.email);
             toast({
                 title: t('newsletter.unsubscribed'),
             });
             // alert is no longer displayed
             displayDoubleNewsletterRegistrationAlert.value = false;
+            newsletterStatus.value = await getNewsletterStatus();
         } catch (error) {
             toast({
                 title: t('general.errorHeadline'),
@@ -63,12 +64,13 @@ const onChange = async (formData: NewsletterFormData) => {
     }
 
     // Otherwise, subscribe to newsletter (only if not already subscribed to the newsletter)
-    if(newsletterStatus.value?.status !== 'direct' && newsletterStatus.value?.status !== 'optIn' && newsletterStatus.value?.status !== 'notSet') {
+    if (newsletterStatus.value?.status !== 'direct' && newsletterStatus.value?.status !== 'optIn' && newsletterStatus.value?.status !== 'notSet') {
         try {
             await newsletterSubscribe({ email: props.customer.email, option: 'subscribe' });
             toast({
                 title: t('newsletter.subscribed.headline'),
             });
+            newsletterStatus.value = await getNewsletterStatus();
 
             // Depending on the newsletter status, the alert display is set
             newsletterStatus.value = await getNewsletterStatus();
