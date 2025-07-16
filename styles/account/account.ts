@@ -23,7 +23,7 @@ export default {
 
     register: {
         outer: 'flex flex-col justify-center gap-5',
-        headline: '',
+        headline: 'text-center',
         addressHeadline: 'col-span-12',
         alert: {
             outer: 'mb-4 flex gap-4 col-span-12',
@@ -37,6 +37,7 @@ export default {
     },
 
     recover: {
+        page: 'container flex justify-center md:w-2/3 xl:w-1/2 pt-4',
         alert: {
             outer: 'mb-4 flex gap-4',
             icon: 'size-4 shrink-0',
@@ -50,9 +51,9 @@ export default {
                 submit: 'min-w-52 grow',
             },
         },
-        page: {
-            outer: 'container relative flex justify-center py-4',
-            inner: 'w-full md:w-2/3 xl:w-1/2',
+        password: {
+            outer: 'grid gap-5 w-full',
+            button: 'col-span-12',
         },
     },
 

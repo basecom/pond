@@ -34,7 +34,21 @@
             "submitButton": "E-Mail anfordern",
             "backButton": "Zurück zum Login",
             "successHeader": "E-Mail gesendet",
-            "successMessage": "Eine Bestätigungs-E-Mail mit einem Link zum Zurücksetzen des Passworts wurde versandt, wenn die angegebene E-Mail-Adresse registriert ist."
+            "successMessage": "Eine Bestätigungs-E-Mail mit einem Link zum Zurücksetzen des Passworts wurde versandt, wenn die angegebene E-Mail-Adresse registriert ist.",
+            "errorMessage": "Der Link zum Zurücksetzen des Passworts scheint defekt zu sein.",
+            "successResetHeader": "Passwort Änderung erfolgreich",
+            "successResetMessage": "Sie können sich nun mit Ihrem neuen Passwort anmelden",
+            "password": {
+                "new": {
+                    "label": "Neues Passwort",
+                    "placeholder": "Neues Passwort eingeben ..."
+                },
+                "newConfirm": {
+                    "label": "Passwort-Bestätigung",
+                    "placeholder": "Passwort-Bestätigung eingeben ..."
+                }
+            },
+            "submitRecoverButton": "Passwort ändern"
         },
         "customer": {
             "accountType": {

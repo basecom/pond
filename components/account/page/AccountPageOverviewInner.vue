@@ -57,6 +57,7 @@ const onChange = async (formData: NewsletterFormData) => {
             toast({
                 title: t('general.errorHeadline'),
                 description: t('general.errorMessage'),
+                variant: 'destructive',
             });
             handleError(error);
         }
@@ -83,6 +84,7 @@ const onChange = async (formData: NewsletterFormData) => {
             toast({
                 title: t('general.errorHeadline'),
                 description: t('general.errorMessage'),
+                variant: 'destructive',
             });
             handleError(error);
         }
