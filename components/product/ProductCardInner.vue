@@ -28,6 +28,9 @@ const { getStyle } = usePondStyle();
 const mediaType = product.value?.cover?.media?.mimeType?.split('/')[0];
 const showControls = ref(false);
 const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.productFallBackCover') as string;
+const isNew = ref(product.value?.isNew);
+const isTopseller = ref(product.value?.markAsTopseller);
+const isSale = ref(isListPrice.value);
 
 const srcPath = computed(() => getSmallestThumbnailUrl(
     product.value?.cover?.media,
@@ -40,8 +43,8 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
             :class="getStyle('product.card.outer')"
         >
             <slot name="product-badges">
-                <div class="absolute top-0 flex flex-col gap-1 p-2 z-2">
-                    <ProductBadges :is-new="product.isNew" :is-topseller="product.markAsTopseller" :is-sale="isListPrice" />
+                <div :class="getStyle('product.badge.outer')">
+                    <ProductBadges :is-new="product?.isNew" :is-topseller="product?.markAsTopseller" :is-sale="isListPrice" />
                 </div>
             </slot>
             <slot name="product-image">

@@ -11,26 +11,28 @@ withDefaults(
         isSale: false,
     },
 );
+
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
     <slot name="is-sale-badge">
         <template v-if="isSale">
-            <UiBadge class="bg-red-500">
-                <Icon name="mdi:percent" class="size-4 shrink-0" />
+            <UiBadge :class="getStyle('product.badge.sale.outer')">
+                <Icon name="mdi:percent" :class="getStyle('product.badge.sale.icon')" />
             </UiBadge>
         </template>
     </slot>
     <slot name="is-topseller-badge">
         <template v-if="isTopseller">
-            <UiBadge class="bg-brown-500">
+            <UiBadge :class="getStyle('product.badge.topseller')">
                 {{ $t('product.badge.topseller') }}
             </UiBadge>
         </template>
     </slot>
     <slot name="is-new-badge">
         <template v-if="isNew">
-            <UiBadge class="bg-green-600">
+            <UiBadge :class="getStyle('product.badge.new')">
                 {{ $t('product.badge.new') }}
             </UiBadge>
         </template>
