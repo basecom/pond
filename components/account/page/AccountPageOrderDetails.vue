@@ -20,7 +20,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <AccountOrderDetailsInner
+    <AccountPageOrderDetailsInner
         :order="order"
         :payment-method-name="paymentMethod?.name ?? ''"
         :shipping-costs="shippingCosts"

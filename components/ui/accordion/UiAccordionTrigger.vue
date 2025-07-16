@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
-import { ChevronDown } from 'lucide-vue-next';
 import {
     AccordionHeader,
     AccordionTrigger,
@@ -10,6 +8,7 @@ import { computed, type HTMLAttributes } from 'vue';
 
 const props = defineProps<AccordionTriggerProps & { class?: HTMLAttributes['class'] }>();
 
+const { getStyle } = usePondStyle();
 const delegatedProps = computed(() => {
     const { class: _, ...delegated } = props;
 
@@ -21,18 +20,12 @@ const delegatedProps = computed(() => {
     <AccordionHeader class="flex">
         <AccordionTrigger
             v-bind="delegatedProps"
-            :class="
-                cn(
-                    'cursor-pointer flex flex-1 items-center justify-between py-4 text-sm font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180',
-                    props.class,
-                )
-            "
+            :class="[getStyle('ui.accordion.trigger.outer'), props.class]"
         >
             <slot />
+
             <slot name="icon">
-                <ChevronDown
-                    class="size-4 shrink-0 text-gray-500 transition-transform duration-200"
-                />
+                <Icon name="mdi:chevron-down" :class="getStyle('ui.accordion.trigger.icon')" />
             </slot>
         </AccordionTrigger>
     </AccordionHeader>

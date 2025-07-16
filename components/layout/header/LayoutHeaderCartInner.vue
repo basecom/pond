@@ -13,6 +13,8 @@ const props = withDefaults(
         cartPriceTotal: '',
     },
 );
+
+const { getStyle } = usePondStyle();
 defineEmits<{
   open: [value: boolean];
 }>();
@@ -25,11 +27,17 @@ const hasLineItems = computed(() => cartCount.value > 0);
 <template>
     <UiSheet @update:open="(value: boolean) => $emit('open', value)">
         <slot name="cart-trigger">
-            <UiSheetTrigger id="open-offcanvas-cart" class="size-5 cursor-pointer" aria-label="open-offcanvas-cart">
+            <UiSheetTrigger id="open-offcanvas-cart"
+                            :class="getStyle('header.actions.cart.trigger')"
+                            aria-label="open-offcanvas-cart"
+            >
                 <div class="relative">
                     <span class="flex">
                         <slot name="cart-icon">
-                            <span> <Icon name="mdi:cart-outline" class="size-5" /> </span>
+                            <span> <Icon
+                                name="mdi:cart-outline"
+                                :class="getStyle('header.actions.cart.icon')"
+                            /> </span>
                         </slot>
                         <slot name="cart-amount">
                             <ClientOnly>
@@ -41,12 +49,12 @@ const hasLineItems = computed(() => cartCount.value > 0);
                     </span>
                     <slot name="cart-badge">
                         <ClientOnly>
-                            <UiBadge v-if="hasLineItems" class="absolute -right-2 -top-1.5 px-1 py-0 text-xs font-normal" aria-label="$t('checkout.itemsInCart', { count: cartCount })">
+                            <UiBadge v-if="hasLineItems" :class="getStyle('header.actions.cart.badge')" aria-label="$t('checkout.itemsInCart', { count: cartCount })">
                                 {{ cartCount }}
                             </UiBadge>
                         </ClientOnly>
                     </slot>
-                    
+
                 </div>
             </UiSheetTrigger>
         </slot>

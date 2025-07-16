@@ -7,6 +7,13 @@ export function usePondHandleError() {
     const handleError = (error: unknown | string, showAsError: boolean = true, toastMessage:
         { show?: boolean, title?: string, description?: string } = {show: false, description: undefined, title: ''}) => {
 
+        const prefix = `[Pond][${extractFileNameFromStack()}]`;
+
+        if (typeof error === 'string') {
+            showError(`${prefix}: ${error}`, showAsError);
+            return;
+        }
+
         if (error instanceof ApiClientError) {
             showToastError(toastMessage, error.details.errors[0]?.code);
             showError(error.details, showAsError);
@@ -49,6 +56,21 @@ export function usePondHandleError() {
             description: t(`error.${description}`),
             variant: 'destructive',
         });
+    };
+
+    const extractFileNameFromStack = (): string => {
+        const stack = new Error().stack;
+        if (!stack) return 'UnknownFile';
+
+        const lines = stack.split('\n');
+
+        // search for the first line which is not usePondHandleError
+        const externalLine = lines.find(line =>
+            !line.includes('usePondHandleError') && /\/([^/]+)\.(ts|js|vue)/.test(line),
+        );
+
+        const match = externalLine?.match(/\/([^/]+)\.(ts|js|vue)/);
+        return match?.[1] ?? 'UnknownFile';
     };
 
     return { handleError };
