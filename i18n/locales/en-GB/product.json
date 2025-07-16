@@ -1,12 +1,16 @@
 {
-    "product": {
-        "addToCart": "Add to cart",
-        "details": "Show details",
-        "productAddedToCart": "{product} added to cart",
-        "image": "Product cover",
-        "badge": {
-            "new": "New",
-            "topseller": "Tip"
-        }
-    }
+  "product": {
+    "fallback": {
+      "alt": "Product cover for {product} not found",
+      "title": "Fallback cover for {product}"
+    },
+    "addToCart": "Add to cart",
+    "details": "Show details",
+    "productAddedToCart": "{product} added to cart",
+    "image": "Product cover",
+      "badge": {
+          "new": "New",
+          "topseller": "Tip"
+      }
+  }
 }

@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
-import { cn } from '@/lib/utils';
 
 const props = defineProps<{
   class?: HTMLAttributes['class']
 }>();
+
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
-    <div :class="cn('text-sm [&_p]:leading-relaxed', props.class)">
+    <div :class="[getStyle('ui.alert.description'), props.class]">
         <slot />
     </div>
 </template>

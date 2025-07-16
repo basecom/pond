@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type {NuxtError} from '#app';
+import type { NuxtError } from '#app';
 
 const props = defineProps({
     // we don't need a default value -> it's always set
@@ -7,7 +7,7 @@ const props = defineProps({
     error: Object as () => NuxtError,
 });
 
-const {locale} = useI18n();
+const { locale } = useI18n();
 const url = useRequestURL();
 const route = useRoute();
 const configStore = useConfigStore();
@@ -43,7 +43,7 @@ const pageNotFound = computed(() => props.error?.statusCode === 404);
                 <template #title>
                     {{ error?.message }}
                 </template>
-                <template #subTitle>
+                <template #description>
                     {{ error?.statusCode }}
                 </template>
             </ErrorLayout>

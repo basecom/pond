@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type {BoxLayout, DisplayMode} from '@shopware/composables';
-import {buildUrlPrefix, getProductName, getProductRoute, getSmallestThumbnailUrl} from '@shopware/helpers';
-import {useUrlResolver} from '#imports';
-import {RouterLink} from 'vue-router';
+import type { BoxLayout, DisplayMode } from '@shopware/composables';
+import { buildUrlPrefix, getProductName, getProductRoute, getSmallestThumbnailUrl } from '@shopware/helpers';
+import { useUrlResolver } from '#imports';
+import { RouterLink } from 'vue-router';
 
 withDefaults(
     defineProps<{
@@ -23,6 +23,7 @@ const configStore = useConfigStore();
 const { product } = useProduct();
 const { isListPrice } = useProductPrice(product);
 const { getUrlPrefix } = useUrlResolver();
+const { getStyle } = usePondStyle();
 
 const mediaType = product.value?.cover?.media?.mimeType?.split('/')[0];
 const showControls = ref(false);
@@ -36,7 +37,7 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
 <template>
     <slot name="wrapper">
         <div
-            class="relative sw-product-card not-prose group relative flex max-w-full flex-col justify-between rounded-lg border border-gray-200 bg-white transition duration-300 hover:shadow-lg"
+            :class="getStyle('product.card.outer')"
         >
             <slot name="product-badges">
                 <div class="absolute top-0 flex flex-col gap-1 p-2 z-2">
@@ -46,11 +47,10 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
             <slot name="product-image">
                 <RouterLink
                     :to="buildUrlPrefix(getProductRoute(product), getUrlPrefix())"
-                    :class="[
-                        'group relative inline-block flex-none w-full overflow-hidden rounded-t-lg',
-                        layoutType === 'image' ? 'h-80' : 'h-60',
-                        mediaType === 'image' ? 'hover:opacity-75' : '',
-                    ]"
+                    :class="[getStyle('product.card.cover.outer.default'), {
+                        [getStyle('product.card.cover.outer.layout')]: layoutType === 'image',
+                        [getStyle('product.card.cover.outer.media')]: mediaType === 'image',
+                    }]"
                     :aria-label="`navigate-to-${getProductName({ product })}`"
                 >
                     <template v-if="mediaType === 'image'">
@@ -60,15 +60,12 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
                                 :src="srcPath"
                                 :alt="getProductName({ product }) || $t('product.image')"
                                 :title="$t('product.image')"
-                                class="absolute inset-0 size-full rounded-t-lg"
-                                :class="{
-                                    'object-cover':
-                                        displayMode === 'cover' ||
+                                :class="[getStyle('product.card.cover.default'), {
+                                    [getStyle('product.card.cover.object.cover')]: displayMode === 'cover' ||
                                         (displayMode === 'standard' && layoutType === 'image'),
-                                    'object-contain': displayMode === 'contain',
-                                    'object-scale-down':
-                                        displayMode === 'standard' && layoutType !== 'image',
-                                }"
+                                    [getStyle('product.card.cover.object.contain')]: displayMode === 'contain',
+                                    [getStyle('product.card.cover.object.scale')]: displayMode === 'standard' && layoutType !== 'image',
+                                }]"
                             >
                         </slot>
                     </template>
@@ -76,15 +73,12 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
                         <slot name="product-cover-video">
                             <video
                                 :src="srcPath"
-                                class="absolute inset-0 size-full rounded-t-lg"
-                                :class="{
-                                    'object-cover':
-                                        displayMode === 'cover' ||
+                                :class="[getStyle('product.card.cover.default'), {
+                                    [getStyle('product.card.cover.object.cover')]: displayMode === 'cover' ||
                                         (displayMode === 'standard' && layoutType === 'image'),
-                                    'object-contain': displayMode === 'contain',
-                                    'object-scale-down':
-                                        displayMode === 'standard' && layoutType !== 'image',
-                                }"
+                                    [getStyle('product.card.cover.object.contain')]: displayMode === 'contain',
+                                    [getStyle('product.card.cover.object.scale')]: displayMode === 'standard' && layoutType !== 'image',
+                                }]"
                                 :autoplay="autoPlayVideoInListing"
                                 loop
                                 muted
@@ -100,9 +94,9 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
                         <slot name="fallback-cover">
                             <img
                                 :src="productFallBackCover"
-                                :alt="getProductName({ product }) || $t('general.imageNotFound')"
-                                :title="$t('general.imageNotFound')"
-                                class="m-auto h-full object-contain p-8"
+                                :alt="$t('product.fallback.alt', { product: getProductName({ product }) })"
+                                :title="$t('product.fallback.title', { product: getProductName({ product }) })"
+                                :class="getStyle('product.card.cover.fallback')"
                             >
                         </slot>
                     </template>
@@ -110,26 +104,26 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
             </slot>
 
             <slot name="product-info">
-                <div class="p-4 h-full flex flex-col justify-between">
+                <div :class="getStyle('product.card.information.outer')">
                     <div>
                         <slot name="variant-characteristics">
-                            <div class="min-h-4 mt-4 text-xs text-gray-600">
+                            <div :class="getStyle('product.card.information.variant.outer')">
                                 <span
                                     v-for="(option, index) in product?.options"
                                     :key="option.id"
                                 >
                                     {{ option.group.translated.name }}:
-                                    <span class="font-bold">{{ option.translated.name }}</span><span v-if="index < (product?.options?.length ?? 0) - 1"> | </span>
+                                    <span :class="getStyle('product.card.information.variant.inner')">{{ option.translated.name }}</span><span v-if="index < (product?.options?.length ?? 0) - 1"> | </span>
                                 </span>
                             </div>
                         </slot>
 
                         <slot name="title">
                             <RouterLink
-                                class="mt-4 line-clamp-2"
+                                :class="getStyle('product.card.information.title.outer')"
                                 :to="buildUrlPrefix(getProductRoute(product), getUrlPrefix())"
                             >
-                                <h2 class="text-lg my-0">
+                                <h2 :class="getStyle('product.card.information.title.inner')">
                                     {{ getProductName({ product }) }}
                                 </h2>
                             </RouterLink>
@@ -137,7 +131,7 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
 
                         <template v-if="layoutType === 'standard'">
                             <slot name="product-description">
-                                <p class="mt-6 text-sm text-gray-600 line-clamp-5">{{ product.translated.description }}</p>
+                                <p :class="getStyle('product.card.information.description')">{{ product.translated.description }}</p>
                             </slot>
                         </template>
                     </div>
@@ -146,7 +140,7 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
                         <slot name="price">
                             <SwListingProductPrice
                                 :product="product"
-                                class="ml-auto"
+                                :class="getStyle('product.card.information.price')"
                             />
                         </slot>
 
@@ -160,7 +154,7 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
                                     :to="buildUrlPrefix(getProductRoute(product), getUrlPrefix())"
                                     :aria-label="`navigate-to-${getProductName({ product })}`"
                                 >
-                                    <UiButton variant="secondary" class="w-full">
+                                    <UiButton variant="secondary" :class="getStyle('product.card.information.detailsButton')">
                                         {{ $t('product.details') }}
                                     </UiButton>
                                 </RouterLink>

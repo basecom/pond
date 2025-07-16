@@ -1,12 +1,13 @@
 <script setup lang="ts">
 const { formatLink } = useInternationalization();
 const route = useRoute();
+const { getStyle } = usePondStyle();
 
 const breadcrumbs = computed(() => route.path.split('/').filter((breadcrumb: string) => breadcrumb !== ''));
 </script>
 
 <template>
-    <UiBreadcrumb class="mt-4 md:mt-6">
+    <UiBreadcrumb :class="getStyle('account.breadcrumb')">
         <UiBreadcrumbList>
             <UiBreadcrumbItem>
                 <slot name="breadcrumb-home">

@@ -8,9 +8,16 @@
         "product": "Produkt | Produkte",
         "resetFilters": "Filter zurücksetzen",
         "sort": "Sortieren nach",
-        "from": "Ab",
-        "variantsFrom": "Varianten ab",
-        "previously": "Zuvor",
-        "to": "bis"
+        "pagination": {
+            "next": "Nächste",
+            "previous": "Vorherige",
+            "page": "Seite"
+        },
+        "price": {
+            "variantsFrom": "Varianten von",
+            "previously": "Zuvor",
+            "from": "Ab",
+            "to": "bis"
+        }
     }
 }
