@@ -46,25 +46,37 @@ export function useNavigation(params?: {
 
     const navigationElements = computed(() => sharedElements.value);
 
-    async function loadNavigationElements({ depth }: { depth: number }) {
-        try {
-            // CUSTOM: instead of calling the apiClient directly, use the proxy route which can be cached when enabled in the nuxt.config.ts routeRules
-            const navigationResponse = await useFetch(`/api/proxy/navigation/${type}`, {
-                method: 'POST',
-                body: {
-                    headers: {
-                        'sw-include-seo-urls': true,
-                    },
-                    endpoint: 'readNavigation post /navigation/{activeId}/{rootId}',
-                    pathParams: {
-                        activeId: type,
-                        rootId: type,
-                    },
-                    depth,
-                },
-            });
+    // CUSTOM: instead of calling the apiClient directly, use the proxy route which can be cached when enabled in the nuxt.config.ts routeRules
+    // initial placeholder - will be updated by loadNavigationElements
+    const depthRef = ref(1);
+    // useFetch needs to be at the top level, otherwise it breaks SSR/CSR payload data transfer and reactivity
+    // an explicit key should be passed to ensure consistency between server and client, regardless of file structure or runtime context
+    const { data, execute } = useFetch(`/api/proxy/navigation/${type}`, {
+        // ideally, the key would also include the depth here, but no working way was found and the depthHandling of the navigationStore seems to work as expected
+        key: `proxy-navigation-${type}`,
+        method: 'POST',
+        // the body needs to be wrapped in computed to detect changes to the depthRef
+        body: computed(() => ({
+            headers: {
+                'sw-include-seo-urls': true,
+            },
+            endpoint: 'readNavigation post /navigation/{activeId}/{rootId}',
+            pathParams: {
+                activeId: type,
+                rootId: type,
+            },
+            depth: depthRef.value,
+        })),
+        immediate: false,
+    });
 
-            sharedElements.value = navigationResponse.data.value || [];
+    async function loadNavigationElements({ depth }: { depth: number }) {
+        depthRef.value = depth;
+
+        try {
+            await execute();
+
+            sharedElements.value = data.value || [];
             return sharedElements.value;
         } catch (e) {
             sharedElements.value = [];

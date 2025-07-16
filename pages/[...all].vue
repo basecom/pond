@@ -43,11 +43,13 @@ const { data: seoResult } = await useAsyncData(`seoPath${routePath}`, async () =
         return result;
     } catch (error) {
         if (error instanceof Error || typeof error === 'string') {
-            return showError(error);
+            showError(error);
+            return { routeName: null, foreignKey: null };
         }
 
         if (error instanceof ApiClientError) {
-            return showError(error.details);
+            showError(error.details);
+            return { routeName: null, foreignKey: null };
         }
     }
 });
@@ -55,8 +57,8 @@ const { data: seoResult } = await useAsyncData(`seoPath${routePath}`, async () =
 const { routeName, foreignKey } = useNavigationContext(seoResult);
 const { componentExists } = useCmsUtils();
 
-const componentName = computed(() => pascalCase(routeName.value));
-const componentExistsWithName = computed(() => componentExists(componentName.value));
+const componentName = computed(() => routeName.value ? pascalCase(routeName.value) : null);
+const componentExistsWithName = computed(() => componentName.value && componentExists(componentName.value));
 
 onBeforeRouteLeave(() => {
     clearBreadcrumbs();
