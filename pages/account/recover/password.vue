@@ -3,8 +3,11 @@ const { toast } = usePondToast();
 const route = useRoute();
 const { t } = useI18n();
 const { getStyle } = usePondStyle();
+const configStore = useConfigStore();
+await configStore.loadConfig();
 
 const hashQuery: Ref<undefined | string> = ref(route.query.hash?.toString() || undefined);
+const shopName = configStore.get('core.basicInformation.shopName') as string|null ?? 'pond';
 
 onMounted(() => {
     if(!hashQuery.value) {
@@ -14,6 +17,9 @@ onMounted(() => {
     }
 });
 
+useHead(() => ({
+    title: `${t('account.recover.header')  } | ${shopName}`,
+}));
 </script>
 
 <template>

@@ -36,8 +36,8 @@
             "successHeader": "E-Mail gesendet",
             "successMessage": "Eine Bestätigungs-E-Mail mit einem Link zum Zurücksetzen des Passworts wurde versandt, wenn die angegebene E-Mail-Adresse registriert ist.",
             "errorMessage": "Der Link zum Zurücksetzen des Passworts scheint defekt zu sein.",
-            "successResetHeader": "Password Änderung erfolgreich",
-            "successResetMessage": "Du kannst dich nun mit deinem neuen Passwort anmelden",
+            "successResetHeader": "Passwort Änderung erfolgreich",
+            "successResetMessage": "Sie können sich nun mit Ihrem neuen Passwort anmelden",
             "password": {
                 "new": {
                     "label": "Neues Passwort",
