@@ -11,7 +11,9 @@
         "button": {
             "acceptLabel": "Akzeptieren"
         },
-        "currencySwitch": "Währung umgestellt auf {currency}"
+        "currencySwitch": "Währung umgestellt auf {currency}",
+        "grossTaxInformation": "Preise inkl. MwSt. zzgl. Versandkosten",
+        "netTaxInformation": "Preise exkl. MwSt. zzgl. Versandkosten"
     },
 
     "image": {
