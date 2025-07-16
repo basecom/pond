@@ -17,10 +17,12 @@ withDefaults(
 defineEmits<{
   'change-page': [page: number];
 }>();
+
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
-    <div class="gap-5 grid">
+    <div :class="getStyle('account.wishlist.outer')">
         <slot name="headline">
             <h1>
                 {{ $t('wishlist.headline') }}
@@ -29,12 +31,12 @@ defineEmits<{
 
         <div
             v-if="isLoading"
-            class="grid grid-cols-2 md:grid-cols-3 gap-2.5"
+            :class="getStyle('account.wishlist.loading.outer')"
         >
             <slot name="loading">
                 <div v-for="n in 12" :key="n">
                     <UiSkeleton
-                        class="w-full h-30 md:h-50"
+                        :class="getStyle('account.wishlist.loading.skeleton')"
                     />
                 </div>
             </slot>
@@ -44,14 +46,13 @@ defineEmits<{
             v-else-if="products && products.length > 0"
         >
             <slot name="wishlist-product">
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-2.5">
-
+                <div :class="getStyle('account.wishlist.product')">
                     <ProductCard v-for="product in products" :key="product.id" :product="product" />
                 </div>
             </slot>
 
             <slot name="wishlist-pagination">
-                <div class="flex w-full justify-center mt-5 gap-2.5">
+                <div :class="getStyle('account.wishlist.pagination')">
                     <SwPagination
                         :total="totalPages"
                         :current="currentPage"
@@ -63,9 +64,9 @@ defineEmits<{
 
         <template v-else>
             <slot name="wishlist-no-products">
-                <UiAlert class="flex gap-4 items-center">
-                    <Icon name="mdi:alert-circle-outline" class="size-4 shrink-0" />
-                    <UiAlertTitle class="mb-0"> {{ $t('wishlist.noProducts') }} </UiAlertTitle>
+                <UiAlert :class="getStyle('account.wishlist.noProducts.outer')">
+                    <Icon name="mdi:alert-circle-outline" :class="getStyle('account.wishlist.noProducts.icon')" />
+                    <UiAlertTitle :class="getStyle('account.wishlist.noProducts.inner')"> {{ $t('wishlist.noProducts') }} </UiAlertTitle>
                 </UiAlert>
             </slot>
         </template>
