@@ -10,11 +10,9 @@ withDefaults(
 
 const { product } = useProduct();
 const { isInCart, count } = useAddToCart(product);
-const addToCart = () => {
-    emit('addToCart');
-};
+const { getStyle } = usePondStyle();
 
-const emit = defineEmits<{
+defineEmits<{
     (event: 'addToCart'): void;
 }>();
 
@@ -31,14 +29,14 @@ onMounted(() => {
 <template>
     <slot name="wrapper">
         <UiButton
-            class="w-full"
+            :class="getStyle('product.add.outer')"
             :is-loading="isLoading"
-            @click="addToCart"
+            @click="$emit('addToCart')"
         >
             {{ $t('product.addToCart') }}
             <slot name="is-in-cart-icon">
-                <div v-if="isProductInCart" class="flex ml-2 items-center">
-                    <Icon name="mdi:cart-outline" class="size-4 mr-1" />
+                <div v-if="isProductInCart" :class="getStyle('product.add.inner')">
+                    <Icon name="mdi:cart-outline" :class="getStyle('product.add.icon')" />
                     {{ productCount }}
                 </div>
             </slot>
