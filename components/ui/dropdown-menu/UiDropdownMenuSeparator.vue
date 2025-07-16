@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
 import {
     DropdownMenuSeparator,
     type DropdownMenuSeparatorProps,
 } from 'reka-ui';
-import { computed, type HTMLAttributes } from 'vue';
+import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<DropdownMenuSeparatorProps & {
   class?: HTMLAttributes['class']
 }>();
+
+const { getStyle } = usePondStyle();
 
 const delegatedProps = computed(() => {
     const { class: _, ...delegated } = props;
@@ -18,5 +19,5 @@ const delegatedProps = computed(() => {
 </script>
 
 <template>
-    <DropdownMenuSeparator v-bind="delegatedProps" :class="cn('-mx-1 my-1 h-px bg-gray-100', props.class)" />
+    <DropdownMenuSeparator v-bind="delegatedProps" :class="[getStyle('ui.dropdown.separator'), props.class]" />
 </template>

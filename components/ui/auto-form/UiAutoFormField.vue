@@ -23,7 +23,7 @@ const delegatedProps = computed(() => {
 const getInputComponent = (shapeType: string | undefined) => {
     if (!shapeType) {
     // Handle the case where shapeType is undefined or empty
-        handleError('[Pond][UiAutoFormField]: Undefined shapeType');
+        handleError('Undefined shapeType');
         return;
     }
 
@@ -34,7 +34,7 @@ const getInputComponent = (shapeType: string | undefined) => {
         return INPUT_COMPONENTS[componentKey];
     }
 
-    handleError(`[Pond][UiAutoFormField]: Invalid key ${componentKey}`);
+    handleError(`Invalid key ${componentKey}`);
 };
 
 const { isDisabled, isHidden, isRequired, overrideOptions } = useDependencies(props.fieldName);

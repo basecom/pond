@@ -4,7 +4,6 @@ import { cn } from '@/lib/utils';
 import { FormField } from '@/components/ui/form';
 
 import { DateFormatter, getLocalTimeZone } from '@internationalized/date';
-import { CalendarIcon } from 'lucide-vue-next';
 import { beautifyObjectName, maybeBooleanishToBoolean } from './utils';
 
 defineProps<FieldProps>();
@@ -32,7 +31,7 @@ const df = new DateFormatter('en-US', {
                                         !slotProps.componentField.modelValue && 'text-gray-500',
                                     )"
                                 >
-                                    <CalendarIcon class="mr-2 size-4" />
+                                    calendar
                                     {{ slotProps.componentField.modelValue ? df.format(slotProps.componentField.modelValue.toDate(getLocalTimeZone())) : "Pick a date" }}
                                 </UiButton>
                             </UiPopoverTrigger>

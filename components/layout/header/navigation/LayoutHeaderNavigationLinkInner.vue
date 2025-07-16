@@ -20,7 +20,9 @@ const emits = defineEmits<{
   click: [navigationElement?: Schemas['Category'], categoryLink?: string, options?: {open: {target: string}}];
 }>();
 
+const { getStyle } = usePondStyle();
 const { isExternalLink, isInternalLink, externalLink, loadInternalLink, path, linkNewTab } = usePondNavigationUtils(props.navigationElement);
+
 if (isInternalLink) {
     await loadInternalLink();
 }
@@ -40,12 +42,12 @@ const categoryLink = computed(() => {
 const handleClick = () => {
     // if it's an external link: link to it
     if (isExternalLink && externalLink) {
-        navigateTo(categoryLink.value, {external: true, open: {target: '_blank'}});
+        navigateTo(categoryLink.value, { external: true, open: { target: '_blank' } });
         return;
     }
 
     // internal? push event
-    const options =linkNewTab ? {open: {target: '_blank'}} : undefined;
+    const options =linkNewTab ? { open: { target: '_blank' } } : undefined;
     emits('click', props.navigationElement, categoryLink.value, options);
 };
 </script>
@@ -54,7 +56,7 @@ const handleClick = () => {
     <LazyNuxtLinkLocale
         v-if="showAsLink && categoryLink"
         :to="categoryLink"
-        :class="[classes]"
+        :class="getStyle('header.navigation.linkItem.link')"
         @click.prevent="handleClick"
     >
         <slot name="link-name">
@@ -64,16 +66,14 @@ const handleClick = () => {
 
     <div
         v-else
-        :class="[classes, {
-            'flex cursor-pointer items-center': showIcon,
-        }]"
+        :class="[getStyle('header.navigation.linkItem.item'), showIcon ? getStyle('header.navigation.linkItem.iconWrapper') : '']"
         @click="$emit('click', navigationElement, undefined)"
     >
         <slot name="item-name">
             {{ getTranslatedProperty(navigationElement, 'name') }}
         </slot>
 
-        <span v-if="showIcon" class="ml-auto">
+        <span v-if="showIcon" :class="getStyle('header.navigation.linkItem.icon')">
             <slot name="item-icon">
                 <Icon name="mdi:chevron-right" class="size-5" />
             </slot>

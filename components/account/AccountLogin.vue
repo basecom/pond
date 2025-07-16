@@ -17,6 +17,7 @@ const errorMessage: Ref<string|undefined> = ref(undefined);
 const customerStore = useCustomerStore();
 const { t } = useI18n();
 const { formatLink } = useInternationalization();
+const { toast } = usePondToast();
 
 const login = async (loginData: LoginData) => {
     isLoading.value = true;
@@ -27,6 +28,10 @@ const login = async (loginData: LoginData) => {
         if (props.redirectTo !== null) {
             navigateTo(formatLink(props.redirectTo));
         }
+
+        toast({
+            title: t('account.auth.loginSuccess'),
+        });
     } catch (error) {
         if (error instanceof ApiClientError) {
             errorMessage.value = t(`error.${ error.details.errors[0]?.code}`);

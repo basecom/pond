@@ -4,21 +4,23 @@ import type { Schemas } from '@shopware/api-client/api-types';
 defineProps<{
   navigationElements?: Schemas['Category'][];
 }>();
+
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
     <slot name="header">
-        <header class="sticky top-0 z-30 h-fit bg-white shadow">
-            <div class="container relative py-3">
+        <header :class="getStyle('header.outer')">
+            <div :class="getStyle('header.container')">
                 <slot name="wrapper">
-                    <div class="flex items-center justify-between gap-4 md:grid md:grid-cols-[80%_auto]">
-                        <div class="flex items-center gap-2">
+                    <div :class="getStyle('header.wrapper')">
+                        <div :class="getStyle('header.leftSection')">
                             <slot name="navigation-mobile">
                                 <LayoutHeaderNavigationMobile :navigation-elements="navigationElements" />
                             </slot>
 
                             <slot name="logo">
-                                <LayoutLogo :logo-classes="{ 'w-6 h-6 min-w-6': true }" />
+                                <LayoutLogo :logo-classes="{ [getStyle('header.logo')]: true }" />
                             </slot>
 
                             <slot name="navigation-desktop">

@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 @import "tw-animate-css";
+@import '@vueform/vueform/dist/vueform.css';
+
 @plugin '@tailwindcss/typography';
 @source "../../stories";
 @source "../../layers/cms-base-layer";
@@ -52,11 +54,19 @@
       @apply m-0
     }
   }
+
+  h1 {
+    @apply text-xl font-bold md:text-2xl;
+  }
+
+  h3 {
+    @apply text-lg font-bold;
+  }
 }
 
 @utility container {
   margin-inline: auto;
-  padding-inline: 2rem;
+  padding-inline: 1rem;
   
   @media (width >= 640px) {
     padding-inline: 1rem;

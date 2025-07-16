@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useToast } from '@/components/ui/toast/use-toast';
 import { ApiClientError } from '@shopware/api-client';
 import type { ChangePasswordForm } from '~/components/account/page/AccountPageProfileChangePasswordInner.vue';
 import type { ChangeMailForm } from '~/components/account/page/AccountPageProfileChangeMailInner.vue';
@@ -9,7 +8,7 @@ const { t } = useI18n();
 const customerStore = useCustomerStore();
 const { updatePersonalInfo, updateEmail } = useUser();
 const { updatePassword } = useCustomerPassword();
-const { toast } = useToast();
+const { toast } = usePondToast();
 
 const { customer } = storeToRefs(customerStore);
 const isLoading = ref({
