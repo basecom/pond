@@ -11,7 +11,9 @@
         "button": {
             "acceptLabel": "Accept"
         },
-        "currencySwitch": "Currency switched to {currency}"
+        "currencySwitch": "Currency switched to {currency}",
+        "errorHeadline": "An error has occurred.",
+        "errorMessage": "Please try again later."
     },
     "image": {
         "altText": "Image",
