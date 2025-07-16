@@ -12,7 +12,6 @@
             "acceptLabel": "Akzeptieren"
         },
         "currencySwitch": "Währung umgestellt auf {currency}",
-        "imageNotFound": "Kein Bild gefunden"
         "errorHeadline": "Es ist ein Fehler aufgetreten.",
         "errorMessage": "Versuchen Sie es später erneut."
     },

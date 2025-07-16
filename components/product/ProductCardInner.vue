@@ -94,8 +94,8 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
                         <slot name="fallback-cover">
                             <img
                                 :src="productFallBackCover"
-                                :alt="getProductName({ product }) || $t('general.imageNotFound')"
-                                :title="$t('general.imageNotFound')"
+                                :alt="$t('product.fallback.alt', { product: getProductName({ product }) })"
+                                :title="$t('product.fallback.title', { product: getProductName({ product }) })"
                                 class="m-auto h-full object-contain p-8"
                             >
                         </slot>

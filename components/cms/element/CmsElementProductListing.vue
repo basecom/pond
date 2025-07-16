@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<{
     style: undefined,
 },
 );
-// change: use i18n's t function instead of provided translations
+// change: use snippets instead of provided translations
 const defaultLimit = 15;
 const defaultPage = 1;
 const defaultOrder = 'name-asc';
@@ -44,7 +44,6 @@ const limit = ref(
 
 // Corrected defu usage
 const initalRoute = defu({}, route);
-console.log(initalRoute);
 
 const isLoading = ref(true);
 

@@ -11,6 +11,11 @@
         "from": "From",
         "variantsFrom": "Variants from",
         "previously": "Previously",
-        "to": "to"
+        "to": "to",
+        "pagination": {
+            "next": "Next",
+            "previous": "Previous",
+            "page": "Page"
+        }
     }
 }

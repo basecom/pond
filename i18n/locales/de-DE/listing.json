@@ -11,6 +11,11 @@
         "from": "Ab",
         "variantsFrom": "Varianten ab",
         "previously": "Zuvor",
-        "to": "bis"
+        "to": "bis",
+        "pagination": {
+            "next": "Nächste",
+            "previous": "Vorherige",
+            "page": "Seite"
+        }
     }
 }
