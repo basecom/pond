@@ -16,6 +16,7 @@ defineEmits<{
   click: [];
 }>();
 
+const { getStyle } = usePondStyle();
 const configStore = useConfigStore();
 const wishlistEnabled = configStore.get('core.cart.wishlistEnabled') as boolean;
 const dialogOpen = ref(false);
@@ -28,9 +29,13 @@ provide('closeDialog', () => {
 <template>
     <UiSheet :open="open" @update:open="(value: boolean) => $emit('open', value)">
         <slot name="mobile-account-trigger">
-            <UiSheetTrigger id="open-account-menu-mobile" class="size-5" aria-label="open-account-menu">
+            <UiSheetTrigger
+                id="open-account-menu-mobile"
+                :class="getStyle('header.actions.account.mobile.trigger')"
+                aria-label="open-account-menu"
+            >
                 <slot name="account-icon">
-                    <Icon name="mdi:account-outline" class="size-5" />
+                    <Icon name="mdi:account-outline" :class="getStyle('header.actions.account.mobile.icon')" />
                 </slot>
             </UiSheetTrigger>
         </slot>
@@ -38,20 +43,16 @@ provide('closeDialog', () => {
         <UiSheetContent>
             <UiSheetHeader>
                 <UiSheetTitle>{{ $t('account.myAccount') }}</UiSheetTitle>
-                <LazyUiSheetDescription class="text-initial text-base text-start grid gap-2">
+
+                <LazyUiSheetDescription :class="getStyle('header.actions.account.mobile.description')">
                     <!-- user view -->
                     <template v-if="signedIn">
                         <slot name="signed-in">
                             <AccountActionLink link="/account" :label="$t('account.account')" @click="() => $emit('click')" />
-
                             <AccountActionLink link="/account/profile" :label="$t('account.profile')" @click="() => $emit('click')" />
-
                             <AccountActionLink link="/account/address" :label="$t('account.address')" @click="() => $emit('click')" />
-
                             <AccountActionLink link="/account/payment" :label="$t('account.payment')" @click="() => $emit('click')" />
-
                             <AccountActionLink link="/account/order" :label="$t('account.order')" @click="() => $emit('click')" />
-
                             <AccountActionLink
                                 v-if="wishlistEnabled"
                                 link="/account/wishlist"
@@ -59,9 +60,9 @@ provide('closeDialog', () => {
                                 @click="() => $emit('click')"
                             />
 
-                            <div class="cursor-pointer" @click="$emit('logout')">
+                            <div :class="getStyle('header.actions.account.mobile.logoutWrapper')" @click="$emit('logout')">
                                 <slot name="logout">
-                                    <div class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3">
+                                    <div :class="getStyle('header.actions.account.mobile.logout')">
                                         {{ $t('account.auth.logout') }}
                                     </div>
                                 </slot>
@@ -73,10 +74,10 @@ provide('closeDialog', () => {
                     <template v-else>
                         <slot name="guest">
                             <UiDialog v-model:open="dialogOpen">
-                                <UiDialogTrigger class="w-full text-start">
+                                <UiDialogTrigger :class="getStyle('header.actions.account.mobile.loginTrigger')">
                                     <slot name="action-login">
                                         <slot name="login">
-                                            <div class="flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3">
+                                            <div :class="getStyle('header.actions.account.mobile.logout')">
                                                 {{ $t('account.auth.login') }}
                                             </div>
                                         </slot>
@@ -89,7 +90,6 @@ provide('closeDialog', () => {
                                             {{ $t('account.auth.login') }}
                                         </UiDialogTitle>
                                     </UiDialogHeader>
-
                                     <AccountLogin :redirect-to="null" />
                                 </UiDialogContent>
                             </UiDialog>

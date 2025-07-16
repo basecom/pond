@@ -15,25 +15,30 @@ withDefaults(
 defineEmits<{
   logout: [];
 }>();
+
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
     <div>
         <!-- mobile view -->
         <slot name="mobile-account-links">
-            <UiAccordion class="mb-4 md:hidden" type="single" collapsible>
-                <UiAccordionItem value="my-account" class="border-gray-100">
-                    <UiAccordionTrigger class="text-lg font-bold">{{ $t('account.myAccount') }}</UiAccordionTrigger>
-                    <UiAccordionContent class="text-base">
+            <UiAccordion :class="getStyle('account.menu.accordion.outer')" type="single" collapsible>
+                <UiAccordionItem value="my-account" :class="getStyle('account.menu.accordion.item')">
+                    <UiAccordionTrigger :class="getStyle('account.menu.accordion.trigger')">
+                        {{ $t('account.myAccount') }}
+                    </UiAccordionTrigger>
+
+                    <UiAccordionContent :class="getStyle('account.menu.accordion.content')">
                         <slot name="account-links">
-                            <div v-if="accountLinks" class="grid gap-2">
+                            <div v-if="accountLinks" :class="getStyle('account.menu.accordion.links.outer')">
                                 <slot name="account-link">
                                     <NuxtLinkLocale
                                         v-for="accountLink in accountLinks"
                                         :key="accountLink.name"
                                         :to="accountLink.link"
-                                        active-class="font-bold"
-                                        class="max-w-max"
+                                        :active-class="getStyle('account.menu.accordion.links.item')"
+                                        :class="getStyle('account.menu.accordion.links.activeItem')"
                                     >
                                         {{ $t(`account.${accountLink.name}`) }}
                                     </NuxtLinkLocale>
@@ -47,22 +52,22 @@ defineEmits<{
 
         <!-- desktop view -->
         <slot name="desktop-account-links">
-            <div class="hidden md:block">
+            <div :class="getStyle('account.menu.navigation.outer')">
                 <slot name="welcome">
-                    <h3 v-if="customer" class="mb-4 text-xl font-bold">
+                    <h3 v-if="customer" :class="getStyle('account.menu.welcome')">
                         {{ $t('account.welcome', { name: customer.firstName + ' ' + customer.lastName }) }}
                     </h3>
                 </slot>
 
                 <slot name="account-links">
-                    <div v-if="accountLinks" class="grid gap-4">
+                    <div v-if="accountLinks" :class="getStyle('account.menu.navigation.links.outer')">
                         <slot name="account-link">
                             <NuxtLinkLocale
                                 v-for="accountLink in accountLinks"
                                 :key="accountLink.name"
                                 :to="accountLink.link"
-                                active-class="font-bold"
-                                class="max-w-max"
+                                :active-class="getStyle('account.menu.navigation.links.activeItem')"
+                                :class="getStyle('account.menu.navigation.links.item')"
                             >
                                 {{ $t('account.'+accountLink.name) }}
                             </NuxtLinkLocale>
@@ -70,10 +75,10 @@ defineEmits<{
                     </div>
                 </slot>
 
-                <UiDropdownMenuSeparator class="my-4" />
+                <UiDropdownMenuSeparator :class="getStyle('account.menu.navigation.separator')" />
 
                 <slot name="action-logout">
-                    <div class="max-w-max cursor-pointer" @click="$emit('logout')">
+                    <div :class="getStyle('account.menu.navigation.logout')" @click="$emit('logout')">
                         <slot name="logout">
                             {{ $t('account.auth.logout') }}
                         </slot>

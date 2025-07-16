@@ -1,15 +1,10 @@
 <script setup lang="ts">
-const { formatLink } = useInternationalization();
 const customerStore = useCustomerStore();
 const { signedIn } = storeToRefs(customerStore);
+const { logout } = usePondAuthentication();
 
 const isOpen: Ref<boolean> = ref(false);
 const isSignedIn = computed(() => signedIn.value);
-
-const logout = async () => {
-    await customerStore.logout();
-    navigateTo(formatLink('/'));
-};
 </script>
 
 <template>

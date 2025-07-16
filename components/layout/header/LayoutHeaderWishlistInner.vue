@@ -7,6 +7,8 @@ withDefaults(
         wishlistItemsCount: 0,
     },
 );
+
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
@@ -14,15 +16,21 @@ withDefaults(
         <NuxtLinkLocale
             id="wishlist"
             to="/account/wishlist"
-            class="relative h-5"
+            :class="getStyle('header.actions.wishlist.trigger')"
             aria-label="wishlist"
         >
             <slot name="wishlist-icon">
-                <Icon name="mdi:cards-heart-outline" class="size-5" />
+                <Icon
+                    name="mdi:cards-heart-outline"
+                    :class="getStyle('header.actions.wishlist.icon')"
+                />
             </slot>
 
             <slot name="wishlist-badge">
-                <UiBadge v-if="wishlistItemsCount > 0" class="absolute -right-2 -top-1.5 px-1 py-0 text-xs font-normal">
+                <UiBadge
+                    v-if="wishlistItemsCount > 0"
+                    :class="getStyle('header.actions.wishlist.badge')"
+                >
                     {{ wishlistItemsCount }}
                 </UiBadge>
             </slot>

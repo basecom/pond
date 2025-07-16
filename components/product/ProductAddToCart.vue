@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { useToast } from '~/components/ui/toast';
-
 const { product } = useProduct();
 const { t } = useI18n();
 const { addToCart } = useAddToCart(product);
-const { toast } = useToast();
+const { toast } = usePondToast();
 
 const isLoading = ref(false);
 
@@ -14,7 +12,7 @@ const addProductToCart = async () => {
     try {
         await addToCart();
         toast({
-            title: t('product.productAddedToCart', {product: product.value.translated.name}),
+            title: t('product.productAddedToCart', { product: product.value.translated.name }),
         });
     } catch {
         toast({

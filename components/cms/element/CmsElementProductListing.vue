@@ -4,7 +4,7 @@ import type { CmsElementProductListing } from '@shopware/composables';
 import { defu } from 'defu';
 import { useRoute, useRouter } from 'vue-router';
 import { useCategoryListing } from '#imports';
-import type {Schemas, operations} from '@shopware/api-client/api-types';
+import type { Schemas, operations } from '@shopware/api-client/api-types';
 import type { cssClasses, layoutStyles } from '~/types/cms';
 
 const props = withDefaults(defineProps<{
@@ -18,11 +18,13 @@ const props = withDefaults(defineProps<{
     style: undefined,
 },
 );
-// change: use i18n's t function instead of provided translations
+// Changed: use snippets instead of provided translations
 const defaultLimit = 15;
 const defaultPage = 1;
 const defaultOrder = 'name-asc';
 const productListElement = useTemplateRef('productListElement');
+// Changed: Use pond style config
+const { getStyle } = usePondStyle();
 
 const {
     changeCurrentPage,
@@ -168,39 +170,39 @@ onMounted(async () => {
     <div
         v-if="loading"
         data-testid="loading"
-        class="flex justify-center flex-wrap p-4 md:p-6 lg:p-8"
+        :class="getStyle('listing.loading.outer')"
     >
         <UiSkeleton
             v-for="index in limit"
             :key="index"
-            class="w-full mb-8 sm:w-3/7 lg:w-2/7 2xl:w-7/24 mr-0 sm:mr-8 mb-8"
+            :class="getStyle('listing.loading.inner')"
         />
     </div>
     <div
-        class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8 p-4 md:p-6 lg:p-8"
+        :class="getStyle('listing.pagination.outer')"
     >
-        <div class="text-center place-self-center">
+        <div :class="getStyle('listing.pagination.inner')">
             <SwPagination
                 :total="getTotalPagesCount"
                 :current="Number(getCurrentPage)"
                 @change-page="changePage"
             />
         </div>
-        <div class="text-center place-self-center mt-2 lg:mt-0">
+        <div :class="getStyle('listing.pagination.page.outer')">
             <div
-                class="inline-block align-top text-center md:text-left"
+                :class="getStyle('listing.pagination.page.inner')"
                 data-testid="listing-pagination-limit-box"
             >
                 <label
                     for="limit"
-                    class="inline mr-4"
+                    :class="getStyle('listing.pagination.page.limit.label')"
                     data-testid="listing-pagination-limit-label"
                 >{{ $t('listing.perPage') }}</label>
                 <select
                     id="limit"
                     v-model="limit"
                     name="limitchoices"
-                    class="inline appearance-none bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                    :class="getStyle('listing.pagination.page.limit.select')"
                     data-testid="listing-pagination-limit-select"
                     @change="changeLimit"
                 >
@@ -216,10 +218,10 @@ onMounted(async () => {
                     </option>
                 </select>
                 <div
-                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+                    :class="getStyle('listing.pagination.page.svg.outer')"
                 >
                     <svg
-                        class="fill-current h-4 w-4"
+                        :class="getStyle('listing.pagination.page.svg.inner')"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
                     >

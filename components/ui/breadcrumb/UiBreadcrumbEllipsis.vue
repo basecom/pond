@@ -1,22 +1,23 @@
 <script lang="ts" setup>
 import type { HTMLAttributes } from 'vue';
-import { cn } from '@/lib/utils';
-import { MoreHorizontal } from 'lucide-vue-next';
 
 const props = defineProps<{
   class?: HTMLAttributes['class']
 }>();
+
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
     <span
         role="presentation"
         aria-hidden="true"
-        :class="cn('flex h-9 w-9 items-center justify-center', props.class)"
+        :class="[getStyle('ui.breadcrumb.ellipsis.outer'), props.class]"
     >
         <slot>
-            <MoreHorizontal class="size-4" />
+            <Icon name="mdi:ellipsis-horizontal" :class="getStyle('ui.breadcrumb.ellipsis.icon')" />
         </slot>
+
         <span class="sr-only">More</span>
     </span>
 </template>
