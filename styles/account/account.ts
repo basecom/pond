@@ -83,7 +83,7 @@ export default {
     },
 
     newsletter: {
-        wrapper: 'col-start-1 col-span-2',
+        outer: 'col-start-1 col-span-2',
         headline: 'mb-2 border-b border-gray-100 pb-2',
         alert: {
             outer: 'mb-4 flex gap-4',

@@ -169,7 +169,7 @@ const onChange = async (formData: NewsletterFormData) => {
 
         <!-- newsletter subscription -->
         <slot name="newsletter">
-            <div :class="getStyle('account.newsletter.wrapper')">
+            <div :class="getStyle('account.newsletter.outer')">
                 <slot name="newsletter-headline">
                     <h3 :class="getStyle('account.newsletter.headline')">
                         {{ $t('newsletter.headline') }}
