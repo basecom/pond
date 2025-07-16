@@ -70,7 +70,6 @@ const onChange = async (formData: NewsletterFormData) => {
             toast({
                 title: t('newsletter.subscribed.headline'),
             });
-            newsletterStatus.value = await getNewsletterStatus();
 
             // Depending on the newsletter status, the alert display is set
             newsletterStatus.value = await getNewsletterStatus();
@@ -178,9 +177,9 @@ const onChange = async (formData: NewsletterFormData) => {
                 </slot>
 
                 <slot name="newsletter-double-registration">
-                    <UiAlert v-if="displayDoubleNewsletterRegistrationAlert" :class="getStyle('account.newsletter.alert')">
+                    <UiAlert v-if="displayDoubleNewsletterRegistrationAlert" :class="getStyle('account.newsletter.alert.outer')">
                         <slot name="alert-icon">
-                            <Icon name="mdi:info" :class="getStyle('account.newsletter.alertIcon')" />
+                            <Icon name="mdi:info" :class="getStyle('account.newsletter.alert.icon')" />
                         </slot>
 
                         <slot name="alert-content">
