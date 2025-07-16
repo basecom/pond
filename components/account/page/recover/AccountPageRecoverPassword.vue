@@ -16,16 +16,10 @@ const { recoverPasswordConfirm } = usePondCustomer();
 const { toast } = usePondToast();
 const { t } = useI18n();
 
-onMounted(() => {
-    if(!props.hashQuery) {
-        handleError();
-    }
-});
-
 const recoverPassword = async (recoverPasswordFormData: RecoverPasswordFormData) => {
     isLoading.value = true;
     if (!props.hashQuery) {
-        isLoading.value= false;
+        isLoading.value = false;
         await handleError();
         return;
     }
