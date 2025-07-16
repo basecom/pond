@@ -51,10 +51,6 @@ export default {
                 submit: 'min-w-52 grow',
             },
         },
-        page: {
-            outer: 'container relative flex justify-center py-4',
-            inner: 'w-full md:w-2/3 xl:w-1/2',
-        },
         password: {
             outer: 'grid gap-5 w-full',
             button: 'col-span-12',
