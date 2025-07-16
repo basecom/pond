@@ -78,7 +78,7 @@ const { t } = useI18n();
         </ol>
     </nav>
 
-    <template v-if="!breadcrumbs">
+    <template v-if="!breadcrumbs && route.fullPath !== '/'">
         <div class="container mx-auto my-8 flex">
             <LayoutSkeletonBreadcrumbs />
         </div>
