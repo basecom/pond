@@ -14,17 +14,26 @@ export default {
             outer: 'mb-4 flex gap-4',
             icon: 'size-4 text-red-500',
         },
+        page: {
+            outer: 'container relative flex justify-center py-4',
+            inner: 'w-full md:w-2/3 xl:w-1/2',
+            headline: 'mb-4',
+        },
     },
 
     register: {
         outer: 'flex flex-col justify-center gap-5',
-        headline: 'text-center',
+        headline: '',
         addressHeadline: 'col-span-12',
         alert: {
             outer: 'mb-4 flex gap-4 col-span-12',
             icon: 'size-4 text-red-500',
         },
         submit: 'col-span-12',
+        page: {
+            outer: 'container flex justify-center py-4',
+            inner: 'w-full',
+        },
     },
 
     recover: {
@@ -40,6 +49,10 @@ export default {
                 cancel: 'w-fit grow sm:grow-0',
                 submit: 'min-w-52 grow',
             },
+        },
+        page: {
+            outer: 'container relative flex justify-center py-4',
+            inner: 'w-full md:w-2/3 xl:w-1/2',
         },
     },
 
@@ -69,17 +82,9 @@ export default {
     },
 
     dataProtection: {
-        policy: {
-            trigger: 'underline underline-offset-2 cursor-pointer mx-1',
-            content: 'max-h-3/4 overflow-scroll',
-            skeleton: 'w-full h-50 mt-2.5',
-        },
-        termsAndConditions: {
-            trigger: 'underline underline-offset-2 cursor-pointer mx-1',
-            content: 'max-h-3/4 overflow-scroll',
-            skeleton: 'w-full h-50 mt-2.5',
-        },
-
+        content: 'max-h-3/4 overflow-scroll md:!max-w-3/4',
+        skeleton: 'w-full h-50 mt-2.5',
+        trigger: 'underline underline-offset-2 cursor-pointer mx-1',
     },
 
     newsletter: {
