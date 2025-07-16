@@ -34,20 +34,20 @@ onMounted(async () => {
         <slot name="data-protection-policy-dialog">
             <UiDialog>
                 <slot name="data-protection-policy-trigger">
-                    <UiDialogTrigger :class="getStyle('account.dataProtection.policy.trigger')">
+                    <UiDialogTrigger :class="getStyle('account.dataProtection.trigger')">
                         {{ $t('account.register.dataProtection.policy.trigger') }}
                     </UiDialogTrigger>
                 </slot>
 
                 <slot name="data-protection-policy-content">
-                    <UiDialogContent :class="getStyle('account.dataProtection.policy.content')">
+                    <UiDialogContent :class="getStyle('account.dataProtection.content')">
                         <slot name="data-protection-policy-header">
                             <UiDialogHeader>
                                 <UiDialogTitle />
                             </UiDialogHeader>
                         </slot>
                         <template v-if="isPrivacyPageLayoutLoading">
-                            <UiSkeleton :class="getStyle('account.dataProtection.policy.skeleton')" />
+                            <UiSkeleton :class="getStyle('account.dataProtection.skeleton')" />
                         </template>
                         <template v-if="privacyPageLayout && !isPrivacyPageLayoutLoading">
                             <CmsPage :content="privacyPageLayout" />
@@ -64,20 +64,20 @@ onMounted(async () => {
         <slot name="data-protection-terms-and-conditions-dialog">
             <UiDialog>
                 <slot name="data-protection-terms-and-conditions-trigger">
-                    <UiDialogTrigger :class="getStyle('account.dataProtection.termsAndConditions.trigger')">
+                    <UiDialogTrigger :class="getStyle('account.dataProtection.trigger')">
                         {{ $t('account.register.dataProtection.termsAndConditions.trigger') }}
                     </UiDialogTrigger>
                 </slot>
 
                 <slot name="data-protection-terms-and-conditions-content">
-                    <UiDialogContent :class="getStyle('account.dataProtection.termsAndConditions.content')">
+                    <UiDialogContent :class="getStyle('account.dataProtection.content')">
                         <slot name="data-protection-terms-and-conditions-header">
                             <UiDialogHeader>
                                 <UiDialogTitle />
                             </UiDialogHeader>
                         </slot>
                         <template v-if="isTosPageLayoutLoading">
-                            <UiSkeleton :class="getStyle('account.dataProtection.termsAndConditions.skeleton')" />
+                            <UiSkeleton :class="getStyle('account.dataProtection.skeleton')" />
                         </template>
                         <template v-if="tosPageLayout && !isTosPageLayoutLoading">
                             <CmsPage :content="tosPageLayout" />
