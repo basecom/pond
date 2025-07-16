@@ -54,6 +54,7 @@ const handleError = async () => {
     await navigateTo(formatLink('/account/recover'));
     toast({
         title: t('account.recover.errorMessage'),
+        variant: 'destructive',
     });
 };
 </script>

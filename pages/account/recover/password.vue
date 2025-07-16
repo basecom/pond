@@ -13,6 +13,7 @@ onMounted(() => {
     if(!hashQuery.value) {
         toast({
             title: t('account.recover.errorMessage'),
+            variant: 'destructive',
         });
     }
 });
