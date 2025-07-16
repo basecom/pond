@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Loader2 } from 'lucide-vue-next';
-
 withDefaults(
     defineProps<{
       spinnerClasses?: { [key: string]: boolean };
@@ -11,6 +9,7 @@ withDefaults(
         isLoading: false,
     },
 );
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
@@ -21,7 +20,7 @@ withDefaults(
         >
             <div v-if="isLoading" class="absolute flex size-full items-center justify-center">
                 <slot name="loading-spinner">
-                    <Loader2 class="size-12 animate-spin" :class="spinnerClasses" />
+                    <Icon name="mdi:loading" :class="[getStyle('ui.button.spinner'), spinnerClasses]" />
                 </slot>
             </div>
             <div class="flex flex-wrap border-b py-4">
