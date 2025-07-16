@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 const { t } = useI18n();
 const configStore = useConfigStore();
 await configStore.loadConfig();
@@ -23,13 +22,5 @@ watch(() => signedIn.value, async (newValue) => {
 </script>
 
 <template>
-    <div class="container flex justify-center py-4">
-        <div class="w-full">
-            <AccountRegister>
-                <template #headline>
-                    <h1>{{ $t('account.auth.register') }}</h1>
-                </template>
-            </AccountRegister>
-        </div>
-    </div>
+    <AccountRegister />
 </template>
