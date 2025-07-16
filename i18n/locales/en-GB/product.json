@@ -1,0 +1,8 @@
+{
+  "product": {
+    "fallback": {
+      "alt": "Product cover for {product} not found",
+      "title": "Fallback cover for {product}"
+    }
+  }
+}

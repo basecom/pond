@@ -62,6 +62,7 @@ const confirmed = ref(false);
             <iframe
                 class="w-full inset-0 aspect-video"
                 :src="videoUrl.replace(/ /g, '')"
+                :title="$t('video.vimeoTitle')"
             />
         </div>
     </template>

@@ -13,7 +13,7 @@ const landingPage = await search(props.navigationId, {
 });
 
 if (!landingPage) {
-    throw createError({statusCode: 404, message: t('error.404.heading')});
+    throw createError({ statusCode: 404, message: t('error.404.heading') });
 }
 
 useHead(() => ({

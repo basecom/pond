@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type {Columns} from '~/types/vueForm/Columns';
+import type { Columns } from '~/types/vueForm/Columns';
 
 withDefaults(
     defineProps<{
@@ -88,6 +88,8 @@ const confirmEmail = ref(configStore.get('core.loginRegistration.requireEmailCon
 const showBirthday = ref(configStore.get('core.loginRegistration.showBirthdayField') as boolean);
 const confirmPassword = ref(configStore.get('core.loginRegistration.requirePasswordConfirmation') as boolean);
 const showAccountType = ref(configStore.get('core.loginRegistration.showAccountTypeSelection') as boolean);
+const passwordMinLength = configStore.get('core.loginRegistration.passwordMinLength') as number;
+const passwordMinRule = ref(`min:${passwordMinLength}`);
 </script>
 
 <template>
@@ -226,17 +228,41 @@ const showAccountType = ref(configStore.get('core.loginRegistration.showAccountT
         />
     </slot>
 
-    <AccountPassword
-        v-if="isDetail"
-        :show-confirm="confirmPassword"
-        :password-id="`${prefix}password`"
-        :password-name="`${prefix}password`"
-        :password-label="$t('account.customer.password.label')"
-        :password-placeholder="$t('account.customer.password.placeholder')"
-        :password-confirm-id="`${prefix}password_confirmation`"
-        :password-confirm-name="`${prefix}password_confirmation`"
-        :password-confirm-label="$t('account.customer.password.confirm.label')"
-        :password-confirm-placeholder="$t('account.customer.password.confirm.placeholder')"
-        :columns="columns.passwordColumns"
-    />
+    <slot name="password">
+        <FormTextElement
+            v-if="isDetail"
+            :id="`${prefix}password`"
+            :label="$t('account.customer.password.label')"
+            autocomplete="password"
+            :name="`${prefix}password`"
+            input-type="password"
+            :placeholder="$t('account.customer.password.placeholder')"
+            :rules="confirmPassword ? [
+                'required',
+                'confirmed',
+                passwordMinRule
+            ] : [
+                'required',
+                passwordMinRule
+            ]"
+            :debounce="300"
+            :messages="{ required: $t('account.customer.password.errorRequired'), confirmed: $t('account.customer.password.errorConfirmed'), min: $t('account.customer.password.errorMin', { number: passwordMinLength }) }"
+            :columns="columns.passwordColumns"
+        />
+    </slot>
+
+    <slot name="password-confirm">
+        <FormTextElement
+            v-if="confirmPassword && isDetail"
+            :id="`${prefix}password_confirmation`"
+            autocomplete="new-password"
+            :name="`${prefix}password_confirmation`"
+            :label="$t('account.customer.password.confirm.label')"
+            input-type="password"
+            :placeholder="$t('account.customer.password.confirm.placeholder')"
+            :messages="{ required: $t('account.customer.password.errorRequired') }"
+            rules="required"
+            :columns="columns.passwordColumns"
+        />
+    </slot>
 </template>

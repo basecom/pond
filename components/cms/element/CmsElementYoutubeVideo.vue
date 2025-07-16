@@ -56,7 +56,11 @@ const confirmed = ref(false);
     />
     <template v-else>
         <div class="cms-element-youtube-video">
-            <iframe class="inset-0 aspect-video w-full" :src="videoUrl" />
+            <iframe 
+                class="inset-0 aspect-video w-full" 
+                :src="videoUrl" 
+                :title="$t('video.youtubeTitle')"
+            />
         </div>
     </template>
 </template>

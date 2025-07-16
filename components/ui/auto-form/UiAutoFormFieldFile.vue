@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { FieldProps } from './interface';
 import { FormField } from '@/components/ui/form';
-import { Trash } from 'lucide-vue-next';
 import { ref } from 'vue';
 import { beautifyObjectName } from './utils';
 
@@ -57,7 +56,7 @@ async function parseFileAsString(file: File | undefined): Promise<string> {
                                 slotProps.componentField.onInput(undefined)
                             }"
                         >
-                            <Trash />
+                            Trash
                         </UiButton>
                     </div>
                 </slot>
