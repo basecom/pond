@@ -44,7 +44,6 @@ const { getStyle } = usePondStyle();
             </template>
         </SwSharedPrice>
         <SwSharedPrice
-            class="text-gray-900 basis-2/6"
             :class="[getStyle('listing.price.unitPrice.outer.default'), {
                 [getStyle('listing.price.unitPrice.outer.listPrice')]: isListPrice,
                 [getStyle('listing.price.unitPrice.outer.position')]:
