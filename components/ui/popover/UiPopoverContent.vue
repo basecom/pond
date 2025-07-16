@@ -2,12 +2,14 @@
 import { cn } from '@/lib/utils';
 import {
     PopoverContent,
-    type PopoverContentEmits,
-    type PopoverContentProps,
+    
+    
     PopoverPortal,
     useForwardPropsEmits,
 } from 'reka-ui';
-import { computed, type HTMLAttributes } from 'vue';
+import type {PopoverContentEmits, PopoverContentProps} from 'reka-ui';
+import { computed  } from 'vue';
+import type {HTMLAttributes} from 'vue';
 
 defineOptions({
     inheritAttrs: false,

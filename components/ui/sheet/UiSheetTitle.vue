@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { cn } from '@/lib/utils';
-import { DialogClose, DialogTitle, type DialogTitleProps } from 'reka-ui';
-import { computed, type HTMLAttributes } from 'vue';
+import { DialogClose, DialogTitle  } from 'reka-ui';
+import type {DialogTitleProps} from 'reka-ui';
+import { computed  } from 'vue';
+import type {HTMLAttributes} from 'vue';
 import { X } from 'lucide-vue-next';
 
 const props = defineProps<DialogTitleProps & { class?: HTMLAttributes['class'] }>();

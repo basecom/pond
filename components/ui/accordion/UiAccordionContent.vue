@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { cn } from '@/lib/utils';
-import { AccordionContent, type AccordionContentProps } from 'reka-ui';
-import { computed, type HTMLAttributes } from 'vue';
+import { AccordionContent  } from 'reka-ui';
+import type {AccordionContentProps} from 'reka-ui';
+import { computed  } from 'vue';
+import type {HTMLAttributes} from 'vue';
 
 const props = defineProps<AccordionContentProps & { class?: HTMLAttributes['class'] }>();
 

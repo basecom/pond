@@ -5,7 +5,8 @@ import type { Config, ConfigItem, Dependency, Shape } from './interface';
 import { Form } from '@/components/ui/form';
 import { toTypedSchema } from '@vee-validate/zod';
 import { provideDependencies } from './dependencies';
-import { getBaseSchema, getBaseType, getDefaultValueInZodStack, getObjectFormSchema, type ZodObjectOrWrapped } from './utils';
+import { getBaseSchema, getBaseType, getDefaultValueInZodStack, getObjectFormSchema  } from './utils';
+import type {ZodObjectOrWrapped} from './utils';
 
 const props = defineProps<{
   schema: T

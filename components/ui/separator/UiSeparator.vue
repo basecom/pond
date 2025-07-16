@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { cn } from '@/lib/utils';
-import { Separator, type SeparatorProps } from 'reka-ui';
-import { computed, type HTMLAttributes } from 'vue';
+import { Separator  } from 'reka-ui';
+import type {SeparatorProps} from 'reka-ui';
+import { computed  } from 'vue';
+import type {HTMLAttributes} from 'vue';
 
 const props = defineProps<
   SeparatorProps & { class?: HTMLAttributes['class'], label?: string }

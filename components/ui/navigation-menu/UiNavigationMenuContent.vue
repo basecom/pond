@@ -2,11 +2,13 @@
 import { cn } from '@/lib/utils';
 import {
     NavigationMenuContent,
-    type NavigationMenuContentEmits,
-    type NavigationMenuContentProps,
+    
+    
     useForwardPropsEmits,
 } from 'reka-ui';
-import { computed, type HTMLAttributes } from 'vue';
+import type {NavigationMenuContentEmits, NavigationMenuContentProps} from 'reka-ui';
+import { computed  } from 'vue';
+import type {HTMLAttributes} from 'vue';
 
 const props = defineProps<NavigationMenuContentProps & { class?: HTMLAttributes['class'] }>();
 

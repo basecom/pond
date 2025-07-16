@@ -1,7 +1,8 @@
 import type { ToastRootProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 
-import { cva, type VariantProps } from 'class-variance-authority';
+import { cva  } from 'class-variance-authority';
+import type {VariantProps} from 'class-variance-authority';
 
 export { default as UiToast } from './UiToast.vue';
 export { default as UiToastAction } from './UiToastAction.vue';

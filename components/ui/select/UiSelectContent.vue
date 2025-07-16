@@ -2,13 +2,15 @@
 import { cn } from '@/lib/utils';
 import {
     SelectContent,
-    type SelectContentEmits,
-    type SelectContentProps,
+    
+    
     SelectPortal,
     SelectViewport,
     useForwardPropsEmits,
 } from 'reka-ui';
-import { computed, type HTMLAttributes } from 'vue';
+import type {SelectContentEmits, SelectContentProps} from 'reka-ui';
+import { computed  } from 'vue';
+import type {HTMLAttributes} from 'vue';
 
 defineOptions({
     inheritAttrs: false,

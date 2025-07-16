@@ -2,12 +2,14 @@
 import { cn } from '@/lib/utils';
 import {
     SwitchRoot,
-    type SwitchRootEmits,
-    type SwitchRootProps,
+    
+    
     SwitchThumb,
     useForwardPropsEmits,
 } from 'reka-ui';
-import { computed, type HTMLAttributes } from 'vue';
+import type {SwitchRootEmits, SwitchRootProps} from 'reka-ui';
+import { computed  } from 'vue';
+import type {HTMLAttributes} from 'vue';
 
 const props = defineProps<SwitchRootProps & { class?: HTMLAttributes['class'] }>();
 

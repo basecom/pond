@@ -2,14 +2,17 @@
 import { cn } from '@/lib/utils';
 import {
     DialogContent,
-    type DialogContentEmits,
-    type DialogContentProps,
+    
+    
     DialogOverlay,
     DialogPortal,
     useForwardPropsEmits,
 } from 'reka-ui';
-import { computed, type HTMLAttributes } from 'vue';
-import { type SheetVariants, sheetVariants } from '.';
+import type {DialogContentEmits, DialogContentProps} from 'reka-ui';
+import { computed  } from 'vue';
+import type {HTMLAttributes} from 'vue';
+import {  sheetVariants } from '.';
+import type {SheetVariants} from '.';
 
 interface SheetContentProps extends DialogContentProps {
   class?: HTMLAttributes['class']
