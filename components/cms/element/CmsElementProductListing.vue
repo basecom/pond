@@ -158,7 +158,7 @@ onMounted(async () => {
     <div
         v-if="!loading && getElements.length > 0"
         ref="productListElement"
-        class="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-8 productListElement"
+        :class="getStyle('listing.outer')"
     >
         <ProductCard
             v-for="product in getElements"

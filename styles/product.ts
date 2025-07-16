@@ -23,11 +23,11 @@ export default {
         information: {
             outer: 'p-4 h-full flex flex-col justify-between',
             variant: {
-                outer: 'min-h-4 mt-4 text-xs text-gray-600',
+                outer: 'min-h-4 text-xs text-gray-600',
                 inner: 'font-bold',
             },
             title: {
-                outer: 'mt-4 line-clamp-2',
+                outer: 'mt-2 line-clamp-2',
                 inner: 'text-lg my-0',
             },
             description: 'mt-6 text-sm text-gray-600 line-clamp-5',

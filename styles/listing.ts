@@ -1,4 +1,5 @@
 export default {
+    outer: 'mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4 productListElement',
     loading: {
         outer: 'flex justify-center flex-wrap p-4 md:p-6 lg:p-8',
         inner: 'w-full mb-8 sm:w-3/7 lg:w-2/7 2xl:w-7/24 mr-0 sm:mr-8 mb-8',
