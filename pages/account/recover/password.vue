@@ -2,6 +2,7 @@
 const { toast } = usePondToast();
 const route = useRoute();
 const { t } = useI18n();
+const { getStyle } = usePondStyle();
 
 const hashQuery: Ref<undefined | string> = ref(route.query.hash?.toString() || undefined);
 
@@ -16,10 +17,8 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="container relative flex justify-center py-4">
-        <div class="w-full md:w-2/3 xl:w-1/2">
-            <AccountPageRecoverPassword v-if="hashQuery" :hash-query="hashQuery" />
-            <AccountPageRecover v-else />
-        </div>
+    <div :class="getStyle('account.recover.page')">
+        <AccountPageRecoverPassword v-if="hashQuery" :hash-query="hashQuery" />
+        <AccountPageRecover v-else />
     </div>
 </template>

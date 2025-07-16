@@ -7,8 +7,6 @@ withDefaults(
       isLoading?: boolean;
       showRequired?: string[];
       errorMessage?: string;
-      wrapperClasses?: string;
-      submitButtonClasses?: string;
       floatPlaceholders?: boolean;
     }>(),
     {
@@ -16,8 +14,6 @@ withDefaults(
         isLoading: false,
         showRequired: () => ['label'],
         errorMessage: undefined,
-        wrapperClasses: 'grid gap-5',
-        submitButtonClasses: 'col-span-12',
         floatPlaceholders: false,
     },
 );
@@ -25,10 +21,12 @@ withDefaults(
 const emits = defineEmits<{
   recoverPassword: [formData: RecoverPasswordFormData];
 }>();
+
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
-    <div :class="wrapperClasses">
+    <div :class="getStyle('account.recover.password.outer')">
         <slot name="headline">
             <h1> {{ $t('account.recover.header') }} </h1>
         </slot>
@@ -59,7 +57,7 @@ const emits = defineEmits<{
                         id="recover-submit"
                         type="submit"
                         name="recover-submit"
-                        :class="submitButtonClasses"
+                        :class="getStyle('account.recover.password.button')"
                         :is-loading="isLoading"
                     >
                         {{ $t('account.recover.submitRecoverButton') }}

@@ -28,6 +28,7 @@ export default {
     },
 
     recover: {
+        page: 'container flex justify-center md:w-2/3 xl:w-1/2 pt-4',
         alert: {
             outer: 'mb-4 flex gap-4',
             icon: 'size-4 shrink-0',
@@ -40,6 +41,10 @@ export default {
                 cancel: 'w-fit grow sm:grow-0',
                 submit: 'min-w-52 grow',
             },
+        },
+        password: {
+            outer: 'grid gap-5 w-full',
+            button: 'col-span-12',
         },
     },
 
