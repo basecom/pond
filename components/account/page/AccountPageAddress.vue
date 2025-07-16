@@ -55,8 +55,8 @@ const setAsDefaultBillingAddress = async (addressId: string) => {
 
     try {
         await setDefaultCustomerBillingAddress(addressId);
-        await loadCustomerAddresses();
         await refreshSessionContext();
+        await loadCustomerAddresses();
         toast({
             title: t('address.defaultBillingAddress.success'),
         });

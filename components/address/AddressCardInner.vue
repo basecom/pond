@@ -15,6 +15,7 @@ withDefaults(
     },
 );
 
+const { getStyle } = usePondStyle();
 const configStore = useConfigStore();
 const showTitle = configStore.get('core.loginRegistration.showTitleField') as boolean;
 const showAdditionalAddressField1 = configStore.get('core.loginRegistration.showAdditionalAddressField1') as boolean;
@@ -25,7 +26,7 @@ const showPhoneNumberField = configStore.get('core.loginRegistration.showPhoneNu
 <template>
     <div>
         <slot name="address-card-headline">
-            <h3 v-if="headline">
+            <h3 v-if="headline" :class="getStyle('account.address.subHeadline')">
                 {{ headline }}
             </h3>
         </slot>
@@ -37,7 +38,7 @@ const showPhoneNumberField = configStore.get('core.loginRegistration.showPhoneNu
         </slot>
 
         <slot name="address-card-fields">
-            <div v-if="address && !description" class="space-y-1">
+            <div v-if="address && !description" :class="getStyle('account.address.card.outer')">
                 <p v-if="address.salutationId">
                     {{ getTranslatedProperty(address.salutation, 'displayName') }}
                 </p>

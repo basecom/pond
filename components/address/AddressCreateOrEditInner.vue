@@ -24,6 +24,7 @@ defineEmits<{
   onSubmit: [value: AddressData];
 }>();
 
+const { getStyle } = usePondStyle();
 const form$: Ref<null | Vueform> = ref(null);
 
 onMounted(() => {
@@ -87,7 +88,7 @@ onMounted(() => {
             type="submit"
             name="create-or-edit-address-submit"
             :is-loading="isLoading"
-            class="col-span-12"
+            :class="getStyle('account.address.editOrCreateAddressButton.submit')"
         >
             {{ $t('general.save') }}
         </UiButton>
