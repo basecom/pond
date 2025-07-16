@@ -1,5 +1,6 @@
 import tailwindcss from '@tailwindcss/vite';
 import { autoInjectTWTheme } from './vite/autoInjectTWTheme';
+import { fileURLToPath } from 'node:url';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -85,11 +86,11 @@ export default defineNuxtConfig({
         locales: [
             {
                 code: 'de-DE',
-                files: ['de-DE/account.json', 'de-DE/error.json', 'de-DE/general.json', 'de-DE/order.json', 'de-DE/payment.json', 'de-DE/address.json'],
+                files: ['de-DE/account.json', 'de-DE/error.json', 'de-DE/general.json', 'de-DE/order.json', 'de-DE/payment.json', 'de-DE/address.json', 'de-DE/product.json'],
             },
             {
                 code: 'en-GB',
-                files: ['en-GB/account.json', 'en-GB/error.json', 'en-GB/general.json', 'en-GB/order.json', 'de-DE/payment.json', 'en-GB/address.json'],
+                files: ['en-GB/account.json', 'en-GB/error.json', 'en-GB/general.json', 'en-GB/order.json', 'en-GB/payment.json', 'en-GB/address.json', 'en-GB/product.json'],
             },
         ],
         lazy: true,
@@ -129,5 +130,9 @@ export default defineNuxtConfig({
     ducktory: {
         path: '/styleguide',
         debug: true,
+    },
+
+    alias: {
+        '#pond-config': fileURLToPath(new URL('./pond.config.ts', import.meta.url)),
     },
 });

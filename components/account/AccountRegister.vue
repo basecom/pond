@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ApiClientError } from '@shopware/api-client';
-import type {RegisterFormData} from '~/types/vueForm/Register';
-import { useToast } from '@/components/ui/toast/use-toast';
+import type { RegisterFormData } from '~/types/vueForm/Register';
 
 const customerStore = useCustomerStore();
 const { t } = useI18n();
 const { handleError } = usePondHandleError();
-const { toast } = useToast();
+const { toast } = usePondToast();
+const { getStyle } = usePondStyle();
 
 const isLoading = ref(false);
 const errorMessage: Ref<string|undefined> = ref(undefined);
@@ -39,9 +39,13 @@ const register = async (registerData: RegisterFormData) => {
 </script>
 
 <template>
-    <AccountRegisterInner
-        :is-loading="isLoading"
-        :error-message="errorMessage"
-        @register="(registerData: RegisterFormData) => register(registerData)"
-    />
+    <div :class="getStyle('account.register.page.outer')">
+        <div :class="getStyle('account.register.page.inner')">
+            <AccountRegisterInner
+                :is-loading="isLoading"
+                :error-message="errorMessage"
+                @register="(registerData: RegisterFormData) => register(registerData)"
+            />
+        </div>
+    </div>
 </template>

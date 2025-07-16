@@ -1,7 +1,15 @@
+<script setup lang="ts">
+const { t } = useI18n();
+const configStore = useConfigStore();
+await configStore.loadConfig();
+
+const shopName = configStore.get('core.basicInformation.shopName') as string|null ?? 'pond';
+
+useHead(() => ({
+    title: `${t('account.recover.header')  } | ${shopName}`,
+}));
+</script>
+
 <template>
-    <div class="container relative flex justify-center py-4">
-        <div class="w-full md:w-2/3 xl:w-1/2">
-            <AccountRecover />
-        </div>
-    </div>
+    <AccountRecover />
 </template>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { FieldProps } from './interface';
 import { FormField } from '@/components/ui/form';
-import { UiInput } from '@/components/ui/input';
-import { UiTextarea } from '@/components/ui/textarea';
 import { beautifyObjectName } from './utils';
+import { UiTextarea } from '~/components/ui/textarea';
+import { UiInput } from '~/components/ui/input';
 
 const props = defineProps<FieldProps>();
 const inputComponent = computed(() => props.config?.component === 'textarea' ? UiTextarea : UiInput);

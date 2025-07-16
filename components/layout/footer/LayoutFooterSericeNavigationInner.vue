@@ -5,39 +5,40 @@ defineProps<{
     navigationElements?: Schemas['Category'][];
 }>();
 
+const { getStyle } = usePondStyle();
 const configStore = useConfigStore();
 const shopName = configStore.get('core.basicInformation.shopName') as string|null ?? 'pond';
 </script>
 
 <template>
-    <div class="mt-4 grid justify-between gap-6 border-t border-gray-500/70 pt-4 text-sm text-gray-700 md:mt-8 md:flex md:pt-8">
-        <div class="flex gap-2 md:gap-4 items-center">
+    <div :class="getStyle('footer.serviceNavigation.outer')">
+        <div :class="getStyle('footer.serviceNavigation.left')">
             <slot name="copyright">
-                <span class="order-2 md:order-[unset]">
+                <span :class="getStyle('footer.serviceNavigation.copyright')">
                     {{ $t('general.copyright', { 'companyName': shopName }) }}
                 </span>
             </slot>
             <slot name="language-switcher">
-                <div class="order-3 md:order-[unset]">
-                    <LayoutLanguageSwitcher />
+                <div :class="getStyle('footer.serviceNavigation.languageSwitcher')">
+                    <LayoutFooterLanguageSwitcher />
                 </div>
             </slot>
             <slot name="currency-switcher">
-                <div class="order-4 md:order-[unset]">
-                    <LayoutCurrencySwitcher />
+                <div :class="getStyle('footer.serviceNavigation.currencySwitcher')">
+                    <LayoutFooterCurrencySwitcher />
                 </div>
             </slot>
         </div>
 
         <slot name="navigation-elements">
-            <div class="grid gap-2 md:flex md:gap-4">
+            <div :class="getStyle('footer.serviceNavigation.links')">
                 <template
                     v-for="navigationElement in navigationElements"
                     :key="navigationElement.id"
                 >
                     <LazyLayoutHeaderNavigationLink
                         :navigation-element="navigationElement"
-                        :classes="{ 'hover:text-gray-950 transition-colors': true }"
+                        :classes="{ [getStyle('footer.serviceNavigation.link')]: true }"
                         :show-as-link="navigationElement.type === 'link' || navigationElement.type === 'page'"
                         :show-icon="false"
                     />

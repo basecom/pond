@@ -27,6 +27,7 @@ const schema = z.object({
         }),
 });
 
+const { getStyle } = usePondStyle();
 export type RecoverData = z.infer<typeof schema>;
 
 const recover = (recoverData: RecoverData) => {
@@ -39,9 +40,9 @@ const recover = (recoverData: RecoverData) => {
         <div v-auto-animate>
             <slot name="success-message">
                 <template v-if="showSuccessMessage">
-                    <UiAlert variant="successful" class="mb-4 flex gap-4">
+                    <UiAlert variant="successful" :class="getStyle('account.recover.alert.outer')">
                         <slot name="alert-icon">
-                            <Icon name="mdi:check" class="size-4 shrink-0" />
+                            <Icon name="mdi:check" :class="getStyle('account.recover.alert.icon')" />
                         </slot>
 
                         <div>
@@ -55,16 +56,16 @@ const recover = (recoverData: RecoverData) => {
             </slot>
 
             <slot name="header">
-                <h1 class="text-lg font-semibold">{{ $t('account.recover.header') }}</h1>
+                <h1>{{ $t('account.recover.header') }}</h1>
             </slot>
 
             <slot name="info-text">
-                <p class="pb-4 pt-2 text-sm">{{ $t('account.recover.information') }}</p>
+                <p :class="getStyle('account.recover.description')">{{ $t('account.recover.information') }}</p>
             </slot>
 
             <slot name="form">
                 <UiAutoForm
-                    class="space-y-6"
+                    :class="getStyle('account.recover.form.outer')"
                     :schema="schema"
                     :field-config="{
                         email: {
@@ -78,15 +79,15 @@ const recover = (recoverData: RecoverData) => {
                     @submit="recover"
                 >
                     <slot name="buttons">
-                        <div class="flex flex-wrap gap-4">
+                        <div :class="getStyle('account.recover.form.buttons.outer')">
                             <slot name="back-button">
-                                <UiButton variant="outline" class="w-fit grow sm:grow-0">
+                                <UiButton variant="outline" :class="getStyle('account.recover.form.buttons.cancel')">
                                     <NuxtLinkLocale to="/account/login">{{ $t('account.recover.backButton') }}</NuxtLinkLocale>
                                 </UiButton>
                             </slot>
 
                             <slot name="submit-button">
-                                <UiButton type="submit" :is-loading="isLoading" class="min-w-52 grow">
+                                <UiButton type="submit" :is-loading="isLoading" :class="getStyle('account.recover.form.buttons.submit')">
                                     {{ $t('account.recover.submitButton') }}
                                 </UiButton>
                             </slot>

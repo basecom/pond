@@ -6,6 +6,7 @@ const { languages, changeLanguage, replaceToDevStorefront, getAvailableLanguages
     useInternationalization();
 const { languageIdChain } = useSessionContext();
 const { handleError } = usePondHandleError();
+const { getStyle } = usePondStyle();
 
 const selectedLanguage: Ref<undefined | Schemas['Language']> = ref(undefined);
 const selectedLanguageId = ref(languageIdChain);
@@ -26,7 +27,7 @@ const onUpdate = async (selectedValue: AcceptableValue): Promise<void> =>  {
             const redirectUrl = response.redirectUrl;
             window.location.replace(replaceToDevStorefront(redirectUrl));
         } catch {
-            handleError('[Pond][LayoutLanguageSwitchInner] Language switch failed');
+            handleError('Language switch failed');
         }
     }
 };
@@ -35,10 +36,14 @@ const onUpdate = async (selectedValue: AcceptableValue): Promise<void> =>  {
 <template>
     <UiSelect :model-value="selectedLanguageId" @update:model-value="onUpdate">
         <slot name="language-switcher-trigger">
-            <UiSelectTrigger id="language-switch" class="border-none shadow-none p-0" aria-label="language-switch">
+            <UiSelectTrigger
+                id="language-switch"
+                :class="getStyle('footer.languageSwitcherComponent.trigger')"
+                aria-label="language-switch"
+            >
                 <UiSelectValue>
                     <template v-if="selectedLanguage">
-                        <div class="flex items-center gap-1">
+                        <div :class="getStyle('footer.languageSwitcherComponent.valueWrapper')">
                             <Icon :name="`custom-icons:${selectedLanguage?.translationCode?.code}`" />
                             {{ selectedLanguage?.name }}
                         </div>
@@ -55,7 +60,7 @@ const onUpdate = async (selectedValue: AcceptableValue): Promise<void> =>  {
                         :key="language.id"
                         :value="language.id"
                     >
-                        <div class="flex items-center gap-1 cursor-pointer">
+                        <div :class="getStyle('footer.languageSwitcherComponent.item')">
                             <template v-if="language.translationCode.code">
                                 <Icon :name="`custom-icons:${language.translationCode.code}`" />
                             </template>
