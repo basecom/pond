@@ -4,7 +4,7 @@ import type { CmsElementProductListing } from '@shopware/composables';
 import { defu } from 'defu';
 import { useRoute, useRouter } from 'vue-router';
 import { useCategoryListing } from '#imports';
-import type {Schemas, operations} from '@shopware/api-client/api-types';
+import type { Schemas, operations } from '@shopware/api-client/api-types';
 import type { cssClasses, layoutStyles } from '~/types/cms';
 
 const props = withDefaults(defineProps<{

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type {BoxLayout, DisplayMode} from '@shopware/composables';
-import {buildUrlPrefix, getProductName, getProductRoute, getSmallestThumbnailUrl} from '@shopware/helpers';
-import {useUrlResolver} from '#imports';
-import {RouterLink} from 'vue-router';
+import type { BoxLayout, DisplayMode } from '@shopware/composables';
+import { buildUrlPrefix, getProductName, getProductRoute, getSmallestThumbnailUrl } from '@shopware/helpers';
+import { useUrlResolver } from '#imports';
+import { RouterLink } from 'vue-router';
 
 withDefaults(
     defineProps<{

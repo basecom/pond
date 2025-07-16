@@ -12,7 +12,7 @@ const addProductToCart = async () => {
     try {
         await addToCart();
         toast({
-            title: t('product.productAddedToCart', {product: product.value.translated.name}),
+            title: t('product.productAddedToCart', { product: product.value.translated.name }),
         });
     } catch {
         toast({
