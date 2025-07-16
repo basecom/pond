@@ -27,9 +27,10 @@ const hasLineItems = computed(() => cartCount.value > 0);
 <template>
     <UiSheet @update:open="(value: boolean) => $emit('open', value)">
         <slot name="cart-trigger">
-            <UiSheetTrigger id="open-offcanvas-cart"
-                            :class="getStyle('header.actions.cart.trigger')"
-                            aria-label="open-offcanvas-cart"
+            <UiSheetTrigger
+                id="open-offcanvas-cart"
+                :class="getStyle('header.actions.cart.trigger')"
+                aria-label="open-offcanvas-cart"
             >
                 <div class="relative">
                     <span class="flex">

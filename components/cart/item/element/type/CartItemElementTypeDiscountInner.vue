@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type {Schemas} from '@shopware/api-client/api-types';
-import {getMainImageUrl} from '@shopware-pwa/helpers-next';
+import type { Schemas } from '@shopware/api-client/api-types';
+import { getMainImageUrl } from '@shopware-pwa/helpers-next';
 
 const props = withDefaults(
     defineProps<{
@@ -11,7 +11,7 @@ const props = withDefaults(
         itemTotalPrice: 0,
     },
 );
-const {cartItem } = toRefs(props);
+const { cartItem } = toRefs(props);
 
 const imageUrl = computed(() => props.cartItem ? getMainImageUrl(props.cartItem) : undefined);
 </script>

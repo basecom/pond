@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import {toast} from '../../ui/toast';
-import {getProductUrl} from '@shopware-pwa/helpers-next';
+import { getProductUrl } from '@shopware-pwa/helpers-next';
 
 const props = withDefaults(
     defineProps<{
@@ -15,15 +14,17 @@ const props = withDefaults(
     },
 );
 
+const { toast } = usePondToast();
+
 const { cartItem } = toRefs(props);
 
-const {addToWishlist, isInWishlist, removeFromWishlist } = useProductWishlist(cartItem.value?.referencedId ?? '');
+const { addToWishlist, isInWishlist, removeFromWishlist } = useProductWishlist(cartItem.value?.referencedId ?? '');
 
-const {removeItem} = useCartItem(cartItem);
+const { removeItem } = useCartItem(cartItem);
 
-const {refreshCart} = useCart();
+const { refreshCart } = useCart();
 
-const {handleError} = usePondHandleError();
+const { handleError } = usePondHandleError();
 const { t } = useI18n();
 
 const {
@@ -42,7 +43,7 @@ const isLoading = ref({
 const quantity = ref(1);
 
 const productUrl = cartItem?.value?.referencedId && cartItem?.value?.type === 'product' ?
-    getProductUrl({id: cartItem?.value?.referencedId}) : '';
+    getProductUrl({ id: cartItem?.value?.referencedId }) : '';
 
 syncRefs(itemQuantity, quantity);
 
@@ -54,7 +55,7 @@ const removeCartItem = async () => {
             description: t('checkout.removeSuccess'),
         });
     } catch (error) {
-        handleError(error, true, {show: true});
+        handleError(error, true, { show: true });
     } finally {
         isLoading.value.container = false;
     }
@@ -69,7 +70,7 @@ const changeCartItemQuantity = async (quantityInput: number) => {
             description: t('checkout.success'),
         });
     } catch (error) {
-        handleError(error, true, {show: true, description: 'DEFAULT'});
+        handleError(error, true, { show: true, description: 'DEFAULT' });
     } finally {
         isLoading.value.container = false;
         quantity.value = itemQuantity.value ?? 1;
@@ -84,7 +85,7 @@ const addProductToWishlist = async () => {
             description: t('checkout.addToWishlistSuccess'),
         });
     } catch(error) {
-        handleError(error, true, {show: true});
+        handleError(error, true, { show: true });
     } finally {
         isLoading.value.wishlist = false;
     }
@@ -98,7 +99,7 @@ const removeProductFromWishlist = async () => {
             description: t('checkout.removeFromWishlistSuccess'),
         });
     } catch(error) {
-        handleError(error, true, {show: true});
+        handleError(error, true, { show: true });
     } finally {
         isLoading.value.wishlist = false;
     }

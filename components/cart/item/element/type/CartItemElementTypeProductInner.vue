@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type {Schemas} from '@shopware/api-client/api-types';
-import {getMainImageUrl} from '@shopware-pwa/helpers-next';
+import type { Schemas } from '@shopware/api-client/api-types';
+import { getMainImageUrl } from '@shopware-pwa/helpers-next';
 
 const props = withDefaults(
     defineProps<{
@@ -35,7 +35,7 @@ const props = withDefaults(
         productUrl: undefined,
     },
 );
-const {cartItem, quantity} = toRefs(props);
+const { cartItem, quantity } = toRefs(props);
 
 defineEmits<{
   'change-cart-item-quantity': [number],

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type {Schemas} from '@shopware/api-client/api-types';
+import type { Schemas } from '@shopware/api-client/api-types';
 
 const props = withDefaults(
     defineProps<{
@@ -14,7 +14,7 @@ const props = withDefaults(
     },
 );
 
-const {cartItem, quantity} = toRefs(props);
+const { cartItem, quantity } = toRefs(props);
 
 defineEmits<{
   'change-cart-item-quantity': [quantityInput: number]

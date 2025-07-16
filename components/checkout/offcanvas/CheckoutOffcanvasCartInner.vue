@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type {Schemas} from '@shopware/api-client/api-types';
-import type {AcceptableValue} from 'reka-ui';
+import type { Schemas } from '@shopware/api-client/api-types';
+import type { AcceptableValue } from 'reka-ui';
 
 const props = withDefaults(
     defineProps<{
@@ -32,7 +32,7 @@ const props = withDefaults(
         isLoggedIn: false,
     },
 );
-const {cartDeliveries, cartItems} = toRefs(props);
+const { cartDeliveries, cartItems } = toRefs(props);
 
 const emits = defineEmits<{
   'set-selected-shipping-method': [shippingMethodId: AcceptableValue];

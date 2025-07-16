@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type {Schemas} from '@shopware/api-client/api-types';
-import type {AcceptableValue} from 'reka-ui';
+import type { Schemas } from '@shopware/api-client/api-types';
+import type { AcceptableValue } from 'reka-ui';
 
 withDefaults(
     defineProps<{
@@ -34,7 +34,7 @@ const emits = defineEmits<{
   'add-selected-promotion-code': [promotionCode: string];
 }>();
 
-const {getFormattedPrice} = usePrice();
+const { getFormattedPrice } = usePrice();
 
 const { t } = useI18n();
 

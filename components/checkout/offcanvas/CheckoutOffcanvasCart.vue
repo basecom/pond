@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import type {Schemas} from '@shopware/api-client/api-types';
-import {toast} from '../../ui/toast';
-import type {AcceptableValue} from 'reka-ui';
+import type { Schemas } from '@shopware/api-client/api-types';
+import type { AcceptableValue } from 'reka-ui';
 
 withDefaults(
     defineProps<{
@@ -14,11 +13,12 @@ withDefaults(
     },
 );
 
-const {t} = useI18n();
-const {subtotal, shippingCosts, addPromotionCode, cart, refreshCart} = useCart();
-const {isLoggedIn} = useUser();
-const {getShippingMethods, setShippingMethod, selectedShippingMethod} = useCheckout();
-const {handleError} = usePondHandleError();
+const { t } = useI18n();
+const { subtotal, shippingCosts, addPromotionCode, cart, refreshCart } = useCart();
+const { isLoggedIn } = useUser();
+const { getShippingMethods, setShippingMethod, selectedShippingMethod } = useCheckout();
+const { handleError } = usePondHandleError();
+const { toast } = usePondToast();
 
 const isLoading = ref({
     promotion: false,
@@ -34,7 +34,7 @@ const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
     try {
         const shippingMethodIdString = shippingMethodId?.toString();
         if(shippingMethodIdString) {
-            await setShippingMethod({id: shippingMethodIdString});
+            await setShippingMethod({ id: shippingMethodIdString });
             toast({
                 description: t('checkout.success'),
             });
@@ -46,7 +46,7 @@ const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
             });
         }
     } catch (error) {
-        handleError(error, true, {show: true});
+        handleError(error, true, { show: true });
     } finally {
         await refreshCart();
         shippingCost.value = findSelectedShippingCost(shippingCosts.value);
@@ -75,7 +75,7 @@ const addSelectedPromotionCode = async (promotionCode: string) => {
         }
 
     } catch (error) {
-        handleError(error,true, {show: true});
+        handleError(error,true, { show: true });
     } finally {
         isLoading.value.promotion = false;
     }

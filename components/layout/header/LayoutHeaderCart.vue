@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { cartItems, cart, refreshCart } = useCart();
-const {getFormattedPrice} = usePrice();
+const { getFormattedPrice } = usePrice();
 </script>
 
 <template>

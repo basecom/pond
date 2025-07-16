@@ -1,11 +1,11 @@
 import { ApiClientError } from '@shopware/api-client';
-import {toast} from '../components/ui/toast';
 
 export function usePondHandleError() {
     const { $i18n } = useNuxtApp();
+    const { toast } = usePondToast();
     const t = $i18n.t;
     const handleError = (error: unknown | string, showAsError: boolean = true, toastMessage:
-        { show?: boolean, title?: string, description?: string } = {show: false, description: undefined, title: ''}) => {
+        { show?: boolean, title?: string, description?: string } = { show: false, description: undefined, title: '' }) => {
 
         const prefix = `[Pond][${extractFileNameFromStack()}]`;
 
