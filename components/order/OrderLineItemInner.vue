@@ -16,40 +16,43 @@ const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.
         <slot name="line-item">
             <div :class="getStyle('account.order.lineItem.base')">
                 <slot name="line-item-cover">
-                    <img
-                        v-if="lineItem.cover?.url && !lineItem.cover?.mimeType?.includes('video')"
-                        :src="lineItem.cover.url"
-                        :alt="lineItem.cover.translated?.alt"
-                        :title="lineItem.cover.translated?.title"
-                        :class="getStyle('account.order.lineItem.cover')"
-                    >
-                    <video
-                        v-else-if="lineItem.cover?.url && lineItem.cover?.mimeType?.includes('video')"
-                        :src="lineItem.cover.url"
-                        :title="lineItem.cover.translated?.title"
-                        :class="getStyle('account.order.lineItem.cover')"
-                        :aria-label="`product-video-${lineItem.label}`"
-                    />
-                    <img
-                        v-else-if="lineItem.type !== 'promotion' && productFallBackCover"
-                        :src="productFallBackCover"
-                        :alt="$t('product.fallback.alt', { product: lineItem.label })"
-                        :title="$t('product.fallback.title', { product: lineItem.label })"
-                        :class="getStyle('account.order.lineItem.cover')"
-                    >
-                    <img
-                        v-else-if="lineItem.type !== 'promotion' && !productFallBackCover"
-                        src="/fallback-product-cover.svg"
-                        :alt="$t('product.fallback.alt', { product: lineItem.label })"
-                        :title="$t('product.fallback.title', { product: lineItem.label })"
-                        :class="getStyle('account.order.lineItem.cover')"
-                    >
-                    <div
-                        v-else-if="lineItem.type === 'promotion'"
-                        :class="getStyle('account.order.lineItem.promotion.wrapper')"
-                    >
-                        <Icon name="mdi:percent" :class="getStyle('account.order.lineItem.promotion.icon')" />
-                    </div>
+                    <template v-if="lineItem.cover && lineItem.type !== 'promotion'">
+                        <img
+                            v-if="lineItem.cover?.url && !lineItem.cover?.mimeType?.includes('video')"
+                            :src="lineItem.cover.url"
+                            :alt="lineItem.cover.translated?.alt"
+                            :title="lineItem.cover.translated?.title"
+                            :class="getStyle('account.order.lineItem.cover')"
+                        >
+                        <video
+                            v-else-if="lineItem.cover?.url && lineItem.cover?.mimeType?.includes('video')"
+                            :src="lineItem.cover.url"
+                            :title="lineItem.cover.translated?.title"
+                            :class="getStyle('account.order.lineItem.cover')"
+                            :aria-label="`product-video-${lineItem.label}`"
+                        />
+                    </template>
+                    <template v-else-if="lineItem.type === 'promotion'">
+                        <div :class="getStyle('account.order.lineItem.promotion.wrapper')">
+                            <Icon name="mdi:percent" :class="getStyle('account.order.lineItem.promotion.icon')" />
+                        </div>
+                    </template>
+                    <template v-else>
+                        <img
+                            v-if="productFallBackCover"
+                            :src="productFallBackCover"
+                            :alt="$t('product.fallback.alt', { product: lineItem.label })"
+                            :title="$t('product.fallback.title', { product: lineItem.label })"
+                            :class="getStyle('account.order.lineItem.cover')"
+                        >
+                        <img
+                            v-else
+                            src="/fallback-product-cover.svg"
+                            :alt="$t('product.fallback.alt', { product: lineItem.label })"
+                            :title="$t('product.fallback.title', { product: lineItem.label })"
+                            :class="getStyle('account.order.lineItem.cover')"
+                        >
+                    </template>
                 </slot>
 
                 <slot name="line-item-information">
