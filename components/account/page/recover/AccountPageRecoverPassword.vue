@@ -12,9 +12,9 @@ const props = withDefaults(
 
 const isLoading = ref(false);
 const { formatLink } = useInternationalization();
-const { recoverPasswordConfirm } = usePondCustomer();
 const { toast } = usePondToast();
 const { t } = useI18n();
+const { apiClient } = useShopwareContext();
 
 const recoverPassword = async (recoverPasswordFormData: RecoverPasswordFormData) => {
     isLoading.value = true;
@@ -24,18 +24,30 @@ const recoverPassword = async (recoverPasswordFormData: RecoverPasswordFormData)
         return;
     }
 
-    const result = await recoverPasswordConfirm(props.hashQuery, recoverPasswordFormData.newPassword, recoverPasswordFormData.newPassword_confirmation);
+    try {
+        const result = await apiClient.invoke(
+            'recoveryPassword post /account/recovery-password-confirm',
+            {
+                body: {
+                    hash: props.hashQuery,
+                    newPassword: recoverPasswordFormData.newPassword,
+                    newPasswordConfirm: recoverPasswordFormData.newPassword_confirmation,
+                },
+            },
+        );
 
-    if (result && result === 200) {
-        await navigateTo(formatLink('/account/login'));
-        toast({
-            title: t('account.recover.successResetHeader'),
-            description: t('account.recover.successResetMessage'),
-        });
-    } else {
+        if (result && result.status === 200) {
+            await navigateTo(formatLink('/account/login'));
+            toast({
+                title: t('account.recover.successResetHeader'),
+                description: t('account.recover.successResetMessage'),
+            });
+        }
+    } catch {
         await handleError();
+    } finally {
+        isLoading.value = false;
     }
-    isLoading.value = false;
 };
 
 const handleError = async () => {
