@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
-import { DialogClose, DialogTitle  } from 'reka-ui';
-import type {DialogTitleProps} from 'reka-ui';
-import { computed  } from 'vue';
-import type {HTMLAttributes} from 'vue';
-import { X } from 'lucide-vue-next';
+import { DialogClose, DialogTitle, type DialogTitleProps } from 'reka-ui';
+import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<DialogTitleProps & { class?: HTMLAttributes['class'] }>();
+
+const { getStyle } = usePondStyle();
 
 const delegatedProps = computed(() => {
     const { class: _, ...delegated } = props;
@@ -17,15 +15,13 @@ const delegatedProps = computed(() => {
 
 <template>
     <DialogTitle
-        :class="cn('text-lg font-semibold text-gray-950 flex items-center justify-between', props.class)"
+        :class="[getStyle('ui.sheet.title.outer'), props.class]"
         v-bind="delegatedProps"
     >
         <slot />
 
-        <DialogClose
-            class="rounded-sm opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-gray-950 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-gray-100"
-        >
-            <X class="size-4" />
+        <DialogClose :class="getStyle('ui.sheet.title.close')">
+            <Icon name="mdi:close" :class="getStyle('ui.sheet.title.icon')" />
         </DialogClose>
     </DialogTitle>
 </template>

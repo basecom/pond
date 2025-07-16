@@ -1,16 +1,13 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
 import {
     SelectContent,
-    
-    
+    type SelectContentEmits,
+    type SelectContentProps,
     SelectPortal,
     SelectViewport,
     useForwardPropsEmits,
 } from 'reka-ui';
-import type {SelectContentEmits, SelectContentProps} from 'reka-ui';
-import { computed  } from 'vue';
-import type {HTMLAttributes} from 'vue';
+import type { HTMLAttributes } from 'vue';
 
 defineOptions({
     inheritAttrs: false,
@@ -25,6 +22,8 @@ const props = withDefaults(
 );
 const emits = defineEmits<SelectContentEmits>();
 
+const { getStyle } = usePondStyle();
+
 const delegatedProps = computed(() => {
     const { class: _, ...delegated } = props;
 
@@ -38,18 +37,20 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
     <SelectPortal>
         <SelectContent
             v-bind="{ ...forwarded, ...$attrs }"
-            :class="cn(
-                'relative z-50 max-h-96 min-w-32 overflow-hidden rounded-md border border-gray-200 bg-white text-gray-950 shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-                position === 'popper'
-                    && 'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
-                props.class,
-            )
-            "
+            :class="[{
+                [getStyle('ui.select.content.outerPopperPosition')]: position === 'popper'
+            }, getStyle('ui.select.content.outer'), props.class]"
         >
             <UiSelectScrollUpButton />
-            <SelectViewport :class="cn('p-1', position === 'popper' && 'h-(--reka-select-trigger-height) w-full min-w-(--reka-select-trigger-width)')">
+
+            <SelectViewport
+                :class="[{
+                    [getStyle('ui.select.content.viewportPopperPosition')]: position === 'popper'
+                }, getStyle('ui.select.content.viewport')]"
+            >
                 <slot />
             </SelectViewport>
+
             <UiSelectScrollDownButton />
         </SelectContent>
     </SelectPortal>

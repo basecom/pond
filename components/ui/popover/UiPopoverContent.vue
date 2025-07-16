@@ -1,15 +1,12 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
 import {
     PopoverContent,
-    
-    
+    type PopoverContentEmits,
+    type PopoverContentProps,
     PopoverPortal,
     useForwardPropsEmits,
 } from 'reka-ui';
-import type {PopoverContentEmits, PopoverContentProps} from 'reka-ui';
-import { computed  } from 'vue';
-import type {HTMLAttributes} from 'vue';
+import type { HTMLAttributes } from 'vue';
 
 defineOptions({
     inheritAttrs: false,
@@ -25,6 +22,8 @@ const props = withDefaults(
 );
 const emits = defineEmits<PopoverContentEmits>();
 
+const { getStyle } = usePondStyle();
+
 const delegatedProps = computed(() => {
     const { class: _, ...delegated } = props;
 
@@ -38,12 +37,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
     <PopoverPortal>
         <PopoverContent
             v-bind="{ ...forwarded, ...$attrs }"
-            :class="
-                cn(
-                    'z-50 w-72 rounded-md border border-gray-200 bg-white p-4 text-gray-950 shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-                    props.class,
-                )
-            "
+            :class="[getStyle('ui.popover.content'), props.class]"
         >
             <slot />
         </PopoverContent>

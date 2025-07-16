@@ -1,19 +1,17 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
-import { Check } from 'lucide-vue-next';
 import {
     DropdownMenuCheckboxItem,
-    
-    
+    type DropdownMenuCheckboxItemEmits,
+    type DropdownMenuCheckboxItemProps,
     DropdownMenuItemIndicator,
     useForwardPropsEmits,
 } from 'reka-ui';
-import type {DropdownMenuCheckboxItemEmits, DropdownMenuCheckboxItemProps} from 'reka-ui';
-import { computed  } from 'vue';
-import type {HTMLAttributes} from 'vue';
+import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<DropdownMenuCheckboxItemProps & { class?: HTMLAttributes['class'] }>();
 const emits = defineEmits<DropdownMenuCheckboxItemEmits>();
+
+const { getStyle } = usePondStyle();
 
 const delegatedProps = computed(() => {
     const { class: _, ...delegated } = props;
@@ -27,14 +25,11 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 <template>
     <DropdownMenuCheckboxItem
         v-bind="forwarded"
-        :class=" cn(
-            'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-gray-100 focus:text-gray-900 data-disabled:pointer-events-none data-disabled:opacity-50',
-            props.class,
-        )"
+        :class="[getStyle('ui.dropdown.item.outer'), props.class]"
     >
-        <span class="absolute left-2 flex size-3.5 items-center justify-center">
+        <span :class="getStyle('ui.dropdown.item.inner')">
             <DropdownMenuItemIndicator>
-                <Check class="size-4" />
+                <Icon name="mdi:check" :class="getStyle('ui.dropdown.item.icon')" />
             </DropdownMenuItemIndicator>
         </span>
         <slot />

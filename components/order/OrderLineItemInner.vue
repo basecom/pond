@@ -1,0 +1,93 @@
+<script setup lang="ts">
+import type { Schemas } from '@shopware/api-client/api-types';
+
+defineProps<{
+  lineItem: Schemas['OrderLineItem'];
+}>();
+
+const { getStyle } = usePondStyle();
+const { getFormattedPrice } = usePrice();
+const configStore = useConfigStore();
+const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.productFallBackCover') as string;
+</script>
+
+<template>
+    <div :class="getStyle('account.order.lineItem.wrapper')">
+        <slot name="line-item">
+            <div :class="getStyle('account.order.lineItem.base')">
+                <slot name="line-item-cover">
+                    <template v-if="lineItem.cover && lineItem.type !== 'promotion'">
+                        <img
+                            v-if="lineItem.cover?.url && !lineItem.cover?.mimeType?.includes('video')"
+                            :src="lineItem.cover.url"
+                            :alt="lineItem.cover.translated?.alt"
+                            :title="lineItem.cover.translated?.title"
+                            :class="getStyle('account.order.lineItem.cover')"
+                        >
+                        <video
+                            v-else-if="lineItem.cover?.url && lineItem.cover?.mimeType?.includes('video')"
+                            :src="lineItem.cover.url"
+                            :title="lineItem.cover.translated?.title"
+                            :class="getStyle('account.order.lineItem.cover')"
+                            :aria-label="`product-video-${lineItem.label}`"
+                        />
+                    </template>
+                    <template v-else-if="lineItem.type === 'promotion'">
+                        <div :class="getStyle('account.order.lineItem.promotion.wrapper')">
+                            <Icon name="mdi:percent" :class="getStyle('account.order.lineItem.promotion.icon')" />
+                        </div>
+                    </template>
+                    <template v-else>
+                        <img
+                            v-if="productFallBackCover"
+                            :src="productFallBackCover"
+                            :alt="$t('product.fallback.alt', { product: lineItem.label })"
+                            :title="$t('product.fallback.title', { product: lineItem.label })"
+                            :class="getStyle('account.order.lineItem.cover')"
+                        >
+                        <img
+                            v-else
+                            src="/fallback-product-cover.svg"
+                            :alt="$t('product.fallback.alt', { product: lineItem.label })"
+                            :title="$t('product.fallback.title', { product: lineItem.label })"
+                            :class="getStyle('account.order.lineItem.cover')"
+                        >
+                    </template>
+                </slot>
+
+                <slot name="line-item-information">
+                    <div :class="getStyle('account.order.lineItem.info')">
+                        <span :class="getStyle('account.order.lineItem.label')">
+                            {{ lineItem.label }}
+                        </span>
+
+                        <span :class="getStyle('account.order.lineItem.description')">
+                            {{ lineItem.payload?.productNumber }}
+                        </span>
+                    </div>
+                </slot>
+            </div>
+        </slot>
+
+        <slot name="quantity">
+            <span :class="getStyle('account.order.lineItem.quantity.wrapper')">
+                <span :class="getStyle('account.order.lineItem.quantity.label')">
+                    {{ $t('order.lineItem.quantity') }}
+                </span>
+                {{ lineItem.quantity }}
+            </span>
+        </slot>
+
+        <slot name="unit-price">
+            <span :class="getStyle('account.order.lineItem.unitPrice')">
+                {{ getFormattedPrice(lineItem.unitPrice) }}
+            </span>
+        </slot>
+
+        <slot name="total-price">
+            <span :class="getStyle('account.order.lineItem.totalPrice')">
+                {{ getFormattedPrice(lineItem.totalPrice) }}
+            </span>
+        </slot>
+    </div>
+</template>

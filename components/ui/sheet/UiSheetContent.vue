@@ -1,31 +1,34 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
 import {
     DialogContent,
-    
-    
+    type DialogContentEmits,
+    type DialogContentProps,
     DialogOverlay,
     DialogPortal,
     useForwardPropsEmits,
 } from 'reka-ui';
-import type {DialogContentEmits, DialogContentProps} from 'reka-ui';
-import { computed  } from 'vue';
-import type {HTMLAttributes} from 'vue';
-import {  sheetVariants } from '.';
-import type {SheetVariants} from '.';
+import type { HTMLAttributes } from 'vue';
 
 interface SheetContentProps extends DialogContentProps {
   class?: HTMLAttributes['class']
-  side?: SheetVariants['side']
+  side?: 'top'|'bottom'|'left'|'right'
 }
 
 defineOptions({
     inheritAttrs: false,
 });
 
-const props = defineProps<SheetContentProps>();
+const props = withDefaults(
+    defineProps<SheetContentProps>(),
+    {
+        class: undefined,
+        side: 'right',
+    },
+);
 
 const emits = defineEmits<DialogContentEmits>();
+
+const { getStyle } = usePondStyle();
 
 const delegatedProps = computed(() => {
     const { class: _, side, ...delegated } = props;
@@ -38,11 +41,10 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 
 <template>
     <DialogPortal>
-        <DialogOverlay
-            class="fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
-        />
+        <DialogOverlay :class="getStyle('ui.sheet.overlay') " />
+
         <DialogContent
-            :class="cn(sheetVariants({ side }), props.class)"
+            :class="[getStyle('ui.sheet.base'), getStyle(`ui.sheet.variants.${side}`), props.class]"
             v-bind="{ ...forwarded, ...$attrs }"
         >
             <slot />

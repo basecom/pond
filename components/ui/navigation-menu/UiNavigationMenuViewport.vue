@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
 import {
     NavigationMenuViewport,
-    
+    type NavigationMenuViewportProps,
     useForwardProps,
 } from 'reka-ui';
-import type {NavigationMenuViewportProps} from 'reka-ui';
-import { computed  } from 'vue';
-import type {HTMLAttributes} from 'vue';
+import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<NavigationMenuViewportProps & { class?: HTMLAttributes['class'] }>();
+
+const { getStyle } = usePondStyle();
 
 const delegatedProps = computed(() => {
     const { class: _, ...delegated } = props;
@@ -27,13 +26,7 @@ const forwardedProps = useForwardProps(delegatedProps);
     <div class="absolute left-auto top-full flex justify-center">
         <NavigationMenuViewport
             v-bind="forwardedProps"
-            :class="
-                cn(
-                    'left-(--reka-navigation-menu-viewport-left)',
-                    'origin-top-center relative mt-1.5 h-(--reka-navigation-menu-viewport-height) w-full overflow-hidden rounded-md border border-gray-200 bg-white text-gray-950 shadow data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 md:w-(--reka-navigation-menu-viewport-width)',
-                    props.class,
-                )
-            "
+            :class="[getStyle('ui.navigationMenu.viewport'), 'left-(--reka-navigation-menu-viewport-left)', props.class]"
         />
     </div>
 </template>

@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
-import { ChevronDown } from 'lucide-vue-next';
-import { SelectIcon, SelectTrigger,  useForwardProps } from 'reka-ui';
-import type {SelectTriggerProps} from 'reka-ui';
+import { SelectIcon, SelectTrigger, type SelectTriggerProps, useForwardProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<SelectTriggerProps & { class?: HTMLAttributes['class'] }>();
+
+const { getStyle } = usePondStyle();
 
 const delegatedProps = computed(() => {
     const { class: _, ...delegated } = props;
@@ -19,14 +18,11 @@ const forwardedProps = useForwardProps(delegatedProps);
 <template>
     <SelectTrigger
         v-bind="forwardedProps"
-        :class="cn(
-            'cursor-pointer flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-gray-200 bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-white data-placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-950 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:truncate text-start',
-            props.class,
-        )"
+        :class="[getStyle('ui.select.trigger.outer'), props.class]"
     >
         <slot />
         <SelectIcon as-child>
-            <ChevronDown class="size-4 shrink-0 opacity-50" />
+            <Icon name="mdi:chevron-down" :class="getStyle('ui.select.trigger.icon')" />
         </SelectIcon>
     </SelectTrigger>
 </template>

@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
-import { SelectGroup  } from 'reka-ui';
-import type {SelectGroupProps} from 'reka-ui';
-import { computed  } from 'vue';
-import type {HTMLAttributes} from 'vue';
+import { SelectGroup, type SelectGroupProps } from 'reka-ui';
+import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<SelectGroupProps & { class?: HTMLAttributes['class'] }>();
+
+const { getStyle } = usePondStyle();
 
 const delegatedProps = computed(() => {
     const { class: _, ...delegated } = props;
@@ -15,7 +14,7 @@ const delegatedProps = computed(() => {
 </script>
 
 <template>
-    <SelectGroup :class="cn('p-1 w-full', props.class)" v-bind="delegatedProps">
+    <SelectGroup :class="[getStyle('ui.select.group'), props.class]" v-bind="delegatedProps">
         <slot />
     </SelectGroup>
 </template>

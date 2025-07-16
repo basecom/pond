@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
-import { cn } from '@/lib/utils';
-import { SelectLabel  } from 'reka-ui';
-import type {SelectLabelProps} from 'reka-ui';
+import { SelectLabel, type SelectLabelProps } from 'reka-ui';
 
 const props = defineProps<SelectLabelProps & { class?: HTMLAttributes['class'] }>();
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
-    <SelectLabel :class="cn('px-2 py-1.5 text-sm font-semibold', props.class)">
+    <SelectLabel :class="[getStyle('ui.select.label'), props.class]">
         <slot />
     </SelectLabel>
 </template>

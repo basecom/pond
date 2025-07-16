@@ -1,17 +1,14 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
-import { ChevronDown } from 'lucide-vue-next';
 import {
     NavigationMenuTrigger,
-    
+    type NavigationMenuTriggerProps,
     useForwardProps,
 } from 'reka-ui';
-import type {NavigationMenuTriggerProps} from 'reka-ui';
-import { computed  } from 'vue';
-import type {HTMLAttributes} from 'vue';
-import { navigationMenuTriggerStyle } from '.';
+import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<NavigationMenuTriggerProps & { class?: HTMLAttributes['class'] }>();
+
+const { getStyle } = usePondStyle();
 
 const delegatedProps = computed(() => {
     const { class: _, ...delegated } = props;
@@ -25,12 +22,10 @@ const forwardedProps = useForwardProps(delegatedProps);
 <template>
     <NavigationMenuTrigger
         v-bind="forwardedProps"
-        :class="cn(navigationMenuTriggerStyle(), 'group', props.class)"
+        :class="[getStyle('ui.navigationMenu.triggerStyle'), 'group', props.class]"
     >
         <slot />
-        <ChevronDown
-            class="relative top-px ml-1 size-3 transition duration-300 group-data-[state=open]:rotate-180"
-            aria-hidden="true"
-        />
+
+        <Icon name="mdi:chevron-down" :class="getStyle('ui.navigationMenu.trigger')" aria-hidden="true" />
     </NavigationMenuTrigger>
 </template>

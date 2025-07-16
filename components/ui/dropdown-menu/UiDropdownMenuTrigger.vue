@@ -4,11 +4,13 @@ import type {DropdownMenuTriggerProps} from 'reka-ui';
 
 const props = defineProps<DropdownMenuTriggerProps>();
 
+const { getStyle } = usePondStyle();
+
 const forwardedProps = useForwardProps(props);
 </script>
 
 <template>
-    <DropdownMenuTrigger class="outline-none" v-bind="forwardedProps">
+    <DropdownMenuTrigger :class="getStyle('ui.dropdown.menuTrigger')" v-bind="forwardedProps">
         <slot />
     </DropdownMenuTrigger>
 </template>

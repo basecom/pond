@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
-import { NavigationMenuList,  useForwardProps } from 'reka-ui';
-import type {NavigationMenuListProps} from 'reka-ui';
-import { computed  } from 'vue';
-import type {HTMLAttributes} from 'vue';
+import { NavigationMenuList, type NavigationMenuListProps, useForwardProps } from 'reka-ui';
+import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<NavigationMenuListProps & { class?: HTMLAttributes['class'] }>();
+
+const { getStyle } = usePondStyle();
 
 const delegatedProps = computed(() => {
     const { class: _, ...delegated } = props;
@@ -19,12 +18,7 @@ const forwardedProps = useForwardProps(delegatedProps);
 <template>
     <NavigationMenuList
         v-bind="forwardedProps"
-        :class="
-            cn(
-                'group flex flex-1 list-none items-center justify-center gap-x-1',
-                props.class,
-            )
-        "
+        :class="[getStyle('ui.navigationMenu.list'), props.class]"
     >
         <slot />
     </NavigationMenuList>

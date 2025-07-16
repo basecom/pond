@@ -1,20 +1,20 @@
 <script lang="ts" setup>
 import type { HTMLAttributes } from 'vue';
-import { cn } from '@/lib/utils';
-import { Primitive  } from 'reka-ui';
-import type {PrimitiveProps} from 'reka-ui';
+import { Primitive, type PrimitiveProps } from 'reka-ui';
 
 const props = withDefaults(defineProps<PrimitiveProps & { class?: HTMLAttributes['class'] }>(), {
     as: 'a',
     class: undefined,
 });
+
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
     <Primitive
         :as="as"
         :as-child="asChild"
-        :class="cn('transition-colors hover:text-gray-950', props.class)"
+        :class="[getStyle('ui.breadcrumb.link'), props.class]"
     >
         <slot />
     </Primitive>

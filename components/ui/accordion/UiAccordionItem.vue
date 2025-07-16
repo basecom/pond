@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
-import { AccordionItem,  useForwardProps } from 'reka-ui';
-import type {AccordionItemProps} from 'reka-ui';
-import { computed  } from 'vue';
-import type {HTMLAttributes} from 'vue';
+import { AccordionItem, type AccordionItemProps, useForwardProps } from 'reka-ui';
+import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<AccordionItemProps & { class?: HTMLAttributes['class'] }>();
 
+const { getStyle } = usePondStyle();
 const delegatedProps = computed(() => {
     const { class: _, ...delegated } = props;
 
@@ -19,7 +17,7 @@ const forwardedProps = useForwardProps(delegatedProps);
 <template>
     <AccordionItem
         v-bind="forwardedProps"
-        :class="cn('border-b', props.class)"
+        :class="[getStyle('ui.accordion.item'), props.class]"
     >
         <slot />
     </AccordionItem>

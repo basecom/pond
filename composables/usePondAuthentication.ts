@@ -2,6 +2,9 @@ export function usePondAuthentication() {
     const customerStore = useCustomerStore();
     const { signedIn, loading } = storeToRefs(customerStore);
     const { formatLink } = useInternationalization();
+    const { toast } = usePondToast();
+    const { t } = useI18n();
+    const { handleError } = usePondHandleError();
 
     const rerouteIfLoggedOut = async (targetRoute: string = '/account/login') => {
         await sessionContextLoaded();
@@ -14,13 +17,11 @@ export function usePondAuthentication() {
         await sessionContextLoaded();
 
         // The customer can log in via modal and be on the login page at the same time. The watcher is required to handle the case.
-        const stop = watch(
+        watch(
             () => signedIn.value,
             (isSignedIn) => {
                 if (!isSignedIn) return;
                 navigateTo(formatLink(targetRoute));
-                // prevent duplicate redirects & memory leaks
-                stop();
             },
             { immediate: true },
         );
@@ -32,8 +33,21 @@ export function usePondAuthentication() {
         }
     };
 
+    const logout = async (redirectTo: string = '/') => {
+        try {
+            await navigateTo(formatLink(redirectTo));
+            await customerStore.logout();
+            toast({
+                title: t('account.auth.logoutSuccess'),
+            });
+        } catch (error) {
+            handleError(error);
+        }
+    };
+
     return {
         rerouteIfLoggedOut,
         rerouteIfLoggedIn,
+        logout,
     };
 }
