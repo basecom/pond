@@ -4,9 +4,9 @@ import {
     AccordionTrigger,
     
 } from 'reka-ui';
-import type {AccordionTriggerProps} from 'reka-ui';
+import type { AccordionTriggerProps } from 'reka-ui';
 import { computed  } from 'vue';
-import type {HTMLAttributes} from 'vue';
+import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<AccordionTriggerProps & { class?: HTMLAttributes['class'] }>();
 

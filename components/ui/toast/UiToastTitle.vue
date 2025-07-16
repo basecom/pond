@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ToastTitle, type ToastTitleProps } from 'reka-ui';
+import { ToastTitle  } from 'reka-ui';
+import type { ToastTitleProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<ToastTitleProps & { class?: HTMLAttributes['class'] }>();

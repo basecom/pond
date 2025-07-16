@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import {
     NavigationMenuTrigger,
-    type NavigationMenuTriggerProps,
+    
     useForwardProps,
 } from 'reka-ui';
+import type { NavigationMenuTriggerProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<NavigationMenuTriggerProps & { class?: HTMLAttributes['class'] }>();

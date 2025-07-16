@@ -1,7 +1,7 @@
 import * as z from 'zod';
 import type { Schemas } from '@shopware/api-client/api-types';
 import { DependencyType  } from '../components/ui/auto-form/interface';
-import type {Dependency} from '../components/ui/auto-form/interface';
+import type { Dependency } from '../components/ui/auto-form/interface';
 import type { ZodObjectOrWrapped } from '~/components/ui/auto-form/utils';
 
 export const usePondForm = () => {
