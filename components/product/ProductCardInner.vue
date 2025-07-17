@@ -100,73 +100,73 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
 
             <slot name="product-info">
                 <div :class="getStyle('product.card.information.outer')">
-                    <div>
-                        <slot name="variant-characteristics">
-                            <div :class="getStyle('product.card.information.variant.outer')">
-                                <slot name="product-rating">
-                                    <!-- Wrapper div, to ensure that elements align, when no rating is present -->
-                                    <div v-if="showReview" :class="getStyle('product.card.reviews.outer')">
-                                        <ProductRating v-if="product.ratingAverage" :rating-average="Math.round(product.ratingAverage)" />
-                                    </div>
-                                </slot>
+                    <slot name="variant-characteristics">
+                        <div :class="getStyle('product.card.information.variant.outer')">
+                            <slot name="product-rating">
+                                <!-- Wrapper div, to ensure that elements align, when no rating is present -->
+                                <div v-if="showReview" :class="getStyle('product.card.reviews.outer')">
+                                    <ProductRating v-if="product.ratingAverage" :rating-average="Math.round(product.ratingAverage)" />
+                                </div>
+                            </slot>
 
-                                <slot name="title">
-                                    <RouterLink
-                                        :class="getStyle('product.card.information.title.outer')"
-                                        :to="buildUrlPrefix(getProductRoute(product), getUrlPrefix())"
+                            <slot name="title">
+                                <RouterLink
+                                    :class="getStyle('product.card.information.title.outer')"
+                                    :to="buildUrlPrefix(getProductRoute(product), getUrlPrefix())"
+                                >
+                                    <h2 :class="getStyle('product.card.information.title.inner')">
+                                        {{ getProductName({ product }) }}
+                                    </h2>
+                                </RouterLink>
+                            </slot>
+
+                            <slot name="variant-characteristics">
+                                <div v-if="product?.options" class="mt-4 text-xs text-gray-600">
+                                    <span
+                                        v-for="(option, index) in product?.options"
+                                        :key="option.id"
                                     >
-                                        <h2 :class="getStyle('product.card.information.title.inner')">
-                                            {{ getProductName({ product }) }}
-                                        </h2>
-                                    </RouterLink>
-                                </slot>
+                                        {{ option.group.translated.name }}:
+                                        <span class="font-bold">{{ option.translated.name }}</span><span v-if="index < (product?.options?.length ?? 0) - 1"> | </span>
+                                    </span>
+                                </div>
+                            </slot>
 
-                                <slot name="variant-characteristics">
-                                    <div class="min-h-4 mt-4 text-xs text-gray-600">
-                                        <span
-                                            v-for="(option, index) in product?.options"
-                                            :key="option.id"
-                                        >
-                                            {{ option.group.translated.name }}:
-                                            <span class="font-bold">{{ option.translated.name }}</span><span v-if="index < (product?.options?.length ?? 0) - 1"> | </span>
-                                        </span>
-                                    </div>
+                            <template v-if="layoutType === 'standard'">
+                                <slot name="product-description">
+                                    <p :class="getStyle('product.card.information.description')">{{ product.translated.description }}</p>
                                 </slot>
+                            </template>
+                        </div>
 
-                                <template v-if="layoutType === 'standard'">
-                                    <slot name="product-description">
-                                        <p :class="getStyle('product.card.information.description')">{{ product.translated.description }}</p>
-                                    </slot>
+                        <div>
+                            <slot name="price">
+                                <SwListingProductPrice
+                                    :product="product"
+                                    :class="getStyle('product.card.information.price')"
+                                />
+                            </slot>
+
+                            <slot name="product-action">
+                                <template v-if="allowBuyInListing && (product?.availableStock ?? 0) > 0 && !product.childCount">
+                                    <ProductAddToCart />
                                 </template>
-                            </div>
 
-                            <div>
-                                <slot name="price">
-                                    <SwListingProductPrice
-                                        :product="product"
-                                        :class="getStyle('product.card.information.price')"
-                                    />
-                                </slot>
-
-                                <slot name="product-action">
-                                    <template v-if="allowBuyInListing && (product?.availableStock ?? 0) > 0 && !product.childCount">
-                                        <ProductAddToCart />
-                                    </template>
-
-                                    <template v-else>
-                                        <RouterLink
-                                            :to="buildUrlPrefix(getProductRoute(product), getUrlPrefix())"
-                                            :aria-label="`navigate-to-${getProductName({ product })}`"
-                                        >
-                                            <UiButton variant="secondary" :class="getStyle('product.card.information.detailsButton')">
-                                                {{ $t('product.details') }}
-                                            </UiButton>
-                                        </RouterLink>
-                                    </template>
-                                </slot>
-                            </div>
-                        </slot></div>
-                </div></slot>
+                                <template v-else>
+                                    <RouterLink
+                                        :to="buildUrlPrefix(getProductRoute(product), getUrlPrefix())"
+                                        :aria-label="`navigate-to-${getProductName({ product })}`"
+                                    >
+                                        <UiButton variant="secondary" :class="getStyle('product.card.information.detailsButton')">
+                                            {{ $t('product.details') }}
+                                        </UiButton>
+                                    </RouterLink>
+                                </template>
+                            </slot>
+                        </div>
+                    </slot>
+                </div>
+            </slot>
         </div>
     </slot>
 </template>
