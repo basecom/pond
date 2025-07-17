@@ -21,6 +21,7 @@ withDefaults(
 
 const configStore = useConfigStore();
 const { product } = useProduct();
+const { isListPrice } = useProductPrice(product);
 const { getUrlPrefix } = useUrlResolver();
 const { getStyle } = usePondStyle();
 
@@ -39,6 +40,11 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
         <div
             :class="getStyle('product.card.outer')"
         >
+            <slot name="product-badges">
+                <div :class="getStyle('product.card.badge.outer')">
+                    <ProductBadges :is-new="product?.isNew" :is-topseller="product?.markAsTopseller" :is-sale="isListPrice" />
+                </div>
+            </slot>
             <slot name="product-image">
                 <RouterLink
                     :to="buildUrlPrefix(getProductRoute(product), getUrlPrefix())"

@@ -5,7 +5,7 @@ export default {
         icon: 'size-4 mr-1',
     },
     card: {
-        outer: 'sw-product-card not-prose group relative flex max-w-full flex-col justify-between rounded-lg border border-gray-200 bg-white transition duration-300 hover:shadow-lg',
+        outer: 'relative sw-product-card not-prose group flex max-w-full flex-col justify-between rounded-lg border border-gray-200 bg-white transition duration-300 hover:shadow-lg',
         cover: {
             outer: {
                 default: 'group relative inline-block flex-none w-full overflow-hidden rounded-t-lg h-40 md:h-60',
@@ -41,6 +41,15 @@ export default {
                 color: 'text-gray-500',
                 noColor: 'text-yellow-500',
             },
+        },
+        badge: {
+            outer: 'absolute top-0 flex flex-col gap-1 p-2 z-2',
+            sale: {
+                outer: 'bg-red-500 w-fit hover:bg-red-500',
+                icon: 'size-4 shrink-0',
+            },
+            topseller: '!bg-brown-500 hover:!bg-brown-500',
+            new: 'bg-green-600 hover:bg-green-600',
         },
     },
 };
