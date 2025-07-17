@@ -154,15 +154,19 @@ const onSubmit = (data: VueFormRequestData) => {
 
                 <slot name="data-protection">
                     <FormCheckboxElement
+                        v-if="isDataProtectionCheckboxRequired"
                         id="acceptedDataProtection"
                         name="acceptedDataProtection"
-                        :rules="isDataProtectionCheckboxRequired ? 'required' : ''"
+                        rules="required"
                         :messages="{ required: $t('account.register.dataProtection.errorRequired') }"
                     >
                         <template #checkbox-element-content>
                             <AccountDataProtection />
                         </template>
                     </FormCheckboxElement>
+                  <template v-else>
+                    <AccountDataProtection class="col-span-12" />
+                  </template>
                 </slot>
 
                 <slot name="alert">
@@ -181,16 +185,18 @@ const onSubmit = (data: VueFormRequestData) => {
                 </slot>
 
                 <slot name="register-submit-button">
-                    <UiButton
-                        id="register-submit"
-                        type="submit"
-                        name="register-submit"
-                        :is-loading="isLoading"
-                        :class="getStyle('account.register.submit')"
-                        @click="() => onValidate = true"
-                    >
-                        {{ $t('account.auth.register') }}
-                    </UiButton>
+
+
+                  <ButtonElement
+                      :loading="false"
+                      :submits="true"
+                      :class="[getStyle('ui.button.base')]"
+                      :disabled="isLoading"
+                      :full="true"
+                      class="col-span-12 w-full"
+                  >
+                    {{ $t('account.auth.register') }}
+                  </ButtonElement>
                 </slot>
             </Vueform>
         </slot>
