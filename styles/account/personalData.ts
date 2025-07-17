@@ -12,8 +12,6 @@ export default {
         description: 'text-sm',
     },
 
-    formPadding: 'space-y-2',
-
     accordion: {
         outer: 'w-full',
         item: 'border-gray-100',

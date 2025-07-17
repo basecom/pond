@@ -1,5 +1,6 @@
 import order from './order';
 import personalData from './personalData';
+import address from './address';
 import wishlist from './wishlist';
 
 export default {
@@ -100,5 +101,6 @@ export default {
 
     order,
     personalData,
+    address,
     wishlist,
 };
