@@ -8,9 +8,9 @@
     "details": "Show details",
     "productAddedToCart": "{product} added to cart",
     "image": "Product cover",
-      "badge": {
-          "new": "New",
-          "topseller": "Tip"
-      }
+    "badge": {
+      "new": "New",
+      "topseller": "Tip"
+    }
   }
 }
