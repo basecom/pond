@@ -53,7 +53,7 @@ const { getStyle } = usePondStyle();
                 />
 
                 <slot name="recover-submit-button">
-                    <UiButton
+                    <UiFormButton
                         id="recover-submit"
                         type="submit"
                         name="recover-submit"
@@ -61,7 +61,7 @@ const { getStyle } = usePondStyle();
                         :is-loading="isLoading"
                     >
                         {{ $t('account.recover.submitRecoverButton') }}
-                    </UiButton>
+                    </UiFormButton>
                 </slot>
             </Vueform>
         </slot>
