@@ -2,6 +2,7 @@
     "general": {
         "save": "Save",
         "close": "Close",
+        "cancel": "Cancel",
         "homepage": "Home",
         "copyright": "© 2025 {companyName}",
         "back": "Back",

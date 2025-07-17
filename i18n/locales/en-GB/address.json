@@ -16,6 +16,7 @@
     "availableAddresses": "Available addresses",
     "editAddress": "Edit address",
     "deleteAddress": "Delete address",
+    "deleteAddressDescription": "Do you really want to delete the address?",
     "createdAddress": "The address was added successfully",
     "deletedAddress": "The address was successfully deleted",
     "updatedAddress": "The address was successfully updated",

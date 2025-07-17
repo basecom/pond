@@ -16,6 +16,7 @@
     "availableAddresses": "Verfügbare Adressen",
     "editAddress": "Adresse bearbeiten",
     "deleteAddress": "Adresse löschen",
+    "deleteAddressDescription": "Wollen Sie die Adresse wirklich löschen?",
     "createdAddress": "Die Adresse wurde erfolgreich hinzugefügt",
     "deletedAddress": "Die Adresse wurde erfolgreich gelöscht",
     "updatedAddress": "Die Adresse wurde erfolgreich aktualisiert",

@@ -38,7 +38,16 @@ const showPhoneNumberField = configStore.get('core.loginRegistration.showPhoneNu
         </slot>
 
         <slot name="address-card-fields">
-            <div v-if="address && !description" :class="getStyle('account.address.card.outer')">
+            <div v-if="address" :class="getStyle('account.address.card.outer')">
+                <p
+                    v-if="address.company"
+                    :class="getStyle('account.address.boldText')"
+                >
+                    {{ address.company }}
+                    <template v-if="address.department">
+                        - {{ address.department }}
+                    </template>
+                </p>
                 <p v-if="address.salutationId">
                     {{ getTranslatedProperty(address.salutation, 'displayName') }}
                 </p>

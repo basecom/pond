@@ -120,7 +120,7 @@ const dialogOpen = ref(false);
                             <UiDialog :class="getStyle('account.address.dialog')">
                                 <slot name="edit-address-trigger">
                                     <UiDialogTrigger :class="getStyle('account.address.trigger.outer')">
-                                        <UiButton :class="getStyle('account.address.editOrCreateAddressButton.trigger')">
+                                        <UiButton :class="getStyle('account.address.editOrCreateAddressButton.trigger')" variant="secondary">
                                             <Icon name="mdi:pencil" :class="getStyle('account.address.icon')" />
                                             {{ $t('address.editAddress') }}
                                         </UiButton>
@@ -144,15 +144,47 @@ const dialogOpen = ref(false);
                             </UiDialog>
 
                             <slot name="delete-address">
-                                <UiButton
+                                <UiDialog
                                     v-if="defaultShippingAddressId !== address.id && defaultBillingAddressId !== address.id"
-                                    :class="getStyle('account.address.deleteAddressButton')"
-                                    :is-loading="isLoading"
-                                    @click="$emit('delete-address', address.id)"
+                                    :class="getStyle('account.address.dialog')"
                                 >
-                                    <Icon name="mdi:delete-forever-outline" :class="getStyle('account.address.icon')" />
-                                    {{ $t('address.deleteAddress') }}
-                                </UiButton>
+                                    <slot name="delete-address-trigger">
+                                        <UiDialogTrigger :class="getStyle('account.address.trigger.outer')">
+                                            <UiButton variant="secondary">
+                                                <Icon name="mdi:delete-forever-outline" :class="getStyle('account.address.icon')" />
+                                                {{ $t('address.deleteAddress') }}
+                                            </UiButton>
+                                        </UiDialogTrigger>
+                                    </slot>
+
+                                    <slot name="delete-address-content">
+                                        <UiDialogContent :class="getStyle('account.address.dialog.inner')">
+                                            <UiDialogHeader>
+                                                <UiDialogTitle>
+                                                    {{ $t('address.deleteAddress') }}
+                                                </UiDialogTitle>
+                                            </UiDialogHeader>
+
+                                            {{ $t('address.deleteAddressDescription') }}
+                                            <div :class="getStyle('account.address.deleteAddress.outer')">
+                                                <UiButton
+                                                    :is-loading="isLoading"
+                                                    :class="getStyle('account.address.deleteAddress.button')"
+                                                    @click="$emit('delete-address', address.id)"
+                                                >
+                                                    <Icon name="mdi:delete-forever-outline" :class="getStyle('account.address.icon')" />
+                                                    {{ $t('address.deleteAddress') }}
+                                                </UiButton>
+
+                                                <UiDialogClose
+                                                    :class="[getStyle('account.address.deleteAddress.button'), getStyle('ui.button.base'), getStyle('ui.button.variants.secondary')]"
+                                                >
+                                                    {{ $t('general.cancel') }}
+                                                </UiDialogClose>
+                                            </div>
+                                        </UiDialogContent>
+                                    </slot>
+                                </UiDialog>
                             </slot>
                         </div>
 
