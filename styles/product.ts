@@ -46,10 +46,10 @@ export default {
             outer: 'absolute top-0 flex flex-col gap-1 p-2 z-2',
             sale: {
                 outer: 'bg-red-500 w-fit hover:bg-red-500',
-                icon: 'size-4 shrink-0'
+                icon: 'size-4 shrink-0',
             },
             topseller: '!bg-brown-500 hover:!bg-brown-500',
-            new: 'bg-green-600 hover:bg-green-600'
-        }
+            new: 'bg-green-600 hover:bg-green-600',
+        },
     },
 };

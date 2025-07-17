@@ -41,7 +41,7 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
             :class="getStyle('product.card.outer')"
         >
             <slot name="product-badges">
-                <div :class="getStyle('product.badge.outer')">
+                <div :class="getStyle('product.card.badge.outer')">
                     <ProductBadges :is-new="product?.isNew" :is-topseller="product?.markAsTopseller" :is-sale="isListPrice" />
                 </div>
             </slot>
