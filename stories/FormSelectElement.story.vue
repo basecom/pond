@@ -8,14 +8,14 @@ onMounted(() => isMounted.value = true);
 <template>
     <div class="grid gap-4">
         <Vueform v-if="isMounted" id="story-select-form">
-            <FormSelectElement
+            <UiSelectElement
                 id="form-select-element-default"
                 name="form-select-element-default"
                 label="I'm a default select element"
                 :items="[{ value: 'private', label: $t('account.customer.accountType.private') }, { value: 'business', label: $t('account.customer.accountType.business') }]"
             />
 
-            <FormSelectElement
+            <UiSelectElement
                 id="form-select-element-with-default-value"
                 name="form-select-element-with-default-value"
                 label="I'm a select element with a default value"
@@ -23,7 +23,7 @@ onMounted(() => isMounted.value = true);
                 default-value="private"
             />
 
-            <FormSelectElement
+            <UiSelectElement
                 id="form-select-element-native"
                 name="form-select-element-native"
                 label="I'm a native select element"
@@ -31,7 +31,7 @@ onMounted(() => isMounted.value = true);
                 :is-native="true"
             />
 
-            <FormSelectElement
+            <UiSelectElement
                 id="form-select-element-can-de-select"
                 name="form-select-element-can-de-select"
                 label="I'm a select element, which can be de-selected"
@@ -40,7 +40,7 @@ onMounted(() => isMounted.value = true);
                 :can-deselect="true"
             />
 
-            <FormSelectElement
+            <UiSelectElement
                 id="form-select-element-can-clear"
                 name="form-select-element-can-clear"
                 label="I'm a select element, which can be cleared"

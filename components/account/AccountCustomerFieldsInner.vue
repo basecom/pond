@@ -105,7 +105,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
         </slot>
 
         <slot name="title">
-            <FormTextElement
+            <UiTextElement
                 v-if="showTitle"
                 :id="`${prefix}title`"
                 :label="$t('account.customer.title.label')"
@@ -118,7 +118,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
 
     <GroupElement name="customer-name">
         <slot name="first-name">
-            <FormTextElement
+            <UiTextElement
                 :id="`${prefix}firstName`"
                 :label="$t('account.customer.firstName.label')"
                 :name="`${prefix}firstName`"
@@ -130,7 +130,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
         </slot>
 
         <slot name="last-name">
-            <FormTextElement
+            <UiTextElement
                 :id="`${prefix}lastName`"
                 :label="$t('account.customer.lastName.label')"
                 :name="`${prefix}lastName`"
@@ -148,7 +148,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
 
     <GroupElement name="business-customer">
         <slot name="company">
-            <FormTextElement
+            <UiTextElement
                 :id="`${prefix}company`"
                 :name="`${prefix}company`"
                 :placeholder="$t('account.customer.company.placeholder')"
@@ -161,7 +161,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
         </slot>
 
         <slot name="department">
-            <FormTextElement
+            <UiTextElement
                 :id="`${prefix}department`"
                 :name="`${prefix}department`"
                 :label="$t('account.customer.department.label')"
@@ -172,7 +172,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
         </slot>
 
         <slot name="vat-id">
-            <FormTextElement
+            <UiTextElement
                 v-if="isDetail && !isVatIdRequiredBySelectedCountry"
                 :id="`${prefix}vatIds`"
                 :name="`${prefix}vatIds`"
@@ -181,7 +181,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
                 :conditions="accountTypeConditions"
                 :columns="columns.vatIdColumns"
             />
-            <FormTextElement
+            <UiTextElement
                 v-if="isDetail && isVatIdRequiredBySelectedCountry"
                 :id="`${prefix}vatIds`"
                 :name="`${prefix}vatIds`"
@@ -195,7 +195,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
     </GroupElement>
 
     <slot name="email">
-        <FormTextElement
+        <UiTextElement
             v-if="isDetail"
             :id="`${prefix}email`"
             :name="`${prefix}email`"
@@ -214,7 +214,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
     </slot>
 
     <slot name="email-confirm">
-        <FormTextElement
+        <UiTextElement
             v-if="confirmEmail && isDetail"
             :id="`${prefix}email_confirmation`"
             autocomplete="new-user"
@@ -229,7 +229,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
     </slot>
 
     <slot name="password">
-        <FormTextElement
+        <UiTextElement
             v-if="isDetail"
             :id="`${prefix}password`"
             :label="$t('account.customer.password.label')"
@@ -252,7 +252,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
     </slot>
 
     <slot name="password-confirm">
-        <FormTextElement
+        <UiTextElement
             v-if="confirmPassword && isDetail"
             :id="`${prefix}password_confirmation`"
             autocomplete="new-password"

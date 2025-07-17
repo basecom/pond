@@ -34,7 +34,7 @@ onMounted(async () => {
 
 <template>
     <slot name="salutation">
-        <FormSelectElement
+        <UiSelectElement
             :id="`${prefix}salutation`"
             :name="`${prefix}salutation`"
             :label="$t('account.customer.salutation.label')"

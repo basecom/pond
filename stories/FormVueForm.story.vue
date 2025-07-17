@@ -14,7 +14,7 @@ onMounted(() => isMounted.value = true);
             :show-required="['label']"
             :display-errors="false"
         >
-            <FormTextElement
+            <UiTextElement
                 id="required-text-element"
                 label="I'm a required text element"
                 name="text-element"
@@ -23,7 +23,7 @@ onMounted(() => isMounted.value = true);
                 rules="required"
             />
 
-            <FormSelectElement
+            <UiSelectElement
                 id="required-select-element"
                 name="select-element"
                 label="I'm a required select element"
@@ -32,7 +32,7 @@ onMounted(() => isMounted.value = true);
                 :items="[{ value: 'private', label: $t('account.customer.accountType.private') }, { value: 'business', label: $t('account.customer.accountType.business') }]"
             />
 
-            <FormCheckboxElement
+            <UiCheckboxElement
                 id="required-checkbox-element"
                 name="checkbox-element"
                 rules="required"
@@ -43,16 +43,16 @@ onMounted(() => isMounted.value = true);
                         I'm a required checkbox
                     </span>
                 </template>
-            </FormCheckboxElement>
+            </UiCheckboxElement>
 
-            <UiButton
+            <UiFormButton
                 id="form-submit-button"
                 name="form-submit"
                 label="Submit"
                 type="submit"
             >
                 Submit
-            </UiButton>
+            </UiFormButton>
         </Vueform>
 
         <h1> I'm a Vue form, which displays all errors </h1>
@@ -62,7 +62,7 @@ onMounted(() => isMounted.value = true);
             :show-required="['label']"
             :display-errors="true"
         >
-            <FormTextElement
+            <UiTextElement
                 id="fomr-2-required-text-element"
                 label="I'm a required text element"
                 name="text-element"
@@ -71,16 +71,15 @@ onMounted(() => isMounted.value = true);
                 rules="required"
             />
 
-            <FormSelectElement
+            <UiSelectElement
                 id="form-2-required-select-element"
                 name="select-element"
-                label="I'm a required select element"
                 rules="required"
                 :messages="{ required: 'Select field is required' }"
                 :items="[{ value: 'private', label: $t('account.customer.accountType.private') }, { value: 'business', label: $t('account.customer.accountType.business') }]"
             />
 
-            <FormCheckboxElement
+            <UiCheckboxElement
                 id="form-2-required-checkbox-element"
                 name="checkbox-element"
                 rules="required"
@@ -91,21 +90,21 @@ onMounted(() => isMounted.value = true);
                         I'm a required checkbox
                     </span>
                 </template>
-            </FormCheckboxElement>
+            </UiCheckboxElement>
 
-            <UiButton
+            <UiFormButton
                 id="form-2-submit-button"
                 name="form-submit"
                 label="Submit"
                 type="submit"
             >
                 Submit
-            </UiButton>
+            </UiFormButton>
         </Vueform>
 
         <h1> I'm a Vue form (Grid with 12 col span), which uses different cols for form field and uses group elements </h1>
         <Vueform v-if="isMounted" id="story-form-cols-and-group-elements">
-            <FormTextElement
+            <UiTextElement
                 id="text-element-col-6"
                 label="I'm a text element with 6 cols"
                 name="text-element"
@@ -114,7 +113,7 @@ onMounted(() => isMounted.value = true);
             />
 
             <GroupElement name="select-element" label="I'm a group element with a singular form field, to force the first element to start at col-span-1">
-                <FormSelectElement
+                <UiSelectElement
                     id="select-element-col-3"
                     name="select-element"
                     label="I'm a select element with 3 cols"
@@ -124,10 +123,9 @@ onMounted(() => isMounted.value = true);
             </GroupElement>
 
             <GroupElement name="checkboxes" label="I'm a group element with 2 checkboxes">
-                <FormCheckboxElement
+                <UiCheckboxElement
                     id="first-checkbox-element"
                     name="first-checkbox"
-                    label="I'm a checkbox"
                     :columns="{ md: 6 }"
                 >
                     <template #checkbox-element-content>
@@ -135,11 +133,10 @@ onMounted(() => isMounted.value = true);
                             I'm a checkbox
                         </span>
                     </template>
-                </FormCheckboxElement>
-                <FormCheckboxElement
+                </UiCheckboxElement>
+                <UiCheckboxElement
                     id="second-checkbox-element"
                     name="second-checkbox"
-                    label="I'm another checkbox"
                     :columns="{ md: 6 }"
                 >
                     <template #checkbox-element-content>
@@ -147,17 +144,17 @@ onMounted(() => isMounted.value = true);
                             I'm another checkbox
                         </span>
                     </template>
-                </FormCheckboxElement>
+                </UiCheckboxElement>
             </GroupElement>
 
-            <UiButton
+            <UiFormButton
                 id="form-3-submit-button"
                 name="form-submit"
                 label="Submit"
                 type="submit"
             >
                 Submit
-            </UiButton>
+            </UiFormButton>
         </Vueform>
     </div>
 </template>

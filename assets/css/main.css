@@ -90,7 +90,3 @@
 #__nuxt {
   @apply flex flex-col min-h-screen;
 }
-
-.vf-element-layout-outer-wrapper {
-  @apply w-full
-}

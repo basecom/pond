@@ -197,14 +197,14 @@ const onChange = async (formData: NewsletterFormData) => {
 
                 <slot name="newsletter-content">
                     <Vueform ref="form$" @change="(data: NewsletterFormData) => onChange(data)">
-                        <FormCheckboxElement
+                        <UiCheckboxElement
                             id="newsletter"
                             name="newsletter"
                         >
                             <template #checkbox-element-content>
                                 {{ $t('newsletter.subscribeToNewsletterLabel') }}
                             </template>
-                        </FormCheckboxElement>
+                        </UiCheckboxElement>
                     </Vueform>
                 </slot>
             </div>

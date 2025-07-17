@@ -8,14 +8,14 @@ onMounted(() => isMounted.value = true);
 <template>
     <div class="grid gap-4">
         <Vueform v-if="isMounted" id="story-text-form">
-            <FormTextElement
+            <UiTextElement
                 id="form-text-element-story-default"
                 label="I'm a default text element"
                 name="default_text_element"
                 placeholder="Enter Text ..."
             />
 
-            <FormTextElement
+            <UiTextElement
                 id="form-text-element-story-email"
                 label="I'm a email text field"
                 name="email_text_element"
@@ -24,7 +24,7 @@ onMounted(() => isMounted.value = true);
                 :rules="['email']"
             />
 
-            <FormTextElement
+            <UiTextElement
                 id="form-text-element-story-password"
                 label="I'm a password text element"
                 name="password_text_element"
@@ -41,7 +41,7 @@ onMounted(() => isMounted.value = true);
                 }"
             />
 
-            <FormTextElement
+            <UiTextElement
                 id="form-text-element-story-first-name"
                 label="I'm a text field"
                 name="first_name"
@@ -49,7 +49,7 @@ onMounted(() => isMounted.value = true);
                 :rules="['confirmed']"
             />
 
-            <FormTextElement
+            <UiTextElement
                 id="form-text-element-story-first-name-confirm"
                 label="I'm a confirm text field"
                 name="first_name_confirmation"
