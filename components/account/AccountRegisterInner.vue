@@ -42,7 +42,7 @@ const onSubmit = (data: VueFormRequestData) => {
         company: data.company,
         acceptedDataProtection: data.acceptedDataProtection,
         differentShippingAddress: data.differentShippingAddress,
-        salutationId: data.salutation,
+        salutationId: data.salutationId,
         billingAddress: {
             title: data.title,
             firstName: data.firstName,
@@ -51,13 +51,13 @@ const onSubmit = (data: VueFormRequestData) => {
             zipcode: data.zipcode,
             countryId: data.countryId,
             city: data.city,
-            countryStateId: data.state,
+            countryStateId: data.countryStateId,
             additionalAddressLine1: data.additionalAddressLine1,
             additionalAddressLine2: data.additionalAddressLine2,
             phoneNumber: data.phoneNumber,
             company: data.company,
             department: data.department,
-            salutationId: data.salutation,
+            salutationId: data.salutationId,
         },
     };
 
@@ -80,13 +80,13 @@ const onSubmit = (data: VueFormRequestData) => {
             zipcode: data['shipping-zipcode'],
             countryId: data['shipping-countryId'],
             city: data['shipping-city'],
-            countryStateId: data['shipping-state'],
+            countryStateId: data['shipping-countryStateId'],
             additionalAddressLine1: data['shipping-additionalAddressLine1'],
             additionalAddressLine2: data['shipping-additionalAddressLine2'],
             phoneNumber: data['shipping-phoneNumber'],
             company: data['shipping-company'],
             department: data['shipping-department'],
-            salutationId: data['shipping-salutation'],
+            salutationId: data['shipping-salutationId'],
         };
     }
 

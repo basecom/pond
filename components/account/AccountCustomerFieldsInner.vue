@@ -12,68 +12,64 @@ withDefaults(
        */
       prefix?: string;
       isVatIdRequiredBySelectedCountry?: boolean;
-      columns?: {
-        accountTypeColumns?: Columns;
-        salutationColumns?: Columns;
-        titleColumns?: Columns;
-        firstNameColumns?: Columns;
-        lastNameColumns?: Columns;
-        birthdayColumns?: Columns;
-        companyColumns?: Columns;
-        vatIdColumns?: Columns;
-        departmentColumns?: Columns;
-        emailColumns?: Columns;
-        passwordColumns?: Columns,
-      }
+      accountTypeColumns?: Columns;
+      salutationColumns?: Columns;
+      titleColumns?: Columns;
+      firstNameColumns?: Columns;
+      lastNameColumns?: Columns;
+      birthdayColumns?: Columns;
+      companyColumns?: Columns;
+      vatIdColumns?: Columns;
+      departmentColumns?: Columns;
+      emailColumns?: Columns;
+      passwordColumns?: Columns,
     }>(),
     {
         isDetail: false,
         accountTypeConditions: undefined,
-        columns: () => ({
-            accountTypeColumns: {
-                sm: 12,
-                md: 3,
-            },
-            salutationColumns: {
-                sm: 12,
-                md: 3,
-            },
-            birthdayColumns: {
-                sm: 1,
-                md: 2,
-            },
-            titleColumns: {
-                sm: 12,
-                md: 3,
-            },
-            firstNameColumns: {
-                sm: 12,
-                md: 6,
-            },
-            lastNameColumns: {
-                sm: 12,
-                md: 6,
-            },
-            companyColumns: {
-                sm: 12,
-                md: 6,
-            },
-            vatIdColumns: {
-                sm: 12,
-                md: 6,
-            },
-            departmentColumns: {
-                sm: 12,
-                md: 6,
-            },
-            emailColumns: {
-                sm: 12,
-                md: 6,
-            },
-            passwordColumns: {
-                sm: 12,
-                md: 6,
-            },
+        accountTypeColumns: () => ({
+            sm: 12,
+            md: 3,
+        }),
+        salutationColumns: () => ({
+            sm: 12,
+            md: 3,
+        }),
+        birthdayColumns: () => ({
+            sm: 1,
+            md: 2,
+        }),
+        titleColumns: () => ({
+            sm: 12,
+            md: 3,
+        }),
+        firstNameColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        lastNameColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        companyColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        vatIdColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        departmentColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        emailColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        passwordColumns: () => ({
+            sm: 12,
+            md: 6,
         }),
         prefix: '',
         isVatIdRequiredBySelectedCountry: false,
@@ -95,13 +91,13 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
 <template>
     <GroupElement name="account-type">
         <slot name="account-type">
-            <AccountType v-if="showAccountType" :prefix="prefix" />
+            <AccountType v-if="showAccountType" :prefix="prefix" :columns="accountTypeColumns" />
         </slot>
     </GroupElement>
 
     <GroupElement name="salutation-and-title">
         <slot name="salutation">
-            <AccountSalutation :prefix="prefix" />
+            <AccountSalutation :prefix="prefix" :columns="salutationColumns" />
         </slot>
 
         <slot name="title">
@@ -111,7 +107,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
                 :label="$t('account.customer.title.label')"
                 :name="`${prefix}title`"
                 :placeholder="$t('account.customer.title.placeholder')"
-                :columns="columns.titleColumns"
+                :columns="titleColumns"
             />
         </slot>
     </GroupElement>
@@ -125,7 +121,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
                 :placeholder="$t('account.customer.firstName.placeholder')"
                 rules="required"
                 :messages="{ required: $t('account.customer.firstName.errorRequired') }"
-                :columns="columns.firstNameColumns"
+                :columns="firstNameColumns"
             />
         </slot>
 
@@ -137,7 +133,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
                 :placeholder="$t('account.customer.lastName.placeholder')"
                 rules="required"
                 :messages="{ required: $t('account.customer.lastName.errorRequired') }"
-                :columns="columns.lastNameColumns"
+                :columns="lastNameColumns"
             />
         </slot>
     </GroupElement>
@@ -156,7 +152,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
                 rules="required"
                 :messages="{ required: $t('account.customer.company.errorRequired') }"
                 :conditions="accountTypeConditions"
-                :columns="columns.companyColumns"
+                :columns="companyColumns"
             />
         </slot>
 
@@ -167,7 +163,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
                 :label="$t('account.customer.department.label')"
                 :placeholder="$t('account.customer.department.placeholder')"
                 :conditions="accountTypeConditions"
-                :columns="columns.departmentColumns"
+                :columns="departmentColumns"
             />
         </slot>
 
@@ -179,7 +175,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
                 :label="$t('account.customer.vatId.label')"
                 :placeholder="$t('account.customer.vatId.placeholder')"
                 :conditions="accountTypeConditions"
-                :columns="columns.vatIdColumns"
+                :columns="vatIdColumns"
             />
             <FormTextElement
                 v-if="isDetail && isVatIdRequiredBySelectedCountry"
@@ -188,7 +184,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
                 :label="$t('account.customer.vatId.label')"
                 :placeholder="$t('account.customer.vatId.placeholder')"
                 :conditions="accountTypeConditions"
-                :columns="columns.vatIdColumns"
+                :columns="vatIdColumns"
                 rules="required"
             />
         </slot>
@@ -209,7 +205,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
             ]"
             :debounce="300"
             :messages="{ email: $t('account.customer.email.errorInvalid'), confirmed: $t('account.customer.email.errorConfirmed'), required: $t('account.customer.email.errorRequired') }"
-            :columns="columns.emailColumns"
+            :columns="emailColumns"
         />
     </slot>
 
@@ -224,7 +220,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
             rules="required|email"
             :debounce="300"
             :messages="{ email: $t('account.customer.email.errorInvalid'), required: $t('account.customer.email.errorRequired') }"
-            :columns="columns.emailColumns"
+            :columns="emailColumns"
         />
     </slot>
 
@@ -247,7 +243,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
             ]"
             :debounce="300"
             :messages="{ required: $t('account.customer.password.errorRequired'), confirmed: $t('account.customer.password.errorConfirmed'), min: $t('account.customer.password.errorMin', { number: passwordMinLength }) }"
-            :columns="columns.passwordColumns"
+            :columns="passwordColumns"
         />
     </slot>
 
@@ -262,7 +258,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
             :placeholder="$t('account.customer.password.confirm.placeholder')"
             :messages="{ required: $t('account.customer.password.errorRequired') }"
             rules="required"
-            :columns="columns.passwordColumns"
+            :columns="passwordColumns"
         />
     </slot>
 </template>
