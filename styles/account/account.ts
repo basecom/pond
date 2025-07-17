@@ -1,6 +1,7 @@
 import order from './order';
 import personalData from './personalData';
 import address from './address';
+import wishlist from './wishlist';
 
 export default {
     actionLink: 'flex cursor-pointer items-center gap-2 border-b-2 border-gray-100 py-3',
@@ -24,7 +25,7 @@ export default {
 
     register: {
         outer: 'flex flex-col justify-center gap-5',
-        headline: '',
+        headline: 'text-center',
         addressHeadline: 'col-span-12',
         alert: {
             outer: 'mb-4 flex gap-4 col-span-12',
@@ -38,6 +39,7 @@ export default {
     },
 
     recover: {
+        page: 'container flex justify-center md:w-2/3 xl:w-1/2 pt-4',
         alert: {
             outer: 'mb-4 flex gap-4',
             icon: 'size-4 shrink-0',
@@ -51,9 +53,9 @@ export default {
                 submit: 'min-w-52 grow',
             },
         },
-        page: {
-            outer: 'container relative flex justify-center py-4',
-            inner: 'w-full md:w-2/3 xl:w-1/2',
+        password: {
+            outer: 'grid gap-5 w-full',
+            button: 'col-span-12',
         },
     },
 
@@ -88,7 +90,17 @@ export default {
         trigger: 'underline underline-offset-2 cursor-pointer mx-1',
     },
 
+    newsletter: {
+        outer: 'col-start-1 col-span-2',
+        headline: 'mb-2 border-b border-gray-100 pb-2',
+        alert: {
+            outer: 'mb-4 flex gap-4',
+            icon: 'size-4 shrink-0',
+        },
+    },
+
     order,
     personalData,
     address,
+    wishlist,
 };

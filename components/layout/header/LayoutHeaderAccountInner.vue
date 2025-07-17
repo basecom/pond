@@ -13,6 +13,8 @@ defineEmits<{
 }>();
 
 const { getStyle } = usePondStyle();
+const configStore = useConfigStore();
+const wishlistEnabled = configStore.get('core.cart.wishlistEnabled') as boolean;
 const dialogOpen = ref<boolean>(false);
 
 provide('closeDialog', () => {
@@ -94,7 +96,7 @@ provide('closeDialog', () => {
                             </NuxtLinkLocale>
                         </slot>
                     </UiDropdownMenuItem>
-                    <UiDropdownMenuItem>
+                    <UiDropdownMenuItem v-if="wishlistEnabled">
                         <slot name="action-wishlist">
                             <NuxtLinkLocale to="/account/wishlist">
                                 <slot name="wishlist">

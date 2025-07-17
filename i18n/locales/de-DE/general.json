@@ -11,14 +11,14 @@
         "button": {
             "acceptLabel": "Akzeptieren"
         },
-        "currencySwitch": "Währung umgestellt auf {currency}"
+        "currencySwitch": "Währung umgestellt auf {currency}",
+        "errorHeadline": "Es ist ein Fehler aufgetreten.",
+        "errorMessage": "Versuchen Sie es später erneut."
     },
-
     "image": {
         "altText": "Bild",
         "altSliderText": "Bild-Slider Element {currentSlide} von {totalSlides}"
     },
-
     "video": {
         "vimeoTitle": "Vimeo Video",
         "youtubeTitle": "YouTube Video"

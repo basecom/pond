@@ -4,6 +4,8 @@ import footer from './styles/footer';
 import header from './styles/header';
 import ui from './styles/ui';
 import slider from './styles/slider';
+import listing from './styles/listing';
+import product from './styles/product';
 
 export default {
     styles: {
@@ -13,5 +15,7 @@ export default {
         header,
         ui,
         slider,
+        listing,
+        product,
     },
 } as const;
