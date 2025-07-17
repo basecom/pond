@@ -34,5 +34,13 @@ export default {
             price: 'ml-auto',
             detailsButton: 'w-full',
         },
+        reviews: {
+            outer: 'h-3 sm:h-4 md:h-5',
+            icon: {
+                default: 'size-3 sm:size-4 md:size-5',
+                color: 'text-gray-500',
+                noColor: 'text-yellow-500',
+            },
+        },
     },
 };
