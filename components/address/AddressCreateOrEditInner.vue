@@ -10,6 +10,7 @@ const props = withDefaults(
       showRequired?: string[];
       isLoading?: boolean;
       errorMessage?: string;
+      floatPlaceholders?: boolean;
     }>(),
     {
         address: undefined,
@@ -17,6 +18,7 @@ const props = withDefaults(
         showRequired: () => ['label'],
         isLoading: false,
         errorMessage: undefined,
+        floatPlaceholders: false,
     },
 );
 
@@ -57,6 +59,7 @@ onMounted(() => {
         :show-required="showRequired"
         :loading="isLoading"
         :endpoint="false"
+        :float-placeholders="floatPlaceholders"
         @submit="(value: AddressVueFormSubmitValue) => $emit('onSubmit', value.data)"
     >
         <AddressFields

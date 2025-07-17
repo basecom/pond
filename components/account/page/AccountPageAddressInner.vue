@@ -30,6 +30,7 @@ defineEmits<{
 }>();
 
 const { getStyle } = usePondStyle();
+const dialogOpen = ref(false);
 </script>
 
 <template>
@@ -47,7 +48,7 @@ const { getStyle } = usePondStyle();
         </slot>
 
         <slot name="create-address">
-            <UiDialog :class="getStyle('account.address.dialog.outer')">
+            <UiDialog v-model:open="dialogOpen" :class="getStyle('account.address.dialog.outer')">
                 <slot name="create-address-trigger">
                     <UiDialogTrigger :class="getStyle('account.address.trigger.outer')">
                         <UiButton>
@@ -64,7 +65,14 @@ const { getStyle } = usePondStyle();
                                 {{ $t('address.createAddress') }}
                             </UiDialogTitle>
                         </UiDialogHeader>
-                        <AddressCreateOrEdit :is-loading="isLoading" @on-submit="(value: AddressData) => $emit('create-address', value)" />
+                        <AddressCreateOrEdit
+                            :is-loading="isLoading"
+                            @on-submit="(value: AddressData) => {
+                                dialogOpen = false;
+                                $emit('create-address', value);
+
+                            }"
+                        />
                     </UiDialogContent>
                 </slot>
             </UiDialog>

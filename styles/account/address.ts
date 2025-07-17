@@ -8,7 +8,7 @@ export default {
     defaultBillingAddress: 'col-start-1',
     dialog: {
         outer: 'w-full',
-        inner: 'max-h-4/5 overflow-scroll',
+        inner: 'max-h-4/5 overflow-scroll md:!max-w-1/2',
     },
     trigger: {
         outer: 'flex flex-start w-1/2',
