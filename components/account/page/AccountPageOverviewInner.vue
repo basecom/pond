@@ -222,7 +222,7 @@ const onChange = async (formData: NewsletterFormData) => {
             <AddressCard
                 v-if="customer.defaultShippingAddress"
                 :headline="$t('account.overview.defaultShippingAddress')"
-                :address="customer.defaultBillingAddressId !== customer.defaultShippingAddressId ? customer.defaultBillingAddress : undefined"
+                :address="customer.defaultBillingAddressId !== customer.defaultShippingAddressId ? customer.defaultShippingAddress : undefined"
                 :description="customer.defaultBillingAddressId === customer.defaultShippingAddressId ? $t('account.overview.addressesIdentical') : undefined"
             />
         </slot>
