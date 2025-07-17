@@ -7,12 +7,14 @@ withDefaults(
       showRequired?: string[];
       isLoading?: boolean;
       errorMessage?: string;
+      floatPlaceholders?: boolean;
     }>(),
     {
         displayVueFormErrors: false,
         showRequired: () => ['label'],
         isLoading: false,
         errorMessage: undefined,
+      floatPlaceholders: false,
     },
 );
 
@@ -20,12 +22,15 @@ const emits = defineEmits<{
   register: [formData: RegisterFormData];
 }>();
 
+const onValidate = ref(false);
+
 // Admin configs
 const { getStyle } = usePondStyle();
 const configStore = useConfigStore();
 const isDataProtectionCheckboxRequired = ref(configStore.get('core.loginRegistration.requireDataProtectionCheckbox') as boolean);
 
 const onSubmit = (data: VueFormRequestData) => {
+  onValidate.value = false;
     const registerData: Ref<undefined | RegisterFormData> = ref(undefined);
 
     // create registration object according to the store api
@@ -111,6 +116,7 @@ const onSubmit = (data: VueFormRequestData) => {
                 :loading="isLoading"
                 :endpoint="false"
                 @submit="(value: VueFormSubmitData) => onSubmit(value.data)"
+                :float-placeholders="floatPlaceholders"
             >
                 <slot name="register-customer-info-and-billing-address">
                     <GroupElement name="billing-address">
@@ -181,6 +187,7 @@ const onSubmit = (data: VueFormRequestData) => {
                         name="register-submit"
                         :is-loading="isLoading"
                         :class="getStyle('account.register.submit')"
+                        @click="() => onValidate = true"
                     >
                         {{ $t('account.auth.register') }}
                     </UiButton>
