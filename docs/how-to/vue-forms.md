@@ -59,3 +59,9 @@ Therefore, all configuration options should be customizable via props. Keep this
 ## Create new form field components
 
 When a new form field type is created, a new component is created under /ui. Follow naming and style conventions from shadcn how-to.
+
+## Form button
+
+There are two button files; one button that can be used outside VueForms and one VueForms button. It's not 
+possible to use VueForm elements outside VueForm-forms, so we need the second component. To avoid styling differences between 
+the two button files, the styling is only adjusted in the existing pond config (ui.button)!

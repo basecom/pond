@@ -8,6 +8,7 @@ const props = withDefaults(
       class?: HTMLAttributes['class'];
       isLoading?: boolean;
       isSubmit?: boolean;
+      name?: string;
     }>(),
     {
         variant: 'default',
@@ -15,6 +16,7 @@ const props = withDefaults(
         class: '',
         isLoading: false,
         isSubmit: true,
+        name: 'submit-button',
     },
 );
 
@@ -24,7 +26,7 @@ const { getStyle } = usePondStyle();
 <template>
     <ButtonElement
         :submits="isSubmit"
-        name="est"
+        :name="name"
         :add-class="{
             button: [getStyle('ui.button.base'), getStyle(`ui.button.variants.${variant}`), getStyle(`ui.button.size.${size}`), props.class, 'w-full !border-none'],
         }"
