@@ -150,7 +150,7 @@ const dialogOpen = ref(false);
                                 >
                                     <slot name="delete-address-trigger">
                                         <UiDialogTrigger :class="getStyle('account.address.trigger.outer')">
-                                            <UiButton variant="secondary">
+                                            <UiButton variant="secondary" :class="getStyle('account.address.editOrCreateAddressButton.trigger')">
                                                 <Icon name="mdi:delete-forever-outline" :class="getStyle('account.address.icon')" />
                                                 {{ $t('address.deleteAddress') }}
                                             </UiButton>
