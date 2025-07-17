@@ -17,6 +17,8 @@ defineEmits<{
 }>();
 
 const { getStyle } = usePondStyle();
+const configStore = useConfigStore();
+const wishlistEnabled = configStore.get('core.cart.wishlistEnabled') as boolean;
 const dialogOpen = ref(false);
 
 provide('closeDialog', () => {
@@ -51,7 +53,12 @@ provide('closeDialog', () => {
                             <AccountActionLink link="/account/address" :label="$t('account.address')" @click="() => $emit('click')" />
                             <AccountActionLink link="/account/payment" :label="$t('account.payment')" @click="() => $emit('click')" />
                             <AccountActionLink link="/account/order" :label="$t('account.order')" @click="() => $emit('click')" />
-                            <AccountActionLink link="/account/wishlist" :label="$t('account.wishlist')" @click="() => $emit('click')" />
+                            <AccountActionLink
+                                v-if="wishlistEnabled"
+                                link="/account/wishlist"
+                                :label="$t('account.wishlist')"
+                                @click="() => $emit('click')"
+                            />
 
                             <div :class="getStyle('header.actions.account.mobile.logoutWrapper')" @click="$emit('logout')">
                                 <slot name="logout">
