@@ -16,6 +16,8 @@ withDefaults(
       inputType?: string;
       debounce?: number;
       classes?: string;
+      icon?: string;
+      iconClasses?: string;
     }>(),
     {
         id: undefined,
@@ -31,6 +33,8 @@ withDefaults(
         inputType: undefined,
         debounce: undefined,
         classes: undefined,
+      icon: undefined,
+      iconClasses: undefined,
     },
 );
 </script>
@@ -51,6 +55,11 @@ withDefaults(
             :input-type="inputType"
             :debounce="debounce"
             :class="classes"
-        />
+
+      >
+          <template #addon-before="scope">
+            <Icon v-if="icon" :name="icon" :class="iconClasses" />
+          </template>
+        </TextElement>
     </slot>
 </template>
