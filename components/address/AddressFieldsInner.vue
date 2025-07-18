@@ -192,7 +192,7 @@ const onSelectCountry = (selectedCountryId: string) => {
 
     <GroupElement name="customer-address">
         <slot name="street">
-            <FormTextElement
+            <UiTextElement
                 :id="`${prefix}street`"
                 :label="$t('address.street.label')"
                 :name="`${prefix}street`"
@@ -208,7 +208,7 @@ const onSelectCountry = (selectedCountryId: string) => {
         </slot>
 
         <slot name="city">
-            <FormTextElement
+            <UiTextElement
                 :id="`${prefix}city`"
                 :label="$t('address.city.label')"
                 :name="`${prefix}city`"
@@ -224,7 +224,7 @@ const onSelectCountry = (selectedCountryId: string) => {
         </slot>
 
         <slot name="additional-address-line-1">
-            <FormTextElement
+            <UiTextElement
                 v-if="showAdditionalAddress1Field"
                 :id="`${prefix}additionalAddressLine1`"
                 :label="$t('address.additionalAddressLine1.label')"
@@ -237,7 +237,7 @@ const onSelectCountry = (selectedCountryId: string) => {
         </slot>
 
         <slot name="additional-address-line-2">
-            <FormTextElement
+            <UiTextElement
                 v-if="showAdditionalAddress2Field"
                 :id="`${prefix}additionalAddressLine2`"
                 :label="$t('address.additionalAddressLine2.label')"
@@ -250,7 +250,7 @@ const onSelectCountry = (selectedCountryId: string) => {
         </slot>
 
         <slot name="country">
-            <FormSelectElement
+            <UiSelectElement
                 :id="`${prefix}countryId`"
                 :name="`${prefix}countryId`"
                 :placeholder="$t('address.country.placeholder')"
@@ -264,7 +264,7 @@ const onSelectCountry = (selectedCountryId: string) => {
         </slot>
 
         <slot name="state">
-            <FormSelectElement
+            <UiSelectElement
                 v-if="states && states.length > 0"
                 :id="`${prefix}countryStateId`"
                 :name="`${prefix}countryStateId`"
@@ -276,7 +276,7 @@ const onSelectCountry = (selectedCountryId: string) => {
         </slot>
 
         <slot name="phone-number">
-            <FormTextElement
+            <UiTextElement
                 v-if="showPhoneNumber"
                 :id="`${prefix}phoneNumber`"
                 :label="$t('address.phoneNumber.label')"

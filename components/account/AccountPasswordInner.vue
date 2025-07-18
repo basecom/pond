@@ -39,7 +39,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
 
 <template>
     <slot name="password">
-        <FormTextElement
+        <UiTextElement
             :id="passwordId"
             :label="passwordLabel"
             autocomplete="password"
@@ -62,7 +62,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
 
     <template v-if="showConfirm">
         <slot name="password-confirm">
-            <FormTextElement
+            <UiTextElement
                 :id="passwordConfirmId"
                 autocomplete="new-password"
                 :name="passwordConfirmName"

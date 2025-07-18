@@ -15,7 +15,7 @@ withDefaults(
       isNative?: boolean;
       canClear?: boolean;
       canDeselect?: boolean;
-      items?: [];
+      items?: string[] | number[] | { value: string; label: string; }[];
       defaultValue?: string;
       classes?: string;
     }>(),

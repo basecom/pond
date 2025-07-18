@@ -17,7 +17,7 @@ withDefaults(
 </script>
 
 <template>
-    <FormTextElement
+    <UiTextElement
         :id="`${prefix}zipcode`"
         :label="$t('address.zipCode.label')"
         :name="`${prefix}zipcode`"

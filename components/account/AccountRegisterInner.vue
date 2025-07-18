@@ -7,12 +7,14 @@ withDefaults(
       showRequired?: string[];
       isLoading?: boolean;
       errorMessage?: string;
+      floatPlaceholders?: boolean;
     }>(),
     {
         displayVueFormErrors: false,
         showRequired: () => ['label'],
         isLoading: false,
         errorMessage: undefined,
+        floatPlaceholders: false,
     },
 );
 
@@ -110,6 +112,7 @@ const onSubmit = (data: VueFormRequestData) => {
                 :show-required="showRequired"
                 :loading="isLoading"
                 :endpoint="false"
+                :float-placeholders="floatPlaceholders"
                 @submit="(value: VueFormSubmitData) => onSubmit(value.data)"
             >
                 <slot name="register-customer-info-and-billing-address">
@@ -124,14 +127,14 @@ const onSubmit = (data: VueFormRequestData) => {
                 </slot>
 
                 <slot name="different-shipping-address">
-                    <FormCheckboxElement
+                    <UiCheckboxElement
                         id="differentShippingAddress"
                         name="differentShippingAddress"
                     >
                         <template #checkbox-element-content>
                             {{ $t('address.differentShippingAddress') }}
                         </template>
-                    </FormCheckboxElement>
+                    </UiCheckboxElement>
                 </slot>
 
                 <slot name="shipping-address">
@@ -147,16 +150,20 @@ const onSubmit = (data: VueFormRequestData) => {
                 </slot>
 
                 <slot name="data-protection">
-                    <FormCheckboxElement
+                    <UiCheckboxElement
+                        v-if="isDataProtectionCheckboxRequired"
                         id="acceptedDataProtection"
                         name="acceptedDataProtection"
-                        :rules="isDataProtectionCheckboxRequired ? 'required' : ''"
+                        rules="required"
                         :messages="{ required: $t('account.register.dataProtection.errorRequired') }"
                     >
                         <template #checkbox-element-content>
                             <AccountDataProtection />
                         </template>
-                    </FormCheckboxElement>
+                    </UiCheckboxElement>
+                    <template v-else>
+                        <AccountDataProtection class="col-span-12" />
+                    </template>
                 </slot>
 
                 <slot name="alert">
@@ -175,15 +182,9 @@ const onSubmit = (data: VueFormRequestData) => {
                 </slot>
 
                 <slot name="register-submit-button">
-                    <UiButton
-                        id="register-submit"
-                        type="submit"
-                        name="register-submit"
-                        :is-loading="isLoading"
-                        :class="getStyle('account.register.submit')"
-                    >
+                    <UiFormButton :is-loading="isLoading">
                         {{ $t('account.auth.register') }}
-                    </UiButton>
+                    </UiFormButton>
                 </slot>
             </Vueform>
         </slot>

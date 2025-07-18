@@ -25,7 +25,7 @@ export default {
 
     register: {
         outer: 'flex flex-col justify-center gap-5',
-        headline: 'text-center',
+        headline: '',
         addressHeadline: 'col-span-12',
         alert: {
             outer: 'mb-4 flex gap-4 col-span-12',

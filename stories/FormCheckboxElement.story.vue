@@ -7,13 +7,13 @@ onMounted(() => isMounted.value = true);
 
 <template>
     <Vueform v-if="isMounted" id="story-checkbox-form">
-        <FormCheckboxElement
+        <UiCheckboxElement
             id="form-checkbox-element-default"
             name="form-checkbox-element-default"
         >
             <template #checkbox-element-content>
                 <span> I'm a checkbox </span>
             </template>
-        </FormCheckboxElement>
+        </UiCheckboxElement>
     </Vueform>
 </template>

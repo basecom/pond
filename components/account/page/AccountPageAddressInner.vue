@@ -68,9 +68,8 @@ const dialogOpen = ref(false);
                         <AddressCreateOrEdit
                             :is-loading="isLoading"
                             @on-submit="(value: AddressData) => {
-                                dialogOpen = false;
                                 $emit('create-address', value);
-
+                                dialogOpen = false;
                             }"
                         />
                     </UiDialogContent>
