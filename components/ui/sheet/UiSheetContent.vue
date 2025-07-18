@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import {
     DialogContent,
-    type DialogContentEmits,
-    type DialogContentProps,
+    
+    
     DialogOverlay,
     DialogPortal,
     useForwardPropsEmits,
 } from 'reka-ui';
+import type { DialogContentEmits, DialogContentProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 
 interface SheetContentProps extends DialogContentProps {

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { AccordionItem, type AccordionItemProps, useForwardProps } from 'reka-ui';
+import { AccordionItem,  useForwardProps } from 'reka-ui';
+import type { AccordionItemProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<AccordionItemProps & { class?: HTMLAttributes['class'] }>();
