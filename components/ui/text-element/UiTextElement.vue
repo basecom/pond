@@ -55,7 +55,6 @@ withDefaults(
             :input-type="inputType"
             :debounce="debounce"
             :class="classes"
-
       >
           <template #addon-before="scope">
             <Icon v-if="icon" :name="icon" :class="iconClasses" />
