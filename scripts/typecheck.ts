@@ -20,7 +20,7 @@ for(const line of text.split('\n')) {
     chunks[chunkIndex]?.push(line);
 }
 
-chunks = chunks.filter(chunk => !chunk[0]?.includes('shopware-pwa'));
+chunks = chunks.filter(chunk => !chunk[0]?.includes('node_modules'));
 chunks.forEach(chunk => {
     chunk.forEach((line, index) => {
         if(index === 0) {
@@ -31,5 +31,7 @@ chunks.forEach(chunk => {
     });
     console.log('');
 });
+
+console.log(`\x1b[33mTotal errors: ${chunks.length}\x1b[0m`);
 
 process.exit(chunks.length > 1 ? 1 : 0);
