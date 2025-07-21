@@ -53,6 +53,7 @@ export function useNavigation(params?: {
     // an explicit key should be passed to ensure consistency between server and client, regardless of file structure or runtime context
     const { data, execute } = useFetch(`/api/proxy/navigation/${type}`, {
         // ideally, the key would also include the depth here, but no working way was found and the depthHandling of the navigationStore seems to work as expected
+        // support for dynamic keys was added with nuxt v3.17.0 / v4.0.0
         key: `proxy-navigation-${type}`,
         method: 'POST',
         // the body needs to be wrapped in computed to detect changes to the depthRef
