@@ -8,6 +8,8 @@ const props = defineProps<{
     block: Schemas['CmsBlock'];
 }>();
 
+const { t } = useI18n();
+
 const { getCmsBlockComponentName, componentExists, getBlockClasses } = useCmsUtils();
 
 const isDevelopment = computed(() => import.meta.dev);
@@ -31,7 +33,8 @@ const componentStyle = computed(() => getCmsLayoutConfiguration(props.block).lay
             :block="block"
         />
     </div>
+
     <div v-else-if="isDevelopment">
-        {{ $t('cms.componentNotFound', { componentName: getCmsBlockComponentName(block.type) }) }}
+        {{ t('cms.componentNotFound', { componentName: getCmsBlockComponentName(block.type) }) }}
     </div>
 </template>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { RouteIdParams } from '~/types/RouteParams';
 
+const { t } = useI18n();
 const route = useRoute();
 const { checkoutBreadcrumbs } = useStaticBreadcrumbs();
 const orderId = (route.params as RouteIdParams).id;
@@ -33,12 +34,12 @@ onMounted(async () => {
     <div class="container">
         <template v-if="order">
             <div class="text-center">
-                <h1 class="mb-6">{{ $t('checkout.finish.heading') }}</h1>
+                <h1 class="mb-6">{{ t('checkout.finish.heading') }}</h1>
 
                 <p class="mb-4">
-                    {{ $t('checkout.finish.confirmationMessage') }}
+                    {{ t('checkout.finish.confirmationMessage') }}
                     <br>
-                    {{ $t('checkout.finish.emailMessage') }}
+                    {{ t('checkout.finish.emailMessage') }}
                 </p>
             </div>
 
@@ -47,7 +48,7 @@ onMounted(async () => {
                 class="flex justify-center divide-x divide-gray py-4"
             >
                 <div class="pr-3 text-center">
-                    {{ $t('checkout.finish.orderNumberLabel') }}
+                    {{ t('checkout.finish.orderNumberLabel') }}
                     <span class="font-bold text-gray-dark"> #{{ order.orderNumber }} </span>
                 </div>
 
@@ -55,21 +56,21 @@ onMounted(async () => {
                     v-if="formattedOrderDate"
                     class="px-3 text-center"
                 >
-                    {{ $t('checkout.finish.orderDateLabel') }}
+                    {{ t('checkout.finish.orderDateLabel') }}
                     <span class="font-bold text-gray-dark">
                         {{ formattedOrderDate }}
                     </span>
                 </div>
 
                 <div class="px-3 text-center">
-                    {{ $t('checkout.finish.orderStatusLabel') }}
+                    {{ t('checkout.finish.orderStatusLabel') }}
                     <span class="font-bold text-gray-dark">
                         {{ status }}
                     </span>
                 </div>
 
                 <div class="pl-3 text-center">
-                    {{ $t('checkout.finish.totalAmountLabel') }}
+                    {{ t('checkout.finish.totalAmountLabel') }}
                     <span class="font-bold text-gray-dark">
                         {{ getFormattedPrice(total) }}
                     </span>
@@ -81,14 +82,14 @@ onMounted(async () => {
                 class="mx-auto flex max-w-80 justify-center text-brand-primary"
                 :to="'/account/orders'"
             >
-                {{ $t('checkout.finish.orderHistoryLinkLabel') }}
+                {{ t('checkout.finish.orderHistoryLinkLabel') }}
             </LocaleLink>
 
             <div class="grid gap-6 pt-6 lg:grid-cols-2">
                 <div class="divide-y divide-gray-medium rounded-md p-4 shadow">
                     <div class="pb-4">
                         <div class="mb-2 font-bold">
-                            {{ $t('checkout.finish.billingAddressHeading') }}
+                            {{ t('checkout.finish.billingAddressHeading') }}
                         </div>
 
                         <OrderAddressBilling :billing-address="billingAddress" />
@@ -96,7 +97,7 @@ onMounted(async () => {
 
                     <div class="py-4">
                         <div class="mb-2 font-bold">
-                            {{ $t('checkout.finish.shippingAddressHeading') }}
+                            {{ t('checkout.finish.shippingAddressHeading') }}
                         </div>
 
                         <OrderAddressShipping
@@ -107,7 +108,7 @@ onMounted(async () => {
 
                     <div class="py-4">
                         <div class="mb-2 font-bold">
-                            {{ $t('checkout.finish.paymentMethodHeading') }}
+                            {{ t('checkout.finish.paymentMethodHeading') }}
                         </div>
 
                         <OrderPayment :payment-method="paymentMethod" />
@@ -115,7 +116,7 @@ onMounted(async () => {
 
                     <div class="pt-4">
                         <div class="mb-2 font-bold">
-                            {{ $t('checkout.finish.shippingMethodHeading') }}
+                            {{ t('checkout.finish.shippingMethodHeading') }}
                         </div>
 
                         <OrderShipping :shipping-method="shippingMethod" />
@@ -126,7 +127,7 @@ onMounted(async () => {
                         class="pt-4"
                     >
                         <div class="mb-2 font-bold">
-                            {{ $t('checkout.finish.customerCommentHeading') }}
+                            {{ t('checkout.finish.customerCommentHeading') }}
                         </div>
 
                         {{ order.customerComment }}
@@ -134,7 +135,7 @@ onMounted(async () => {
                 </div>
 
                 <div class="rounded-md p-4 shadow">
-                    <p class="font-bold">{{ $t('checkout.lineItemsHeading') }}</p>
+                    <p class="font-bold">{{ t('checkout.lineItemsHeading') }}</p>
 
                     <ul class="divide-y divide-gray-medium">
                         <li

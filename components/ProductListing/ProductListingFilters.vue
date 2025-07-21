@@ -87,7 +87,7 @@ const { t } = useI18n();
                     >
                         <template v-if="displayFullPopoverContainer">
                             <span>
-                                {{ $t('listing.sidebar.filter.showLess') }}
+                                {{ t('listing.sidebar.filter.showLess') }}
                             </span>
 
                             <FormKitIcon
@@ -99,7 +99,7 @@ const { t } = useI18n();
 
                         <template v-else>
                             <span>
-                                {{ $t('listing.sidebar.filter.showMore') }}
+                                {{ t('listing.sidebar.filter.showMore') }}
                             </span>
 
                             <FormKitIcon
@@ -127,7 +127,7 @@ const { t } = useI18n();
 
                 <UtilityBadge
                     v-if="props.showResetButton"
-                    :content="$t('listing.sidebar.filter.reset')"
+                    :content="t('listing.sidebar.filter.reset')"
                     size="md"
                     type="danger"
                     suffix-icon="xmark"

@@ -16,8 +16,9 @@ const { footerNavigation, serviceNavigation } = storeToRefs(navigationStore);
                         :key="navigationElement.id"
                     >
                         <ul class="list-none">
+                            <!-- the shopware category type definition is missing 'folder' so we use 'as' here -->
                             <li
-                                v-if="navigationElement.type === 'folder'"
+                                v-if="(navigationElement.type as 'page' | 'link' | 'folder') === 'folder'"
                                 class="mb-1 max-w-max font-bold"
                             >
                                 {{ getTranslatedProperty(navigationElement, 'name') }}

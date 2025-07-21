@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import { type ApiClientError } from '@shopware/api-client';
+import type { ApiClientError } from '@shopware/api-client';
 import type { BillingAddressForm } from '~/types/form/AddressForm';
 
 const modalController = useModal(false);
@@ -61,7 +61,7 @@ const handleSave = async (fields: BillingAddressForm) => {
 
 <template>
     <h1 class="mb-2 font-bold">
-        {{ $t('account.address.heading') }}
+        {{ t('account.address.heading') }}
     </h1>
 
     <FormKit
@@ -71,7 +71,7 @@ const handleSave = async (fields: BillingAddressForm) => {
         }"
         @click="openModal(null)"
     >
-        {{ $t('account.address.create') }}
+        {{ t('account.address.create') }}
     </FormKit>
 
     <div
@@ -86,15 +86,16 @@ const handleSave = async (fields: BillingAddressForm) => {
             @delete="deleteAddress"
         />
     </div>
+
     <div v-else>
-        <p>{{ $t('account.address.nothingFound') }}</p>
+        <p>{{ t('account.address.nothingFound') }}</p>
     </div>
 
     <LazySharedModal
         :controller="modalController"
         with-close-button
     >
-        <template #title>{{ $t('checkout.confirm.address.modal.editLabel') }}</template>
+        <template #title>{{ t('checkout.confirm.address.modal.editLabel') }}</template>
         <template #content>
             <FormKit
                 type="form"
@@ -137,8 +138,9 @@ const handleSave = async (fields: BillingAddressForm) => {
                             'opacity-0': isLoading,
                         }"
                     >
-                        {{ $t('global.save') }}
+                        {{ t('global.save') }}
                     </span>
+
                     <UtilityLoadingSpinner
                         v-if="isLoading"
                         size="small"

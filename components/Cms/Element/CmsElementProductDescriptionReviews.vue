@@ -6,6 +6,9 @@ import type { Schemas } from '@shopware/api-client/api-types';
 const props = defineProps<{
     element: CmsElementProductDescriptionReviews;
 }>();
+
+const { t } = useI18n();
+
 const { product } = useProduct(props.element.data.product);
 const propertyGroups = ref<Schemas['PropertyGroup'][]>();
 
@@ -28,7 +31,7 @@ const getPropertyNamesOfGroup = (groupId: string) => {
 
 <template>
     <div class="flex flex-col gap-4">
-        <div class="text-xl font-bold">{{ $t('cms.element.product.descriptionHeading') }}</div>
+        <div class="text-xl font-bold">{{ t('cms.element.product.descriptionHeading') }}</div>
         <div class="flex flex-col gap-8 md:flex-row">
             <!-- v-html is necessary because we need to render html -->
             <!-- eslint-disable vue/no-v-html -->

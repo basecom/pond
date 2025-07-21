@@ -73,6 +73,10 @@ const handleNewsletterSubmit = async (newsletterValues: NewsletterForm) => {
             }
         } catch (error) {
             pushError(t('cms.element.form.newsletter.errorSubscribe'));
+
+            if (import.meta.dev) {
+                console.error(error);
+            }
         }
     } else if (newsletterAction.value === t('cms.element.form.newsletter.unsubscribe')) {
         try {
@@ -83,6 +87,10 @@ const handleNewsletterSubmit = async (newsletterValues: NewsletterForm) => {
             pushSuccess(t('cms.element.form.newsletter.successUnsubscribe'));
         } catch (error) {
             pushError(t('cms.element.form.newsletter.errorUnsubscribe'));
+
+            if (import.meta.dev) {
+                console.error(error);
+            }
         }
     }
 };
@@ -121,9 +129,9 @@ watch(customer, async newCustomer => {
         v-if="isSubscriber"
         class="py-2"
     >
-        {{ $t('cms.element.form.newsletter.alreadySubscriber') }}
+        {{ t('cms.element.form.newsletter.alreadySubscriber') }}
         <br>
-        {{ $t('cms.element.form.newsletter.unsubscribeInfo') }}
+        {{ t('cms.element.form.newsletter.unsubscribeInfo') }}
     </div>
 
     <FormKit
@@ -153,21 +161,21 @@ watch(customer, async newCustomer => {
             :id="`newsletterEmail-${element.id}`"
             v-model="customerMail"
             type="email"
-            :label="$t('account.login.email.label')"
+            :label="t('account.login.email.label')"
             name="email"
-            :placeholder="$t('account.login.email.placeholder')"
+            :placeholder="t('account.login.email.placeholder')"
             validation="required"
             :classes="{
                 outer: 'col-span-3',
             }"
         />
 
-        <template v-if="newsletterAction === $t('cms.element.form.newsletter.subscribe')">
+        <template v-if="newsletterAction === t('cms.element.form.newsletter.subscribe')">
             <FormKit
                 :id="`newsletterSalutationId-${element.id}`"
                 type="select"
                 name="salutationId"
-                :placeholder="$t('account.register.salutation.placeholder')"
+                :placeholder="t('account.register.salutation.placeholder')"
                 :options="salutationOptions"
                 :classes="{
                     outer: 'col-span-1',
@@ -178,9 +186,9 @@ watch(customer, async newCustomer => {
             <FormKit
                 :id="`newsletterFirstName-${element.id}`"
                 type="text"
-                :label="$t('account.register.firstname.label')"
+                :label="t('account.register.firstname.label')"
                 name="firstName"
-                :placeholder="$t('account.register.firstname.placeholder')"
+                :placeholder="t('account.register.firstname.placeholder')"
                 :classes="{
                     outer: 'col-span-1',
                 }"
@@ -189,9 +197,9 @@ watch(customer, async newCustomer => {
             <FormKit
                 :id="`newsletterLastName-${element.id}`"
                 type="text"
-                :label="$t('account.register.lastname.label')"
+                :label="t('account.register.lastname.label')"
                 name="lastName"
-                :placeholder="$t('account.register.lastname.placeholder')"
+                :placeholder="t('account.register.lastname.placeholder')"
                 :classes="{
                     outer: 'col-span-1',
                 }"
@@ -201,8 +209,8 @@ watch(customer, async newCustomer => {
         <FormKit
             :id="`newsletterPrivacy-${element.id}`"
             type="checkbox"
-            :label="$t('cms.element.form.newsletter.privacy.label')"
-            :help="$t('cms.element.form.newsletter.privacy.help')"
+            :label="t('cms.element.form.newsletter.privacy.label')"
+            :help="t('cms.element.form.newsletter.privacy.help')"
             :name="`newsletterPrivacy-${element.id}`"
             decorator-icon="check"
             validation="accepted"

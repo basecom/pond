@@ -16,6 +16,8 @@
  */
 
 const localePath = useLocalePath();
+// TODO: look into this
+// @ts-expect-error: TS2345 - works for now
 const { formatLink } = useInternationalization(localePath);
 
 const props = withDefaults(

@@ -5,18 +5,20 @@ defineProps<{
     shippingAddress: Schemas['OrderAddress'];
     billingAddress: Schemas['OrderAddress'];
 }>();
+
+const { t } = useI18n();
 </script>
 
 <template>
-    <CheckoutConfirmCard :title="$t('checkout.confirm.address.shipping')">
+    <CheckoutConfirmCard :title="t('checkout.confirm.address.shipping')">
         <AddressData :address="shippingAddress" />
     </CheckoutConfirmCard>
 
-    <CheckoutConfirmCard :title="$t('checkout.confirm.address.billing')">
+    <CheckoutConfirmCard :title="t('checkout.confirm.address.billing')">
         <AddressData
             v-if="shippingAddress.id !== billingAddress.id"
             :address="billingAddress"
         />
-        <p v-else>{{ $t('checkout.confirm.address.sameAsShippingAddress') }}</p>
+        <p v-else>{{ t('checkout.confirm.address.sameAsShippingAddress') }}</p>
     </CheckoutConfirmCard>
 </template>

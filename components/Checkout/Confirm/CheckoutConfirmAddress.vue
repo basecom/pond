@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
 import type { AddressTypes } from '~/types/checkout/AddressTypes';
-import { type ApiClientError } from '@shopware/api-client';
+import type { ApiClientError } from '@shopware/api-client';
 import type { BillingAddressForm, ShippingAddressForm } from '~/types/form/AddressForm';
 
 const { refreshContext, signedIn } = useCustomerStore();
@@ -98,7 +98,7 @@ const openModal = (type:AddressTypes, address: Schemas['CustomerAddress']) => {
 </script>
 
 <template>
-    <CheckoutConfirmCard :title="$t('checkout.confirm.address.shipping')">
+    <CheckoutConfirmCard :title="t('checkout.confirm.address.shipping')">
         <div class="flex w-full flex-col justify-between sm:flex-row sm:items-end">
             <AddressData
                 v-if="activeShippingAddress"
@@ -110,19 +110,19 @@ const openModal = (type:AddressTypes, address: Schemas['CustomerAddress']) => {
                 type="button"
                 @click="openModal('shippingAddress', activeShippingAddress)"
             >
-                {{ $t('global.change') }}
+                {{ t('global.change') }}
             </FormKit>
         </div>
     </CheckoutConfirmCard>
 
-    <CheckoutConfirmCard :title="$t('checkout.confirm.address.billing')">
+    <CheckoutConfirmCard :title="t('checkout.confirm.address.billing')">
         <div class="flex w-full flex-col justify-between sm:flex-row sm:items-end">
             <div>
                 <FormKit
                     v-model="billingAddressIsSameAsShippingAddress"
                     type="checkbox"
                     name="billingAddressSameAsShippingAddress"
-                    :label="$t('checkout.confirm.address.sameAsShippingAddress')"
+                    :label="t('checkout.confirm.address.sameAsShippingAddress')"
                     :classes="{
                         outer: 'mb-4',
                     }"
@@ -140,7 +140,7 @@ const openModal = (type:AddressTypes, address: Schemas['CustomerAddress']) => {
                 type="button"
                 @click="openModal('billingAddress', activeBillingAddress)"
             >
-                {{ $t('global.change') }}
+                {{ t('global.change') }}
             </FormKit>
         </div>
     </CheckoutConfirmCard>
@@ -153,8 +153,8 @@ const openModal = (type:AddressTypes, address: Schemas['CustomerAddress']) => {
         <template #title>
             {{
                 modalAddressType === 'shippingAddress'
-                    ? $t('checkout.confirm.address.modal.shippingHeading')
-                    : $t('checkout.confirm.address.modal.billingHeading')
+                    ? t('checkout.confirm.address.modal.shippingHeading')
+                    : t('checkout.confirm.address.modal.billingHeading')
             }}
         </template>
 

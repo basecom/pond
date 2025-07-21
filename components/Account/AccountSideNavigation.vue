@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = withDefaults(
     defineProps<{
-      isInHeader: boolean;
+      isInHeader?: boolean;
     }>(),
     {
         isInHeader: false,
@@ -38,7 +38,7 @@ const navItems = ref([
             class="text-2xl font-bold"
         >
             {{
-                $t('account.greeting', {
+                t('account.greeting', {
                     firstname: customerStore.customer.firstName,
                     lastname: customerStore.customer.lastName,
                 })
@@ -49,7 +49,7 @@ const navItems = ref([
             v-if="props.isInHeader"
             class="mt-4 pb-4 pl-2 text-2xl font-bold"
         >
-            {{ $t('account.dropdownHeading') }}
+            {{ t('account.dropdownHeading') }}
         </li>
 
         <li
@@ -74,7 +74,7 @@ const navItems = ref([
                 :title="t('account.logout.buttonLabel')"
                 @click.prevent="handleLogout"
             >
-                {{ $t('account.logout.buttonLabel') }}
+                {{ t('account.logout.buttonLabel') }}
             </FormKit>
         </li>
     </ul>

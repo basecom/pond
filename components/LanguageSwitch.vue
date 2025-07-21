@@ -14,6 +14,7 @@ const onLanguageChange = async (option: Event) => {
     const selectedOptionId = (option.target as HTMLSelectElement).value;
     loading.value = true;
     await changeLanguage(selectedOptionId);
+    // @ts-expect-error: TS2345 - this is typed by the defined locales
     setLocale(getLanguageCodeFromId(selectedOptionId));
     await refreshSessionContext();
     loading.value = false;

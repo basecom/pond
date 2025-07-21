@@ -34,6 +34,10 @@ const handleAddToCart = async () => {
     } catch (error) {
         pushError(t('product.addToCart.errorMessage', { productName: product.value.translated.name }));
         apiErrors.value.push({ key: 'product', code: 'PRODUCT_ADD_TO_CART_GENERAL_ERROR' });
+
+        if (import.meta.dev) {
+            console.error(error);
+        }
     }
 };
 </script>
@@ -68,7 +72,7 @@ const handleAddToCart = async () => {
             :classes="{
                 outer: 'w-full',
             }"
-            :label="props.label ? $t('product.addToCart.submitLabel') : ' '"
+            :label="props.label ? t('product.addToCart.submitLabel') : ' '"
             :prefix-icon="props.icon ? 'cart-shopping' : ''"
             :title="props.icon ? t('product.addToCart.submitLabel') : ''"
         />
@@ -83,6 +87,6 @@ const handleAddToCart = async () => {
             :title="t('icon.info')"
             class="block size-3.5"
         />
-        <span>{{ $t('product.addToCart.notAvailable') }}</span>
+        <span>{{ t('product.addToCart.notAvailable') }}</span>
     </div>
 </template>

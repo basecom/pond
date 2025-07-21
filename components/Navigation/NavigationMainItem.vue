@@ -16,6 +16,7 @@ const debounced = refDebounced(isOutsideNavItem, 300);
         ref="navigationItem"
         class="min-w-max px-2 py-4 first:pl-0 last:pr-0"
     >
+        <!-- the shopware category type definition is missing 'folder' so we use 'as' here -->
         <NavigationLink
             :navigation-element="navigationElement"
             class="text-md font-bold"
@@ -23,7 +24,7 @@ const debounced = refDebounced(isOutsideNavItem, 300);
             :class="{
                 'text-brand-primary': !debounced,
             }"
-            :as-link="navigationElement.type !== 'folder'"
+            :as-link="(navigationElement.type as 'page' | 'link' | 'folder') !== 'folder'"
         />
     </div>
 

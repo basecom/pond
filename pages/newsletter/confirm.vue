@@ -48,6 +48,10 @@ onMounted(async () => {
         } catch (error) {
             notification.value.message = t('cms.element.form.newsletter.errorSubscribe');
             notification.value.type = 'danger';
+
+            if (import.meta.dev) {
+                console.error(error);
+            }
         }
 
         isLoading.value = false;

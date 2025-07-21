@@ -10,6 +10,8 @@ const emit = defineEmits<{
     'update-method': [key: string];
 }>();
 
+const { t } = useI18n();
+
 const { paymentMethods, getPaymentMethods } = useCheckout();
 
 const selectedPaymentMethod = computed({
@@ -37,8 +39,8 @@ onMounted(async () => {
 
 <template>
     <CheckoutConfirmCard
-        :title="$t('checkout.confirm.payment.cardTitle')"
-        :subtitle="$t('checkout.confirm.payment.cardSubtitle')"
+        :title="t('checkout.confirm.payment.cardTitle')"
+        :subtitle="t('checkout.confirm.payment.cardSubtitle')"
     >
         <FormKit
             v-if="paymentOptions?.length"

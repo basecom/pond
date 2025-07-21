@@ -33,6 +33,10 @@ const handleChangeVariant = async (groupName: string, optionId: string) => {
             await navigateTo(selectedOptionsVariantPath.path);
         } catch (error) {
             handleError('[Pond][ProductVariantSelection]: could not redirect', true);
+
+            if (import.meta.dev) {
+                console.error(error);
+            }
         }
         return;
     }
@@ -50,6 +54,10 @@ const handleChangeVariant = async (groupName: string, optionId: string) => {
             await navigateTo(selectedOptionsVariantPath.path);
         } catch (error) {
             handleError('[Pond][ProductVariantSelection]: could not redirect', true);
+
+            if (import.meta.dev) {
+                console.error(error);
+            }
         }
     }
 };

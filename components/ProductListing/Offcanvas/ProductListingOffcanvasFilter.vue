@@ -52,7 +52,7 @@ const { listingState } = storeToRefs(useListingStore(props.productListingStoreKe
         @click="sideMenuController.open()"
     >
         <span>
-            {{ $t('listing.sidebar.title') }}
+            {{ t('listing.sidebar.title') }}
         </span>
 
         <UtilityPill :number="listingState.filters.appliedTotal" />
@@ -70,7 +70,7 @@ const { listingState } = storeToRefs(useListingStore(props.productListingStoreKe
     >
         <template #header>
             <span v-if="!displayedFilter">
-                {{ $t('listing.sidebar.title') }}
+                {{ t('listing.sidebar.title') }}
             </span>
 
             <button

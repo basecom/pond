@@ -8,6 +8,7 @@ const props = defineProps<{
     element: CmsElementImageSlider;
 }>();
 
+const { t } = useI18n();
 const config = useCmsElementConfig(props.element);
 const { getCmsElementData } = useCmsUtils();
 const { shouldPreloadElement } = useCmsElementPreload();
@@ -104,8 +105,8 @@ if (isHomePage.value) {
                     <img
                         ref="slidesRef"
                         :src="slide.media.url"
-                        :alt="getTranslatedProperty(slide.media, 'alt') || $t('cms.element.imageAlt')"
-                        :title="getTranslatedProperty(slide.media, 'title') || $t('cms.element.imageAlt')"
+                        :alt="getTranslatedProperty(slide.media, 'alt') || t('cms.element.imageAlt')"
+                        :title="getTranslatedProperty(slide.media, 'title') || t('cms.element.imageAlt')"
                         class="size-full object-center"
                         :class="'object-' + displayMode"
                     >
@@ -117,8 +118,8 @@ if (isHomePage.value) {
                     v-cms-element-lazy-load="{ id: firstSlide?.media?.id ?? firstSlide?.media?.url, type: 'image' }"
                     :src="firstSlide?.media?.url"
                     :loading="shouldPreloadImage ? 'eager' : 'lazy'"
-                    :alt="getTranslatedProperty(firstSlide?.media, 'alt') || $t('cms.element.imageAlt')"
-                    :title="getTranslatedProperty(firstSlide?.media, 'title') || $t('cms.element.imageAlt')"
+                    :alt="getTranslatedProperty(firstSlide?.media, 'alt') || t('cms.element.imageAlt')"
+                    :title="getTranslatedProperty(firstSlide?.media, 'title') || t('cms.element.imageAlt')"
                     class="size-full object-center"
                     :class="'object-' + displayMode"
                 >

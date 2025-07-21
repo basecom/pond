@@ -51,7 +51,7 @@ const addPromotion = async (promotionCodeForm: PromotionCodeForm) => {
 
     <FormKit
         type="form"
-        :submit-label="$t('checkout.promotion.submitLabel')"
+        :submit-label="t('checkout.promotion.submitLabel')"
         :submit-attrs="{
             wrapperClass: 'min-w-max',
         }"
@@ -63,7 +63,7 @@ const addPromotion = async (promotionCodeForm: PromotionCodeForm) => {
     >
         <FormKit
             type="text"
-            :label="$t('checkout.promotion.code.label')"
+            :label="t('checkout.promotion.code.label')"
             name="promotionCode"
             required="true"
             :classes="{

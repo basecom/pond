@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
 
+const { t } = useI18n();
+
 defineProps<{
     order: Schemas['Order'];
 }>();
@@ -8,10 +10,10 @@ defineProps<{
 
 <template>
     <div class="bg-gray-light p-4">
-        <h2 class="pb-4">{{ $t('order.summary.heading') }}</h2>
+        <h2 class="pb-4">{{ t('order.summary.heading') }}</h2>
 
         <CheckoutSummaryValues
-            :label="$t('order.summary.netPriceLabel')"
+            :label="t('order.summary.netPriceLabel')"
             :value="order.price.netPrice"
         />
 
@@ -20,19 +22,19 @@ defineProps<{
             :key="`calculated-tax-${index}`"
         >
             <CheckoutSummaryValues
-                :label="$t('order.summary.taxLabel')"
+                :label="t('order.summary.taxLabel')"
                 :value="calculatedTax.tax"
             />
         </template>
 
         <CheckoutSummaryValues
             v-if="order.shippingTotal"
-            :label="$t('order.summary.shippingCostLabel')"
+            :label="t('order.summary.shippingCostLabel')"
             :value="order.shippingTotal"
         />
 
         <CheckoutSummaryValues
-            :label="$t('order.summary.totalLabel')"
+            :label="t('order.summary.totalLabel')"
             :value="order.price.totalPrice"
             :highlight="true"
         />

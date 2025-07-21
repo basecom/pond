@@ -3,6 +3,8 @@ import { getShippingMethodDeliveryTime } from '@shopware-pwa/helpers-next';
 import type { Schemas } from '@shopware/api-client/api-types';
 import type { ShippingMethodOption } from '~/types/checkout/ShippingMethodOption';
 
+const { t } = useI18n();
+
 const { shippingMethods, getShippingMethods } = useCheckout();
 const { trackAddShippingInfo } = useAnalytics();
 const { refreshCart } = useCart();
@@ -42,8 +44,8 @@ onMounted(async () => {
 
 <template>
     <CheckoutConfirmCard
-        :title="$t('checkout.confirm.shipping.cardTitle')"
-        :subtitle="$t('checkout.confirm.shipping.cardSubtitle')"
+        :title="t('checkout.confirm.shipping.cardTitle')"
+        :subtitle="t('checkout.confirm.shipping.cardSubtitle')"
     >
         <FormKit
             v-if="shippingOptions?.length"

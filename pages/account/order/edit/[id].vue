@@ -34,6 +34,10 @@ const updateOrder = async () => {
         }
     } catch (error) {
         pushError(t('account.order.edit.errorMessage'));
+
+        if (import.meta.dev) {
+            console.error(error);
+        }
     }
 };
 
@@ -47,7 +51,7 @@ onMounted(async () => {
 <template>
     <div class="container">
         <template v-if="order">
-            <h1>{{ $t('account.order.edit.heading') }}</h1>
+            <h1>{{ t('account.order.edit.heading') }}</h1>
             <FormKit
                 type="form"
                 :actions="false"
@@ -78,7 +82,7 @@ onMounted(async () => {
                     </div>
 
                     <div class="rounded-md p-4 shadow">
-                        <div class="font-bold">{{ $t('checkout.lineItemsHeading') }}</div>
+                        <div class="font-bold">{{ t('checkout.lineItemsHeading') }}</div>
 
                         <ul class="divide-y divide-gray-medium pb-2">
                             <div
@@ -108,7 +112,7 @@ onMounted(async () => {
                                 outer: 'mt-4',
                             }"
                         >
-                            {{ $t('account.order.edit.buttonLabel') }}
+                            {{ t('account.order.edit.buttonLabel') }}
                         </FormKit>
                     </div>
                 </div>
@@ -118,7 +122,7 @@ onMounted(async () => {
         <UtilityStaticNotification
             v-else
             type="info"
-            :message="$t('account.order.edit.noOrderFound')"
+            :message="t('account.order.edit.noOrderFound')"
             class="mt-4"
         />
     </div>

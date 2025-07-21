@@ -57,7 +57,7 @@ const onSubmitAddress= (fields: ShippingAddressForm|BillingAddressForm) => {
 <template>
     <!-- selected address -->
     <h2 class="mb-4 text-lg">
-        {{ $t('checkout.confirm.address.modal.chosenAddress') }}
+        {{ t('checkout.confirm.address.modal.chosenAddress') }}
     </h2>
 
     <AddressData
@@ -75,7 +75,7 @@ const onSubmitAddress= (fields: ShippingAddressForm|BillingAddressForm) => {
             }"
             @click="mode = 'edit-address'"
         >
-            {{ $t('checkout.confirm.address.modal.editLabel') }}
+            {{ t('checkout.confirm.address.modal.editLabel') }}
         </FormKit>
 
         <FormKit
@@ -87,7 +87,7 @@ const onSubmitAddress= (fields: ShippingAddressForm|BillingAddressForm) => {
             }"
             @click="mode = 'add-address'"
         >
-            {{ $t('checkout.confirm.address.modal.createLabel') }}
+            {{ t('checkout.confirm.address.modal.createLabel') }}
         </FormKit>
 
         <FormKit
@@ -99,7 +99,7 @@ const onSubmitAddress= (fields: ShippingAddressForm|BillingAddressForm) => {
             }"
             @click="mode = 'select-address'"
         >
-            {{ $t('checkout.confirm.address.modal.selectLabel') }}
+            {{ t('checkout.confirm.address.modal.selectLabel') }}
         </FormKit>
     </div>
 
@@ -108,14 +108,14 @@ const onSubmitAddress= (fields: ShippingAddressForm|BillingAddressForm) => {
     <!-- select address -->
     <template v-if="mode === 'select-address'">
         <h2 class="mb-4 text-lg">
-            {{ $t('checkout.confirm.address.modal.selectHeading') }}
+            {{ t('checkout.confirm.address.modal.selectHeading') }}
         </h2>
 
         <div class="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <button
                 v-for="address in customerAddresses"
                 :key="address.id"
-                :aria-label="$t('checkout.confirm.address.modal.ariaLabel')"
+                :aria-label="t('checkout.confirm.address.modal.ariaLabel')"
                 :aria-description="addressText(address)"
                 class="mb-4 p-4 text-left"
                 :class="[address.id === selectedAddress.id ? 'bg-gray-light' : 'hover:bg-gray-light']"
@@ -136,7 +136,7 @@ const onSubmitAddress= (fields: ShippingAddressForm|BillingAddressForm) => {
             "
         >
             <span :class="{ 'opacity-0': isLoading }">
-                {{ $t('checkout.confirm.address.modal.selectSubmitLabel') }}
+                {{ t('checkout.confirm.address.modal.selectSubmitLabel') }}
             </span>
 
             <UtilityLoadingSpinner
@@ -199,7 +199,7 @@ const onSubmitAddress= (fields: ShippingAddressForm|BillingAddressForm) => {
                         'opacity-0': isLoading,
                     }"
                 >
-                    {{ $t('checkout.confirm.address.modal.formSubmitLabel') }}
+                    {{ t('checkout.confirm.address.modal.formSubmitLabel') }}
                 </span>
 
                 <UtilityLoadingSpinner

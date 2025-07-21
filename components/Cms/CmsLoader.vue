@@ -6,6 +6,8 @@ const props = defineProps<{
     content: Schemas['CmsSlot'];
 }>();
 
+const { t } = useI18n();
+
 const { getCmsElementComponentName, componentExists } = useCmsUtils();
 
 const isDevelopment = computed(() => import.meta.dev);
@@ -26,6 +28,6 @@ provide('cmsElementId', props.content?.id);
     </div>
 
     <div v-else-if="isDevelopment">
-        {{ $t('cms.componentNotFound', { componentName: getCmsElementComponentName(content?.type) }) }}
+        {{ t('cms.componentNotFound', { componentName: getCmsElementComponentName(content?.type) }) }}
     </div>
 </template>

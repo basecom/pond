@@ -18,6 +18,8 @@ withDefaults(
         thumbsSwiper: '',
     },
 );
+
+const { t } = useI18n();
 </script>
 
 <template>
@@ -45,8 +47,8 @@ withDefaults(
                         <img
                             v-if="slide.media.url"
                             :src="slide.media.url"
-                            :alt="getTranslatedProperty(slide.media, 'alt') || $t('cms.element.imageAlt')"
-                            :title="getTranslatedProperty(slide.media, 'title') || $t('cms.element.imageAlt')"
+                            :alt="getTranslatedProperty(slide.media, 'alt') || t('cms.element.imageAlt')"
+                            :title="getTranslatedProperty(slide.media, 'title') || t('cms.element.imageAlt')"
                             class="size-full object-center"
                             :class="imageClasses"
                         >

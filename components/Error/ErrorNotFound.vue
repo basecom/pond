@@ -17,16 +17,16 @@ useHead(() => ({
         />
 
         <h1 class="pb-4 pt-6">
-            {{ $t('error.404.heading') }}
+            {{ t('error.404.heading') }}
         </h1>
 
         <p class="pb-8 text-center">
-            {{ $t('error.404.detail') }}
+            {{ t('error.404.detail') }}
         </p>
 
         <LocaleLink :to="'/'">
             <FormKit type="submit">
-                {{ $t('global.homepageLinkLabel') }}
+                {{ t('global.homepageLinkLabel') }}
             </FormKit>
         </LocaleLink>
     </ErrorLayout>

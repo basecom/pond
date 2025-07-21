@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { t } = useI18n();
 const cookieBannerStore = useCookieBannerStore();
 const { activatedCookies, cookieGroups } = storeToRefs(cookieBannerStore);
 const configStore = useConfigStore();
@@ -29,7 +30,7 @@ const onDenyAll = () => {
         <template #trigger>
             <slot name="trigger" />
         </template>
-        <template #title>{{ $t('cookie.modal.title') }}</template>
+        <template #title>{{ t('cookie.modal.title') }}</template>
         <template #content>
             <CookieBannerConfiguration
                 :is-accept-all-enabled="isAcceptAllEnabled ?? false"

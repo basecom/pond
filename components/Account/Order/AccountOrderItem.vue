@@ -5,6 +5,8 @@ const props = defineProps<{
     orderId: string;
 }>();
 
+const { t } = useI18n();
+
 const {
     order,
     loadOrderDetails,
@@ -72,7 +74,7 @@ onMounted(async () => {
                     >
                         <template v-if="formattedOrderDate"> {{ formattedOrderDate }} - </template>
 
-                        {{ $t('checkout.finish.orderNumberLabel') }} {{ order.orderNumber }}
+                        {{ t('checkout.finish.orderNumberLabel') }} {{ order.orderNumber }}
                     </div>
 
                     <div
@@ -87,28 +89,28 @@ onMounted(async () => {
                         class="rounded-md bg-brand-primary p-2 text-white"
                         :to="`/account/order/edit/${orderId}`"
                     >
-                        {{ $t('account.orders.changePaymentMethod') }}
+                        {{ t('account.orders.changePaymentMethod') }}
                     </LocaleLink>
                 </div>
 
                 <div class="gap-12 text-left lg:flex">
                     <AccountOrderItemInfo
-                        :title="$t('account.orders.paymentStatusLabel')"
+                        :title="t('account.orders.paymentStatusLabel')"
                         :state="paymentState"
                     />
 
                     <AccountOrderItemInfo
-                        :title="$t('account.orders.paymentMethodLabel')"
+                        :title="t('account.orders.paymentMethodLabel')"
                         :method="paymentMethod"
                     />
 
                     <AccountOrderItemInfo
-                        :title="$t('account.orders.shippingStatusLabel')"
+                        :title="t('account.orders.shippingStatusLabel')"
                         :state="shippingStatus"
                     />
 
                     <AccountOrderItemInfo
-                        :title="$t('account.orders.shippingMethodLabel')"
+                        :title="t('account.orders.shippingMethodLabel')"
                         :method="shippingMethod"
                     />
                 </div>
@@ -119,7 +121,7 @@ onMounted(async () => {
             <div class="py-4">
                 <div class="pb-4">
                     <div class="mb-2 font-bold">
-                        {{ $t('checkout.finish.shippingAddressHeading') }}
+                        {{ t('checkout.finish.shippingAddressHeading') }}
                     </div>
 
                     <div>
@@ -131,7 +133,7 @@ onMounted(async () => {
                 </div>
 
                 <div class="mt-5 font-bold">
-                    {{ $t('account.orders.lineItemsHeading') }}
+                    {{ t('account.orders.lineItemsHeading') }}
                 </div>
 
                 <ul class="divide-y divide-gray-medium">

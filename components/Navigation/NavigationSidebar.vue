@@ -90,7 +90,7 @@ const showBackButton = computed(() => navigationPath.value.length > 0);
                     :title="t('icon.backToPreviousCategory')"
                     class="block size-3"
                 />
-                <span>{{ $t('navigation.sidebar.backLinkLabel') }}</span>
+                <span>{{ t('navigation.sidebar.backLinkLabel') }}</span>
             </div>
         </template>
 

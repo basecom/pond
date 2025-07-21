@@ -6,7 +6,6 @@ const { handleError } = useHandleError();
 
 const { refreshCart } = useCart();
 const { getWishlistProducts } = useWishlist();
-const { setAffiliateCode } = useAffiliateMarketing();
 
 const customerStore = useCustomerStore();
 const configStore = useConfigStore();

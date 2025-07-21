@@ -3,10 +3,10 @@ import type { NumberFieldInput } from 'radix-vue';
 
 withDefaults(
     defineProps<{
-      minPurchase: number;
-      maxPurchase: number;
-      steps: number;
-      initialValue: number;
+      minPurchase?: number;
+      maxPurchase?: number;
+      steps?: number;
+      initialValue?: number;
       isLoading?: boolean;
       isDisabled?: boolean;
     }>(),

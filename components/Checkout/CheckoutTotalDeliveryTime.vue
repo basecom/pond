@@ -5,6 +5,8 @@ const props = defineProps<{
     cart: Schemas['Cart'];
 }>();
 
+const { t } = useI18n();
+
 const dateFormat = 'DD.MM.YYYY';
 
 const earliestDeliveryDate = computed(
@@ -24,6 +26,6 @@ const latestDeliveryDate = computed(
 
 <template>
     <div v-if="earliestDeliveryDate && latestDeliveryDate">
-        {{ $t('order.deliveryPeriod') }} {{ earliestDeliveryDate }} - {{ latestDeliveryDate }}
+        {{ t('order.deliveryPeriod') }} {{ earliestDeliveryDate }} - {{ latestDeliveryDate }}
     </div>
 </template>

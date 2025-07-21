@@ -51,7 +51,7 @@ await updateSessionWithLanguage();
 useNotifications();
 useBreadcrumbs();
 
-const shopName = configStore.get('core.basicInformation.shopName');
+const shopName = configStore.get('core.basicInformation.shopName') as string;
 setAffiliateCode('affiliateCode');
 
 useHead(() => ({

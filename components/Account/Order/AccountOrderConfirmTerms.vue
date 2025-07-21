@@ -1,9 +1,13 @@
+<script setup lang="ts">
+const { t } = useI18n();
+</script>
+
 <template>
-    <CheckoutConfirmCard :title="$t('checkout.confirm.terms.cardTitle')">
+    <CheckoutConfirmCard :title="t('checkout.confirm.terms.cardTitle')">
         <FormKit
             type="checkbox"
-            :label="$t('checkout.confirm.terms.label')"
-            :help="$t('account.order.edit.terms.help')"
+            :label="t('checkout.confirm.terms.label')"
+            :help="t('account.order.edit.terms.help')"
             name="terms"
             decorator-icon="check"
             :value="true"

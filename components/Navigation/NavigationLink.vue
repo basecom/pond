@@ -62,7 +62,7 @@ const listingStore = useListingStore(route.path === '/search' ? 'search' : 'cate
         @click="trackNavigation(navigationElement.level ? navigationElement.level - 1 : 0, getTranslatedProperty(navigationElement, 'name')); listingStore.isLoading = !isActive(navigationElement.seoUrls, true);"
     >
         <template v-if="asAllItemsLink">
-            {{ $t('navigation.sidebar.allItems') }}
+            {{ t('navigation.sidebar.allItems') }}
         </template>
 
         <template v-else>

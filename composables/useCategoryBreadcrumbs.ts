@@ -34,7 +34,11 @@ export function useCategoryBreadcrumbs() {
             const breadcrumbs = await _loadCategoryBreadcrumbsFromApi(category.id);
 
             return _mapBreadcrumbsFromApi(breadcrumbs);
-        } catch (e) {
+        } catch (error) {
+            if (import.meta.dev) {
+                console.error(error);
+            }
+
             return getCategoryBreadcrumbs(category, {
                 startIndex,
             });

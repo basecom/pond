@@ -59,7 +59,7 @@ const handleLogin = async (fields: LoginForm) => {
     <FormKit
         v-if="!signedIn"
         type="form"
-        :submit-label="$t('account.login.submitLabel')"
+        :submit-label="t('account.login.submitLabel')"
         :classes="{
             form: 'w-full flex flex-wrap flex-col gap-4',
             actions: 'w-full',
@@ -74,21 +74,21 @@ const handleLogin = async (fields: LoginForm) => {
                 v-for="(error, index) in apiErrors"
                 :key="`login-error-${index}`"
             >
-                {{ $t('error.api.' + error.code) }}
+                {{ t('error.api.' + error.code) }}
             </li>
         </ul>
 
         <FormKit
             type="email"
-            :label="$t('account.login.email.label')"
+            :label="t('account.login.email.label')"
             name="username"
-            :placeholder="$t('account.login.email.placeholder')"
-            :help="$t('account.login.email.help')"
+            :placeholder="t('account.login.email.placeholder')"
+            :help="t('account.login.email.help')"
         />
 
         <FormKit
             type="password"
-            :label="$t('account.login.password.label')"
+            :label="t('account.login.password.label')"
             name="password"
             suffix-icon="lock"
             @suffix-icon-click="togglePasswordVisibility"
@@ -104,7 +104,7 @@ const handleLogin = async (fields: LoginForm) => {
             to="/account/register"
             class="hover:text-brand-primary"
         >
-            {{ $t('account.login.createAccountLink') }}
+            {{ t('account.login.createAccountLink') }}
         </LocaleLink>
 
         <LocaleLink
@@ -114,7 +114,7 @@ const handleLogin = async (fields: LoginForm) => {
             :class="{ 'text-right': showCreateLink }"
             @click="$emit('closeModal')"
         >
-            {{ $t('account.login.recoverPasswordLink') }}
+            {{ t('account.login.recoverPasswordLink') }}
         </LocaleLink>
     </div>
 </template>

@@ -41,6 +41,10 @@ onMounted(async () => {
     } catch (error) {
         notification.value.message = t('account.register.confirm.error');
         notification.value.type = 'danger';
+
+        if (import.meta.dev) {
+            console.error(error);
+        }
     }
 
     isLoading.value = false;

@@ -107,7 +107,7 @@ export default defineNuxtConfig({
     },
 
     components: {
-        dirs: [join(currentDir, 'components'), join(currentDir, 'components/*'), join(currentDir, 'types/*')],
+        dirs: [join(currentDir, 'components')],
         global: true,
     },
 
@@ -118,18 +118,18 @@ export default defineNuxtConfig({
     },
 
     i18n: {
-        vueI18n: './i18n.config.ts',
         strategy: 'prefix_except_default',
         defaultLocale: 'de-DE',
         detectBrowserLanguage: false,
+        bundle: {
+            optimizeTranslationDirective: false,
+        },
         locales: [
             {
                 code: 'de-DE',
-                file: 'i18n/de-DE/de-DE.ts',
             },
             {
                 code: 'en-GB',
-                file: 'i18n/en-GB/en-GB.ts',
             },
         ],
     },

@@ -2,7 +2,7 @@
 import type { PaymentMethodOption } from '~/types/checkout/PaymentMethodOption';
 
 const { paymentMethods, getPaymentMethods } = useCheckout();
-
+const { t } = useI18n();
 const { selectedPaymentMethod: paymentMethod, setPaymentMethod } = useSessionContext();
 const { trackAddPaymentInfo } = useAnalytics();
 const { refreshCart } = useCart();
@@ -39,8 +39,8 @@ onMounted(async () => {
 
 <template>
     <CheckoutConfirmCard
-        :title="$t('checkout.confirm.payment.cardTitle')"
-        :subtitle="$t('checkout.confirm.payment.cardSubtitle')"
+        :title="t('checkout.confirm.payment.cardTitle')"
+        :subtitle="t('checkout.confirm.payment.cardSubtitle')"
     >
         <FormKit
             v-if="paymentOptions?.length"

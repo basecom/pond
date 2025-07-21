@@ -20,15 +20,15 @@ useHead(() => ({
             class="block size-20 text-gray-dark"
         />
 
-        <h1 class="pb-4 pt-6">{{ $t('error.server.heading') }} - {{ error.statusCode }}</h1>
+        <h1 class="pb-4 pt-6">{{ t('error.server.heading') }} - {{ error.statusCode }}</h1>
 
         <p class="pb-8 text-center">
-            {{ $t('error.server.detail') }}
+            {{ t('error.server.detail') }}
         </p>
 
         <LocaleLink :to="'/'">
             <FormKit type="submit">
-                {{ $t('global.homepageLinkLabel') }}
+                {{ t('global.homepageLinkLabel') }}
             </FormKit>
         </LocaleLink>
     </main>
