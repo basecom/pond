@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getProductRoute, getProductName } from '@shopware/helpers';
+import { getProductName } from '@shopware/helpers';
 const { t } = useI18n();
 
 const props = defineProps<{
