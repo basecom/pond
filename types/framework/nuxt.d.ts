@@ -21,9 +21,6 @@ declare module '@nuxt/schema' {
                 trackingUrl?: string;
                 id?: string;
             };
-            breadcrumb: {
-                enableDynamicLoading: boolean,
-            },
             cms: {
                 enableProgressiveLoading: boolean,
             },

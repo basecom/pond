@@ -120,6 +120,8 @@ await getWishlistProducts({
 </script>
 
 <template>
+    <LayoutBreadcrumbs />
+
     <div class="container relative mx-auto">
         <UtilityLoadingSpinner
             v-if="isLoading"

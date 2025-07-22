@@ -24,10 +24,13 @@ useBreadcrumbs([
         path: landingResponse.value.url,
     },
 ]);
+
 useAnalytics({ trackPageView: true, pageType: 'landingpage' });
 </script>
 
 <template>
+    <LayoutBreadcrumbs />
+
     <CmsPage
         v-if="landingResponse?.cmsPage"
         :cms-page="landingResponse.cmsPage"

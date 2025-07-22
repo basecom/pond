@@ -52,6 +52,8 @@ onMounted(async () => {
 </script>
 
 <template>
+    <LayoutBreadcrumbs />
+
     <UtilityLoadingSpinner v-if="isLoading" />
 
     <div

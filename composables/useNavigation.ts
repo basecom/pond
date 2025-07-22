@@ -69,6 +69,8 @@ export function useNavigation(params?: {
             depth: depthRef.value,
         })),
         immediate: false,
+        // setting watch to false prevents triggering the request twice when depthRef changes -> will only get triggered when execute is called
+        watch: false,
     });
 
     async function loadNavigationElements({ depth }: { depth: number }) {

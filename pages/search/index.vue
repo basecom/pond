@@ -125,6 +125,8 @@ const cardSkeletons = computed(() => {
 </script>
 
 <template>
+    <LayoutBreadcrumbs />
+
     <div class="container">
         <h1 class="mb-6 text-center">
             <span v-if="products?.length">

@@ -8,6 +8,8 @@ useAnalytics({ trackPageView: true, pageType: 'accountProfile' });
 </script>
 
 <template>
+    <LayoutBreadcrumbs />
+
     <Account>
         <AccountProfileContent />
     </Account>

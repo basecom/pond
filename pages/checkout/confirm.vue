@@ -56,6 +56,8 @@ onMounted(async () => {
 </script>
 
 <template>
+    <LayoutBreadcrumbs />
+
     <div class="container">
         <h1>{{ t('checkout.confirm.heading') }}</h1>
 

@@ -7,48 +7,67 @@ const props = defineProps<{
 }>();
 
 const { search } = useProductSearch();
-const { getBreadcrumbs } = useCategoryBreadcrumbs();
+const { apiClient } = useShopwareContext();
 
-const { data: productResponse } = await useAsyncData(
-    `pdp${props.navigationId}`,
-    async () =>
-        await search(props.navigationId, {
-            withCmsAssociations: true,
-            criteria: {
-                associations: {
-                    canonicalProduct: {},
-                    options: {},
-                    properties: {
-                        associations: {
-                            group: {},
+const { data } = await useAsyncData(
+    `pdp-${props.navigationId}`,
+    async () => {
+        const responses = await Promise.allSettled([
+            search(props.navigationId, {
+                withCmsAssociations: true,
+                criteria: {
+                    associations: {
+                        canonicalProduct: {},
+                        options: {},
+                        properties: {
+                            associations: {
+                                group: {},
+                            },
                         },
+                        manufacturer: {},
+                        seoUrls: {},
                     },
-                    manufacturer: {},
-                    seoUrls: {},
                 },
-            },
-        }),
+            }),
+
+            apiClient.invoke('readBreadcrumb get /breadcrumb/{id}', {
+                pathParams: {
+                    id: props.navigationId,
+                },
+            }),
+        ]);
+
+        return {
+            productResponse:
+                responses[0].status === 'fulfilled' ? responses[0].value : null,
+            breadcrumbs:
+                responses[1].status === 'fulfilled' ? responses[1].value : null,
+        };
+    },
 );
 
-if (!productResponse.value) {
+const productResponse = data.value?.productResponse;
+if (!productResponse) {
     throw createError({ statusCode: 404, message: t('error.404.detail') });
 }
+const { product } = useProduct(productResponse.product, productResponse.configurator);
 
-const { product } = useProduct(productResponse.value.product, productResponse.value.configurator);
+const initialBreadcrumbs = data.value?.breadcrumbs.data ?? [];
+const breadcrumbs = computed(() => [
+    ...initialBreadcrumbs,
+    {
+        name: product.value.translated.name,
+        path: getProductRoute(product.value)?.path,
+    },
+]);
+useBreadcrumbs(breadcrumbs.value);
 
-const breadcrumbs = await getBreadcrumbs(productResponse.value.product.seoCategory);
-
-// add product as last breadcrumb entry on pdp
-breadcrumbs.push({
-    name: product.value.translated.name,
-    path: getProductRoute(product.value)?.path,
-});
-
-useBreadcrumbs(breadcrumbs);
 useAnalytics({ pageType: 'pdp', trackPageView: true });
 </script>
 
 <template>
+    <LayoutBreadcrumbs />
+
     <CmsPage
         v-if="product?.cmsPage"
         :cms-page="product.cmsPage"

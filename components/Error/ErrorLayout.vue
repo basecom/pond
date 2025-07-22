@@ -42,7 +42,6 @@ const updateSessionWithLanguage = async () => {
 await updateSessionWithLanguage();
 
 useNotifications();
-useBreadcrumbs([]);
 
 useHead(() => ({
     htmlAttrs: {

@@ -8,6 +8,8 @@ useAnalytics({ trackPageView: true, pageType: 'accountAddress' });
 </script>
 
 <template>
+    <LayoutBreadcrumbs />
+
     <Account>
         <AccountAddressContent />
     </Account>

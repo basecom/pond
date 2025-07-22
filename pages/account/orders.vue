@@ -8,6 +8,8 @@ useAnalytics({ trackPageView: true, pageType: 'accountOrders' });
 </script>
 
 <template>
+    <LayoutBreadcrumbs />
+
     <Account>
         <AccountOrderContent />
     </Account>

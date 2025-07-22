@@ -31,6 +31,8 @@ onMounted(async () => {
 </script>
 
 <template>
+    <LayoutBreadcrumbs />
+
     <div class="container">
         <template v-if="order">
             <div class="text-center">

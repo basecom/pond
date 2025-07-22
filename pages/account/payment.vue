@@ -8,6 +8,8 @@ useAnalytics({ trackPageView: true, pageType: 'accountPayment' });
 </script>
 
 <template>
+    <LayoutBreadcrumbs />
+
     <Account>
         <AccountPaymentContent />
     </Account>

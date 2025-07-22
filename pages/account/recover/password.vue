@@ -5,6 +5,8 @@ useBreadcrumbs(accountBreadcrumbs({ type: 'recover' }));
 </script>
 
 <template>
+    <LayoutBreadcrumbs />
+
     <div class="flex w-full justify-center">
         <div class="w-128">
             <AccountRecoverPassword />

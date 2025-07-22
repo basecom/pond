@@ -48,9 +48,6 @@ export default defineNuxtConfig({
                     id: 'G-XXXX',
                     trackingUrl: 'https://www.googletagmanager.com/',
                 },
-                breadcrumb: {
-                    enableDynamicLoading: false,
-                },
                 cms: {
                     enableProgressiveLoading: false,
                 },

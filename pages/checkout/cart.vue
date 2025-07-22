@@ -10,6 +10,8 @@ useBreadcrumbs(checkoutBreadcrumbs({ index: 0 }));
 </script>
 
 <template>
+    <LayoutBreadcrumbs />
+
     <div class="container">
         <h1>{{ t('checkout.cart.heading') }}</h1>
 

@@ -8,6 +8,8 @@ useAnalytics({ trackPageView: true, pageType: 'register' });
 </script>
 
 <template>
+    <LayoutBreadcrumbs />
+
     <div class="container flex w-full justify-center">
         <AccountRegister :redirect-after-success="true" />
     </div>
