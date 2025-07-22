@@ -1,4 +1,4 @@
-// extends the useNavigation composable from the '@shopware-pwa/composables-next' package
+// extends the useNavigation composable from the '@shopware/composables' package
 
 import type { Schemas } from '@shopware/api-client/api-types';
 
@@ -14,9 +14,9 @@ export type UseNavigationReturn = {
     /**
      * Load navigation elements
      */
-    loadNavigationElements(params: {
-        depth: number;
-    }): Promise<Schemas['NavigationRouteResponse']>;
+    loadNavigationElements(
+        params: operations['readNavigation post /navigation/{activeId}/{rootId}']['body'],
+    ): Promise<Schemas['NavigationRouteResponse']>;
 };
 
 /**
@@ -73,8 +73,10 @@ export function useNavigation(params?: {
         watch: false,
     });
 
-    async function loadNavigationElements({ depth }: { depth: number }) {
-        depthRef.value = depth;
+    async function loadNavigationElements(
+        params: operations['readNavigation post /navigation/{activeId}/{rootId}']['body'],
+    ) {
+        depthRef.value = params.depth ?? 1;
 
         try {
             await execute();
