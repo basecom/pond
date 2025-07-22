@@ -12,16 +12,26 @@ withDefaults(
       prefix?: string;
       headlineClasses?: string;
       headline?: string;
-      columns?: {
-        streetColumns?: Columns,
-        zipColumns?: Columns,
-        cityColumns?: Columns,
-        additionalAddressLine1Columns?: Columns,
-        additionalAddressLine2Columns?: Columns,
-        countryColumns?: Columns,
-        stateColumns?: Columns,
-        phoneNumberColumns?: Columns,
-      }
+      streetColumns?: Columns,
+      zipColumns?: Columns,
+      cityColumns?: Columns,
+      additionalAddressLine1Columns?: Columns,
+      additionalAddressLine2Columns?: Columns,
+      countryColumns?: Columns,
+      stateColumns?: Columns,
+      phoneNumberColumns?: Columns,
+      // Columns for AccountCustomerFields
+      accountTypeColumns?: Columns;
+      salutationColumns?: Columns;
+      titleColumns?: Columns;
+      firstNameColumns?: Columns;
+      lastNameColumns?: Columns;
+      birthdayColumns?: Columns;
+      companyColumns?: Columns;
+      vatIdColumns?: Columns;
+      departmentColumns?: Columns;
+      emailColumns?: Columns;
+      passwordColumns?: Columns,
     }>(),
     {
         isDetail: false,
@@ -29,39 +39,81 @@ withDefaults(
         prefix: '',
         headlineClasses: undefined,
         headline: undefined,
-        columns: () => ({
-            streetColumns: {
-                sm: 12,
-                md: 6,
-            },
-            zipColumns: {
-                sm: 12,
-                md: 3,
-            },
-            cityColumns: {
-                sm: 12,
-                md: 3,
-            },
-            additionalAddressLine1Columns: {
-                sm: 12,
-                md: 6,
-            },
-            additionalAddressLine2Columns: {
-                sm: 12,
-                md: 6,
-            },
-            countryColumns: {
-                sm: 12,
-                md: 6,
-            },
-            stateColumns: {
-                sm: 12,
-                md: 6,
-            },
-            phoneNumberColumns: {
-                sm: 12,
-                md: 6,
-            },
+        streetColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        zipColumns: () => ({
+            sm: 12,
+            md: 3,
+        }),
+        cityColumns: () => ({
+            sm: 12,
+            md: 3,
+        }),
+        additionalAddressLine1Columns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        additionalAddressLine2Columns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        countryColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        stateColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        phoneNumberColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        accountTypeColumns: () => ({
+            sm: 12,
+            md: 3,
+        }),
+        salutationColumns: () => ({
+            sm: 12,
+            md: 3,
+        }),
+        birthdayColumns: () => ({
+            sm: 1,
+            md: 2,
+        }),
+        titleColumns: () => ({
+            sm: 12,
+            md: 3,
+        }),
+        firstNameColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        lastNameColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        companyColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        vatIdColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        departmentColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        emailColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        passwordColumns: () => ({
+            sm: 12,
+            md: 6,
         }),
     },
 );
@@ -118,6 +170,17 @@ const onSelectCountry = (selectedCountryId: string) => {
             :account-type-conditions="accountTypeConditions"
             :prefix="prefix"
             :is-vat-id-required-by-selected-country="isVatIdRequiredBySelectedCountry"
+            :account-type-columns="accountTypeColumns"
+            :salutation-columns="salutationColumns"
+            :birthday-columns="birthdayColumns"
+            :title-columns="titleColumns"
+            :first-name-columns="firstNameColumns"
+            :last-name-columns="lastNameColumns"
+            :company-columns="companyColumns"
+            :vat-id-columns="vatIdColumns"
+            :department-columns="departmentColumns"
+            :email-columns="emailColumns"
+            :password-columns="passwordColumns"
         />
     </slot>
 
@@ -129,39 +192,39 @@ const onSelectCountry = (selectedCountryId: string) => {
 
     <GroupElement name="customer-address">
         <slot name="street">
-            <FormTextElement
+            <UiTextElement
                 :id="`${prefix}street`"
                 :label="$t('address.street.label')"
                 :name="`${prefix}street`"
                 :placeholder="$t('address.street.placeholder')"
                 rules="required"
                 :messages="{ required: $t('address.street.errorRequired') }"
-                :columns="columns.streetColumns"
+                :columns="streetColumns"
             />
         </slot>
 
         <slot name="zip-code-before">
-            <AddressFieldZipcode v-if="showZipcodeInFrontOfCity" :prefix="prefix" :columns="columns.zipColumns" />
+            <AddressFieldZipcode v-if="showZipcodeInFrontOfCity" :prefix="prefix" :columns="zipColumns" />
         </slot>
 
         <slot name="city">
-            <FormTextElement
+            <UiTextElement
                 :id="`${prefix}city`"
                 :label="$t('address.city.label')"
                 :name="`${prefix}city`"
                 :placeholder="$t('address.city.placeholder')"
                 rules="required"
                 :messages="{ required: $t('address.city.errorRequired') }"
-                :columns="columns.cityColumns"
+                :columns="cityColumns"
             />
         </slot>
 
         <slot name="zip-code-after">
-            <AddressFieldZipcode v-if="!showZipcodeInFrontOfCity" :prefix="prefix" :columns="columns.zipColumns" />
+            <AddressFieldZipcode v-if="!showZipcodeInFrontOfCity" :prefix="prefix" :columns="zipColumns" />
         </slot>
 
         <slot name="additional-address-line-1">
-            <FormTextElement
+            <UiTextElement
                 v-if="showAdditionalAddress1Field"
                 :id="`${prefix}additionalAddressLine1`"
                 :label="$t('address.additionalAddressLine1.label')"
@@ -169,12 +232,12 @@ const onSelectCountry = (selectedCountryId: string) => {
                 :placeholder="$t('address.additionalAddressLine1.placeholder')"
                 :rules="isAdditionalAddress1FieldRequired ? 'required': ''"
                 :messages="{ required: $t('address.additionalAddressLine1.errorRequired') }"
-                :columns="columns.additionalAddressLine1Columns"
+                :columns="additionalAddressLine1Columns"
             />
         </slot>
 
         <slot name="additional-address-line-2">
-            <FormTextElement
+            <UiTextElement
                 v-if="showAdditionalAddress2Field"
                 :id="`${prefix}additionalAddressLine2`"
                 :label="$t('address.additionalAddressLine2.label')"
@@ -182,12 +245,12 @@ const onSelectCountry = (selectedCountryId: string) => {
                 :placeholder="$t('address.additionalAddressLine2.placeholder')"
                 :rules="isAdditionalAddress2FieldRequired ? 'required': ''"
                 :messages="{ required: $t('address.additionalAddressLine2.errorRequired') }"
-                :columns="columns.additionalAddressLine2Columns"
+                :columns="additionalAddressLine2Columns"
             />
         </slot>
 
         <slot name="country">
-            <FormSelectElement
+            <UiSelectElement
                 :id="`${prefix}countryId`"
                 :name="`${prefix}countryId`"
                 :placeholder="$t('address.country.placeholder')"
@@ -195,25 +258,25 @@ const onSelectCountry = (selectedCountryId: string) => {
                 :messages="{ required: $t('address.country.errorRequired') }"
                 rules="required"
                 :items="formattedCountries"
-                :columns="columns.countryColumns"
+                :columns="countryColumns"
                 @on-change="(value: string) => onSelectCountry(value)"
             />
         </slot>
 
         <slot name="state">
-            <FormSelectElement
+            <UiSelectElement
                 v-if="states && states.length > 0"
-                :id="`${prefix}state`"
-                :name="`${prefix}state`"
+                :id="`${prefix}countryStateId`"
+                :name="`${prefix}countryStateId`"
                 :label="$t('address.state.label')"
                 :placeholder="$t('address.state.placeholder')"
                 :items="states"
-                :columns="columns.stateColumns"
+                :columns="stateColumns"
             />
         </slot>
 
         <slot name="phone-number">
-            <FormTextElement
+            <UiTextElement
                 v-if="showPhoneNumber"
                 :id="`${prefix}phoneNumber`"
                 :label="$t('address.phoneNumber.label')"
@@ -221,7 +284,7 @@ const onSelectCountry = (selectedCountryId: string) => {
                 :placeholder="$t('address.phoneNumber.placeholder')"
                 :rules="isPhoneNumberRequired ? 'required': ''"
                 :messages="{ required: $t('address.phoneNumber.errorRequired') }"
-                :columns="columns.phoneNumberColumns"
+                :columns="phoneNumberColumns"
             />
         </slot>
     </GroupElement>

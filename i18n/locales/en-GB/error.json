@@ -14,6 +14,7 @@
         "VIOLATION::CUSTOMER_EMAIL_NOT_UNIQUE": "Please use another e-mail address",
         "VIOLATION::CUSTOMER_PASSWORD_NOT_CORRECT": "Please enter the correct password",
         "VIOLATION::IS_BLANK_ERROR": "Please fill in all required fields",
+        "addToCartErrorDefault": "The product could not be added to the cart."
         "PROMOTION_NOT_FOUND": "Promotioncode could not be found.",
         "DEFAULT": "An error has occurred."
     }

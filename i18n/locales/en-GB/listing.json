@@ -1,0 +1,23 @@
+{
+    "listing": {
+        "filters": "Filters",
+        "max": "Max",
+        "min": "Min",
+        "noProducts": "No products found",
+        "perPage": "Per page:",
+        "product": "Product | Products",
+        "resetFilters": "Reset filters",
+        "sort": "Sort by",
+        "pagination": {
+            "next": "Next",
+            "previous": "Previous",
+            "page": "Page"
+        },
+        "price": {
+            "variantsFrom": "Variants from",
+            "previously": "Previously",
+            "from": "From",
+            "to": "to"
+        }
+    }
+}

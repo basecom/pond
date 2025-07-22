@@ -3,6 +3,14 @@
     "fallback": {
       "alt": "Produktbild für {product} nicht gefunden",
       "title": "Fallback Bild für {product}"
+    },
+    "addToCart": "In den Warenkorb",
+    "details": "Details",
+    "productAddedToCart": "{product} zum Warenkorb hinzugefügt",
+    "image": "Produktbild",
+    "badge": {
+      "new": "Neu",
+      "topseller": "Tipp"
     }
   }
 }
