@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
 import { getMainImageUrl } from '@shopware-pwa/helpers-next';
+import { usePondStyle } from '~/composables/usePondStyle';
 
 const props = withDefaults(
     defineProps<{
@@ -44,6 +45,7 @@ defineEmits<{
 }>();
 
 const configStore = useConfigStore();
+const { getStyle } = usePondStyle();
 
 const showDeliveryTime = configStore.get('core.cart.showDeliveryTime') as boolean;
 const wishlistEnabled = configStore.get('core.cart.wishlistEnabled') as boolean;
@@ -53,8 +55,8 @@ const cartItemFallbackCover = configStore.get('BasecomPondCompanionPlugin.config
 <template>
     <slot name="product-content">
         <slot name="wrapper">
-            <div class="order-1 mb-4 flex w-5/6 flex-col text-left">
-                <div class="mb-2 w-auto">
+            <div :class="getStyle('cart.productWrapper')">
+                <div :class="getStyle('cart.cartImageWrapper')">
                     <slot name="cart-image">
                         <CartItemElementImage
                             :cart-item-image="getMainImageUrl(cartItem)"
@@ -65,7 +67,7 @@ const cartItemFallbackCover = configStore.get('BasecomPondCompanionPlugin.config
                     </slot>
                 </div>
                 <slot name="label-wrapper">
-                    <div class="font-bold">
+                    <div :class="getStyle('cart.labelWrapper')">
                         <NuxtLinkLocale :to="productUrl">
                             <slot name="label">
                                 {{ cartItem?.label }}
@@ -74,28 +76,28 @@ const cartItemFallbackCover = configStore.get('BasecomPondCompanionPlugin.config
                     </div>
                 </slot>
                 <slot name="options-wrapper">
-                    <div class="my-2 text-xs">
+                    <div :class="getStyle('cart.optionsWrapper')">
                         <slot name="options">
                             <CartItemElementOptions :cart-item-options="itemOptions" />
                         </slot>
                     </div>
                 </slot>
                 <slot name="product-number-wrapper">
-                    <div class="mb-2 text-xs">
+                    <div :class="getStyle('cart.productNumberWrapper')">
                         <slot name="product-number">
                             {{ $t('checkout.cartItemInfoId') }}: {{ cartItem.payload.productNumber }}
                         </slot>
                     </div>
                 </slot>
                 <slot name="delivery-position-wrapper">
-                    <div v-if="showDeliveryTime" class="text-xs">
+                    <div v-if="showDeliveryTime" :class="getStyle('cart.deliveryPositionWrapper')">
                         <slot name="deliveryPosition">
                             <CartItemElementDeliveryPosition :cart-item-delivery-position="cartDeliveryPosition" />
                         </slot>
                     </div>
                 </slot>
                 <slot name="wishlist-wrapper">
-                    <div v-if="wishlistEnabled && isLoggedIn" class="mt-2 text-xs">
+                    <div v-if="wishlistEnabled && isLoggedIn" :class="getStyle('cart.wishlistWrapperProduct')">
                         <slot name="wishlist">
                             <CartItemElementAddToWishlist
                                 :is-in-wishlist="isInWishlist"
@@ -110,7 +112,7 @@ const cartItemFallbackCover = configStore.get('BasecomPondCompanionPlugin.config
             <slot name="additional-wrapper" />
         </slot>
         <slot name="quantity-wrapper">
-            <div class="order-3 mb-4 flex w-full items-center justify-between">
+            <div :class="getStyle('cart.quantityWrapper')">
                 <slot name="quantity">
                     <CartItemElementQuantity
                         :cart-item="cartItem"
@@ -122,14 +124,14 @@ const cartItemFallbackCover = configStore.get('BasecomPondCompanionPlugin.config
             </div>
         </slot>
         <slot name="unit-price-wrapper">
-            <div v-if="itemQuantity > 1" class="order-5 flex w-full justify-end text-xs">
+            <div v-if="itemQuantity > 1" :class="getStyle('cart.unitPriceWrapper')">
                 <slot name="unitPrice">
                     <CartItemElementPriceUnit :cart-item-unit-price="itemRegularPrice" />
                 </slot>
             </div>
         </slot>
         <slot name="total-price-wrapper">
-            <div class="order-4 flex w-full justify-end">
+            <div :class="getStyle('cart.totalPriceWrapper')">
                 <slot name="total-price">
                     <CartItemElementPriceTotal :cart-item-total-price="itemTotalPrice" />
                 </slot>

@@ -16,26 +16,27 @@ withDefaults(
         altText: 'Product image',
     },
 );
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
     <slot name="container">
-        <div class="w-20 text-center">
+        <div :class="getStyle('cart.imageContainer')">
             <component :is="productUrl ? NuxtLinkLocale : 'div'" :to="productUrl">
                 <template v-if="cartItemImage">
                     <slot name="image">
-                        <img :src="cartItemImage" :alt="altText" class="h-20 border object-contain p-1">
+                        <img :src="cartItemImage" :alt="altText" :class="getStyle('cart.image')">
                     </slot>
                 </template>
                 <template v-else-if="cartItemFallbackCover">
                     <slot name="fallback-image">
-                        <img :src="cartItemFallbackCover" :alt="altText" class="h-20 border object-contain p-1">
+                        <img :src="cartItemFallbackCover" :alt="altText" :class="getStyle('cart.fallbackImage')">
                     </slot>
                 </template>
                 <template v-else>
                     <slot name="icon">
-                        <div class="flex size-20 items-center justify-center border text-center">
-                            <Icon :name="fallback" class="size-8" />
+                        <div :class="getStyle('cart.iconContainer')">
+                            <Icon :name="fallback" :class="getStyle('cart.icon')" />
                         </div>
                     </slot>
                 </template>

@@ -8,10 +8,11 @@ withDefaults(
     },
 );
 const { getFormattedPrice } = usePrice();
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
-    <span class="font-bold">
+    <span :class="getStyle('cart.totalPriceWrapper')">
         <slot name="total-price">
             {{ getFormattedPrice(cartItemTotalPrice) }}*
         </slot>

@@ -35,6 +35,8 @@ const props = withDefaults(
     },
 );
 
+const { cartItem, isLoading } = toRefs(props);
+
 const emits = defineEmits<{
   'remove-cart-item': [],
   'change-cart-item-quantity': [number],
@@ -42,7 +44,7 @@ const emits = defineEmits<{
   'add-product-to-wishlist': [],
 }>();
 
-const { cartItem, isLoading } = toRefs(props);
+const { getStyle } = usePondStyle();
 
 const isProduct = computed(() => cartItem.value?.type === 'product');
 
@@ -103,7 +105,7 @@ const eventHandlers = computed(() => {
 
 <template>
     <slot name="wrapper">
-        <LayoutLoader :is-loading="isLoading.container">
+        <LayoutLoader :is-loading="isLoading?.container" :class="getStyle('cart.cartItemWrapperSpacing')">
             <template #loading-spinner-content>
                 <slot name="component-type-wrapper">
                     <slot name="component-type">
@@ -113,7 +115,7 @@ const eventHandlers = computed(() => {
                             v-on="eventHandlers"
                         />
                     </slot>
-                    <div class="order-2 flex w-1/6 justify-end">
+                    <div :class="getStyle('cart.cartItemRemoveWrapper')">
                         <slot name="generic-remove">
                             <CartItemElementRemove
                                 v-if="cartItem?.removable"
