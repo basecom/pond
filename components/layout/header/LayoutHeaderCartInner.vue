@@ -31,7 +31,7 @@ const hasLineItems = computed(() => cartCount.value > 0);
                 :class="getStyle('header.actions.cart.trigger')"
                 aria-label="open-offcanvas-cart"
             >
-                <div class="relative">
+                <div :class="getStyle('cart.headerCartTrigger')">
                     <span class="flex">
                         <slot name="cart-icon">
                             <span> <Icon
@@ -41,7 +41,7 @@ const hasLineItems = computed(() => cartCount.value > 0);
                         </slot>
                         <slot name="cart-amount">
                             <ClientOnly>
-                                <span v-if="props.cartPriceTotal" class="text-gray-900 cursor-pointer pl-4">
+                                <span v-if="props.cartPriceTotal" :class="getStyle('cart.headerCartAmount')">
                                     {{ props.cartPriceTotal }}*
                                 </span>
                             </ClientOnly>
@@ -63,10 +63,10 @@ const hasLineItems = computed(() => cartCount.value > 0);
             <UiSheetHeader>
                 <UiSheetTitle>
                     <slot name="offcanvasHeader">
-                        <div class="mt-2 flex w-full items-end justify-between">
+                        <div :class="getStyle('cart.headerCartTitleRow')">
                             <slot name="cartTitle">
                                 <span>{{ $t('checkout.cart') }}</span>
-                                <span class="pr-4">{{ cartCount }} {{ $t('checkout.items') }}</span>
+                                <span :class="getStyle('cart.headerCartTitleCount')">{{ cartCount }} {{ $t('checkout.items') }}</span>
                             </slot>
                         </div>
                     </slot>
@@ -77,7 +77,7 @@ const hasLineItems = computed(() => cartCount.value > 0);
                             <CheckoutOffcanvasCart :cart-deliveries="props.cartDeliveries" :cart-items="props.cartItems" />
                         </template>
                         <template v-else>
-                            <div class="p-4 text-center text-gray-500">{{ $t('checkout.cartEmpty') }}</div>
+                            <div :class="getStyle('cart.headerCartEmpty')">{{ $t('checkout.cartEmpty') }}</div>
                         </template>
                     </slot>
                 </UiSheetDescription>
