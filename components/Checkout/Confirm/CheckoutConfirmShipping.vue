@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getShippingMethodDeliveryTime } from '@shopware-pwa/helpers-next';
+import { getShippingMethodDeliveryTime } from '@shopware/helpers';
 import type { Schemas } from '@shopware/api-client/api-types';
 import type { ShippingMethodOption } from '~/types/checkout/ShippingMethodOption';
 

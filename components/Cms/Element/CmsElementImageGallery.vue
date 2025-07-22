@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { CmsElementImageGallerySlider } from '~/types/cms/CmsElementImageGallery';
-import { getTranslatedProperty } from '@shopware-pwa/helpers-next';
+import { getTranslatedProperty } from '@shopware/helpers';
 
 const props = defineProps<{
     element: CmsElementImageGallery;

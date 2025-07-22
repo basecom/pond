@@ -43,8 +43,10 @@ if (!categoryResponse) {
 const { category } = useCategory(categoryResponse);
 createCategoryListingContext();
 
-const breadcrumbs = data.value?.breadcrumbs.data ?? [];
-useBreadcrumbs(breadcrumbs);
+const { buildDynamicBreadcrumbs } = useBreadcrumbs();
+if (data.value?.breadcrumbs) {
+    buildDynamicBreadcrumbs(data.value.breadcrumbs.data);
+}
 
 useAnalytics({ trackPageView: true, pageType: 'navigation' });
 </script>

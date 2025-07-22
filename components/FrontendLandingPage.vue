@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { getCmsBreadcrumbs } from '@shopware/helpers';
+
 const props = defineProps<{
     navigationId: string;
 }>();
@@ -18,12 +20,8 @@ if (!landingResponse.value) {
     throw createError({ statusCode: 404, message: t('error.404.detail') });
 }
 
-useBreadcrumbs([
-    {
-        name: landingResponse.value.translated.name,
-        path: landingResponse.value.url,
-    },
-]);
+const breadcrumbs = getCmsBreadcrumbs(landingResponse.value);
+useBreadcrumbs(breadcrumbs);
 
 useAnalytics({ trackPageView: true, pageType: 'landingpage' });
 </script>

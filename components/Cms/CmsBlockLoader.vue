@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { kebabCase } from 'scule';
 import type { Schemas } from '@shopware/api-client/api-types';
-import { getCmsLayoutConfiguration } from '@shopware-pwa/helpers-next';
+import { getCmsLayoutConfiguration } from '@shopware/helpers';
 import type { StyleValue } from 'vue';
 
 const props = defineProps<{

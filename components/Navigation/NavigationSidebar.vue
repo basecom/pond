@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import { getTranslatedProperty } from '@shopware-pwa/helpers-next';
+import { getTranslatedProperty } from '@shopware/helpers';
 
 const { languageIdChain } = useSessionContext();
 const { t } = useI18n();

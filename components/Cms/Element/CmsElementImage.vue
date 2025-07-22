@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { CmsElementImage } from '@shopware-pwa/composables-next';
-import { buildUrlPrefix, getTranslatedProperty } from '@shopware-pwa/helpers-next';
+import type { CmsElementImage } from '@shopware/composables';
+import { buildUrlPrefix, getTranslatedProperty } from '@shopware/helpers';
 import { useElementSize } from '@vueuse/core';
 
 const props = defineProps<{

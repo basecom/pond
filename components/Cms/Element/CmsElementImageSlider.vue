@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getTranslatedProperty } from '@shopware-pwa/helpers-next';
+import { getTranslatedProperty } from '@shopware/helpers';
 import type { Schemas } from '@shopware/api-client/api-types';
 import type { PromotionInfo } from '~/types/analytics/Promotion';
 import type { CmsImageSliderItem } from '~/types/cms/CmsImageSliderItem';

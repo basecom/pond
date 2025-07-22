@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CmsElementProductBox } from '@shopware-pwa/composables-next';
+import type { CmsElementProductBox } from '@shopware/composables';
 import type { Schemas } from '@shopware/api-client/api-types';
 import type { PromotionInfo } from '~/types/analytics/Promotion';
 

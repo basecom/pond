@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { components, Schemas } from '@shopware/api-client/api-types';
-import { getTranslatedProperty } from '@shopware-pwa/helpers-next';
+import { getTranslatedProperty } from '@shopware/helpers';
 import type { ListingPropertyFilter } from '~/types/listing/Filter';
 import type { ChangePropertyFilter } from '~/types/listing/FilterEvents';
 

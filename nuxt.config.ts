@@ -86,7 +86,7 @@ export default defineNuxtConfig({
         // },
     },
 
-    extends: ['@shopware-pwa/composables-next/nuxt-layer'],
+    extends: ['@shopware/composables/nuxt-layer'],
 
     imports: {
         dirs: [join(currentDir, 'composables/**'), join(currentDir, 'utils')],

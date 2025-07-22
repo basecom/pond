@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getProductRoute } from '@shopware-pwa/helpers-next';
+import { getProductRoute, getProductName } from '@shopware/helpers';
 const { t } = useI18n();
 
 const props = defineProps<{
@@ -52,15 +52,14 @@ if (!productResponse) {
 }
 const { product } = useProduct(productResponse.product, productResponse.configurator);
 
-const initialBreadcrumbs = data.value?.breadcrumbs.data ?? [];
-const breadcrumbs = computed(() => [
-    ...initialBreadcrumbs,
-    {
-        name: product.value.translated.name,
-        path: getProductRoute(product.value)?.path,
-    },
-]);
-useBreadcrumbs(breadcrumbs.value);
+const { buildDynamicBreadcrumbs, pushBreadcrumb } = useBreadcrumbs();
+if (data.value?.breadcrumbs) {
+    buildDynamicBreadcrumbs(data.value.breadcrumbs.data);
+}
+pushBreadcrumb({
+    name: getProductName({ product: productResponse.product }) ?? '',
+    path: `/${productResponse.product.seoUrls?.[0]?.seoPathInfo}`,
+});
 
 useAnalytics({ pageType: 'pdp', trackPageView: true });
 </script>

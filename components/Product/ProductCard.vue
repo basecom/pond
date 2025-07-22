@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import { getProductRoute, getTranslatedProperty } from '@shopware-pwa/helpers-next';
+import { getProductRoute, getTranslatedProperty } from '@shopware/helpers';
 
 const props = withDefaults(
     defineProps<{

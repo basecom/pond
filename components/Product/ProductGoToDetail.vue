@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import { getProductRoute } from '@shopware-pwa/helpers-next';
+import { getProductRoute } from '@shopware/helpers';
 
 defineProps<{
     product: Schemas['Product'];

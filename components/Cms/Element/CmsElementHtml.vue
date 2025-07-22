@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CmsElementText } from '@shopware-pwa/composables-next';
+import type { CmsElementText } from '@shopware/composables';
 
 const props = defineProps<{
     element: CmsElementText;
