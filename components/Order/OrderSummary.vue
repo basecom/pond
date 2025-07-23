@@ -27,8 +27,9 @@ defineProps<{
             />
         </template>
 
+        <!-- using v-if="order.shippingTotal" would hide the row for free-shipping orders because 0 is falsy. displaying a price of 0 is expected UX -->
         <CheckoutSummaryValues
-            v-if="order.shippingTotal"
+            v-if="order.shippingTotal !== null && order.shippingTotal !== undefined"
             :label="t('order.summary.shippingCostLabel')"
             :value="order.shippingTotal"
         />

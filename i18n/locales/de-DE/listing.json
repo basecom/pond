@@ -1,19 +1,19 @@
 {
-  "listing": {
-    "sidebar": {
-      "title": "Filter",
-      "sorting": {
-        "text": "Sortieren nach",
-        "ariaLabel": "Sortieren nach"
-      },
-      "filter": {
-        "price": {
-          "title": "Preis"
-        },
-        "reset": "Filter zurücksetzen",
-        "showMore": "Mehr Filter",
-        "showLess": "Weniger Filter"
-      }
+    "listing": {
+        "sidebar": {
+            "title": "Filter",
+            "sorting": {
+                "text": "Sortieren nach",
+                "ariaLabel": "Sortieren nach"
+            },
+            "filter": {
+                "price": {
+                    "title": "Preis"
+                },
+                "reset": "Filter zurücksetzen",
+                "showMore": "Mehr Filter",
+                "showLess": "Weniger Filter"
+            }
+        }
     }
-  }
 }
