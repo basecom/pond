@@ -95,7 +95,10 @@ const handleSave = async (fields: BillingAddressForm) => {
         :controller="modalController"
         with-close-button
     >
-        <template #title>{{ t('checkout.confirm.address.modal.editLabel') }}</template>
+        <template #title>
+            {{ isEditMode ? t('checkout.confirm.address.modal.editLabel') : t('checkout.confirm.address.modal.createLabel') }}
+        </template>
+
         <template #content>
             <FormKit
                 type="form"

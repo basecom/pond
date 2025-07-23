@@ -46,7 +46,7 @@ const selfNotHovered = refDebounced(isOutsideFlyout, 200);
                                 :navigation-element="subChild"
                                 classes="py-2"
                                 active-classes="text-brand-primary"
-                                :as-link="(child.type as 'page' | 'link' | 'folder') !== 'folder'"
+                                :as-link="(subChild.type as 'page' | 'link' | 'folder') !== 'folder'"
                             />
                         </div>
                     </div>
