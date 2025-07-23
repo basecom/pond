@@ -11,87 +11,48 @@ export type UseNavigationReturn = {
      * List of navigation elements
      */
     navigationElements: ComputedRef<Schemas['NavigationRouteResponse'] | null>;
-    /**
-     * Load navigation elements
-     */
-    loadNavigationElements(
-        params: operations['readNavigation post /navigation/{activeId}/{rootId}']['body'],
-    ): Promise<Schemas['NavigationRouteResponse']>;
 };
 
 /**
  * Composable for navigation.
  * Provides state for navigation trees depending on navigation type.
  *
- * @example
- * ```
- * // get main navigation
- * useNavigation()
- * // get footer navigation
- * useNavigation({ type: "footer-navigation" } )
- * ```
  * @public
  * @category Navigation & Routing
  */
-export function useNavigation(params?: {
-    type?: Schemas['NavigationType'] | string;
+export function useNavigation(params: {
+    type: Schemas['NavigationType'] | string;
+    depth: number;
 }): UseNavigationReturn {
-    const type = params?.type || 'main-navigation';
+    const { type, depth: initialDepth } = params;
+    const depthRef = ref(initialDepth);
 
     const sharedElements: Ref<Schemas['NavigationRouteResponse']> = inject(
-        `swNavigation-${type}`,
+        `swNavigation-${type}-${initialDepth}`,
         ref([]),
     );
-    provide(`swNavigation-${type}`, sharedElements);
+    provide(`swNavigation-${type}-${initialDepth}`, sharedElements);
 
     const navigationElements = computed(() => sharedElements.value);
 
     // CUSTOM: instead of calling the apiClient directly, use the proxy route which can be cached when enabled in the nuxt.config.ts routeRules
-    // initial placeholder - will be updated by loadNavigationElements
-    const depthRef = ref(1);
     // useFetch needs to be at the top level, otherwise it breaks SSR/CSR payload data transfer and reactivity
     // an explicit key should be passed to ensure consistency between server and client, regardless of file structure or runtime context
-    const { data, execute } = useFetch(`/api/proxy/navigation/${type}`, {
-        // ideally, the key would also include the depth here, but no working way was found and the depthHandling of the navigationStore seems to work as expected
-        // support for dynamic keys was added with nuxt v3.17.0 / v4.0.0
-        key: `proxy-navigation-${type}`,
+    useFetch(`/api/proxy/navigation/${type}-${depthRef.value}`, {
+        key: computed(() => `proxy-navigation-${type}-${depthRef.value}`),
         method: 'POST',
-        // the body needs to be wrapped in computed to detect changes to the depthRef
         body: computed(() => ({
-            headers: {
-                'sw-include-seo-urls': true,
-            },
+            headers: { 'sw-include-seo-urls': true },
             endpoint: 'readNavigation post /navigation/{activeId}/{rootId}',
-            pathParams: {
-                activeId: type,
-                rootId: type,
-            },
+            pathParams: { activeId: type, rootId: type },
             depth: depthRef.value,
         })),
-        immediate: false,
-        // setting watch to false prevents triggering the request twice when depthRef changes -> will only get triggered when execute is called
-        watch: false,
+        onResponse: ({ response }) => {
+            sharedElements.value = response._data || [];
+        },
     });
-
-    async function loadNavigationElements(
-        params: operations['readNavigation post /navigation/{activeId}/{rootId}']['body'],
-    ) {
-        depthRef.value = params.depth ?? 1;
-
-        try {
-            await execute();
-
-            sharedElements.value = data.value || [];
-            return sharedElements.value;
-        } catch (e) {
-            sharedElements.value = [];
-            console.error('[useNavigation][loadNavigationElements]', e);
-            return [];
-        }
-    }
 
     return {
         navigationElements,
-        loadNavigationElements,
     };
 }

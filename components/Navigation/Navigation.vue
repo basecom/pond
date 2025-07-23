@@ -2,12 +2,15 @@
 const { languageIdChain } = useSessionContext();
 
 const navigationStore = useNavigationStore();
-const { mainNavigation } = storeToRefs(navigationStore);
+const mainNavigation = navigationStore.loadNavigation('main-navigation', 2);
+
+const test2 = await navigationStore.loadNavigation('main-navigation', 3);
+console.log(mainNavigation, test2);
 
 watch(
     languageIdChain,
     async () => {
-        await navigationStore.loadNavigation('main-navigation', 2, true);
+        navigationStore.loadNavigation('main-navigation', 2);
     },
     { immediate: false },
 );

@@ -26,7 +26,7 @@ export type UseItemTrackingReturn = {
 
 export function useItemTracking(): UseItemTrackingReturn {
     const navigationStore = useNavigationStore();
-    const { mainNavigation } = storeToRefs(navigationStore);
+    const mainNavigation = navigationStore.loadNavigation('main-navigation', 2);
     const { sessionContext } = useSessionContext();
 
     const _getCategoryTree = (product: Schemas['Product']): Schemas['Category'][] => {

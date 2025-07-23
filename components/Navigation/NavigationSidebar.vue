@@ -8,14 +8,14 @@ const { t } = useI18n();
 const sideMenuController = useModal();
 
 const navigationStore = useNavigationStore();
-const { mainNavigation } = storeToRefs(navigationStore);
+const mainNavigation = navigationStore.loadNavigation('main-navigation', 2);
 
 const navigationPath = ref<string[]>([]);
 
 watch(
     languageIdChain,
     async () => {
-        await navigationStore.loadNavigation('main-navigation', 2, true);
+        navigationStore.loadNavigation('main-navigation', 2);
         // Reset the path when language changes
         navigationPath.value = [];
     },

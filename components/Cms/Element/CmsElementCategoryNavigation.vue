@@ -7,7 +7,7 @@ defineProps<{
 }>();
 
 const navigationStore = useNavigationStore();
-const { mainNavigation } = storeToRefs(navigationStore);
+const mainNavigation = navigationStore.loadNavigation('main-navigation', 2);
 
 const { isActive } = useActivePath();
 

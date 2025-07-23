@@ -2,7 +2,7 @@ import type { UseAnalyticsReturn } from '~/types/analytics/Analytics';
 
 export function useCartPageTracking(analytics: UseAnalyticsReturn) {
     const navigationStore = useNavigationStore();
-    const { mainNavigation } = storeToRefs(navigationStore);
+    const mainNavigation = navigationStore.loadNavigation('main-navigation', 2);
 
     const cartItemsCountStore = useCartItemsStore();
     const { cart } = useCart();

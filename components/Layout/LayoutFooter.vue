@@ -2,7 +2,8 @@
 import { getTranslatedProperty, getCategoryRoute } from '@shopware/helpers';
 
 const navigationStore = useNavigationStore();
-const { footerNavigation, serviceNavigation } = storeToRefs(navigationStore);
+const footerNavigation = navigationStore.loadNavigation('footer-navigation', 1);
+const serviceNavigation = navigationStore.loadNavigation('service-navigation', 1);
 </script>
 
 <template>
