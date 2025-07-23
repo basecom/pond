@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CmsElementBuyBox } from '@shopware-pwa/composables-next';
+import type { CmsElementBuyBox } from '@shopware/composables';
 
 const props = defineProps<{
     element: CmsElementBuyBox;

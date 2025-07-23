@@ -1,6 +1,6 @@
 <template>
     <div class="animate-pulse border border-gray-medium bg-white">
-        <div class="aspect-3/4 mb-2 aspect-square w-full bg-gray-medium" />
+        <div class="mb-2 aspect-square w-full bg-gray-medium" />
 
         <div class="flex flex-wrap gap-2 p-4">
             <div class="h-12 w-full rounded bg-gray-medium" />

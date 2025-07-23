@@ -27,6 +27,10 @@ export function useCustomerAddress() {
                 pushSuccess(t('account.address.updateBillingSuccess'));
             } catch (error) {
                 pushError(t('account.address.updateBillingError'));
+
+                if (import.meta.dev) {
+                    console.error(error);
+                }
             }
         }
     };
@@ -48,6 +52,10 @@ export function useCustomerAddress() {
                 pushSuccess(t('account.address.updateBillingSuccess'));
             }
         } catch (error) {
+            if (import.meta.dev) {
+                console.error(error);
+            }
+
             if (addressType === 'shippingAddress') {
                 pushError(t('account.address.updateShippingError'));
                 return;
@@ -71,20 +79,30 @@ export function useCustomerAddress() {
                 ...addressData,
                 id,
             });
+
             pushSuccess(t('account.address.editSuccess'));
             return savedAddress;
         } catch (error) {
             pushError(t('account.address.editError'));
+
+            if (import.meta.dev) {
+                console.error(error);
+            }
         }
     };
 
     const createAddress = async (addressData: ShippingAddressForm|BillingAddressForm) => {
         try {
             const savedAddress = await createCustomerAddress(addressData);
+
             pushSuccess(t('account.address.createSuccess'));
             return savedAddress;
         } catch (error) {
             pushError(t('account.address.createError'));
+
+            if (import.meta.dev) {
+                console.error(error);
+            }
         }
     };
 
@@ -92,9 +110,14 @@ export function useCustomerAddress() {
         try {
             await deleteCustomerAddress(addressId);
             await loadCustomerAddresses();
+
             pushSuccess(t('account.address.deleteSuccess'));
-        } catch (e) {
+        } catch (error) {
             pushError(t('account.address.deleteError'));
+
+            if (import.meta.dev) {
+                console.error(error);
+            }
         }
     };
 

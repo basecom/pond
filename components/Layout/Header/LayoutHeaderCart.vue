@@ -52,7 +52,7 @@ const { t } = useI18n();
             <template v-else>
                 <UtilityStaticNotification
                     type="info"
-                    :message="$t('checkout.cart.emptyCartMessage')"
+                    :message="t('checkout.cart.emptyCartMessage')"
                     class="mt-4"
                 />
             </template>
@@ -70,7 +70,7 @@ const { t } = useI18n();
                         outer: 'mt-4',
                     }"
                 >
-                    {{ $t('checkout.offcanvasCart.toCartButtonLabel') }}
+                    {{ t('checkout.offcanvasCart.toCartButtonLabel') }}
                 </FormKit>
             </LocaleLink>
 
@@ -85,7 +85,7 @@ const { t } = useI18n();
                 }"
                 @click="offcanvasCartController.close()"
             >
-                {{ $t('checkout.offcanvasCart.continueShopping') }}
+                {{ t('checkout.offcanvasCart.continueShopping') }}
             </FormKit>
         </template>
     </LazyLayoutSidebar>

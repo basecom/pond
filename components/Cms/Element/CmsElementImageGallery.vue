@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import type { CmsElementImageGallerySlider } from '~/types/cms/CmsElementImageGallery';
-import { getTranslatedProperty } from '@shopware-pwa/helpers-next';
+import { getTranslatedProperty } from '@shopware/helpers';
 
 const props = defineProps<{
     element: CmsElementImageGallery;
 }>();
+
+const { t } = useI18n();
 
 const elementConfig = useCmsElementConfig(props.element);
 const { getCmsElementData } = useCmsUtils();
@@ -72,8 +74,8 @@ const openLightbox = (slideMediaId: string) => {
                         <img
                             v-if="slide.media.url"
                             :src="slide.media.url"
-                            :alt="getTranslatedProperty(slide.media, 'alt') || $t('cms.element.imageAlt')"
-                            :title="getTranslatedProperty(slide.media, 'title') || $t('cms.element.imageAlt')"
+                            :alt="getTranslatedProperty(slide.media, 'alt') || t('cms.element.imageAlt')"
+                            :title="getTranslatedProperty(slide.media, 'title') || t('cms.element.imageAlt')"
                             :loading="index === 0 ? 'eager' : 'lazy'"
                             class="size-full object-center"
                             :class="'object-' + displayMode"
@@ -108,8 +110,8 @@ const openLightbox = (slideMediaId: string) => {
                         <img
                             v-if="slide.media.url"
                             :src="slide.media.url"
-                            :alt="getTranslatedProperty(slide.media, 'alt') || $t('cms.element.imageAlt')"
-                            :title="getTranslatedProperty(slide.media, 'title') || $t('cms.element.imageAlt')"
+                            :alt="getTranslatedProperty(slide.media, 'alt') || t('cms.element.imageAlt')"
+                            :title="getTranslatedProperty(slide.media, 'title') || t('cms.element.imageAlt')"
                             :loading="index < thumbnailSlidesPerView ? 'eager' : 'lazy'"
                             class="object-cover object-center opacity-40 group-[.swiper-slide-thumb-active]:border-2 group-[.swiper-slide-thumb-active]:border-brand-primary group-[.swiper-slide-thumb-active]:opacity-100"
                         >
@@ -135,8 +137,8 @@ const openLightbox = (slideMediaId: string) => {
                         <img
                             v-if="firstSlide?.media.url"
                             :src="firstSlide?.media.url"
-                            :alt="getTranslatedProperty(firstSlide?.media, 'alt') || $t('cms.element.imageAlt')"
-                            :title="getTranslatedProperty(firstSlide?.media, 'title') || $t('cms.element.imageAlt')"
+                            :alt="getTranslatedProperty(firstSlide?.media, 'alt') || t('cms.element.imageAlt')"
+                            :title="getTranslatedProperty(firstSlide?.media, 'title') || t('cms.element.imageAlt')"
                             class="size-full object-center"
                             :class="'object-' + displayMode"
                             loading="eager"
@@ -164,8 +166,8 @@ const openLightbox = (slideMediaId: string) => {
                             <img
                                 v-if="slide.media.url"
                                 :src="slide.media.url"
-                                :alt="getTranslatedProperty(slide.media, 'alt') || $t('cms.element.imageAlt')"
-                                :title="getTranslatedProperty(slide.media, 'title') || $t('cms.element.imageAlt')"
+                                :alt="getTranslatedProperty(slide.media, 'alt') || t('cms.element.imageAlt')"
+                                :title="getTranslatedProperty(slide.media, 'title') || t('cms.element.imageAlt')"
                                 class="object-cover object-center opacity-40 group-[.swiper-slide-thumb-active]:border-2 group-[.swiper-slide-thumb-active]:border-brand-primary group-[.swiper-slide-thumb-active]:opacity-100"
                             >
 

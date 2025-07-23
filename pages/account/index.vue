@@ -9,6 +9,8 @@ useAnalytics({ trackPageView: true, pageType: 'account' });
 </script>
 
 <template>
+    <LayoutBreadcrumbs />
+
     <Account>
         <AccountOverviewContent :show-latest-order="showLatestOrder" />
     </Account>

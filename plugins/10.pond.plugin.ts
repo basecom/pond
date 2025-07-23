@@ -1,6 +1,5 @@
-import { createShopwareContext } from '#imports';
 import { createAPIClient } from '@shopware/api-client';
-import { isMaintenanceMode } from '@shopware-pwa/helpers-next';
+import { isMaintenanceMode } from '@shopware/helpers';
 import type { ShopwareResponse } from '~/types/ShopwareResponse';
 
 export class AccessToken {
@@ -46,9 +45,17 @@ export default defineNuxtPlugin(async nuxtApp => {
 
     nuxtApp.vueApp.provide('apiClient', apiClient);
 
+    let browserLocale = 'de-DE';
+    if (import.meta.client) {
+        browserLocale = navigator.language;
+    } else {
+        browserLocale = useRequestHeaders()['accept-language']?.split(',')[0]?.split(';')[0] ?? 'de-DE';
+    }
+
     const shopwareContext = createShopwareContext(nuxtApp.vueApp, {
         enableDevtools: true,
         devStorefrontUrl: runtimeConfig.public.pond.devStorefrontUrl !== '' ? runtimeConfig.public.pond.devStorefrontUrl : null,
+        browserLocale,
     });
     nuxtApp.vueApp.provide('shopware', shopwareContext);
 

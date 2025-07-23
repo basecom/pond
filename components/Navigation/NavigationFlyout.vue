@@ -27,24 +27,26 @@ const selfNotHovered = refDebounced(isOutsideFlyout, 200);
                         :key="`nav-item-${child.id}`"
                         class="flex w-1/4 flex-col gap-2"
                     >
+                        <!-- the shopware category type definition is missing 'folder' so we use 'as' here -->
                         <NavigationLink
                             :navigation-element="child"
                             classes="text-lg font-bold py-2"
                             active-classes="text-brand-primary"
-                            :as-link="child.type !== 'folder'"
+                            :as-link="(child.type as 'page' | 'link' | 'folder') !== 'folder'"
                         />
 
                         <div
                             v-if="child.childCount > 0"
                             class="flex flex-col gap-2"
                         >
+                            <!-- the shopware category type definition is missing 'folder' so we use 'as' here -->
                             <NavigationLink
                                 v-for="subChild in child.children"
                                 :key="`nav-item-${subChild.id}`"
                                 :navigation-element="subChild"
                                 classes="py-2"
                                 active-classes="text-brand-primary"
-                                :as-link="subChild.type !== 'folder'"
+                                :as-link="(subChild.type as 'page' | 'link' | 'folder') !== 'folder'"
                             />
                         </div>
                     </div>

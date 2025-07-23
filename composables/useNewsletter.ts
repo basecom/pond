@@ -1,4 +1,4 @@
-import { useNewsletter as coreUseNewsletter } from '@shopware-pwa/composables-next';
+import { useNewsletter as coreUseNewsletter } from '@shopware/composables';
 
 // Extend default newsletter composable
 // Add newsletterConfirm method

@@ -22,7 +22,7 @@ const { t } = useI18n();
     <PopoverRoot>
         <PopoverTrigger
             class="none inline-flex items-center justify-center"
-            :aria-label="$t('shared.popover.triggerAriaLabel')"
+            :aria-label="t('shared.popover.triggerAriaLabel')"
         >
             <slot name="trigger" />
         </PopoverTrigger>
@@ -37,7 +37,7 @@ const { t } = useI18n();
             <PopoverClose
                 v-if="withCloseButton"
                 class="absolute right-1 top-1 inline-flex size-6 items-center justify-center rounded-full"
-                :aria-label="$t('shared.popover.closeButtonAriaLabel')"
+                :aria-label="t('shared.popover.closeButtonAriaLabel')"
             >
                 <FormKitIcon
                     class="block size-5 text-gray"

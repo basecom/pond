@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { getShippingMethodDeliveryTime, getTranslatedProperty } from '@shopware-pwa/helpers-next';
+import { getShippingMethodDeliveryTime, getTranslatedProperty } from '@shopware/helpers';
 import type { Schemas } from '@shopware/api-client/api-types';
+
+const { t } = useI18n();
 
 defineProps<{
     method: Schemas['ShippingMethod'];
@@ -9,8 +11,8 @@ defineProps<{
 
 <template>
     <CheckoutConfirmCard
-        :title="$t('checkout.confirm.shipping.cardTitle')"
-        :subtitle="$t('checkout.confirm.shipping.cardSubtitle')"
+        :title="t('checkout.confirm.shipping.cardTitle')"
+        :subtitle="t('checkout.confirm.shipping.cardSubtitle')"
     >
         <template v-if="method">
             <CheckoutConfirmShippingMethod

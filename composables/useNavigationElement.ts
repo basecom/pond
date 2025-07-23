@@ -1,5 +1,4 @@
-import { getTranslatedProperty, getCategoryUrl, getProductUrl } from '@shopware-pwa/helpers-next';
-import { useCategorySearch, useProductSearch, useLandingSearch } from '#imports';
+import { getTranslatedProperty, getCategoryUrl, getProductUrl } from '@shopware/helpers';
 import type { Schemas } from '@shopware/api-client/api-types';
 
 export function useNavigationElement(navigationElement: Schemas['Category']) {

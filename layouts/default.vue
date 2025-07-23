@@ -5,8 +5,7 @@
     <UtilityToastNotifications />
 
     <main class="min-h-[calc(100Vh-140px)]">
-        <LayoutBreadcrumbs />
-        <NuxtPage class="mt-4 lg:mt-0" />
+        <NuxtPage />
     </main>
 
     <LayoutFooter />

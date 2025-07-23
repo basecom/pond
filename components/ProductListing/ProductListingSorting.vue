@@ -27,7 +27,7 @@ const handleClick = (option: Schemas['ProductListingResult']['availableSortings'
     <DropdownMenuRoot v-model:open="toggleState">
         <DropdownMenuTrigger
             class="flex items-center gap-2 rounded border border-gray-medium px-4 py-2"
-            :aria-label="$t('listing.sidebar.sorting.ariaLabel')"
+            :aria-label="t('listing.sidebar.sorting.ariaLabel')"
         >
             <span class="text-left">
                 {{ getSortingName }}

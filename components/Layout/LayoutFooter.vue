@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getTranslatedProperty, getCategoryRoute } from '@shopware-pwa/helpers-next';
+import { getTranslatedProperty, getCategoryRoute } from '@shopware/helpers';
 
 const navigationStore = useNavigationStore();
 const { footerNavigation, serviceNavigation } = storeToRefs(navigationStore);
@@ -16,8 +16,9 @@ const { footerNavigation, serviceNavigation } = storeToRefs(navigationStore);
                         :key="navigationElement.id"
                     >
                         <ul class="list-none">
+                            <!-- the shopware category type definition is missing 'folder' so we use 'as' here -->
                             <li
-                                v-if="navigationElement.type === 'folder'"
+                                v-if="(navigationElement.type as 'page' | 'link' | 'folder') === 'folder'"
                                 class="mb-1 max-w-max font-bold"
                             >
                                 {{ getTranslatedProperty(navigationElement, 'name') }}

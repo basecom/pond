@@ -25,6 +25,8 @@ const props = withDefaults(
     },
 );
 
+const { t } = useI18n();
+
 const product = ref(props.product);
 
 const { getFormattedPrice } = usePrice();
@@ -40,7 +42,7 @@ const { price, unitPrice, isListPrice, referencePrice } = useProductPrice(produc
                 :class="[fontSize, fontWeight, { 'text-status-danger': isListPrice }]"
             >
                 <template v-if="product.childCount && product.calculatedCheapestPrice?.unitPrice">
-                    {{ $t('global.startingAt') }}
+                    {{ t('global.startingAt') }}
                     {{ getFormattedPrice(product.calculatedCheapestPrice?.unitPrice) }}
                 </template>
 
@@ -77,7 +79,7 @@ const { price, unitPrice, isListPrice, referencePrice } = useProductPrice(produc
             v-if="displayVat"
             class="w-full text-xs text-gray"
         >
-            {{ $t('product.price.vatInfo') }}
+            {{ t('product.price.vatInfo') }}
         </p>
     </div>
 </template>

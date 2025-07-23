@@ -27,7 +27,7 @@ const { t } = useI18n();
                 :title="t('icon.loading')"
                 class="size-8 animate-spin fill-status-important text-brand-primary"
             />
-            <span class="sr-only">{{ $t('utility.loadingSpinnerLabel') }}</span>
+            <span class="sr-only">{{ t('utility.loadingSpinnerLabel') }}</span>
         </div>
     </Teleport>
     <template v-else>
@@ -44,7 +44,7 @@ const { t } = useI18n();
                     'size-5': size === 'small',
                 }"
             />
-            <span class="sr-only">{{ $t('utility.loadingSpinnerLabel') }}</span>
+            <span class="sr-only">{{ t('utility.loadingSpinnerLabel') }}</span>
         </div>
     </template>
 </template>

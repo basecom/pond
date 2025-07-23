@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { reloadNuxtApp } from '#app';
+
 const { t } = useI18n();
 
 useHead(() => ({
@@ -17,20 +19,20 @@ useHead(() => ({
         />
 
         <h1 class="pb-4 pt-6">
-            {{ $t('error.maintenance.heading') }}
+            {{ t('error.maintenance.heading') }}
         </h1>
 
         <p class="pb-8 text-center">
-            {{ $t('error.maintenance.detail') }}
+            {{ t('error.maintenance.detail') }}
             <br>
-            {{ $t('error.maintenance.tryAgain') }}
+            {{ t('error.maintenance.tryAgain') }}
         </p>
 
         <FormKit
             type="submit"
             @click="reloadNuxtApp()"
         >
-            {{ $t('error.maintenance.refresh') }}
+            {{ t('error.maintenance.refresh') }}
         </FormKit>
     </main>
 </template>

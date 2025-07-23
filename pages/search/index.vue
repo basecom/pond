@@ -125,16 +125,18 @@ const cardSkeletons = computed(() => {
 </script>
 
 <template>
+    <LayoutBreadcrumbs />
+
     <div class="container">
         <h1 class="mb-6 text-center">
             <span v-if="products?.length">
-                {{ $t('search.resultPage.heading') }}
+                {{ t('search.resultPage.heading') }}
 
                 <strong> "{{ searchTerm }}" </strong>
             </span>
 
             <span v-else>
-                {{ $t('search.resultPage.headingNoResults') }}
+                {{ t('search.resultPage.headingNoResults') }}
             </span>
         </h1>
 

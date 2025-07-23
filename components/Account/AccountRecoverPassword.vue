@@ -19,6 +19,10 @@ onMounted(async () => {
         hashIsValid.value = !response.isExpired;
     } catch (error) {
         hashIsValid.value = false;
+
+        if (import.meta.dev) {
+            console.error(error);
+        }
     }
 });
 
@@ -38,6 +42,10 @@ const handlePasswordChange = async (fields: RecoverPasswordForm) => {
         navigateTo('/account/login');
     } catch (error) {
         pushError(t('account.recoverPassword.recover.errorMessage'));
+
+        if (import.meta.dev) {
+            console.error(error);
+        }
     }
 };
 </script>
@@ -45,7 +53,7 @@ const handlePasswordChange = async (fields: RecoverPasswordForm) => {
 <template>
     <template v-if="!hashIsValid">
         <p class="text-center text-status-danger">
-            {{ $t('account.recoverPassword.recover.linkNotValid') }}
+            {{ t('account.recoverPassword.recover.linkNotValid') }}
         </p>
 
         <LocaleLink to="/account/recover">
@@ -55,7 +63,7 @@ const handlePasswordChange = async (fields: RecoverPasswordForm) => {
                     outer: 'm-auto mt-4 w-1/2',
                 }"
             >
-                {{ $t('account.recoverPassword.recover.requestNewLink') }}
+                {{ t('account.recoverPassword.recover.requestNewLink') }}
             </FormKit>
         </LocaleLink>
     </template>
@@ -63,7 +71,7 @@ const handlePasswordChange = async (fields: RecoverPasswordForm) => {
     <FormKit
         v-else
         type="form"
-        :submit-label="$t('account.recoverPassword.recover.submitLabel')"
+        :submit-label="t('account.recoverPassword.recover.submitLabel')"
         :classes="{
             form: 'w-full flex flex-wrap flex-col gap-4',
             actions: 'w-full',
@@ -71,22 +79,22 @@ const handlePasswordChange = async (fields: RecoverPasswordForm) => {
         @submit="handlePasswordChange"
     >
         <h5>
-            {{ $t('account.recoverPassword.recover.heading') }}
+            {{ t('account.recoverPassword.recover.heading') }}
         </h5>
 
         <FormKit
             type="password"
-            :label="$t('account.recoverPassword.recover.passwordLabel')"
+            :label="t('account.recoverPassword.recover.passwordLabel')"
             name="newPassword"
-            :placeholder="$t('account.login.email.placeholder')"
+            :placeholder="t('account.login.email.placeholder')"
             validation="required|length:8"
         />
 
         <FormKit
             type="password"
-            :label="$t('account.recoverPassword.recover.confirmLabel')"
+            :label="t('account.recoverPassword.recover.confirmLabel')"
             name="newPasswordConfirm"
-            :placeholder="$t('account.login.email.placeholder')"
+            :placeholder="t('account.login.email.placeholder')"
             validation="required|confirm:newPassword"
         />
     </FormKit>

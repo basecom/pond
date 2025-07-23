@@ -35,6 +35,7 @@ const onUpdatedOpen = (value: boolean) => {
         <DialogTrigger as-child>
             <slot name="trigger" />
         </DialogTrigger>
+
         <DialogPortal>
             <Transition
                 enter-active-class="transition ease-out duration-200 transform"
@@ -46,6 +47,7 @@ const onUpdatedOpen = (value: boolean) => {
             >
                 <DialogOverlay class="data-[state=open]:animate-overlayShow fixed inset-0 z-30 bg-black/50" />
             </Transition>
+
             <Transition
                 enter-active-class="transition ease-out duration-300 transform "
                 enter-from-class="-translate-y-10 scale-50"
@@ -68,12 +70,14 @@ const onUpdatedOpen = (value: boolean) => {
                     >
                         <slot name="title" />
                     </DialogTitle>
+
                     <div class="px-6 py-4">
                         <DialogDescription>
                             <slot name="description" />
                         </DialogDescription>
                         <slot name="content" />
                     </div>
+
                     <div
                         v-if="withActionsButton"
                         class="flex justify-between border-t border-gray-light px-6 pb-6 pt-4"
@@ -82,7 +86,7 @@ const onUpdatedOpen = (value: boolean) => {
                             <DialogClose as-child>
                                 <FormKit
                                     type="button"
-                                    :label="$t('shared.modal.cancelButtonLabel')"
+                                    :label="t('shared.modal.cancelButtonLabel')"
                                     :classes="{
                                         outer: 'w-full',
                                     }"
@@ -90,10 +94,11 @@ const onUpdatedOpen = (value: boolean) => {
                             </DialogClose>
                         </slot>
                     </div>
+
                     <DialogClose
                         v-if="withCloseButton"
                         class="absolute right-5 top-5 size-5 items-center justify-center text-gray hover:text-black focus:text-black"
-                        :aria-label="$t('shared.modal.closeButtonAriaLabel')"
+                        :aria-label="t('shared.modal.closeButtonAriaLabel')"
                     >
                         <FormKitIcon
                             class="block"

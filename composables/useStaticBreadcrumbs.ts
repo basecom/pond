@@ -59,6 +59,42 @@ export function useStaticBreadcrumbs() {
             return breadcrumbs;
         }
 
+        if (type === 'profile') {
+            breadcrumbs.push({
+                name: t('composable.breadcrumbs.profileName'),
+                path: '/account/profile',
+            });
+
+            return breadcrumbs;
+        }
+
+        if (type === 'address') {
+            breadcrumbs.push({
+                name: t('composable.breadcrumbs.addressName'),
+                path: '/account/address',
+            });
+
+            return breadcrumbs;
+        }
+
+        if (type === 'payment') {
+            breadcrumbs.push({
+                name: t('composable.breadcrumbs.paymentName'),
+                path: '/account/payment',
+            });
+
+            return breadcrumbs;
+        }
+
+        if (type === 'orders') {
+            breadcrumbs.push({
+                name: t('composable.breadcrumbs.ordersName'),
+                path: '/account/orders',
+            });
+
+            return breadcrumbs;
+        }
+
         return breadcrumbs;
     };
 

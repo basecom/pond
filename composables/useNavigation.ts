@@ -1,4 +1,4 @@
-// extends the useNavigation composable from the '@shopware-pwa/composables-next' package
+// extends the useNavigation composable from the '@shopware/composables' package
 
 import type { Schemas } from '@shopware/api-client/api-types';
 
@@ -14,9 +14,9 @@ export type UseNavigationReturn = {
     /**
      * Load navigation elements
      */
-    loadNavigationElements(params: {
-        depth: number;
-    }): Promise<Schemas['NavigationRouteResponse']>;
+    loadNavigationElements(
+        params: operations['readNavigation post /navigation/{activeId}/{rootId}']['body'],
+    ): Promise<Schemas['NavigationRouteResponse']>;
 };
 
 /**
@@ -53,6 +53,7 @@ export function useNavigation(params?: {
     // an explicit key should be passed to ensure consistency between server and client, regardless of file structure or runtime context
     const { data, execute } = useFetch(`/api/proxy/navigation/${type}`, {
         // ideally, the key would also include the depth here, but no working way was found and the depthHandling of the navigationStore seems to work as expected
+        // support for dynamic keys was added with nuxt v3.17.0 / v4.0.0
         key: `proxy-navigation-${type}`,
         method: 'POST',
         // the body needs to be wrapped in computed to detect changes to the depthRef
@@ -68,10 +69,14 @@ export function useNavigation(params?: {
             depth: depthRef.value,
         })),
         immediate: false,
+        // setting watch to false prevents triggering the request twice when depthRef changes -> will only get triggered when execute is called
+        watch: false,
     });
 
-    async function loadNavigationElements({ depth }: { depth: number }) {
-        depthRef.value = depth;
+    async function loadNavigationElements(
+        params: operations['readNavigation post /navigation/{activeId}/{rootId}']['body'],
+    ) {
+        depthRef.value = params.depth ?? 1;
 
         try {
             await execute();

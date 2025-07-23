@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getProductRoute } from '@shopware-pwa/helpers-next';
+import { getProductRoute } from '@shopware/helpers';
 import type { Schemas } from '@shopware/api-client/api-types';
 
 const props = withDefaults(
@@ -14,6 +14,8 @@ const props = withDefaults(
 );
 
 const emit = defineEmits(['closeSearch']);
+
+const { t } = useI18n();
 
 const { searchTerm, search, getProducts, getTotal, loading } = useProductSearchSuggest();
 const { trackSearchSuggestions, trackSearch, trackSelectItem } = useAnalytics();
@@ -107,7 +109,7 @@ onMounted(() => {
                     outer: 'w-full',
                     input: 'border-b border-gray-medium py-1',
                 }"
-                :placeholder="$t('search.searchBar.placeholder')"
+                :placeholder="t('search.searchBar.placeholder')"
                 @keyup.enter="
                     () => {
                         handleEnter();
@@ -148,11 +150,11 @@ onMounted(() => {
                         @click="isResultPage = true"
                     >
                         <template v-if="getTotal > 1">
-                            <span>{{ $t('search.searchBar.resultsLinkLabel', { number: getTotal }) }}</span>
+                            <span>{{ t('search.searchBar.resultsLinkLabel', { number: getTotal }) }}</span>
                         </template>
 
                         <template v-else>
-                            <span>{{ $t('search.searchBar.oneResultLinkLabel') }}</span>
+                            <span>{{ t('search.searchBar.oneResultLinkLabel') }}</span>
                         </template>
                     </LocaleLink>
 
@@ -160,7 +162,7 @@ onMounted(() => {
                         v-else
                         class="py-3"
                     >
-                        {{ $t('search.searchBar.noResultsLabel') }}
+                        {{ t('search.searchBar.noResultsLabel') }}
                     </div>
                 </template>
             </div>

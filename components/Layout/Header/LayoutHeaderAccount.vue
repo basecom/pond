@@ -22,7 +22,7 @@ const closeModal = () => {
                 icon="user"
             />
         </template>
-        <template #title>{{ $t('account.loginModal.heading') }}</template>
+        <template #title>{{ t('account.loginModal.heading') }}</template>
         <template #content>
             <AccountLoginRegisterTabs @close-modal="closeModal" />
         </template>

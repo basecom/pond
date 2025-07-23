@@ -1,13 +1,14 @@
 <script setup lang="ts">
 const tos = ref(false);
+const { t } = useI18n();
 </script>
 
 <template>
-    <CheckoutConfirmCard :title="$t('checkout.confirm.terms.cardTitle')">
+    <CheckoutConfirmCard :title="t('checkout.confirm.terms.cardTitle')">
         <FormKit
             type="checkbox"
-            :label="$t('checkout.confirm.terms.label')"
-            :help="$t('checkout.confirm.terms.help')"
+            :label="t('checkout.confirm.terms.label')"
+            :help="t('checkout.confirm.terms.help')"
             name="terms"
             decorator-icon="check"
             :value="tos"

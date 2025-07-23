@@ -47,7 +47,7 @@ export function useGtags(): UseAnalyticsReturn {
         });
 
     const _loadSessionId = async () => {
-        if (import.meta.server) {
+        if (import.meta.server || !id.value) {
             return;
         }
 

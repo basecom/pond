@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import type { CmsElementImage } from '@shopware-pwa/composables-next';
-import { buildUrlPrefix, getTranslatedProperty } from '@shopware-pwa/helpers-next';
+import type { CmsElementImage } from '@shopware/composables';
+import { buildUrlPrefix, getTranslatedProperty } from '@shopware/helpers';
 import { useElementSize } from '@vueuse/core';
 
 const props = defineProps<{
     element: CmsElementImage;
 }>();
+
+const { t } = useI18n();
 
 const { getUrlPrefix } = useUrlResolver();
 const { shouldPreloadElement } = useCmsElementPreload();
@@ -57,7 +59,7 @@ if (shouldPreloadImage && !isVideoElement.value && srcPath.value) {
                 :src="imageAttrs.src"
                 :type="mimeType"
             >
-            {{ $t('cms.element.videoTagNotSupported') }}
+            {{ t('cms.element.videoTagNotSupported') }}
         </video>
 
         <img
@@ -69,8 +71,8 @@ if (shouldPreloadImage && !isVideoElement.value && srcPath.value) {
                 'w-full': true,
                 'absolute inset-0 h-full object-cover': displayMode === 'cover',
             }"
-            :alt="getTranslatedProperty(mediaObject, 'alt') || mediaObject?.fileName || $t('cms.element.imageAlt')"
-            :title="getTranslatedProperty(mediaObject, 'title') || mediaObject?.fileName || $t('cms.element.imageAlt')"
+            :alt="getTranslatedProperty(mediaObject, 'alt') || mediaObject?.fileName || t('cms.element.imageAlt')"
+            :title="getTranslatedProperty(mediaObject, 'title') || mediaObject?.fileName || t('cms.element.imageAlt')"
             :src="srcPath"
             :srcset="imageAttrs.srcset"
         >

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getTranslatedProperty } from '@shopware-pwa/helpers-next';
+import { getTranslatedProperty } from '@shopware/helpers';
 import type { Schemas } from '@shopware/api-client/api-types';
 
 // We can't use the useCheckout composable to get the paymentMethods because it always uses the parameter 'onlyAvailable'

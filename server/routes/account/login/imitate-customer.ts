@@ -52,6 +52,10 @@ export default defineEventHandler(async event => {
             },
         );
     } catch (error) {
+        if (import.meta.dev) {
+            console.error(error);
+        }
+
         await sendRedirect(event, '/', 400);
         return;
     }

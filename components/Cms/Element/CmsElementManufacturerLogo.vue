@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { CmsElementManufacturerLogo } from '@shopware-pwa/composables-next';
-import { getTranslatedProperty } from '@shopware-pwa/helpers-next';
+import type { CmsElementManufacturerLogo } from '@shopware/composables';
+import { getTranslatedProperty } from '@shopware/helpers';
 
 const props = defineProps<{
     element: CmsElementManufacturerLogo;

@@ -19,7 +19,7 @@ const { t } = useI18n();
     <nav
         v-show="breadcrumbs?.length > 0"
         class="container mx-auto my-8 flex"
-        :aria-label="$t('layout.breadcrumb.ariaLabel')"
+        :aria-label="t('layout.breadcrumb.ariaLabel')"
     >
         <ol class="inline-flex flex-wrap items-center gap-2">
             <li
@@ -37,7 +37,7 @@ const { t } = useI18n();
                         class="size-2.5"
                         :title="rootIcon"
                     />
-                    {{ $t('layout.breadcrumb.homeLinkLabel') }}
+                    {{ t('layout.breadcrumb.homeLinkLabel') }}
                 </LocaleLink>
 
                 <FormKitIcon

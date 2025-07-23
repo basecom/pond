@@ -85,7 +85,7 @@ const handleRegisterSubmit = async (fields: RegisterForm) => {
 <template>
     <FormKit
         type="form"
-        :submit-label="$t('account.register.submitLabel')"
+        :submit-label="t('account.register.submitLabel')"
         :classes="{
             form: 'grid grid-cols-2 gap-3 w-full',
         }"
@@ -121,7 +121,7 @@ const handleRegisterSubmit = async (fields: RegisterForm) => {
         >
             <FormKit
                 type="checkbox"
-                :label="$t('account.register.alternativeShippingAddress')"
+                :label="t('account.register.alternativeShippingAddress')"
                 name="showAlternativeShippingAddress"
                 :value="false"
                 :classes="{
@@ -136,7 +136,7 @@ const handleRegisterSubmit = async (fields: RegisterForm) => {
             <template v-if="value?.showAlternativeShippingAddress === true">
                 <div class="col-span-2">
                     <span>
-                        {{ $t('account.register.shippingAddressHeading') }}
+                        {{ t('account.register.shippingAddressHeading') }}
                     </span>
                 </div>
 
@@ -148,7 +148,7 @@ const handleRegisterSubmit = async (fields: RegisterForm) => {
 
         <div class="col-span-2">
             <span>
-                {{ $t('account.register.accountDataHeading') }}
+                {{ t('account.register.accountDataHeading') }}
             </span>
         </div>
 
@@ -156,7 +156,7 @@ const handleRegisterSubmit = async (fields: RegisterForm) => {
             v-if="allowGuest"
             v-model="orderAsGuest"
             type="checkbox"
-            :label="$t('account.register.guest.toggle')"
+            :label="t('account.register.guest.toggle')"
             name="guest"
             decorator-icon="check"
             :classes="{
@@ -168,9 +168,9 @@ const handleRegisterSubmit = async (fields: RegisterForm) => {
 
         <FormKit
             type="email"
-            :label="$t('account.register.email.label')"
+            :label="t('account.register.email.label')"
             name="email"
-            :placeholder="$t('account.register.email.placeholder')"
+            :placeholder="t('account.register.email.placeholder')"
             :errors="errorOfField('email', formErrorStore.apiErrors)"
             validation="required"
             :classes="{
@@ -183,9 +183,9 @@ const handleRegisterSubmit = async (fields: RegisterForm) => {
         <FormKit
             v-if="!orderAsGuest"
             type="password"
-            :label="$t('account.register.password.label')"
+            :label="t('account.register.password.label')"
             name="password"
-            :placeholder="$t('account.register.password.placeholder')"
+            :placeholder="t('account.register.password.placeholder')"
             :errors="errorOfField('password', formErrorStore.apiErrors)"
             validation="required"
             suffix-icon="lock"
@@ -199,8 +199,8 @@ const handleRegisterSubmit = async (fields: RegisterForm) => {
 
         <FormKit
             type="checkbox"
-            :label="$t('account.register.terms.label')"
-            :help="$t('account.register.terms.help')"
+            :label="t('account.register.terms.label')"
+            :help="t('account.register.terms.help')"
             name="terms"
             :value="false"
             decorator-icon="check"
@@ -225,7 +225,7 @@ const handleRegisterSubmit = async (fields: RegisterForm) => {
                     'opacity-0': isLoading,
                 }"
             >
-                {{ $t('account.register.submitLabel') }}
+                {{ t('account.register.submitLabel') }}
             </span>
             <UtilityLoadingSpinner
                 v-if="isLoading"

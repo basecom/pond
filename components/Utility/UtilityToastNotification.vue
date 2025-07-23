@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Notification } from '@shopware-pwa/composables-next';
+import type { Notification } from '@shopware/composables';
 
 const props = defineProps<{
     notification: Notification;

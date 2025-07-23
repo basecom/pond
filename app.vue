@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const { locale } = useI18n();
 const url = useRequestURL();
 const route = useRoute();
@@ -49,9 +49,8 @@ const updateSessionWithLanguage = async () => {
 await updateSessionWithLanguage();
 
 useNotifications();
-useBreadcrumbs();
 
-const shopName = configStore.get('core.basicInformation.shopName');
+const shopName = configStore.get('core.basicInformation.shopName') as string;
 setAffiliateCode('affiliateCode');
 
 useHead(() => ({

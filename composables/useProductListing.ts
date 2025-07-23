@@ -1,5 +1,5 @@
 import type { LocationQuery, LocationQueryRaw } from '#vue-router';
-import { getListingFilters } from '@shopware-pwa/helpers-next';
+import { getListingFilters } from '@shopware/helpers';
 import type { Schemas } from '@shopware/api-client/api-types';
 import type { ListingFilter, ListingPriceFilter, ListingPropertyFilter } from '~/types/listing/Filter';
 import type { ProductListingCriteria, ListingState } from '~/types/listing/ProductListingCriteria';

@@ -13,7 +13,7 @@ const { t } = useI18n();
 
 const props = withDefaults(
     defineProps<{
-      showLatestOrder: boolean;
+      showLatestOrder?: boolean;
     }>(),
     {
         showLatestOrder: true,
@@ -47,6 +47,10 @@ const handleNewsletterChange = async (event: Event) => {
             );
         } catch (error) {
             pushError(t('cms.element.form.newsletter.errorSubscribe'));
+
+            if (import.meta.dev) {
+                console.error(error);
+            }
         }
     } else {
         try {
@@ -55,15 +59,19 @@ const handleNewsletterChange = async (event: Event) => {
             pushSuccess(t('cms.element.form.newsletter.successUnsubscribe'));
         } catch (error) {
             pushError(t('cms.element.form.newsletter.errorUnsubscribe'));
+
+            if (import.meta.dev) {
+                console.error(error);
+            }
         }
     }
 };
 </script>
 
 <template>
-    <h1 class="mb-2 font-bold">{{ $t('account.overview.heading') }}</h1>
+    <h1 class="mb-2 font-bold">{{ t('account.overview.heading') }}</h1>
     <div class="mb-4 text-base">
-        {{ $t('account.overview.subHeading') }}
+        {{ t('account.overview.subHeading') }}
     </div>
 
     <div
@@ -71,23 +79,23 @@ const handleNewsletterChange = async (event: Event) => {
         class="col-span-2 grid grid-cols-1 gap-6 lg:grid-cols-2"
     >
         <div class="rounded-lg bg-white p-4 shadow-md">
-            <h3 class="mb-2 text-lg font-semibold">{{ $t('account.overview.personalInformation.heading') }}</h3>
+            <h3 class="mb-2 text-lg font-semibold">{{ t('account.overview.personalInformation.heading') }}</h3>
             <p>
-                <strong>{{ $t('account.overview.personalInformation.nameLabel') }}</strong> {{ customer.firstName }}
+                <strong>{{ t('account.overview.personalInformation.nameLabel') }}</strong> {{ customer.firstName }}
                 {{ customer.lastName }}
             </p>
             <p>
-                <strong>{{ $t('account.overview.personalInformation.emailLabel') }}</strong> {{ customer.email }}
+                <strong>{{ t('account.overview.personalInformation.emailLabel') }}</strong> {{ customer.email }}
             </p>
         </div>
 
         <div v-if="paymentMethod" class="rounded-lg bg-white p-4 shadow-md">
-            <h3 class="mb-2 text-lg font-semibold">{{ $t('account.overview.paymentMethod.heading') }}</h3>
+            <h3 class="mb-2 text-lg font-semibold">{{ t('account.overview.paymentMethod.heading') }}</h3>
             <p>
-                <strong>{{ $t('account.overview.paymentMethod.nameLabel') }}</strong> {{ paymentMethod.name }}
+                <strong>{{ t('account.overview.paymentMethod.nameLabel') }}</strong> {{ paymentMethod.name }}
             </p>
             <p>
-                <strong>{{ $t('account.overview.paymentMethod.descriptionLabel') }}</strong>
+                <strong>{{ t('account.overview.paymentMethod.descriptionLabel') }}</strong>
                 {{ paymentMethod.description }}
             </p>
         </div>
@@ -98,12 +106,12 @@ const handleNewsletterChange = async (event: Event) => {
         class="col-span-2 mt-4 grid grid-cols-1 gap-6 lg:grid-cols-2"
     >
         <div class="rounded-lg bg-white p-4 shadow-md">
-            <h3 class="mb-2 text-lg font-semibold">{{ $t('account.overview.billingAddressHeading') }}</h3>
+            <h3 class="mb-2 text-lg font-semibold">{{ t('account.overview.billingAddressHeading') }}</h3>
             <AddressData v-if="billingAddress" :address="billingAddress" />
         </div>
 
         <div class="rounded-lg bg-white p-4 shadow-md">
-            <h3 class="mb-2 text-lg font-semibold">{{ $t('account.overview.shippingAddressHeading') }}</h3>
+            <h3 class="mb-2 text-lg font-semibold">{{ t('account.overview.shippingAddressHeading') }}</h3>
             <AddressData v-if="shippingAddress" :address="shippingAddress" />
         </div>
     </div>
@@ -112,14 +120,14 @@ const handleNewsletterChange = async (event: Event) => {
         v-if="customer"
         class="mt-4 rounded-lg bg-white p-4 shadow-md"
     >
-        <h3 class="mb-2 text-lg font-semibold">{{ $t('account.overview.newsletter.heading') }}</h3>
+        <h3 class="mb-2 text-lg font-semibold">{{ t('account.overview.newsletter.heading') }}</h3>
         <label>
             <input
                 type="checkbox"
                 :checked="isNewsletterSubscriber && !confirmationNeeded"
                 @change="handleNewsletterChange"
             >
-            {{ $t('account.overview.newsletter.label') }}
+            {{ t('account.overview.newsletter.label') }}
         </label>
     </div>
 
@@ -127,7 +135,7 @@ const handleNewsletterChange = async (event: Event) => {
         v-if="customer && showLatestOrder && latestOrder"
         class="mt-4 rounded-lg bg-white p-4 shadow-md"
     >
-        <h3 class="text-lg font-semibold">{{ $t('account.overview.latestOrderHeading') }}</h3>
+        <h3 class="text-lg font-semibold">{{ t('account.overview.latestOrderHeading') }}</h3>
         <SharedAccordionRoot>
             <AccountOrderItem :order-id="latestOrder.id" />
         </SharedAccordionRoot>

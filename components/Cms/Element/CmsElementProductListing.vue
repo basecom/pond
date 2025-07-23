@@ -11,6 +11,8 @@ const props = withDefaults(
     },
 );
 
+const { t } = useI18n();
+
 const route = useRoute();
 const { trackSelectItem } = useAnalytics();
 const { getElements, getCurrentListing } = useCategoryListing();
@@ -96,7 +98,7 @@ const products = computed(() =>
     <UtilityStaticNotification
         v-if="!products.length && !listingStore.isLoading"
         type="info"
-        :message="$t('cms.element.product.noProductsFound')"
+        :message="t('cms.element.product.noProductsFound')"
         class="mt-4"
     />
 

@@ -9,6 +9,8 @@ withDefaults(
 );
 
 defineEmits(['closeModal']);
+
+const { t } = useI18n();
 </script>
 
 <template>
@@ -24,14 +26,14 @@ defineEmits(['closeModal']);
                 class="flex-1 bg-white p-2 hover:text-brand-primary focus-visible:relative data-[state=active]:border-b data-[state=active]:border-brand-primary data-[state=active]:text-brand-primary"
                 value="tab-login"
             >
-                {{ $t('account.loginModal.tabs.loginTabHeading') }}
+                {{ t('account.loginModal.tabs.loginTabHeading') }}
             </TabsTrigger>
 
             <TabsTrigger
                 class="flex-1 bg-white p-2 hover:text-brand-primary focus-visible:relative data-[state=active]:border-b data-[state=active]:border-brand-primary data-[state=active]:text-brand-primary"
                 value="tab-register"
             >
-                {{ $t('account.loginModal.tabs.registerTabHeading') }}
+                {{ t('account.loginModal.tabs.registerTabHeading') }}
             </TabsTrigger>
         </TabsList>
 

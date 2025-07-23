@@ -1,4 +1,4 @@
-import { useProductConfigurator as coreUseProductConfigurator } from '@shopware-pwa/composables-next';
+import { useProductConfigurator as coreUseProductConfigurator } from '@shopware/composables';
 import type { Schemas } from '@shopware/api-client/api-types';
 
 // Extend default product configurator composable

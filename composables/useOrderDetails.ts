@@ -1,5 +1,5 @@
-import { useOrderDetails as useBaseOrderDetails } from '@shopware-pwa/composables-next';
-import type { UseOrderDetailsReturn } from '@shopware-pwa/composables-next';
+import { useOrderDetails as useBaseOrderDetails } from '@shopware/composables';
+import type { UseOrderDetailsReturn } from '@shopware/composables';
 import type { Schemas } from '@shopware/api-client/api-types';
 import type { ComputedRef } from 'vue';
 

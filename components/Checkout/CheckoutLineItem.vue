@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import { getTranslatedProperty, getProductRoute } from '@shopware-pwa/helpers-next';
+import { getTranslatedProperty, getProductRoute } from '@shopware/helpers';
 
 const { getLineItemRoute } = useLineItemRoute();
 const { getProductCover } = useMedia();
@@ -56,7 +56,11 @@ const updateQuantity = async (quantityInput: number | undefined) => {
         await changeItemQuantity(Number(quantityInput));
 
         if (product.value) {
-            addedProductsNumbers > 0 ? trackAddToCart(product.value, addedProductsNumbers) : trackRemoveFromCart(product.value, Math.abs(addedProductsNumbers));
+            if (addedProductsNumbers > 0) {
+                trackAddToCart(product.value, addedProductsNumbers);
+            } else {
+                trackRemoveFromCart(product.value, Math.abs(addedProductsNumbers));
+            }
         }
         // Refresh cart after quantity update
         await refreshCart();
@@ -157,7 +161,7 @@ const debounceUpdate = useDebounceFn(updateQuantity, 600);
             </div>
 
             <span v-if="isDigital">
-                {{ $t('checkout.lineItem.digitalProduct') }}
+                {{ t('checkout.lineItem.digitalProduct') }}
             </span>
 
             <p
@@ -195,7 +199,7 @@ const debounceUpdate = useDebounceFn(updateQuantity, 600);
                 :class="{ 'text-gray-medium': isLoading }"
                 @click="removeCartItem"
             >
-                {{ $t('checkout.lineItem.remove.buttonLabel') }}
+                {{ t('checkout.lineItem.remove.buttonLabel') }}
             </button>
         </div>
     </div>

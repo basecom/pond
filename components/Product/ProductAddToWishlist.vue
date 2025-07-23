@@ -24,6 +24,10 @@ const handleWishlistButtonClicked = async () => {
             pushSuccess(t('wishlist.removedSuccessfully'));
         } catch (error) {
             pushError(t('wishlist.errorRemovingProduct'));
+
+            if (import.meta.dev) {
+                console.error(error);
+            }
         }
     } else {
         try {
@@ -32,6 +36,10 @@ const handleWishlistButtonClicked = async () => {
             pushSuccess(t('wishlist.addedSuccessfully'));
         } catch (error) {
             pushError(t('wishlist.errorAddingProduct'));
+
+            if (import.meta.dev) {
+                console.error(error);
+            }
         }
     }
 };

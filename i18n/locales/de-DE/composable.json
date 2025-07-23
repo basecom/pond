@@ -11,6 +11,10 @@
             "checkoutName": "Kasse",
             "orderName": "Bestellung",
             "accountName": "Konto",
+            "addressName": "Adressen",
+            "profileName": "Profil",
+            "paymentName": "Bezahlmethoden",
+            "ordersName": "Bestellungen",
             "loginName": "Login",
             "registerName": "Registrieren",
             "recoverName": "Passwort wiederherstellen"

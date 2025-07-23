@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { t } = useI18n();
 const customerStore = useCustomerStore();
 const customerId = computed(() => customerStore.customer?.id);
 const { orders, loadOrders, changeCurrentPage, totalPages, currentPage, limit } = useCustomerOrders();
@@ -64,7 +65,7 @@ onMounted(async () => {
 <template>
     <div>
         <h1 class="mb-2 font-bold">
-            {{ $t('account.orders.heading') }}
+            {{ t('account.orders.heading') }}
         </h1>
 
         <div
@@ -97,7 +98,7 @@ onMounted(async () => {
         </ul>
 
         <p v-else-if="!isLoading">
-            {{ $t('account.orders.noOrdersFound') }}
+            {{ t('account.orders.noOrdersFound') }}
         </p>
     </div>
 </template>

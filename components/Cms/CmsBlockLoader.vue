@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { kebabCase } from 'scule';
 import type { Schemas } from '@shopware/api-client/api-types';
-import { getCmsLayoutConfiguration } from '@shopware-pwa/helpers-next';
+import { getCmsLayoutConfiguration } from '@shopware/helpers';
 import type { StyleValue } from 'vue';
 
 const props = defineProps<{
     block: Schemas['CmsBlock'];
 }>();
+
+const { t } = useI18n();
 
 const { getCmsBlockComponentName, componentExists, getBlockClasses } = useCmsUtils();
 
@@ -31,7 +33,8 @@ const componentStyle = computed(() => getCmsLayoutConfiguration(props.block).lay
             :block="block"
         />
     </div>
+
     <div v-else-if="isDevelopment">
-        {{ $t('cms.componentNotFound', { componentName: getCmsBlockComponentName(block.type) }) }}
+        {{ t('cms.componentNotFound', { componentName: getCmsBlockComponentName(block.type) }) }}
     </div>
 </template>

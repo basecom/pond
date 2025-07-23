@@ -56,14 +56,16 @@ onMounted(async () => {
 </script>
 
 <template>
+    <LayoutBreadcrumbs />
+
     <div class="container">
-        <h1>{{ $t('checkout.confirm.heading') }}</h1>
+        <h1>{{ t('checkout.confirm.heading') }}</h1>
 
         <template v-if="!addressCountryIsAllowed && getCountries.length && activeShippingAddress">
             <div class="mt-4">
                 <UtilityStaticNotification
                     type="warning"
-                    :message="$t('checkout.confirm.invalidCountry.notification')"
+                    :message="t('checkout.confirm.invalidCountry.notification')"
                 />
             </div>
         </template>
@@ -87,7 +89,7 @@ onMounted(async () => {
                     </div>
 
                     <div class="rounded-md p-4 shadow">
-                        <div class="font-bold">{{ $t('checkout.lineItemsHeading') }}</div>
+                        <div class="font-bold">{{ t('checkout.lineItemsHeading') }}</div>
 
                         <ul class="divide-y divide-gray-medium">
                             <li
@@ -115,7 +117,7 @@ onMounted(async () => {
                                 outer: 'mt-4',
                             }"
                         >
-                            {{ $t('checkout.confirm.order.buttonLabelNotLoggedIn') }}
+                            {{ t('checkout.confirm.order.buttonLabelNotLoggedIn') }}
                         </FormKit>
 
                         <FormKit
@@ -126,7 +128,7 @@ onMounted(async () => {
                                 outer: 'mt-4',
                             }"
                         >
-                            {{ $t('checkout.confirm.invalidCountry.button') }}
+                            {{ t('checkout.confirm.invalidCountry.button') }}
                         </FormKit>
 
                         <FormKit
@@ -136,7 +138,7 @@ onMounted(async () => {
                                 outer: 'mt-4',
                             }"
                         >
-                            {{ $t('checkout.confirm.order.buttonLabel') }}
+                            {{ t('checkout.confirm.order.buttonLabel') }}
                         </FormKit>
                     </div>
                 </div>
@@ -146,7 +148,7 @@ onMounted(async () => {
         <template v-else>
             <UtilityStaticNotification
                 type="info"
-                :message="$t('checkout.cart.emptyCartMessage')"
+                :message="t('checkout.cart.emptyCartMessage')"
                 class="mt-4"
             />
         </template>

@@ -11,6 +11,8 @@ const emit = defineEmits<{
     'accept-all': [];
 }>();
 
+const { t } = useI18n();
+
 const selectCookieGroup = (group: CookieGroup, event: Event) => {
     const target = event.target as HTMLInputElement;
     group.entries.forEach(entry => {
@@ -77,13 +79,13 @@ onMounted(() => {
 
 <template>
     <div class="mb-3">
-        {{ $t('cookie.banner.additionalInformationText') }}
+        {{ t('cookie.banner.additionalInformationText') }}
     </div>
 
     <FormKit
         type="form"
         :actions="false"
-        :submit-label="$t('cookie.modal.submitLabel')"
+        :submit-label="t('cookie.modal.submitLabel')"
         @submit="handleSubmit"
     >
         <div class="mb-4 border-y py-3">
@@ -95,14 +97,14 @@ onMounted(() => {
                 <FormKit
                     :id="group.id"
                     type="checkbox"
-                    :label="$t(group.name)"
+                    :label="t(group.name)"
                     :name="group.id"
                     :disabled="group.required"
                     :ignore="true"
                     @change="selectCookieGroup(group, $event)"
                 />
 
-                <div class="mb-1 ml-6">{{ group.description && $t(group.description) }}</div>
+                <div class="mb-1 ml-6">{{ group.description && t(group.description) }}</div>
 
                 <div
                     v-for="entry in group.entries"
@@ -115,7 +117,7 @@ onMounted(() => {
                     <FormKit
                         :id="entry.id"
                         type="checkbox"
-                        :label="$t(entry.name)"
+                        :label="t(entry.name)"
                         :disabled="group.required"
                         :name="entry.id"
                         @change="selectCookieEntry(entry, group, $event)"
@@ -130,7 +132,7 @@ onMounted(() => {
                 :classes="{
                     outer: 'w-full',
                 }"
-                :label="$t('cookie.modal.denyAllButton')"
+                :label="t('cookie.modal.denyAllButton')"
                 @click="() => emit('deny-all')"
             />
 
@@ -139,7 +141,7 @@ onMounted(() => {
                 :classes="{
                     outer: 'w-full',
                 }"
-                :label="$t('cookie.modal.submitLabel')"
+                :label="t('cookie.modal.submitLabel')"
             />
 
             <FormKit
@@ -148,7 +150,7 @@ onMounted(() => {
                 :classes="{
                     outer: 'w-full',
                 }"
-                :label="$t('cookie.modal.allowAllButton')"
+                :label="t('cookie.modal.allowAllButton')"
                 @click="() => emit('accept-all')"
             />
         </div>

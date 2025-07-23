@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import { getTranslatedProperty } from '@shopware-pwa/helpers-next';
+import { getTranslatedProperty } from '@shopware/helpers';
 
 const { languageIdChain } = useSessionContext();
 const { t } = useI18n();
@@ -90,7 +90,7 @@ const showBackButton = computed(() => navigationPath.value.length > 0);
                     :title="t('icon.backToPreviousCategory')"
                     class="block size-3"
                 />
-                <span>{{ $t('navigation.sidebar.backLinkLabel') }}</span>
+                <span>{{ t('navigation.sidebar.backLinkLabel') }}</span>
             </div>
         </template>
 

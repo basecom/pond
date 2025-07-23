@@ -1,5 +1,5 @@
 import type { ResolvedApiError } from '~/types/Errors';
-import { getTranslatedProperty } from '@shopware-pwa/helpers-next';
+import { getTranslatedProperty } from '@shopware/helpers';
 import type { FormKitNode } from '@formkit/core';
 
 export function useFormkitHelper() {

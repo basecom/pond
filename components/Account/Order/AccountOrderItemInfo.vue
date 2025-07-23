@@ -10,6 +10,8 @@ withDefaults(
         state: null,
     },
 );
+
+const { t } = useI18n();
 </script>
 
 <template>
@@ -28,7 +30,7 @@ withDefaults(
                 v-if="state?.name"
                 class="mt-5 font-bold"
             >
-                {{ title }} {{ $t('account.orders.status') }}
+                {{ title }} {{ t('account.orders.status') }}
             </div>
             <div v-if="state?.name">{{ state.name }}</div>
         </div>

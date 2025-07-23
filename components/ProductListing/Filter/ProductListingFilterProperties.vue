@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import { getTranslatedProperty } from '@shopware-pwa/helpers-next';
+import { getTranslatedProperty } from '@shopware/helpers';
 import type { ListingPropertyFilter } from '~/types/listing/Filter';
 import { useListingStore } from '~/stores/ListingStore';
 import type { ChangePropertyFilter } from '~/types/listing/FilterEvents';
@@ -30,7 +30,7 @@ const { t } = useI18n();
     <PopoverRoot @update:open="popoverOpen = !popoverOpen">
         <PopoverTrigger
             class="none inline-flex items-center justify-center"
-            :aria-label="getTranslatedProperty(filter, 'name') + ' ' + $t('shared.popover.triggerAriaLabel')"
+            :aria-label="getTranslatedProperty(filter, 'name') + ' ' + t('shared.popover.triggerAriaLabel')"
         >
             <div class="flex items-center gap-2 rounded border border-gray-medium px-4 py-2">
                 {{ getTranslatedProperty(filter, 'name') }}

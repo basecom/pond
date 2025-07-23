@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { t } = useI18n();
 const { isEmpty } = useCart();
 const { checkoutBreadcrumbs } = useStaticBreadcrumbs();
 const cartItemsStore = useCartItemsStore();
@@ -9,8 +10,10 @@ useBreadcrumbs(checkoutBreadcrumbs({ index: 0 }));
 </script>
 
 <template>
+    <LayoutBreadcrumbs />
+
     <div class="container">
-        <h1>{{ $t('checkout.cart.heading') }}</h1>
+        <h1>{{ t('checkout.cart.heading') }}</h1>
 
         <div
             v-if="!isEmpty"
@@ -31,6 +34,7 @@ useBreadcrumbs(checkoutBreadcrumbs({ index: 0 }));
                     </li>
                 </ul>
             </div>
+
             <div class="flex w-full flex-col gap-4 lg:w-1/3">
                 <CheckoutSummary />
 
@@ -38,7 +42,7 @@ useBreadcrumbs(checkoutBreadcrumbs({ index: 0 }));
 
                 <LocaleLink :to="'/checkout/confirm'">
                     <FormKit type="submit">
-                        {{ $t('checkout.cart.checkoutButtonLabel') }}
+                        {{ t('checkout.cart.checkoutButtonLabel') }}
                     </FormKit>
                 </LocaleLink>
             </div>
@@ -47,7 +51,7 @@ useBreadcrumbs(checkoutBreadcrumbs({ index: 0 }));
         <template v-else>
             <UtilityStaticNotification
                 type="info"
-                :message="$t('checkout.cart.emptyCartMessage')"
+                :message="t('checkout.cart.emptyCartMessage')"
                 class="mt-4"
             />
         </template>

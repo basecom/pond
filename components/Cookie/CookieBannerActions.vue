@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const cookieBannerStore = useCookieBannerStore();
 const { isAcceptAllEnabled } = storeToRefs(cookieBannerStore);
+const { t } = useI18n();
 </script>
 
 <template>
@@ -15,7 +16,7 @@ const { isAcceptAllEnabled } = storeToRefs(cookieBannerStore);
             }"
             @click="cookieBannerStore.denyAll()"
         >
-            {{ $t('cookie.banner.denyAllButton') }}
+            {{ t('cookie.banner.denyAllButton') }}
         </FormKit>
 
         <CookieBannerModal>
@@ -29,7 +30,7 @@ const { isAcceptAllEnabled } = storeToRefs(cookieBannerStore);
                         input: 'max-w-full sm:max-w-fit',
                     }"
                 >
-                    {{ $t('cookie.banner.configureButton') }}
+                    {{ t('cookie.banner.configureButton') }}
                 </FormKit>
             </template>
         </CookieBannerModal>
@@ -43,7 +44,7 @@ const { isAcceptAllEnabled } = storeToRefs(cookieBannerStore);
             }"
             @click="cookieBannerStore.acceptAll()"
         >
-            {{ $t('cookie.banner.allowAllButton') }}
+            {{ t('cookie.banner.allowAllButton') }}
         </FormKit>
     </div>
 </template>

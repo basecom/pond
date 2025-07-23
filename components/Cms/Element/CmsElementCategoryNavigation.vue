@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { CmsElementCategoryNavigation } from '@shopware-pwa/composables-next';
-import { getCategoryRoute, getTranslatedProperty } from '@shopware-pwa/helpers-next';
+import type { CmsElementCategoryNavigation } from '@shopware/composables';
+import { getCategoryRoute, getTranslatedProperty } from '@shopware/helpers';
 
 defineProps<{
     element: CmsElementCategoryNavigation;

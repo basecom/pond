@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CmsElementVimeoVideo } from '@shopware-pwa/composables-next';
+import type { CmsElementVimeoVideo } from '@shopware/composables';
 // it's an import, therefore we ignore that it has an any type
 // eslint-disable-next-line  @typescript-eslint/ban-ts-comment
 // @ts-ignore

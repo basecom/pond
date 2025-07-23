@@ -20,8 +20,12 @@ const updateDefaultShipping = async () => {
         await setDefaultCustomerShippingAddress(props.address.id);
         await customerStore.refreshContext();
         pushSuccess(t('account.address.updateShippingSuccess'));
-    } catch (e) {
+    } catch (error) {
         pushError(t('account.address.updateShippingError'));
+
+        if (import.meta.dev) {
+            console.error(error);
+        }
     }
 };
 
@@ -30,8 +34,12 @@ const updateDefaultBilling = async () => {
         await setDefaultCustomerBillingAddress(props.address.id);
         await customerStore.refreshContext();
         pushSuccess(t('account.address.updateBillingSuccess'));
-    } catch (e) {
+    } catch (error) {
         pushError(t('account.address.updateBillingError'));
+
+        if (import.meta.dev) {
+            console.error(error);
+        }
     }
 };
 </script>
@@ -41,14 +49,14 @@ const updateDefaultBilling = async () => {
         <div class="relative mb-2 flex h-11 flex-col justify-between">
             <UtilityBadge
                 v-if="address.id === customerStore.customer.defaultBillingAddressId"
-                :content="$t('account.address.defaultBilling')"
+                :content="t('account.address.defaultBilling')"
                 type="success"
                 size="sm"
             />
 
             <UtilityBadge
                 v-if="address.id === customerStore.customer.defaultShippingAddressId"
-                :content="$t('account.address.defaultShipping')"
+                :content="t('account.address.defaultShipping')"
                 type="success"
                 size="sm"
             />
@@ -78,7 +86,7 @@ const updateDefaultBilling = async () => {
                             }"
                             @click="updateDefaultBilling"
                         >
-                            {{ $t('account.address.updateBilling') }}
+                            {{ t('account.address.updateBilling') }}
                         </FormKit>
 
                         <FormKit
@@ -89,7 +97,7 @@ const updateDefaultBilling = async () => {
                             }"
                             @click="updateDefaultShipping"
                         >
-                            {{ $t('account.address.updateShipping') }}
+                            {{ t('account.address.updateShipping') }}
                         </FormKit>
                     </template>
                 </LazySharedPopover>
@@ -103,7 +111,7 @@ const updateDefaultBilling = async () => {
                 type="submit"
                 @click="() => $emit('edit', address)"
             >
-                {{ $t('global.edit') }}
+                {{ t('global.edit') }}
             </FormKit>
 
             <FormKit
@@ -117,7 +125,7 @@ const updateDefaultBilling = async () => {
                 }"
                 @click="() => $emit('delete', address.id)"
             >
-                {{ $t('global.delete') }}
+                {{ t('global.delete') }}
             </FormKit>
         </div>
     </div>

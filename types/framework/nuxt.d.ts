@@ -5,6 +5,7 @@ export interface PondHooks {
 }
 
 declare module '#app' {
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     interface RuntimeNuxtHooks extends PondHooks {}
 }
 
@@ -13,12 +14,20 @@ declare module '@nuxt/schema' {
         pond: {
             accessToken: string;
             shopwareEndpoint: string;
+            devStorefrontUrl: string,
             analytics: {
                 enabled: boolean;
                 type: PondAnalyticsType;
                 trackingUrl?: string;
                 id?: string;
             };
+            cms: {
+                enableProgressiveLoading: boolean,
+            },
+            preloading: {
+                enabled: boolean,
+                imagePreloadingClass: string,
+            },
         };
     }
 }

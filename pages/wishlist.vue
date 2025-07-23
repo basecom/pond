@@ -33,11 +33,16 @@ const clearWishlistHandler = async () => {
 
     try {
         const productsList = products.value.slice(0);
-        await clearWishlist();
+        clearWishlist();
         trackClearWishlist(productsList);
+
         pushSuccess(t('wishlist.clearedSuccessfully'));
     } catch (error) {
         pushError(t('wishlist.errorClearingWishlist'));
+
+        if (import.meta.dev) {
+            console.error(error);
+        }
     }
 
     isLoading.value = false;
@@ -115,6 +120,8 @@ await getWishlistProducts({
 </script>
 
 <template>
+    <LayoutBreadcrumbs />
+
     <div class="container relative mx-auto">
         <UtilityLoadingSpinner
             v-if="isLoading"
@@ -123,12 +130,12 @@ await getWishlistProducts({
 
         <div v-else-if="products.length">
             <h1 class="my-3 text-3xl font-extrabold">
-                {{ $t('wishlist.titleHeader') }}
+                {{ t('wishlist.titleHeader') }}
             </h1>
 
             <FormKit
                 type="submit"
-                :label="$t('wishlist.clearWishlist')"
+                :label="t('wishlist.clearWishlist')"
                 :classes="{
                     outer: 'max-w-fit mb-4',
                 }"
@@ -166,14 +173,14 @@ await getWishlistProducts({
             class="col mx-auto flex flex-col items-center"
         >
             <h1 class="my-3 text-3xl font-extrabold">
-                {{ $t('wishlist.emptyListTitle') }}
+                {{ t('wishlist.emptyListTitle') }}
             </h1>
 
-            <p class="my-4">{{ $t('wishlist.emptyListSubtitle') }}</p>
+            <p class="my-4">{{ t('wishlist.emptyListSubtitle') }}</p>
 
             <LocaleLink to="/">
                 <FormKit type="submit">
-                    {{ $t('wishlist.continueShopping') }}
+                    {{ t('wishlist.continueShopping') }}
                 </FormKit>
             </LocaleLink>
         </div>
