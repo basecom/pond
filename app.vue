@@ -10,15 +10,11 @@ const { setAffiliateCode } = useAffiliateMarketing();
 
 const customerStore = useCustomerStore();
 const configStore = useConfigStore();
-const navigationStore = useNavigationStore();
 
 try {
     await Promise.all([
         customerStore.refreshContext(),
         configStore.loadConfig(),
-        navigationStore.loadNavigation('main-navigation', 2),
-        navigationStore.loadNavigation('footer-navigation', 1),
-        navigationStore.loadNavigation('service-navigation', 1),
     ]);
 } catch (error) {
     handleError(error, false);

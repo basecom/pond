@@ -1,16 +1,12 @@
 <script setup lang="ts">
 const { languageIdChain } = useSessionContext();
 
-const navigationStore = useNavigationStore();
-const mainNavigation = navigationStore.loadNavigation('main-navigation', 2);
-
-const test2 = await navigationStore.loadNavigation('main-navigation', 3);
-console.log(mainNavigation, test2);
+const mainNavigation = await useAdvancedNavigation('main-navigation', 2).loadNavigation();
 
 watch(
     languageIdChain,
     async () => {
-        navigationStore.loadNavigation('main-navigation', 2);
+        await useAdvancedNavigation('main-navigation', 2).loadNavigation();
     },
     { immediate: false },
 );

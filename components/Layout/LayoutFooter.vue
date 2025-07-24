@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { getTranslatedProperty, getCategoryRoute } from '@shopware/helpers';
 
-const navigationStore = useNavigationStore();
-const footerNavigation = navigationStore.loadNavigation('footer-navigation', 1);
-const serviceNavigation = navigationStore.loadNavigation('service-navigation', 1);
+// TODO: promiseAll oder so, prüfen ob parallel bearbeitet
+const footerNavigation = await useAdvancedNavigation('footer-navigation', 1).loadNavigation();
+const serviceNavigation = await useAdvancedNavigation('service-navigation', 1).loadNavigation();
 </script>
 
 <template>
