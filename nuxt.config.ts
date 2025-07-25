@@ -121,12 +121,15 @@ export default defineNuxtConfig({
         bundle: {
             optimizeTranslationDirective: false,
         },
+        lazy: true,
         locales: [
             {
                 code: 'de-DE',
+                file: 'de-DE/de-DE.ts',
             },
             {
                 code: 'en-GB',
+                file: 'en-GB/en-GB.ts',
             },
         ],
     },
