@@ -1,19 +1,25 @@
 export function usePluginConfig() {
-    // useFetch needs to be at the top level, otherwise it breaks SSR/CSR payload data transfer and reactivity
-    // an explicit key should be passed to ensure consistency between server and client, regardless of file structure or runtime context
-    const { data, status, error, execute } = useFetch('/api/proxy/config', {
-        key: 'proxy-pond-config',
-        method: 'POST',
-        body: {
-            endpoint: 'loadConfig get /pond/config',
-        },
-        immediate: false,
-    });
+    // context needs to be fetched and awaited before (e.g.: in app.vue) or else it will be undefined here
+    const { sessionContext } = useSessionContext();
+
+    const fetchConfig = async () => {
+        const salesChannelId = sessionContext.value?.salesChannel?.id;
+
+        if (!salesChannelId) {
+            console.error('[usePluginConfig] Cannot fetch config: salesChannelId is missing.');
+            return { data: ref(null), error: ref('Missing salesChannelId') };
+        }
+
+        return useFetch('/api/proxy/config', {
+            key: `proxy-${salesChannelId}-config`,
+            method: 'POST',
+            body: {
+                endpoint: 'loadConfig get /pond/config',
+            },
+        });
+    };
 
     return {
-        data,
-        status,
-        error,
-        execute,
+        fetchConfig,
     };
 }

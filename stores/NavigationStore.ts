@@ -47,6 +47,7 @@ export const useNavigationStore = defineStore('navigation', () => {
     }
 
     return {
+        navigation,
         setNavigation,
         getNavigation,
     };

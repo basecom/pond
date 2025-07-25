@@ -12,7 +12,7 @@ export const useAdvancedNavigation = (type: string, depth: number) => {
         }
 
         const { data, error } = useFetch(`/api/proxy/navigation/${type}`, {
-            key: computed(() => `proxy-${salesChannelId}-${type}-${depth}`),
+            key: computed(() => `proxy-${salesChannelId}-navigation-${type}-${depth}`),
             method: 'POST',
             body: {
                 headers: { 'sw-include-seo-urls': true },

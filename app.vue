@@ -12,8 +12,10 @@ const customerStore = useCustomerStore();
 const configStore = useConfigStore();
 
 try {
+    // context should be fetched alone, as other calls depend on its result
+    await customerStore.refreshContext();
+
     await Promise.all([
-        customerStore.refreshContext(),
         configStore.loadConfig(),
     ]);
 } catch (error) {
