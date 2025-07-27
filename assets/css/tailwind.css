@@ -84,3 +84,14 @@ hr {
 .btn-sm {
     @apply py-2 px-4;
 }
+
+/*
+    Shopware adds these invalid classes for visibility of cms blocks on mobile and tablet view
+*/
+.max-md\:hidden {
+    @apply hidden md:block;
+}
+
+.md\:max-lg\:hidden {
+    @apply md:hidden lg:block;
+}
