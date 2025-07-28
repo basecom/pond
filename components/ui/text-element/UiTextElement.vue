@@ -37,6 +37,10 @@ withDefaults(
       iconClasses: undefined,
     },
 );
+
+defineEmits<{
+  click: [];
+}>();
 </script>
 
 <template>
@@ -57,7 +61,7 @@ withDefaults(
             :class="classes"
       >
           <template #addon-before="scope">
-            <Icon v-if="icon" :name="icon" :class="iconClasses" />
+            <Icon v-if="icon" :name="icon" :class="iconClasses" @click="$emit('click')" />
           </template>
         </TextElement>
     </slot>
