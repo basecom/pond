@@ -10,7 +10,6 @@ const { formatLink } = useInternationalization();
 
 const displayTotal = ref(5);
 const displayResultsContainer = ref(false);
-
 const minSearchTermLength = configStore.get('core.search.minSearchTermLength') as number;
 
 const onInput = async (value: string) => {

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 withDefaults(
     defineProps<{
       isVideo?: boolean;
@@ -19,6 +18,7 @@ withDefaults(
     },
 );
 </script>
+
 <template>
     <ProductCoverInner v-bind="$props" />
 </template>

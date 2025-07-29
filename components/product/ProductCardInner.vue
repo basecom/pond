@@ -62,6 +62,7 @@ const showReview = configStore.get('core.listing.showReview') as boolean;
                             [getStyle('product.card.cover.object.scale')]: displayMode === 'standard' && layoutType !== 'image',
                         }]"
                         :fallback-classes="getStyle('product.card.cover.fallback')"
+                        :autoplay="autoPlayVideoInListing"
                     />
                 </NuxtLinkLocale>
             </slot>
