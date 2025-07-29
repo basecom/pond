@@ -1,25 +1,37 @@
 export function usePluginConfig() {
-    // context needs to be fetched and awaited before (e.g.: in app.vue) or else it will be undefined here
     const { sessionContext } = useSessionContext();
+    const salesChannelId = computed(() => sessionContext.value?.salesChannel?.id);
 
-    const fetchConfig = async () => {
-        const salesChannelId = sessionContext.value?.salesChannel?.id;
+    // create a reactive key that depends on the sales channel.
+    const key = computed(() => `proxy-config-${salesChannelId.value}`);
 
-        if (!salesChannelId) {
-            console.error('[usePluginConfig] Cannot fetch config: salesChannelId is missing.');
-            return { data: ref(null), error: ref('Missing salesChannelId') };
-        }
-
-        return useFetch('/api/proxy/config', {
-            key: `proxy-${salesChannelId}-config`,
+    const {
+        data: config,
+        pending,
+        error,
+        execute: fetchConfig,
+    } = useAsyncData(
+        key,
+        async () => await $fetch('/api/proxy/config', {
             method: 'POST',
             body: {
                 endpoint: 'loadConfig get /pond/config',
             },
-        });
-    };
+        }).catch((error) => {
+            console.error('Failed to fetch plugin config:', import.meta.dev ? error : '');
+
+            throw error;
+        }),
+        {
+            immediate: false,
+            watch: [salesChannelId],
+        },
+    );
 
     return {
+        config,
+        pending,
+        error,
         fetchConfig,
     };
 }

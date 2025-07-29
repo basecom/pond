@@ -5,7 +5,7 @@ interface ConfigState {
 }
 
 export const useConfigStore = defineStore('config', () => {
-    const { fetchConfig } = usePluginConfig();
+    const { config, error, fetchConfig } = usePluginConfig();
     const { handleError } = useHandleError();
     const { sessionContext } = useSessionContext();
 
@@ -22,14 +22,14 @@ export const useConfigStore = defineStore('config', () => {
             return;
         }
 
-        const { data, error } = await fetchConfig();
+        await fetchConfig();
 
-        if (error.value && !data.value) {
+        if (error.value && !config.value) {
             handleError('[Pond]: Failed to load config values', false);
         }
 
-        if (data.value && currentSalesChannelId.value) {
-            configState.value[currentSalesChannelId.value] = data.value as PluginConfiguration | null;
+        if (config.value && currentSalesChannelId.value) {
+            configState.value[currentSalesChannelId.value] = config.value as PluginConfiguration | null;
         }
     };
 

@@ -7,14 +7,15 @@ const { t } = useI18n();
 
 const sideMenuController = useModal();
 
-const mainNavigation = await useAdvancedNavigation('main-navigation', 2).loadNavigation();
+const { navigation: mainNavigation, loadNavigation } = useAdvancedNavigation('main-navigation', 2);
+await loadNavigation();
 
 const navigationPath = ref<string[]>([]);
 
 watch(
     languageIdChain,
     async () => {
-        await useAdvancedNavigation('main-navigation', 2).loadNavigation();
+        await loadNavigation();
         // Reset the path when language changes
         navigationPath.value = [];
     },
