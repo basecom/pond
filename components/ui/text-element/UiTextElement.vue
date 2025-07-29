@@ -33,8 +33,8 @@ withDefaults(
         inputType: undefined,
         debounce: undefined,
         classes: undefined,
-      icon: undefined,
-      iconClasses: undefined,
+        icon: undefined,
+        iconClasses: undefined,
     },
 );
 
@@ -59,10 +59,15 @@ defineEmits<{
             :input-type="inputType"
             :debounce="debounce"
             :class="classes"
-      >
-          <template #addon-before="scope">
-            <Icon v-if="icon" :name="icon" :class="iconClasses" @click="$emit('click')" />
-          </template>
+        >
+            <template #addon-before>
+                <Icon
+                    v-if="icon"
+                    :name="icon"
+                    :class="iconClasses"
+                    @click="$emit('click')"
+                />
+            </template>
         </TextElement>
     </slot>
 </template>

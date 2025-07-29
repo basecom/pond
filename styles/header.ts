@@ -3,7 +3,7 @@ import navigation from './navigation';
 export default {
     outer: 'sticky top-0 z-30 h-fit bg-white shadow',
     container: 'container relative py-3',
-    wrapper: 'flex items-center justify-between gap-4 md:grid md:grid-cols-[80%_auto]',
+    wrapper: 'flex items-center justify-between gap-4 md:grid md:grid-cols-[70%_auto]',
     leftSection: 'flex items-center gap-2',
     logo: 'w-6 h-6 min-w-6',
 
@@ -32,7 +32,26 @@ export default {
             badge: 'absolute -right-2 -top-1.5 !px-1 !py-0 text-xs font-normal',
         },
 
-        search: '!size-5 cursor-pointer',
+        search: {
+            icon: '!size-5 cursor-pointer',
+            skeleton: {
+                wrapper: 'gap-2.5 flex flex-col',
+                outer: 'flex gap-2.5 w-full',
+                innerSmall: 'w-1/4 p-2.5',
+                innerBig: 'w-2/4 p-2.5',
+                line: 'w-full p-2.5',
+            },
+            results: {
+                wrapper: 'p-2.5 border-b flex gap-2.5 w-full',
+                product: 'w-10 h-fit m-auto',
+                video: 'w-10 h-fit m-auto',
+                fallback: 'w-10 h-fit m-auto',
+            },
+            page: {
+                wrapper: 'flex mt-2.5 items-center gap-1',
+                inner: 'h-4',
+            },
+        },
 
         wishlist: {
             trigger: 'relative h-5',
