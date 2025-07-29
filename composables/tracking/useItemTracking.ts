@@ -25,15 +25,20 @@ export type UseItemTrackingReturn = {
 };
 
 export function useItemTracking(): UseItemTrackingReturn {
+    const { navigation: mainNavigation } = useAdvancedNavigation('main-navigation', 2);
     const { sessionContext } = useSessionContext();
 
     const _getCategoryTree = (product: Schemas['Product']): Schemas['Category'][] => {
         const categoryTreeId = product.categoryTree ?? [];
 
+        if (!mainNavigation.value) {
+            return [];
+        }
+
         return categoryTreeId.reduce(
             (categoryTree, categoryId) => {
                 const currentCategoryLevel: Schemas['Category'][] =
-                    categoryTree[categoryTree.length - 1]?.children ?? [];
+                    categoryTree[categoryTree.length - 1]?.children ?? mainNavigation?.value ?? [];
                 const currentCategory = currentCategoryLevel.find(category => category.id === categoryId);
 
                 if (currentCategory) {
