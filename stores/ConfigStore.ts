@@ -29,7 +29,7 @@ export const useConfigStore = defineStore('config', () => {
         }
 
         if (config.value && currentSalesChannelId.value) {
-            configState.value[currentSalesChannelId.value] = config.value as PluginConfiguration | null;
+            configState.value[currentSalesChannelId.value] = config.value;
         }
     };
 

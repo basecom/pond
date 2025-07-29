@@ -1,3 +1,5 @@
+import type { PluginConfiguration } from '~/types/PluginConfiguration';
+
 export function usePluginConfig() {
     const { sessionContext } = useSessionContext();
     const salesChannelId = computed(() => sessionContext.value?.salesChannel?.id);
@@ -10,7 +12,7 @@ export function usePluginConfig() {
         pending,
         error,
         execute: fetchConfig,
-    } = useAsyncData(
+    } = useAsyncData<PluginConfiguration | null>(
         key,
         async () => await $fetch('/api/proxy/config', {
             method: 'POST',
