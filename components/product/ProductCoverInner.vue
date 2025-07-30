@@ -7,8 +7,8 @@ withDefaults(
       altText?: string;
       title?: string;
       label?: string;
-      videoClasses?: string | string[];
-      productClasses?: string | string[];
+      videoClasses?: string | (string | { [key: string]: boolean })[];
+      productClasses?: string | (string | { [key: string]: boolean })[];
       fallbackClasses?: string;
       promotionClasses?: string;
       promotionIconClasses?: string;
@@ -26,7 +26,7 @@ withDefaults(
         fallbackClasses: undefined,
         promotionClasses: undefined,
         promotionIconClasses: undefined,
-        autoplay: false,
+        autoPlay: false,
     },
 );
 
