@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { DialogClose, DialogTitle, type DialogTitleProps } from 'reka-ui';
+import { DialogClose, DialogTitle  } from 'reka-ui';
+import type { DialogTitleProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<DialogTitleProps & { class?: HTMLAttributes['class'] }>();

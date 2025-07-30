@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { SelectScrollUpButton, type SelectScrollUpButtonProps, useForwardProps } from 'reka-ui';
+import { SelectScrollUpButton,  useForwardProps } from 'reka-ui';
+import type { SelectScrollUpButtonProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<SelectScrollUpButtonProps & { class?: HTMLAttributes['class'] }>();

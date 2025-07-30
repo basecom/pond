@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ToastClose, type ToastCloseProps } from 'reka-ui';
+import { ToastClose  } from 'reka-ui';
+import type { ToastCloseProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<ToastCloseProps & {
