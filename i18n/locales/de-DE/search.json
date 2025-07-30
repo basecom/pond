@@ -1,6 +1,8 @@
 {
   "search": {
     "allResults": "Alle Suchergebnisse anzeigen",
-    "noResult": "Keine Suchergebnisse gefunden."
+    "allResultsDescription": "Dieser Button navigiert zur Suchergebnisseite",
+    "noResult": "Keine Suchergebnisse gefunden.",
+    "viewProduct": "Produkt ansehen"
   }
 }

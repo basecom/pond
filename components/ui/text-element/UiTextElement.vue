@@ -39,7 +39,7 @@ withDefaults(
 );
 
 defineEmits<{
-  click: [];
+  onIconClick: [];
 }>();
 </script>
 
@@ -65,7 +65,7 @@ defineEmits<{
                     v-if="icon"
                     :name="icon"
                     :class="iconClasses"
-                    @click="$emit('click')"
+                    @click="$emit('onIconClick')"
                 />
             </template>
         </TextElement>

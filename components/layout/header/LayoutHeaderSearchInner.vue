@@ -52,7 +52,7 @@ const navigateToSearchPage = () => {
                                 :icon-classes="getStyle('header.actions.search.icon')"
                                 :debounce="300"
                                 autocomplete="off"
-                                @click="navigateToSearchPage()"
+                                @on-icon-click="navigateToSearchPage()"
                             />
                         </Vueform>
                     </UiPopoverTrigger>
@@ -75,6 +75,8 @@ const navigateToSearchPage = () => {
                                         :key="product.id"
                                         :to="formatLink(getProductRoute(product))"
                                         :class="getStyle('header.actions.search.results.wrapper')"
+                                        :aria-label="$t('search.viewProduct')"
+                                        :aria-description="`${product.translated.name} - ${product.calculatedPrice?.totalPrice}`"
                                     >
                                         <ProductCover
                                             :is-video="product.cover?.media?.mimeType?.includes('video')"
@@ -95,6 +97,8 @@ const navigateToSearchPage = () => {
                                     <NuxtLinkLocale
                                         :to="formatLink({ path: `/search`, query: { search: searchTerm } })"
                                         :class="getStyle('header.actions.search.page.wrapper')"
+                                        :aria-label="$t('search.allResults')"
+                                        :aria-description="$t('search.allResultsDescription')"
                                     >
                                         <Icon name="material-symbols:arrow-forward-ios-rounded" :class="getStyle('header.actions.search.page.inner')" />
 
