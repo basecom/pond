@@ -22,7 +22,7 @@ withDefaults(
 
 <template>
     <slot name="account-type">
-        <FormSelectElement
+        <UiSelectElement
             :id="`${prefix}accountType`"
             :name="`${prefix}accountType`"
             :label="$t('account.customer.accountType.label')"
