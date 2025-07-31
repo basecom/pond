@@ -82,11 +82,15 @@ export default defineNuxtConfig({
         locales: [
             {
                 code: 'de-DE',
-                file: 'de-DE/de-DE.ts'
+                file: 'de-DE/de-DE.ts',
+            },
+            {
+                code: 'en-GB',
+                file: 'en-GB/en-GB.ts',
             },
         ],
         lazy: true,
-        defaultLocale: 'de-DE'
+        defaultLocale: 'de-DE',
     },
 
     compatibilityDate: '2025-02-24',

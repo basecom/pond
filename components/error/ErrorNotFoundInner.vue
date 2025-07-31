@@ -1,10 +1,10 @@
 <template>
     <ErrorLayout>
         <template #title>
-            {{ $t('error.404.heading') }}
+            {{ $t('general.404ErrorPageHeader') }}
         </template>
         <template #description>
-            {{ $t('error.404.detail') }}
+            {{ $t('general.404ErrorDescription') }}
         </template>
     </ErrorLayout>
 </template>

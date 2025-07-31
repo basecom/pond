@@ -46,15 +46,14 @@ const onChange = async (formData: NewsletterFormData) => {
         try {
             await newsletterUnsubscribe(props.customer.email);
             toast({
-                title: t('newsletter.unsubscribed'),
+                title: t('newsletter.subscriptionRevokeSuccess'),
             });
             // alert is no longer displayed
             displayDoubleNewsletterRegistrationAlert.value = false;
             newsletterStatus.value = await getNewsletterStatus();
         } catch (error) {
             toast({
-                title: t('general.errorHeadline'),
-                description: t('general.errorMessage'),
+                title: t('error.message-default'),
                 variant: 'destructive',
             });
             handleError(error);
@@ -67,7 +66,7 @@ const onChange = async (formData: NewsletterFormData) => {
         try {
             await newsletterSubscribe({ email: props.customer.email, option: 'subscribe' });
             toast({
-                title: t('newsletter.subscribed.headline'),
+                title: t('newsletter.subscriptionConfirmationSuccess'),
             });
 
             // Depending on the newsletter status, the alert display is set
@@ -80,8 +79,8 @@ const onChange = async (formData: NewsletterFormData) => {
             displayDoubleNewsletterRegistrationAlert.value = false;
         } catch (error) {
             toast({
-                title: t('general.errorHeadline'),
-                description: t('general.errorMessage'),
+                title: t('error.message-default'),
+                description: t('newsletter.subscriptionConfirmationFailed'),
                 variant: 'destructive',
             });
             handleError(error);
@@ -92,8 +91,8 @@ const onChange = async (formData: NewsletterFormData) => {
 
 <template>
     <slot name="introduction">
-        <h1>{{ $t('account.account') }}</h1>
-        <p :class="getStyle('account.pageDescription')">{{ $t('account.overview.description') }}</p>
+        <h1>{{ $t('account.overviewTitle') }}</h1>
+        <p :class="getStyle('account.pageDescription')">{{ $t('account.overviewInfo') }}</p>
     </slot>
 
     <div :class="getStyle('account.personalData.outer')">
@@ -102,7 +101,7 @@ const onChange = async (formData: NewsletterFormData) => {
             <div>
                 <slot name="personal-data-headline">
                     <h3 :class="getStyle('account.personalData.headline')">
-                        {{ $t('account.overview.personalData') }}
+                        {{ $t('account.profilePersonalTitle') }}
                     </h3>
                 </slot>
 
@@ -112,35 +111,35 @@ const onChange = async (formData: NewsletterFormData) => {
                             v-if="customer.salutation"
                             :class="getStyle('account.personalData.general.label')"
                         >
-                            {{ $t('account.customer.salutation.label') }}
+                            {{ $t('account.personalSalutationLabel') }}
                         </span>
                         <span>{{ customer.salutation?.displayName }}</span>
 
                         <template v-if="showTitle && customer.title">
                             <span :class="getStyle('account.personalData.general.label')">
-                                {{ $t('account.customer.title.label') }}
+                                {{ $t('account.personalTitleLabel') }}
                             </span>
                             <span>{{ customer.title }}</span>
                         </template>
 
                         <span :class="getStyle('account.personalData.general.label')">
-                            {{ $t('account.customer.name') }}
+                            {{ $t('account.personalNameLabel') }}
                         </span>
                         <span>{{ customer.firstName }} {{ customer.lastName }}</span>
 
                         <span :class="getStyle('account.personalData.general.label')">
-                            {{ $t('account.customer.email.label') }}
+                            {{ $t('account.profileMailTitle') }}
                         </span>
                         <span>{{ customer.email }}</span>
 
                         <template v-if="customer.accountType === 'business'">
                             <span :class="getStyle('account.personalData.general.label')">
-                                {{ $t('account.customer.company.label') }}
+                                {{ $t('address.companyNameLabel') }}
                             </span>
                             <span>{{ customer.company }}</span>
 
                             <span :class="getStyle('account.personalData.general.label')">
-                                {{ $t('account.customer.vatId.label') }}
+                                {{ $t('address.companyVatLabel') }}
                             </span>
                             <span>{{ customer.vatIds?.join(', ') }}</span>
                         </template>
@@ -154,7 +153,7 @@ const onChange = async (formData: NewsletterFormData) => {
             <div>
                 <slot name="payment-method-headline">
                     <h3 :class="getStyle('account.personalData.headline')">
-                        {{ $t('account.overview.defaultPaymentMethod') }}
+                        {{ $t('account.overviewPaymentHeader') }}
                     </h3>
                 </slot>
 
@@ -172,7 +171,7 @@ const onChange = async (formData: NewsletterFormData) => {
             <div :class="getStyle('account.newsletter.outer')">
                 <slot name="newsletter-headline">
                     <h3 :class="getStyle('account.newsletter.headline')">
-                        {{ $t('newsletter.headline') }}
+                        {{ $t('account.newsletterTitle') }}
                     </h3>
                 </slot>
 
@@ -184,9 +183,9 @@ const onChange = async (formData: NewsletterFormData) => {
 
                         <slot name="alert-content">
                             <div>
-                                <UiAlertTitle>{{ $t('newsletter.subscribed.headline') }}</UiAlertTitle>
+                                <UiAlertTitle>{{ $t('account.registerAdvantage4') }}</UiAlertTitle>
                                 <UiAlertDescription>
-                                    {{ $t('newsletter.subscribed.message') }}
+                                    {{ $t('newsletter.subscriptionPersistedSuccess') }}
                                 </UiAlertDescription>
                             </div>
                         </slot>
@@ -200,7 +199,7 @@ const onChange = async (formData: NewsletterFormData) => {
                             name="newsletter"
                         >
                             <template #checkbox-element-content>
-                                {{ $t('newsletter.subscribeToNewsletterLabel') }}
+                                {{ $t('account.newsletterSettings') }}
                             </template>
                         </UiCheckboxElement>
                     </Vueform>
@@ -212,7 +211,7 @@ const onChange = async (formData: NewsletterFormData) => {
         <slot name="billing-address">
             <AddressCard
                 v-if="customer.defaultBillingAddress"
-                :headline="$t('account.overview.defaultBillingAddress')"
+                :headline="$t('account.overviewBillingHeader')"
                 :address="customer.defaultBillingAddress"
             />
         </slot>
@@ -221,9 +220,9 @@ const onChange = async (formData: NewsletterFormData) => {
         <slot name="shipping-address">
             <AddressCard
                 v-if="customer.defaultShippingAddress"
-                :headline="$t('account.overview.defaultShippingAddress')"
+                :headline="$t('account.overviewShippingHeader')"
                 :address="customer.defaultBillingAddressId !== customer.defaultShippingAddressId ? customer.defaultShippingAddress : undefined"
-                :description="customer.defaultBillingAddressId === customer.defaultShippingAddressId ? $t('account.overview.addressesIdentical') : undefined"
+                :description="customer.defaultBillingAddressId === customer.defaultShippingAddressId ? $t('account.overviewAddressEqual') : undefined"
             />
         </slot>
     </div>

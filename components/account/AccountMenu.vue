@@ -5,7 +5,7 @@ const { logout } = usePondAuthentication();
 
 const accountLinks: {name: string, link: string}[] = [
     {
-        name: 'account',
+        name: 'overview',
         link: '/account',
     },
     {

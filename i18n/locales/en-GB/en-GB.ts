@@ -17,9 +17,7 @@ export default defineI18nLocale(async () => {
         try {
             // @ts-expect-error - this store api exists
             const res = (await apiClient.invoke('loadSnippets post /pond/snippet', {
-                body: {
-                    domainUrl: url.origin as string,
-                },
+                body: { domainUrl: `${url.origin}${url.pathname}` },
                 // @ts-expect-error - this store api exists
             })).data;
             return res.snippets;

@@ -20,10 +20,10 @@ const emits = defineEmits<{
 const schema = z.object({
     email: z
         .string({
-            required_error: t('account.email.required'),
+            required_error: t('account.emailRequired'),
         })
         .email({
-            message: t('account.email.invalid'),
+            message: t('account.emailInvalid'),
         }),
 });
 
@@ -46,9 +46,9 @@ const recover = (recoverData: RecoverData) => {
                         </slot>
 
                         <div>
-                            <UiAlertTitle>{{ $t('account.recover.successHeader') }}</UiAlertTitle>
+                            <UiAlertTitle>{{ $t('account.profileRecoverPasswordTitle') }}</UiAlertTitle>
                             <UiAlertDescription>
-                                {{ $t('account.recover.successMessage') }}
+                                {{ $t('account.recoveryMailSend') }}
                             </UiAlertDescription>
                         </div>
                     </UiAlert>
@@ -56,11 +56,11 @@ const recover = (recoverData: RecoverData) => {
             </slot>
 
             <slot name="header">
-                <h1>{{ $t('account.recover.header') }}</h1>
+                <h1>{{ $t('account.profileRecoverPasswordTitle') }}</h1>
             </slot>
 
             <slot name="info-text">
-                <p :class="getStyle('account.recover.description')">{{ $t('account.recover.information') }}</p>
+                <p :class="getStyle('account.recover.description')">{{ $t('account.profileRecoverPasswordInfo') }}</p>
             </slot>
 
             <slot name="form">
@@ -69,10 +69,10 @@ const recover = (recoverData: RecoverData) => {
                     :schema="schema"
                     :field-config="{
                         email: {
-                            label: $t('account.email.label'),
+                            label: $t('account.loginMailLabel'),
                             inputProps: {
                                 type: 'email',
-                                placeholder: $t('account.email.placeholder'),
+                                placeholder: $t('account.loginMailPlaceholder'),
                             },
                         }
                     }"
@@ -82,13 +82,13 @@ const recover = (recoverData: RecoverData) => {
                         <div :class="getStyle('account.recover.form.buttons.outer')">
                             <slot name="back-button">
                                 <UiButton variant="outline" :class="getStyle('account.recover.form.buttons.cancel')">
-                                    <NuxtLinkLocale to="/account/login">{{ $t('account.recover.backButton') }}</NuxtLinkLocale>
+                                    <NuxtLinkLocale to="/account/login">{{ $t('general.back') }}</NuxtLinkLocale>
                                 </UiButton>
                             </slot>
 
                             <slot name="submit-button">
                                 <UiButton type="submit" :is-loading="isLoading" :class="getStyle('account.recover.form.buttons.submit')">
-                                    {{ $t('account.recover.submitButton') }}
+                                    {{ $t('account.profileRecoverPasswordSubmit') }}
                                 </UiButton>
                             </slot>
                         </div>

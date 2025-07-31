@@ -37,9 +37,9 @@ onMounted(async () => {
         <UiSelectElement
             :id="`${prefix}salutationId`"
             :name="`${prefix}salutationId`"
-            :label="$t('account.customer.salutation.label')"
-            :placeholder="$t('account.customer.salutation.placeholder')"
-            :messages="{ required: $t('account.customer.salutation.errorRequired') }"
+            :label="$t('account.personalSalutationLabel')"
+            :placeholder="$t('account.personalSalutationPlaceholder')"
+            :messages="{ required: $t('account.personalSalutationRequired') }"
             rules="required"
             :items="formattedSalutations"
             :columns="columns"

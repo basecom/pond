@@ -69,13 +69,13 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
 
 <template>
     <slot name="introduction">
-        <h1>{{ $t('account.profile') }}</h1>
+        <h1>{{ $t('account.profileTitle') }}</h1>
     </slot>
 
     <!-- personal data -->
     <slot name="personal-data-headline">
         <h3 :class="getStyle('account.personalData.subHeadline')">
-            {{ $t('account.overview.personalData') }}
+            {{ $t('account.profileText') }}
         </h3>
     </slot>
 
@@ -86,14 +86,14 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
             :schema="schema"
             :dependencies="dependencies"
             :field-config="{
-                accountType: { label: $t('account.customer.accountType.label') },
-                salutationId: { label: $t('account.customer.salutation.label') },
-                title: { label: $t('account.customer.title.label') },
-                firstName: { label: $t('account.customer.firstName.label') },
-                lastName: { label: $t('account.customer.lastName.label') },
-                company: { label: $t('account.customer.company.label') },
-                vatIds: { label: $t('account.customer.vatId.label') },
-                birthdayDay: { label: $t('account.customer.birthday.label') },
+                accountType: { label: $t('account.personalTypeLabel') },
+                salutationId: { label: $t('account.personalSalutationLabel') },
+                title: { label: $t('account.personalTitleLabel') },
+                firstName: { label: $t('account.personalFirstNameLabel') },
+                lastName: { label: $t('account.personalLastNameLabel') },
+                company: { label: $t('address.companyNameLabel') },
+                vatIds: { label: $t('address.companyVatLabel') },
+                birthdayDay: { label: $t('account.personalBirthdayLabel') },
             }"
             @submit="changePersonalData"
         >
@@ -107,7 +107,7 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
                 <div class="col-span-12">
                     <FormField v-slot="{ componentField }" v-bind="slotProps" name="salutationId">
                         <UiFormItem>
-                            <UiAutoFormLabel>{{ $t('account.customer.salutation.label') }}</UiAutoFormLabel>
+                            <UiAutoFormLabel>{{ $t('account.personalSalutationLabel') }}</UiAutoFormLabel>
                             <UiSelect v-bind="componentField" :default-value="customer.salutationId">
                                 <UiFormControl>
                                     <UiSelectTrigger>
@@ -167,7 +167,7 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
                 <div class="col-span-4">
                     <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayDay">
                         <UiFormItem>
-                            <UiAutoFormLabel>{{ $t('account.customer.birthday.label') }}</UiAutoFormLabel>
+                            <UiAutoFormLabel>{{ $t('account.personalBirthdayLabel') }}</UiAutoFormLabel>
                             <UiSelect v-bind="componentField" :default-value="birthday.getDate()">
                                 <UiFormControl>
                                     <UiSelectTrigger>
@@ -197,7 +197,7 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
                 <div class="col-span-4 grid items-end">
                     <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayMonth">
                         <UiFormItem>
-                            <UiAutoFormLabel class="sr-only">{{ $t('account.customer.birthdayMonth') }}</UiAutoFormLabel>
+                            <UiAutoFormLabel class="sr-only">{{ $t('account.personalBirthdaySelectMonth') }}</UiAutoFormLabel>
                             <UiSelect v-bind="componentField" :default-value="birthday.getMonth() + 1">
                                 <UiFormControl>
                                     <UiSelectTrigger>
@@ -226,7 +226,7 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
                 <div class="col-span-4 grid items-end">
                     <FormField v-slot="{ componentField }" v-bind="slotProps" name="birthdayYear">
                         <UiFormItem>
-                            <UiAutoFormLabel class="sr-only">{{ $t('account.customer.birthdayYear') }}</UiAutoFormLabel>
+                            <UiAutoFormLabel class="sr-only">{{ $t('account.personalBirthdaySelectYear') }}</UiAutoFormLabel>
                             <UiSelect v-bind="componentField" :default-value="birthday.getFullYear()">
                                 <UiFormControl>
                                     <UiSelectTrigger>
@@ -253,7 +253,7 @@ const changePersonalData = async (personalDataForm: PersonalDataForm) => {
 
             <slot name="submit-button">
                 <UiButton type="submit" class="col-span-12" :is-loading="isLoading.personalData">
-                    {{ $t('general.save') }}
+                    {{ $t('global.default.save') }}
                 </UiButton>
             </slot>
         </UiAutoForm>

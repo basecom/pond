@@ -72,7 +72,7 @@ const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.
         <slot name="quantity">
             <span :class="getStyle('account.order.lineItem.quantity.wrapper')">
                 <span :class="getStyle('account.order.lineItem.quantity.label')">
-                    {{ $t('order.lineItem.quantity') }}
+                    {{ $t('account.orderItemColumnQuantity') }}
                 </span>
                 {{ lineItem.quantity }}
             </span>

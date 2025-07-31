@@ -10,7 +10,7 @@ await rerouteIfLoggedIn();
             <AccountLogin>
                 <template #headline>
                     <h1 :class="getStyle('account.login.page.headline')">
-                        {{ $t('account.login.header') }}
+                        {{ $t('account.login') }}
                     </h1>
                 </template>
             </AccountLogin>
