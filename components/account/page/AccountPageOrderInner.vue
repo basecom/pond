@@ -39,10 +39,10 @@ const displayCompletePaymentLink = (paymentStateMachineTechnicalName: string) =>
 <template>
     <div :class="getStyle('account.order.detail.outer')">
         <slot name="headline">
-            <h1>{{ $t('order.headline') }}</h1>
+            <h1>{{ $t('account.ordersTitle') }}</h1>
         </slot>
         <slot name="sub-headline">
-            <h2>{{ $t('order.subHeadline') }}</h2>
+            <h2>{{ $t('account.ordersWelcome') }}</h2>
         </slot>
 
         <template v-if="isLoading">
@@ -67,7 +67,7 @@ const displayCompletePaymentLink = (paymentStateMachineTechnicalName: string) =>
                                     <UiAccordionTrigger :class="getStyle('account.order.detail.trigger')">
                                         <div :class="getStyle('account.order.detail.headline.outer')">
                                             <div :class="getStyle('account.order.detail.headline.inner')">
-                                                {{ $t('order.orderDate') }} {{ formatLocaleDate(order?.orderDate) }}
+                                                {{ $t('account.orderItemDate') }} {{ formatLocaleDate(order?.orderDate) }}
                                                 <UiBadge
                                                     v-if="order && order.transactions"
                                                     :variant="getBadgeVariant(
@@ -79,7 +79,7 @@ const displayCompletePaymentLink = (paymentStateMachineTechnicalName: string) =>
                                                         v-if="order && order.transactions && order.stateMachineState.technicalName !== 'cancelled' && displayCompletePaymentLink(order.transactions[0]?.stateMachineState?.technicalName ?? '')"
                                                         to="/"
                                                     >
-                                                        {{ $t('payment.completePayment') }}
+                                                        {{ $t('account.orderStatusActionCompletePayment') }}
                                                     </NuxtLinkLocale>
 
                                                     <span v-else>
@@ -89,7 +89,7 @@ const displayCompletePaymentLink = (paymentStateMachineTechnicalName: string) =>
                                             </div>
 
                                             <span :class="getStyle('account.order.detail.headline.orderNumber')">
-                                                {{ $t('order.orderNumber') }} {{ order?.orderNumber }}
+                                                {{ $t('account.orderNumber') }} {{ order?.orderNumber }}
                                             </span>
                                         </div>
                                     </UiAccordionTrigger>
@@ -121,7 +121,7 @@ const displayCompletePaymentLink = (paymentStateMachineTechnicalName: string) =>
                     <UiAlert :class="getStyle('account.order.detail.alert.outer')">
                         <Icon name="mdi:alert-circle-outline" :class="getStyle('account.order.detail.alert.icon')" />
                         <UiAlertTitle :class="getStyle('account.order.detail.alert.title')">
-                            {{ $t('order.noOrders') }}
+                            {{ $t('account.ordersInfoEmpty') }}
                         </UiAlertTitle>
                     </UiAlert>
                 </slot>

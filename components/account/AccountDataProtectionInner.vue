@@ -28,14 +28,14 @@ onMounted(async () => {
 <template>
     <span>
         <slot name="data-protection-policy-label">
-            {{ $t('account.register.dataProtection.policy.label') }}
+            {{ $t('account.dataProtection.policy.label') }}
         </slot>
 
         <slot name="data-protection-policy-dialog">
             <UiDialog>
                 <slot name="data-protection-policy-trigger">
                     <UiDialogTrigger :class="getStyle('account.dataProtection.trigger')">
-                        {{ $t('account.register.dataProtection.policy.trigger') }}
+                        {{ $t('account.dataProtection.policy.trigger') }}
                     </UiDialogTrigger>
                 </slot>
 
@@ -58,14 +58,14 @@ onMounted(async () => {
         </slot>
 
         <slot name="data-protection-terms-and-conditions-label">
-            {{ $t('account.register.dataProtection.termsAndConditions.label') }}
+            {{ $t('account.dataProtection.termsAndConditions.label') }}
         </slot>
 
         <slot name="data-protection-terms-and-conditions-dialog">
             <UiDialog>
                 <slot name="data-protection-terms-and-conditions-trigger">
                     <UiDialogTrigger :class="getStyle('account.dataProtection.trigger')">
-                        {{ $t('account.register.dataProtection.termsAndConditions.trigger') }}
+                        {{ $t('account.dataProtection.termsAndConditions.trigger') }}
                     </UiDialogTrigger>
                 </slot>
 

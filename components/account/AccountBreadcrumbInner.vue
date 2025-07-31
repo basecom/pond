@@ -12,7 +12,7 @@ const breadcrumbs = computed(() => route.path.split('/').filter((breadcrumb: str
             <UiBreadcrumbItem>
                 <slot name="breadcrumb-home">
                     <UiBreadcrumbLink :href="formatLink('/')">
-                        {{ $t('general.homepage') }}
+                        {{ $t('general.homeLink') }}
                     </UiBreadcrumbLink>
                 </slot>
             </UiBreadcrumbItem>
@@ -24,11 +24,21 @@ const breadcrumbs = computed(() => route.path.split('/').filter((breadcrumb: str
                     <slot name="breadcrumb-item">
                         <UiBreadcrumbItem>
                             <UiBreadcrumbPage v-if="index === breadcrumbs.length - 1">
-                                {{ $t(`account.${breadcrumb}`) }}
+                                <template v-if="index === 0">
+                                    {{ $t('account.overviewLink') }}
+                                </template>
+                                <template v-else>
+                                    {{ $t(`account.${breadcrumb}Link`) }}
+                                </template>
                             </UiBreadcrumbPage>
 
                             <UiBreadcrumbLink v-else :href="formatLink(`/${breadcrumb}`)">
-                                {{ $t(`account.${breadcrumb}`) }}
+                                <template v-if="index === 0">
+                                    {{ $t('account.overviewLink') }}
+                                </template>
+                                <template v-else>
+                                    {{ $t(`account.${breadcrumb}Link`) }}
+                                </template>
                             </UiBreadcrumbLink>
                         </UiBreadcrumbItem>
                     </slot>

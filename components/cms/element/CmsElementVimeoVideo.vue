@@ -22,7 +22,7 @@ const vimeoConfigMapping = {
     previewMedia: 'previewMedia',
 };
 
-const videoUrl: Ref = ref(
+const videoUrl: Ref<string> = ref(
     `https://player.vimeo.com/video/${getConfigValue('videoID')}?`,
 );
 
@@ -54,7 +54,7 @@ const confirmed = ref(false);
     <CmsElementVideoConfirmation
         v-if="needsConfirmation && !confirmed"
         :preview-url="content?.data?.media?.url"
-        alt="Video preview"
+        :alt="$t('component.cms.video.vimeo.alt')"
         @confirm="(hasConfirmed: boolean) => confirmed = hasConfirmed"
     />
     <template v-else>
@@ -62,7 +62,7 @@ const confirmed = ref(false);
             <iframe
                 class="w-full inset-0 aspect-video"
                 :src="videoUrl.replace(/ /g, '')"
-                :title="$t('video.vimeoTitle')"
+                :title="$t('component.cms.video.vimeo.title')"
             />
         </div>
     </template>

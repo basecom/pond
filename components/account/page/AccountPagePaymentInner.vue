@@ -26,9 +26,9 @@ onMounted(async () => {
 
 <template>
     <slot name="introduction">
-        <h1>{{ $t('account.payment') }}</h1>
+        <h1>{{ $t('account.paymentTitle') }}</h1>
         <p :class="getStyle('account.pageDescription')">
-            {{ $t('account.defaultPaymentMethod.description') }}
+            {{ $t('account.paymentText') }}
         </p>
     </slot>
 
@@ -41,7 +41,7 @@ onMounted(async () => {
             <slot name="payment-id">
                 <FormField v-slot="{ componentField }" v-bind="slotProps" name="paymentId">
                     <UiFormItem>
-                        <UiAutoFormLabel class="sr-only">{{ $t('account.defaultPaymentMethod.description') }}</UiAutoFormLabel>
+                        <UiAutoFormLabel class="sr-only">{{ $t('account.overviewPaymentHeader') }}</UiAutoFormLabel>
                         <UiRadioGroup
                             v-bind="componentField"
                             :default-value="selectedPaymentMethod?.id"
@@ -70,7 +70,7 @@ onMounted(async () => {
 
         <slot name="submit-button">
             <UiButton type="submit" class="col-span-12">
-                {{ $t('general.save') }}
+                {{ $t('global.default.save') }}
             </UiButton>
         </slot>
     </UiAutoForm>

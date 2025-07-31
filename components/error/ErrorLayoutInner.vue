@@ -7,17 +7,19 @@ const { getStyle } = usePondStyle();
         <div :class="getStyle('error.outer')">
             <slot name="container">
                 <h1 :class="getStyle('error.headline')">
-                    <slot name="headline">{{ $t('error.generalHeadline') }}</slot>
+                    <slot name="headline">{{ $t('general.404ErrorPageHeader') }}</slot>
                 </h1>
 
                 <p :class="getStyle('error.description')">
-                    <slot name="description" />
+                    <slot name="description">
+                        {{ $t('general.404ErrorDescription') }}
+                    </slot>
                 </p>
 
                 <slot name="button">
                     <NuxtLinkLocale to="/">
                         <UiButton variant="link" :class="getStyle('error.button')">
-                            {{ $t('error.generalButton') }}
+                            {{ $t('general.404ErrorReturn') }}
                         </UiButton>
                     </NuxtLinkLocale>
                 </slot>
