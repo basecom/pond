@@ -1,0 +1,27 @@
+{
+  "checkout": {
+    "proceedToCheckout": "Zum Checkout",
+    "proceedToCart": "Zum Warenkorb",
+    "deliveryPeriod": "Lieferzeitraum",
+    "quantity": "Menge",
+    "lineItemUnitPriceDescriptor": "Stück",
+    "lineItemUnitPriceSeparator": "/",
+    "removeFromWishlist": "Vom Merkzettel entfernen",
+    "addToWishlist": "Zum Merkzettel hinzufügen",
+    "addPromotionPlaceholder": "Promocode hinzufügen...",
+    "addPromotionLabel": "Promocode",
+    "subTotal": "Zwischensumme",
+    "summaryShipping": "Lieferung",
+    "cartItemInfoId": "Produktnummer",
+    "noLineItems": "Der Einkaufswagen ist leer.",
+    "cart": "Einkaufswagen",
+    "items": "Produkte",
+    "success": "Aktion war erfolgreich",
+    "promoLabel": "Promocode",
+    "addToWishlistSuccess": "Produkt wurde erfolgreich zum Merkzettel hinzugefügt.",
+    "removeFromWishlistSuccess": "Produkt wurde erfolgreich vom Merkzettel entfernt.",
+    "removeSuccess": "Produkt wurde erfolgreich entfernt.",
+    "promotionSuccess": "Promocode wurde erfolgreich hinzugefügt.",
+    "removeCartItem": "Produkt entfernen"
+  }
+}

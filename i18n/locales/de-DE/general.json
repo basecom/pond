@@ -14,7 +14,9 @@
         },
         "currencySwitch": "Währung umgestellt auf {currency}",
         "errorHeadline": "Es ist ein Fehler aufgetreten.",
-        "errorMessage": "Versuchen Sie es später erneut."
+        "errorMessage": "Versuchen Sie es später erneut.",
+        "grossTaxInformation": "Preise inkl. MwSt. zzgl. Versandkosten",
+        "netTaxInformation": "Preise exkl. MwSt. zzgl. Versandkosten"
     },
     "image": {
         "altText": "Bild",

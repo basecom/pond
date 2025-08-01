@@ -1,8 +1,11 @@
 import { ApiClientError } from '@shopware/api-client';
 
 export function usePondHandleError() {
-    const handleError = (error: unknown | string, showAsError: boolean = true) => {
-        if (process.env.NODE_ENV !== 'development') return;
+    const { $i18n } = useNuxtApp();
+    const { toast } = usePondToast();
+    const t = $i18n.t;
+    const handleError = (error: unknown | string, showAsError: boolean = true, toastMessage:
+        { show?: boolean, title?: string, description?: string } = { show: false, description: undefined, title: '' }) => {
 
         const prefix = `[Pond][${extractFileNameFromStack()}]`;
 
@@ -12,20 +15,47 @@ export function usePondHandleError() {
         }
 
         if (error instanceof ApiClientError) {
+            showToastError(toastMessage, error.details.errors[0]?.code);
             showError(error.details, showAsError);
             return;
         }
 
-        showError(showAsError);
+        showToastError(toastMessage);
+        showError(error, showAsError);
     };
 
     const showError = (errorMessage: unknown | string, showAsError: boolean = true) => {
+        if (process.env.NODE_ENV !== 'development') return;
         if (showAsError) {
             console.error(errorMessage);
             return;
         }
 
         console.warn(errorMessage);
+    };
+
+    const showToastError = (toastMessage: {
+        show?: boolean, title?: string, description?: string } = {},
+    code: string = '') => {
+
+        const mergedToastMessage = {
+            show: false,
+            title: 'error.generalHeadline',
+            description: undefined,
+            ...toastMessage,
+        };
+
+        if(!mergedToastMessage.show) {
+            return;
+        }
+
+        const description = mergedToastMessage.description ?? code ?? 'DEFAULT';
+
+        toast({
+            title: t(mergedToastMessage.title || ''),
+            description: t(`error.${description}`),
+            variant: 'destructive',
+        });
     };
 
     const extractFileNameFromStack = (): string => {
