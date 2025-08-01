@@ -1,4 +1,4 @@
-export function useAffiliateMarketing(){
+export function useAffiliateMarketing() {
     const route = useRoute();
     const affiliateCode = useCookie('affiliateCode');
 

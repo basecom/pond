@@ -1,4 +1,4 @@
-export function useOrderHelper(){
+export function useOrderHelper() {
     const { createOrder } = useCheckout();
 
     const createOrderWrapper = async (params?: { campaignCode?: string; customerComment?: string })=>{

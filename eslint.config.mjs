@@ -17,6 +17,8 @@ export default withNuxt({
                 objectsInObjects: true,
             },
         ],
+        'keyword-spacing': ['error', { 'before': true, 'after': true }],
+        'space-before-blocks': ['error', 'always'],
         '@typescript-eslint/array-type': [
             'error',
             {

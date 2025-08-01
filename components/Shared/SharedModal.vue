@@ -57,7 +57,7 @@ const onUpdatedOpen = (value: boolean) => {
                 leave-to-class="-translate-y-10 scale-50"
             >
                 <DialogContent
-                    class="fixed left-1/2 top-8 z-[100] max-h-[calc(100vh-4rem)] w-full -translate-x-1/2 overflow-auto rounded-lg bg-white shadow-lg focus:outline-none"
+                    class="fixed left-1/2 top-8 z-[100] max-h-[calc(100dvh-4rem)] w-full -translate-x-1/2 overflow-auto rounded-lg bg-white shadow-lg focus:outline-none"
                     :class="{
                         'max-w-[calc(100%-40px)] md:max-w-[min(calc(100%-40px),320px)]': size === 'sm',
                         'max-w-[calc(100%-40px)] md:max-w-[min(calc(100%-40px),600px)]': size === 'md',

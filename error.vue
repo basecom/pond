@@ -5,9 +5,6 @@ const props = defineProps<{
     error: NuxtError;
 }>();
 
-const configStore = useConfigStore();
-await configStore.loadConfig();
-
 const pageNotFound = computed(() => props.error.statusCode === 404);
 
 const isMaintenanceMode = computed(
