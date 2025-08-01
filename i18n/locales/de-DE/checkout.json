@@ -52,7 +52,7 @@
             },
             "order": {
                 "successMessage": "Ihre Bestellung wurde aufgegeben.",
-                "errorMessage": "Ein Fehler ist bei ihrer Bestellung aufgetreten. Bitte versuche es noch einmal.",
+                "errorMessage": "Ein Fehler ist bei Ihrer Bestellung aufgetreten. Bitte versuche es noch einmal.",
                 "buttonLabel": "Bestellen",
                 "buttonLabelNotLoggedIn": "Zum Bestellen einloggen"
             },
@@ -92,8 +92,8 @@
             "totalLabel": "Gesamt"
         },
         "finish": {
-            "heading": "Vielen Dank für ihre Bestellung!",
-            "confirmationMessage": "Wir haben ihre Bestellung erhalten und werden sie so schnell wie möglich bearbeiten.",
+            "heading": "Vielen Dank für Ihre Bestellung!",
+            "confirmationMessage": "Wir haben Ihre Bestellung erhalten und werden sie so schnell wie möglich bearbeiten.",
             "emailMessage": "Eine Bestätigungsmail wurde an Ihre Email-Adresse gesendet.",
             "orderNumberLabel": "Bestellnummer:",
             "orderDateLabel": "Datum:",

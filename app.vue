@@ -73,6 +73,7 @@ const ssrId = () => useId();
 </script>
 
 <template>
+    <NuxtRouteAnnouncer />
     <NuxtLoadingIndicator class="!bg-brand-primary !bg-none" :throttle="100" />
 
     <ConfigProvider :use-id="ssrId">

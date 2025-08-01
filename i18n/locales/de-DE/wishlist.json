@@ -10,6 +10,6 @@
         "errorRemovingProduct": "Fehler beim Entfernen des Produkts von der Wunschliste",
         "errorAddingProduct": "Fehler beim Hinzufügen des Produkts zur Wunschliste",
         "clearedSuccessfully": "Ihr Merkzettel wurde erfolgreich gelöscht",
-        "errorClearingWishlist": "Fehler beim Löschen ihres Merkzettels"
+        "errorClearingWishlist": "Fehler beim Löschen Ihres Merkzettels"
     }
 }

@@ -33,7 +33,7 @@
             "createError": "Your new address could not be created.",
             "editSuccess": "Your address has been edited.",
             "editError": "Your address could not be changed.",
-            "deleteSuccess": "Ihre Adresse wurde gelöscht.",
+            "deleteSuccess": "Your address has been deleted.",
             "deleteError": "There was an error deleting your address, please try again later.",
             "nothingFound": "No addresses were found.",
             "defaultBilling": "default delivery address",
