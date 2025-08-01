@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Overrides node_modules/@shopware/cms-base-layer/components/cms/block/CmsBlockImageTextRow.vue
 import type { CmsBlockImageTextRow } from '@shopware/composables';
 import { useCmsBlock } from '#imports';
 
@@ -18,14 +19,17 @@ const rightTextContent = getSlotContent('right-text');
 <template>
     <div class="cms-block-image-text-row grid md:grid-cols-3 gap-10">
         <div class="cms-block-image-text-row__column">
+            <!-- Added Change styling -->
             <CmsGenericElement class="mb-5 !h-fit" :content="leftImageContent" />
             <CmsGenericElement class="mb-5" :content="leftTextContent" />
         </div>
         <div class="cms-block-image-text-row__column">
+            <!-- Added Change styling -->
             <CmsGenericElement class="mb-5 !h-fit" :content="centerImageContent" />
             <CmsGenericElement class="mb-5" :content="centerTextContent" />
         </div>
         <div class="cms-block-image-text-row__column">
+            <!-- Added Change styling -->
             <CmsGenericElement class="mb-5 !h-fit" :content="rightImageContent" />
             <CmsGenericElement class="mb-5" :content="rightTextContent" />
         </div>
@@ -33,7 +37,8 @@ const rightTextContent = getSlotContent('right-text');
 </template>
 
 <style>
-.cms-block-image-text-row .cms-element-image img{
+/* Change styling */
+.cms-block-image-text-row .cms-element-image img {
   @apply object-contain h-fit;
 }
 </style>

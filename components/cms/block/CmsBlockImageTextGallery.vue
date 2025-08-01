@@ -41,7 +41,7 @@ function onImageClick(
 }
 </script>
 <template>
-    <!-- Change styling -->
+    <!-- Added grid layout; Added border -->
     <article
         class="cms-block-image-text-gallery"
         :style="{ backgroundColor: content.backgroundColor || '' }"
@@ -90,7 +90,8 @@ function onImageClick(
 </template>
 
 <style>
-.cms-block-image-text-gallery__container__column .cms-element-image img{
+/* Change styling */
+.cms-block-image-text-gallery__container__column .cms-element-image img {
   @apply object-contain h-fit;
 }
 </style>

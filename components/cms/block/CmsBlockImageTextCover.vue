@@ -18,10 +18,10 @@ const rightContent = getSlotContent('right');
             :content="leftContent"
             class="cms-block-image-text-cover__image"
         />
-        <!-- Added padding-top -->
+        <!-- Changed styling -->
         <CmsGenericElement
             :content="rightContent"
-            class="cms-block-image-text-cover__text pt-8"
+            class="cms-block-image-text-cover__text pt-8 *:mt-0"
         />
     </article>
 </template>
@@ -30,9 +30,5 @@ const rightContent = getSlotContent('right');
 /* change styling */
 .cms-block-image-text-cover .cms-element-image img {
   @apply object-contain;
-}
-
-.cms-block-image-text-cover p, .cms-block-image-text-cover h1, .cms-block-image-text-cover h2, .cms-block-image-text-cover h3 {
-  margin-top: 0;
 }
 </style>

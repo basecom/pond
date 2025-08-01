@@ -13,19 +13,17 @@ const leftContent = getSlotContent('left');
 const rightContent = getSlotContent('right');
 </script>
 <template>
+    <!-- Added responsive design -->
     <div class="cms-block-image-text grid md:grid-cols-2 md:gap-10">
         <CmsGenericElement :content="leftContent" />
-        <CmsGenericElement class="" :content="rightContent" />
+        <!-- Added mt-0 -->
+        <CmsGenericElement class="*:mt-0" :content="rightContent" />
     </div>
 </template>
 
 <style>
-/* change styling */
+/* Changed styling */
 .cms-block-image-text .cms-element-image img {
   @apply object-contain;
-}
-
-.cms-block-image-text p, .cms-block-image-text h1, .cms-block-image-text h2, .cms-block-image-text h3 {
-    margin-top: 0;
 }
 </style>

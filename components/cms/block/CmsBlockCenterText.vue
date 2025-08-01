@@ -13,23 +13,10 @@ const slotRightContent = getSlotContent('right');
 const slotCenterContent = getSlotContent('center');
 </script>
 <template>
-    <!-- Change styling -->
+    <!-- Change styling & move styling to CmsGenericElement (otherwise we receive errors) -->
     <div class="cms-block-center-text grid md:grid-cols-3 md:gap-10 content-center">
-        <CmsGenericElement :content="slotLeftContent" />
+        <CmsGenericElement :content="slotLeftContent" class="*:md:aspect-square *:md:object-contain *:md:h-auto *:content-center" />
         <CmsGenericElement :content="slotCenterContent" />
-        <CmsGenericElement :content="slotRightContent" />
+        <CmsGenericElement :content="slotRightContent" class="*:md:aspect-square *:md:object-contain *:md:h-auto *:content-center" />
     </div>
 </template>
-
-<style>
-/* change styling */
-.cms-block-center-text .cms-element-image img {
-    @media (width >= 640px) {
-      @apply aspect-square object-contain h-auto;
-    }
-}
-
-.cms-block-center-text .cms-element-image {
-  @apply content-center;
-}
-</style>
