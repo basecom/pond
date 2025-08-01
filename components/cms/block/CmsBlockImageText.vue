@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Overrides node_modules/@shopware/cms-base-layer/components/cms/block/CmsBlockImageText.vue
-import type { CmsBlockImageText } from "@shopware/composables";
-import { useCmsBlock } from "#imports";
+import type { CmsBlockImageText } from '@shopware/composables';
+import { useCmsBlock } from '#imports';
 
 const props = defineProps<{
   content: CmsBlockImageText;
@@ -9,14 +9,14 @@ const props = defineProps<{
 
 const { getSlotContent } = useCmsBlock(props.content);
 
-const leftContent = getSlotContent("left");
-const rightContent = getSlotContent("right");
+const leftContent = getSlotContent('left');
+const rightContent = getSlotContent('right');
 </script>
 <template>
-  <div class="cms-block-image-text grid md:grid-cols-2 md:gap-10">
-    <CmsGenericElement :content="leftContent" />
-    <CmsGenericElement class="" :content="rightContent" />
-  </div>
+    <div class="cms-block-image-text grid md:grid-cols-2 md:gap-10">
+        <CmsGenericElement :content="leftContent" />
+        <CmsGenericElement class="" :content="rightContent" />
+    </div>
 </template>
 
 <style>
