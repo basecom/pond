@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Columns } from '~/types/vueForm/Columns';
+import type { Columns, SelectItems } from '~/types/vueForm/Form';
 
 withDefaults(
     defineProps<{
@@ -15,7 +15,7 @@ withDefaults(
       isNative?: boolean;
       canClear?: boolean;
       canDeselect?: boolean;
-      items?: string[] | number[] | { value: string; label: string; }[];
+      items?: string[] | number[] | SelectItems;
       defaultValue?: string;
       classes?: string;
     }>(),

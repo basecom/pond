@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Columns } from '~/types/vueForm/Columns';
+import type { SelectItems, Columns } from '~/types/vueForm/Form';
 
 withDefaults(
     defineProps<{
@@ -21,7 +21,7 @@ withDefaults(
 
 const { getSalutations: salutations, fetchSalutations } = useSalutations();
 
-const formattedSalutations: Ref<undefined | { value: string; label: string; }[]> = ref(undefined);
+const formattedSalutations: Ref<undefined | SelectItems> = ref(undefined);
 
 onMounted(async () => {
     await fetchSalutations();
