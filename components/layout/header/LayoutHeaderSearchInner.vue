@@ -60,53 +60,61 @@ const navigateToSearchPage = () => {
                     <UiPopoverContent v-if="displayResultsContainer">
                         <slot name="header-search-results">
                             <div v-if="loading" :class="getStyle('header.actions.search.skeleton.wrapper')">
-                                <div :class="getStyle('header.actions.search.skeleton.outer')">
-                                    <UiSkeleton :class="getStyle('header.actions.search.skeleton.innerSmall')" />
-                                    <UiSkeleton :class="getStyle('header.actions.search.skeleton.innerBig')" />
-                                    <UiSkeleton :class="getStyle('header.actions.search.skeleton.innerSmall')" />
-                                </div>
-                                <UiSkeleton :class="getStyle('header.actions.search.skeleton.line')" />
+                                <slot name="header-search-results-loading">
+                                    <div :class="getStyle('header.actions.search.skeleton.outer')">
+                                        <UiSkeleton :class="getStyle('header.actions.search.skeleton.innerSmall')" />
+                                        <UiSkeleton :class="getStyle('header.actions.search.skeleton.innerBig')" />
+                                        <UiSkeleton :class="getStyle('header.actions.search.skeleton.innerSmall')" />
+                                    </div>
+                                    <UiSkeleton :class="getStyle('header.actions.search.skeleton.line')" />
+                                </slot>
                             </div>
 
                             <template v-else>
                                 <template v-if="getTotal > 0">
-                                    <NuxtLinkLocale
-                                        v-for="product in getProducts?.slice(0, displayTotal)"
-                                        :key="product.id"
-                                        :to="formatLink(getProductRoute(product))"
-                                        :class="getStyle('header.actions.search.results.wrapper')"
-                                        :aria-label="$t('search.viewProduct')"
-                                        :aria-description="`${product.translated.name} - ${product.calculatedPrice?.totalPrice}`"
-                                    >
-                                        <ProductCover
-                                            :is-video="product.cover?.media?.mimeType?.includes('video')"
-                                            :src-path="product.cover?.media?.url"
-                                            :alt-text="product.cover?.media?.translated?.alt"
-                                            :title="product.cover?.media?.translated?.title"
-                                            :label="product.translated.name"
-                                            :product-classes="getStyle('header.actions.search.results.product')"
-                                            :fallback-classes="getStyle('header.actions.search.results.fallback')"
-                                            :video-classes="getStyle('header.actions.search.results.video')"
-                                        />
+                                    <slot name="header-search-results-product-link">
+                                        <NuxtLinkLocale
+                                            v-for="product in getProducts?.slice(0, displayTotal)"
+                                            :key="product.id"
+                                            :to="formatLink(getProductRoute(product))"
+                                            :class="getStyle('header.actions.search.results.outer')"
+                                            :aria-label="$t('search.viewProduct')"
+                                            :aria-description="`${product.translated.name} - ${product.calculatedPrice?.totalPrice}`"
+                                        >
+                                            <ProductCover
+                                                :is-video="product.cover?.media?.mimeType?.includes('video')"
+                                                :src-path="product.cover?.media?.url"
+                                                :alt-text="product.cover?.media?.translated?.alt"
+                                                :title="product.cover?.media?.translated?.title"
+                                                :label="product.translated.name"
+                                                :product-classes="getStyle('header.actions.search.results.product')"
+                                                :fallback-classes="getStyle('header.actions.search.results.fallback')"
+                                                :video-classes="getStyle('header.actions.search.results.video')"
+                                            />
 
-                                        {{ product.translated.name }}
+                                            {{ product.translated.name }}
 
-                                        <SwSharedPrice :value="product.calculatedPrice?.totalPrice" />
-                                    </NuxtLinkLocale>
+                                            <SwSharedPrice :value="product.calculatedPrice?.totalPrice" />
+                                        </NuxtLinkLocale>
+                                    </slot>
 
-                                    <NuxtLinkLocale
-                                        :to="formatLink({ path: `/search`, query: { search: searchTerm } })"
-                                        :class="getStyle('header.actions.search.page.wrapper')"
-                                        :aria-label="$t('search.allResults')"
-                                        :aria-description="$t('search.allResultsDescription')"
-                                    >
-                                        <Icon name="material-symbols:arrow-forward-ios-rounded" :class="getStyle('header.actions.search.page.inner')" />
+                                    <slot name="header-search-results-all-products-link">
+                                        <NuxtLinkLocale
+                                            :to="formatLink({ path: `/search`, query: { search: searchTerm } })"
+                                            :class="getStyle('header.actions.search.page.outer')"
+                                            :aria-label="$t('search.allResults')"
+                                            :aria-description="$t('search.allResultsDescription')"
+                                        >
+                                            <Icon name="material-symbols:arrow-forward-ios-rounded" :class="getStyle('header.actions.search.page.inner')" />
 
-                                        {{ $t('search.allResults') }}
-                                    </NuxtLinkLocale>
+                                            {{ $t('search.allResults') }}
+                                        </NuxtLinkLocale>
+                                    </slot>
                                 </template>
                                 <template v-else>
-                                    {{ $t('search.noResult') }}
+                                    <slot name="header-search-results-no-products">
+                                        {{ $t('search.noResult') }}
+                                    </slot>
                                 </template>
                             </template>
                         </slot>

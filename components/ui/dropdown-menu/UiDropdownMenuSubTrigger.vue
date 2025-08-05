@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import {
     DropdownMenuSubTrigger,
-    type DropdownMenuSubTriggerProps,
+    
     useForwardProps,
 } from 'reka-ui';
+import type { DropdownMenuSubTriggerProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<DropdownMenuSubTriggerProps & { class?: HTMLAttributes['class'] }>();

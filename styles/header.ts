@@ -42,13 +42,13 @@ export default {
                 line: 'w-full p-2.5',
             },
             results: {
-                wrapper: 'p-2.5 border-b flex gap-2.5 w-full',
+                outer: 'p-2.5 border-b flex gap-2.5 w-full',
                 product: 'w-10 h-fit m-auto',
                 video: 'w-10 h-fit m-auto',
                 fallback: 'w-10 h-fit m-auto',
             },
             page: {
-                wrapper: 'flex mt-2.5 items-center gap-1',
+                outer: 'flex mt-2.5 items-center gap-1',
                 inner: 'h-4',
             },
         },
