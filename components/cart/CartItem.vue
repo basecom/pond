@@ -14,19 +14,14 @@ const props = withDefaults(
     },
 );
 
-const { toast } = usePondToast();
-
 const { cartItem } = toRefs(props);
 
+const { toast } = usePondToast();
 const { addToWishlist, isInWishlist, removeFromWishlist } = useProductWishlist(cartItem.value?.referencedId ?? '');
-
 const { removeItem } = useCartItem(cartItem);
-
 const { refreshCart } = useCart();
-
 const { handleError } = usePondHandleError();
 const { t } = useI18n();
-
 const {
     itemOptions,
     itemTotalPrice,

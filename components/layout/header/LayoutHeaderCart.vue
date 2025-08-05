@@ -1,13 +1,11 @@
 <script setup lang="ts">
-const { cartItems, cart, refreshCart } = useCart();
-const { getFormattedPrice } = usePrice();
+const { cartItems, cart, count } = useCart();
 </script>
 
 <template>
     <LayoutHeaderCartInner 
         :cart-items="cartItems" 
-        :cart-deliveries="cart?.deliveries" 
-        :cart-price-total="getFormattedPrice(cart?.price?.totalPrice)"
-        @open="(value: boolean) => {if(value) refreshCart(); }"
+        :cart-deliveries="cart?.deliveries"
+        :cart-item-count="count"
     />
 </template>

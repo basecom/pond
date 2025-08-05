@@ -115,6 +115,7 @@ const eventHandlers = computed(() => {
                             v-on="eventHandlers"
                         />
                     </slot>
+
                     <div :class="getStyle('cart.cartItemRemoveWrapper')">
                         <slot name="generic-remove">
                             <CartItemElementRemove

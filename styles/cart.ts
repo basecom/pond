@@ -1,4 +1,8 @@
 export default {
+    offcanvas: {
+        empty: 'text-gray-500',
+    },
+
     wrapper: 'mb-4',
     noLineItemsLabel: 'w-full',
     buttonGroup: 'flex w-full flex-col gap-1',
@@ -54,10 +58,7 @@ export default {
     layoutLoaderWrapper: 'relative',
     layoutLoaderDim: 'pointer-events-none opacity-50',
     layoutLoaderSpinnerContent: 'flex flex-wrap border-b',
-    headerCartTrigger: 'relative',
     headerCartIcon: 'size-6',
     headerCartAmount: 'text-gray-900 cursor-pointer pl-4',
-    headerCartTitleRow: 'mt-2 flex w-full items-end justify-between',
-    headerCartTitleCount: 'pr-4',
     headerCartEmpty: 'p-4 text-center text-gray-500',
 };

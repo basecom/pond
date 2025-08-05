@@ -41,6 +41,7 @@ const emits = defineEmits<{
 
 const { getStyle } = usePondStyle();
 
+const hasLineItems = (items?: Schemas['LineItem'][]): boolean => !!items && items.length > 0;
 
 const getCartDeliveryPositions = (deliveries?: Schemas['CartDelivery'][]): Schemas['CartDeliveryPosition'][] | undefined => {
     if (!deliveries || deliveries.length === 0) return undefined;
@@ -58,8 +59,9 @@ const getCartDeliveryPosition = (id: string, cartDeliveryPositions?: Schemas['Ca
 <template>
     <slot name="offcanvas-content">
         <div :class="getStyle('cart.wrapper')">
+            <template v-if="hasLineItems(cartItems)">
                 <template v-for="cartItem in cartItems">
-                    <slot name="offcanvas-cart-item">
+                    <slot name="cartItem">
                         <CartItem
                             :cart-item="cartItem"
                             :cart-delivery-position="getCartDeliveryPosition(cartItem.id, getCartDeliveryPositions(cartDeliveries))"
@@ -67,9 +69,20 @@ const getCartDeliveryPosition = (id: string, cartDeliveryPositions?: Schemas['Ca
                         />
                     </slot>
                 </template>
-        </div>
+            </template>
 
+            <template v-else>
+                <slot name="no-line-items-label">
+                    <div :class="getStyle('cart.noLineItemsLabel')">
+                        <UiAlert>
+                            <UiAlertDescription>{{ $t('checkout.noLineItems') }}</UiAlertDescription>
+                        </UiAlert>
+                    </div>
+                </slot>
+            </template>
+        </div>
         <slot name="cart-summary">
+            <div v-if="hasLineItems(cartItems)">
                 <CheckoutOffcanvasCartSummary
                     :cart="cart"
                     :cart-deliveries="cartDeliveries"
@@ -81,8 +94,8 @@ const getCartDeliveryPosition = (id: string, cartDeliveryPositions?: Schemas['Ca
                     @add-selected-promotion-code="(promotionCode: string) => emits('add-selected-promotion-code', promotionCode)"
                     @set-selected-shipping-method="(shippingMethodId: AcceptableValue) => emits('set-selected-shipping-method', shippingMethodId)"
                 />
+            </div>
         </slot>
-
         <div :class="getStyle('cart.buttonGroup')">
             <div :class="getStyle('cart.buttonWrapper')">
                 <slot name="proceed-to-checkout-button">
