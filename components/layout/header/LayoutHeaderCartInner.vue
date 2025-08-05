@@ -4,9 +4,13 @@ import type { Schemas } from '@shopware/api-client/api-types';
 withDefaults(
     defineProps<{
       cartItems?: Schemas['LineItem'][];
+      cartDeliveries?: Schemas['CartDelivery'][];
+        cartItemCount?: number;
     }>(),
     {
         cartItems: undefined,
+        cartDeliveries: undefined,
+        cartItemCount: undefined,
     },
 );
 
@@ -41,9 +45,32 @@ const { getStyle } = usePondStyle();
 
         <UiSheetContent>
             <UiSheetHeader>
-                <UiSheetTitle>Cart</UiSheetTitle>
+                <UiSheetTitle>
+                    <slot name="cart-offcanvas-header">
+                        <span>{{ $t('checkout.cart') }}</span>
+                    </slot>
+                </UiSheetTitle>
+
                 <UiSheetDescription>
-                    products
+                    <slot name="cart-offcanvas-description">
+                        <template v-if="cartItemCount > 0">
+                            {{ cartItemCount }} {{ $t('checkout.items') }}
+                        </template>
+                    </slot>
+                </UiSheetDescription>
+
+                <UiSheetDescription>
+                    <slot name="cart-offcanvas-content">
+                        <CartOffcanvasCart
+                            v-if="cartItemCount > 0"
+                            :cart-deliveries="cartDeliveries"
+                            :cart-items="cartItems"
+                        />
+
+                        <div v-else :class="getStyle('cart.empty')">
+                            {{ $t('checkout.noLineItems') }}
+                        </div>
+                    </slot>
                 </UiSheetDescription>
             </UiSheetHeader>
         </UiSheetContent>
