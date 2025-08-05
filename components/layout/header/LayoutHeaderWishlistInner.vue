@@ -15,7 +15,7 @@ const { getStyle } = usePondStyle();
     <slot name="wrapper">
         <NuxtLinkLocale
             id="wishlist"
-            to="/wishlist"
+            to="/account/wishlist"
             :class="getStyle('header.actions.wishlist.trigger')"
             aria-label="wishlist"
         >

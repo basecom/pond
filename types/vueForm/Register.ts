@@ -1,3 +1,5 @@
+import type { AddressData } from '~/types/vueForm/Address';
+
 export type VueFormSubmitData = {
     data: VueFormRequestData;
 }
@@ -21,7 +23,7 @@ export type VueFormRequestData = {
     password: string;
     password_confirmation?: string;
     phoneNumber: string;
-    salutation: string;
+    salutationId: string;
     'shipping-accountType': string;
     'shipping-additionalAddressLine1'?: string;
     'shipping-additionalAddressLine2'?: string;
@@ -30,15 +32,15 @@ export type VueFormRequestData = {
     'shipping-firstName': string;
     'shipping-lastName': string;
     'shipping-phoneNumber': string;
-    'shipping-salutation': string;
-    'shipping-state': string;
+    'shipping-salutationId': string;
+    'shipping-countryStateId': string;
     'shipping-street': string;
     'shipping-title'?: string;
     'shipping-zipcode': string;
     'shipping-company'?: string;
     'shipping-department'?: string;
     department?: string;
-    state: string;
+    countryStateId: string;
     street: string;
     title?: string;
     zipcode: string;
@@ -60,37 +62,6 @@ export type RegisterFormData = {
     differentShippingAddress: boolean;
     salutationId: string;
     vatIds?: string[];
-    billingAddress: {
-        title?: string,
-        firstName: string
-        lastName: string,
-        street: string,
-        zipcode: string,
-        countryId: string,
-        city: string,
-        countryStateId: string,
-        additionalAddressLine1?: string | null,
-        additionalAddressLine2?: string | null,
-        phoneNumber?: string | null,
-        company?: string | null,
-        department?: string | null,
-        salutationId: string,
-    },
-    shippingAddress?: {
-        accountType: string;
-        title?: string,
-        firstName: string
-        lastName: string,
-        street: string,
-        zipcode: string,
-        countryId: string,
-        city: string,
-        countryStateId: string,
-        additionalAddressLine1?: string | null,
-        additionalAddressLine2?: string | null,
-        phoneNumber?: string | null,
-        company?: string | null,
-        department?: string | null,
-        salutationId: string,
-    }
+    billingAddress: AddressData,
+    shippingAddress?: AddressData
 }

@@ -1,5 +1,25 @@
 {
   "address": {
+    "accountHeadline": "Addresses",
+    "accountDescription": "Change your default addresses or add new ones.",
+    "createAddress": "Add new address",
+    "defaultBillingAddress": {
+      "label": "Default billing address",
+      "set": "Save this address as default billing address",
+      "success": "Address was successfully saved as default billing address"
+    },
+    "defaultShippingAddress": {
+      "label": "Default shipping address",
+      "set": "Save this address as default shipping address",
+      "success": "Address was successfully saved as default shipping address"
+    },
+    "availableAddresses": "Available addresses",
+    "editAddress": "Edit address",
+    "deleteAddress": "Delete address",
+    "deleteAddressDescription": "Do you really want to delete the address?",
+    "createdAddress": "The address was added successfully",
+    "deletedAddress": "The address was successfully deleted",
+    "updatedAddress": "The address was successfully updated",
     "headline": "Your Address",
     "differentShippingAddress": "Shipping address differs from billing address.",
     "street": {

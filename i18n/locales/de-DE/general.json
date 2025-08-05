@@ -2,6 +2,7 @@
     "general": {
         "save": "Speichern",
         "close": "Schließen",
+        "cancel": "Abbrechen",
         "homepage": "Startseite",
         "copyright": "© 2025 {companyName}",
         "back": "Zurück",
@@ -12,15 +13,15 @@
             "acceptLabel": "Akzeptieren"
         },
         "currencySwitch": "Währung umgestellt auf {currency}",
+        "errorHeadline": "Es ist ein Fehler aufgetreten.",
+        "errorMessage": "Versuchen Sie es später erneut.",
         "grossTaxInformation": "Preise inkl. MwSt. zzgl. Versandkosten",
         "netTaxInformation": "Preise exkl. MwSt. zzgl. Versandkosten"
     },
-
     "image": {
         "altText": "Bild",
         "altSliderText": "Bild-Slider Element {currentSlide} von {totalSlides}"
     },
-
     "video": {
         "vimeoTitle": "Vimeo Video",
         "youtubeTitle": "YouTube Video"

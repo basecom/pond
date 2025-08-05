@@ -30,7 +30,7 @@ const possibleBirthdayYears = computed(() => {
     <slot name="birthday">
         <GroupElement name="birthday" :label="$t('account.customer.birthday.label', { required: isBirthdayRequired ? '*' : '' })">
             <slot name="birthday-day">
-                <FormSelectElement
+                <UiSelectElement
                     :id="`${prefix}birthdayDay`"
                     :name="`${prefix}birthdayDay`"
                     :placeholder="$t('account.customer.birthday.day')"
@@ -42,7 +42,7 @@ const possibleBirthdayYears = computed(() => {
             </slot>
 
             <slot name="birthday-month">
-                <FormSelectElement
+                <UiSelectElement
                     :id="`${prefix}birthdayMonth`"
                     :name="`${prefix}birthdayMonth`"
                     :placeholder="$t('account.customer.birthday.month')"
@@ -54,7 +54,7 @@ const possibleBirthdayYears = computed(() => {
             </slot>
 
             <slot name="birthday-year">
-                <FormSelectElement
+                <UiSelectElement
                     :id="`${prefix}birthdayYear`"
                     :name="`${prefix}birthdayYear`"
                     :placeholder="$t('account.customer.birthday.year')"

@@ -12,68 +12,64 @@ withDefaults(
        */
       prefix?: string;
       isVatIdRequiredBySelectedCountry?: boolean;
-      columns?: {
-        accountTypeColumns?: Columns;
-        salutationColumns?: Columns;
-        titleColumns?: Columns;
-        firstNameColumns?: Columns;
-        lastNameColumns?: Columns;
-        birthdayColumns?: Columns;
-        companyColumns?: Columns;
-        vatIdColumns?: Columns;
-        departmentColumns?: Columns;
-        emailColumns?: Columns;
-        passwordColumns?: Columns,
-      }
+      accountTypeColumns?: Columns;
+      salutationColumns?: Columns;
+      titleColumns?: Columns;
+      firstNameColumns?: Columns;
+      lastNameColumns?: Columns;
+      birthdayColumns?: Columns;
+      companyColumns?: Columns;
+      vatIdColumns?: Columns;
+      departmentColumns?: Columns;
+      emailColumns?: Columns;
+      passwordColumns?: Columns,
     }>(),
     {
         isDetail: false,
         accountTypeConditions: undefined,
-        columns: () => ({
-            accountTypeColumns: {
-                sm: 12,
-                md: 3,
-            },
-            salutationColumns: {
-                sm: 12,
-                md: 3,
-            },
-            birthdayColumns: {
-                sm: 1,
-                md: 2,
-            },
-            titleColumns: {
-                sm: 12,
-                md: 3,
-            },
-            firstNameColumns: {
-                sm: 12,
-                md: 6,
-            },
-            lastNameColumns: {
-                sm: 12,
-                md: 6,
-            },
-            companyColumns: {
-                sm: 12,
-                md: 6,
-            },
-            vatIdColumns: {
-                sm: 12,
-                md: 6,
-            },
-            departmentColumns: {
-                sm: 12,
-                md: 6,
-            },
-            emailColumns: {
-                sm: 12,
-                md: 6,
-            },
-            passwordColumns: {
-                sm: 12,
-                md: 6,
-            },
+        accountTypeColumns: () => ({
+            sm: 12,
+            md: 3,
+        }),
+        salutationColumns: () => ({
+            sm: 12,
+            md: 3,
+        }),
+        birthdayColumns: () => ({
+            sm: 1,
+            md: 2,
+        }),
+        titleColumns: () => ({
+            sm: 12,
+            md: 3,
+        }),
+        firstNameColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        lastNameColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        companyColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        vatIdColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        departmentColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        emailColumns: () => ({
+            sm: 12,
+            md: 6,
+        }),
+        passwordColumns: () => ({
+            sm: 12,
+            md: 6,
         }),
         prefix: '',
         isVatIdRequiredBySelectedCountry: false,
@@ -95,49 +91,49 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
 <template>
     <GroupElement name="account-type">
         <slot name="account-type">
-            <AccountType v-if="showAccountType" :prefix="prefix" />
+            <AccountType v-if="showAccountType" :prefix="prefix" :columns="accountTypeColumns" />
         </slot>
     </GroupElement>
 
     <GroupElement name="salutation-and-title">
         <slot name="salutation">
-            <AccountSalutation :prefix="prefix" />
+            <AccountSalutation :prefix="prefix" :columns="salutationColumns" />
         </slot>
 
         <slot name="title">
-            <FormTextElement
+            <UiTextElement
                 v-if="showTitle"
                 :id="`${prefix}title`"
                 :label="$t('account.customer.title.label')"
                 :name="`${prefix}title`"
                 :placeholder="$t('account.customer.title.placeholder')"
-                :columns="columns.titleColumns"
+                :columns="titleColumns"
             />
         </slot>
     </GroupElement>
 
     <GroupElement name="customer-name">
         <slot name="first-name">
-            <FormTextElement
+            <UiTextElement
                 :id="`${prefix}firstName`"
                 :label="$t('account.customer.firstName.label')"
                 :name="`${prefix}firstName`"
                 :placeholder="$t('account.customer.firstName.placeholder')"
                 rules="required"
                 :messages="{ required: $t('account.customer.firstName.errorRequired') }"
-                :columns="columns.firstNameColumns"
+                :columns="firstNameColumns"
             />
         </slot>
 
         <slot name="last-name">
-            <FormTextElement
+            <UiTextElement
                 :id="`${prefix}lastName`"
                 :label="$t('account.customer.lastName.label')"
                 :name="`${prefix}lastName`"
                 :placeholder="$t('account.customer.lastName.placeholder')"
                 rules="required"
                 :messages="{ required: $t('account.customer.lastName.errorRequired') }"
-                :columns="columns.lastNameColumns"
+                :columns="lastNameColumns"
             />
         </slot>
     </GroupElement>
@@ -148,7 +144,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
 
     <GroupElement name="business-customer">
         <slot name="company">
-            <FormTextElement
+            <UiTextElement
                 :id="`${prefix}company`"
                 :name="`${prefix}company`"
                 :placeholder="$t('account.customer.company.placeholder')"
@@ -156,46 +152,46 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
                 rules="required"
                 :messages="{ required: $t('account.customer.company.errorRequired') }"
                 :conditions="accountTypeConditions"
-                :columns="columns.companyColumns"
+                :columns="companyColumns"
             />
         </slot>
 
         <slot name="department">
-            <FormTextElement
+            <UiTextElement
                 :id="`${prefix}department`"
                 :name="`${prefix}department`"
                 :label="$t('account.customer.department.label')"
                 :placeholder="$t('account.customer.department.placeholder')"
                 :conditions="accountTypeConditions"
-                :columns="columns.departmentColumns"
+                :columns="departmentColumns"
             />
         </slot>
 
         <slot name="vat-id">
-            <FormTextElement
+            <UiTextElement
                 v-if="isDetail && !isVatIdRequiredBySelectedCountry"
                 :id="`${prefix}vatIds`"
                 :name="`${prefix}vatIds`"
                 :label="$t('account.customer.vatId.label')"
                 :placeholder="$t('account.customer.vatId.placeholder')"
                 :conditions="accountTypeConditions"
-                :columns="columns.vatIdColumns"
+                :columns="vatIdColumns"
             />
-            <FormTextElement
+            <UiTextElement
                 v-if="isDetail && isVatIdRequiredBySelectedCountry"
                 :id="`${prefix}vatIds`"
                 :name="`${prefix}vatIds`"
                 :label="$t('account.customer.vatId.label')"
                 :placeholder="$t('account.customer.vatId.placeholder')"
                 :conditions="accountTypeConditions"
-                :columns="columns.vatIdColumns"
+                :columns="vatIdColumns"
                 rules="required"
             />
         </slot>
     </GroupElement>
 
     <slot name="email">
-        <FormTextElement
+        <UiTextElement
             v-if="isDetail"
             :id="`${prefix}email`"
             :name="`${prefix}email`"
@@ -209,12 +205,12 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
             ]"
             :debounce="300"
             :messages="{ email: $t('account.customer.email.errorInvalid'), confirmed: $t('account.customer.email.errorConfirmed'), required: $t('account.customer.email.errorRequired') }"
-            :columns="columns.emailColumns"
+            :columns="emailColumns"
         />
     </slot>
 
     <slot name="email-confirm">
-        <FormTextElement
+        <UiTextElement
             v-if="confirmEmail && isDetail"
             :id="`${prefix}email_confirmation`"
             autocomplete="new-user"
@@ -224,12 +220,12 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
             rules="required|email"
             :debounce="300"
             :messages="{ email: $t('account.customer.email.errorInvalid'), required: $t('account.customer.email.errorRequired') }"
-            :columns="columns.emailColumns"
+            :columns="emailColumns"
         />
     </slot>
 
     <slot name="password">
-        <FormTextElement
+        <UiTextElement
             v-if="isDetail"
             :id="`${prefix}password`"
             :label="$t('account.customer.password.label')"
@@ -247,12 +243,12 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
             ]"
             :debounce="300"
             :messages="{ required: $t('account.customer.password.errorRequired'), confirmed: $t('account.customer.password.errorConfirmed'), min: $t('account.customer.password.errorMin', { number: passwordMinLength }) }"
-            :columns="columns.passwordColumns"
+            :columns="passwordColumns"
         />
     </slot>
 
     <slot name="password-confirm">
-        <FormTextElement
+        <UiTextElement
             v-if="confirmPassword && isDetail"
             :id="`${prefix}password_confirmation`"
             autocomplete="new-password"
@@ -262,7 +258,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
             :placeholder="$t('account.customer.password.confirm.placeholder')"
             :messages="{ required: $t('account.customer.password.errorRequired') }"
             rules="required"
-            :columns="columns.passwordColumns"
+            :columns="passwordColumns"
         />
     </slot>
 </template>

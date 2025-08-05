@@ -4,8 +4,8 @@ const { t } = useI18n();
 
 withDefaults(
     defineProps<{
-        isLoading?: boolean;
-        showSuccessMessage?: boolean;
+      isLoading?: boolean;
+      showSuccessMessage?: boolean;
     }>(),
     {
         isLoading: false,
@@ -14,7 +14,7 @@ withDefaults(
 );
 
 const emits = defineEmits<{
-    recover: [recoverData: RecoverData];
+  recover: [recoverData: RecoverData];
 }>();
 
 const schema = z.object({

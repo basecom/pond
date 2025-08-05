@@ -34,9 +34,9 @@ onMounted(async () => {
 
 <template>
     <slot name="salutation">
-        <FormSelectElement
-            :id="`${prefix}salutation`"
-            :name="`${prefix}salutation`"
+        <UiSelectElement
+            :id="`${prefix}salutationId`"
+            :name="`${prefix}salutationId`"
             :label="$t('account.customer.salutation.label')"
             :placeholder="$t('account.customer.salutation.placeholder')"
             :messages="{ required: $t('account.customer.salutation.errorRequired') }"

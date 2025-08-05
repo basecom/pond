@@ -2,6 +2,7 @@
     "general": {
         "save": "Save",
         "close": "Close",
+        "cancel": "Cancel",
         "homepage": "Home",
         "copyright": "© 2025 {companyName}",
         "back": "Back",
@@ -12,6 +13,8 @@
             "acceptLabel": "Accept"
         },
         "currencySwitch": "Currency switched to {currency}",
+        "errorHeadline": "An error has occurred.",
+        "errorMessage": "Please try again later.",
         "grossTaxInformation": "Prices incl. VAT plus shipping costs",
         "netTaxInformation": "Prices excl. VAT plus shipping costs"
     },

@@ -2,12 +2,13 @@
 import {
     DialogClose,
     DialogContent,
-    type DialogContentEmits,
-    type DialogContentProps,
+    
+    
     DialogOverlay,
     DialogPortal,
     useForwardPropsEmits,
 } from 'reka-ui';
+import type { DialogContentEmits, DialogContentProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<DialogContentProps & { class?: HTMLAttributes['class'] }>();
