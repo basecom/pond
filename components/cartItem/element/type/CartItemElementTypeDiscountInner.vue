@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
 import { getMainImageUrl } from '@shopware-pwa/helpers-next';
+import { usePondStyle } from '~/composables/usePondStyle';
 
 const props = withDefaults(
     defineProps<{
@@ -13,19 +14,20 @@ const props = withDefaults(
 );
 const { cartItem } = toRefs(props);
 
+const { getStyle } = usePondStyle();
 const imageUrl = computed(() => props.cartItem ? getMainImageUrl(props.cartItem) : undefined);
 </script>
 
 <template>
     <slot name="discount-content">
         <slot name="image-container">
-            <div class="order-1 mb-4 flex w-5/6 flex-col text-left">
-                <div class="mb-2 w-auto">
+            <div :class="getStyle('cart.discountWrapper')">
+                <div :class="getStyle('cart.discountImageWrapper')">
                     <slot name="image">
                         <CartItemElementImage :cart-item-image="imageUrl" fallback="mdi:percent" />
                     </slot>
                 </div>
-                <div class="font-bold">
+                <div :class="getStyle('cart.discountLabel')">
                     <slot name="label">
                         {{ cartItem?.label }}
                     </slot>
@@ -33,7 +35,7 @@ const imageUrl = computed(() => props.cartItem ? getMainImageUrl(props.cartItem)
             </div>
         </slot>
         <slot name="total-price-wrapper">
-            <div class="order-4 flex w-full justify-end">
+            <div :class="getStyle('cart.discountTotalPriceWrapper')">
                 <slot name="total-price">
                     <CartItemElementPriceTotal :cart-item-total-price="itemTotalPrice" />
                 </slot>

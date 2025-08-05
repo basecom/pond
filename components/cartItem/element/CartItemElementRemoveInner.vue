@@ -4,6 +4,7 @@ const emits = defineEmits<{
 }>();
 
 const { t } = useI18n();
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
@@ -15,7 +16,7 @@ const { t } = useI18n();
             @click="emits('remove-cart-item')"
         >
             <slot name="remove-icon">
-                <Icon name="mdi-close" class="size-4" />
+                <Icon name="mdi-close" :class="getStyle('cart.cartItemRemoveIcon')" />
             </slot>
         </UiButton>
     </slot>

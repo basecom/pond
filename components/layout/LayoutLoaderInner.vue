@@ -14,16 +14,15 @@ const { getStyle } = usePondStyle();
 
 <template>
     <slot name="loading-spinner-wrapper">
-        <div
-            class="relative" 
-            :class="{ 'pointer-events-none opacity-50': isLoading }"
+        <div 
+            :class="[getStyle('cart.layoutLoaderWrapper'), { [getStyle('cart.layoutLoaderDim')]: isLoading } ]"
         >
-            <div v-if="isLoading" class="absolute flex size-full items-center justify-center">
+            <div v-if="isLoading" :class="getStyle('cart.shippingLoader')">
                 <slot name="loading-spinner">
                     <Icon name="mdi:loading" :class="[getStyle('ui.button.spinner'), spinnerClasses]" />
                 </slot>
             </div>
-            <div class="flex flex-wrap border-b py-4">
+            <div :class="[$attrs.class, getStyle('cart.layoutLoaderSpinnerContent')]">
                 <slot name="loading-spinner-content" />
             </div>
         </div>

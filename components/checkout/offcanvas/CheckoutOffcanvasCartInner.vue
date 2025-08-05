@@ -39,6 +39,8 @@ const emits = defineEmits<{
   'add-selected-promotion-code': [promotionCode: string];
 }>();
 
+const { getStyle } = usePondStyle();
+
 const hasLineItems = (items?: Schemas['LineItem'][]): boolean => !!items && items.length > 0;
 
 const getCartDeliveryPositions = (deliveries?: Schemas['CartDelivery'][]): Schemas['CartDeliveryPosition'][] | undefined => {
@@ -56,7 +58,7 @@ const getCartDeliveryPosition = (id: string, cartDeliveryPositions?: Schemas['Ca
 
 <template>
     <slot name="offcanvas-content">
-        <div class="mb-4">
+        <div :class="getStyle('cart.wrapper')">
             <template v-if="hasLineItems(cartItems)">
                 <template v-for="cartItem in cartItems">
                     <slot name="cartItem">
@@ -71,7 +73,7 @@ const getCartDeliveryPosition = (id: string, cartDeliveryPositions?: Schemas['Ca
 
             <template v-else>
                 <slot name="no-line-items-label">
-                    <div class="w-full">
+                    <div :class="getStyle('cart.noLineItemsLabel')">
                         <UiAlert>
                             <UiAlertDescription>{{ $t('checkout.noLineItems') }}</UiAlertDescription>
                         </UiAlert>
@@ -94,15 +96,15 @@ const getCartDeliveryPosition = (id: string, cartDeliveryPositions?: Schemas['Ca
                 />
             </div>
         </slot>
-        <div class="flex w-full flex-col gap-1">
-            <div class="w-full text-center">
+        <div :class="getStyle('cart.buttonGroup')">
+            <div :class="getStyle('cart.buttonWrapper')">
                 <slot name="proceed-to-checkout-button">
                     <NuxtLinkLocale to="/checkout/confirm">
-                        <UiButton :class="'w-full'">{{ $t('checkout.proceedToCheckout') }}</UiButton>
+                        <UiButton :class="getStyle('cart.proceedToCheckoutButton')">{{ $t('checkout.proceedToCheckout') }}</UiButton>
                     </NuxtLinkLocale>
                 </slot>
             </div>
-            <div class="w-full text-center">
+            <div :class="getStyle('cart.buttonWrapper')">
                 <slot name="proceed-to-cart-button">
                     <NuxtLinkLocale to="/checkout/cart">
                         <UiButton variant="link">{{ $t('checkout.proceedToCart') }}</UiButton>

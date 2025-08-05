@@ -12,7 +12,7 @@ withDefaults(
 </script>
 
 <template>
-    <LayoutLoaderInner v-bind="$props">
+    <LayoutLoaderInner v-bind="$props" :class="$attrs.class">
         <template #loading-spinner-content>
             <slot name="loading-spinner-content" />
         </template>

@@ -35,6 +35,7 @@ const emits = defineEmits<{
 }>();
 
 const { getFormattedPrice } = usePrice();
+const { getStyle } = usePondStyle();
 
 const { t } = useI18n();
 
@@ -50,14 +51,15 @@ const addSelectedPromotionCode = (promotionCode: string) => {
     emits('add-selected-promotion-code', promotionCode);
     inputPromotionCode.value = '';
 };
+
 </script>
 
 <template>
     <slot name="wrapper">
         <div>
             <slot name="subTotal">
-                <div class="flex justify-between">
-                    <div class="font-bold">
+                <div :class="getStyle('cart.subTotalRow')">
+                    <div :class="getStyle('cart.subTotalLabel')">
                         {{ $t("checkout.subTotal") }}
                     </div>
                     <div>
@@ -66,20 +68,21 @@ const addSelectedPromotionCode = (promotionCode: string) => {
                 </div>
             </slot>
             <slot name="shipping">
-                <div class="mb-4">
-                    <LayoutLoader :is-loading="isLoading.select" :spinner-classes="{ 'mr-2 size-8!': true }">
+                <div :class="getStyle('cart.shippingRow')">
+                    <LayoutLoader :is-loading="isLoading.select" :spinner-classes="{ [getStyle('cart.shippingSpinnerClasses')]: true }">
                         <template #loading-spinner-content>
-                            <div class="flex justify-between w-full">
+                            <div :class="getStyle('cart.shippingContainer')">
                                 <slot name="shipping-label">
-                                    <div>
+                                    <div :class="getStyle('cart.shippingLabel')">
                                         <span>{{ $t('checkout.summaryShipping') }}</span>
-                                        <UiButton variant="ghost" class="p-1" @click="showSelectionSelect = !showSelectionSelect">({{
+                                        <UiButton variant="ghost" :class="getStyle('cart.shippingButton')" @click="showSelectionSelect = !showSelectionSelect">({{
                                             selectedShippingMethod?.translated?.name || $t('checkout.noShippingMethod')
                                         }})
-                                        </uibutton></div>
+                                        </UiButton>
+                                    </div>
                                 </slot>
                                 <slot name="shipping-cost">
-                                    <div class="flex items-center">
+                                    <div :class="getStyle('cart.shippingCost')">
                                         <template v-if="shippingCost?.shippingCosts">
                                             <strong>{{ shippingCost.shippingCosts?.totalPrice < 0 ? '-' : '+' }} {{
                                                 getFormattedPrice(shippingCost.shippingCosts?.totalPrice || 0)
@@ -118,7 +121,7 @@ const addSelectedPromotionCode = (promotionCode: string) => {
         </div>
     </slot>
     <slot name="tax-information">
-        <div class="mb-4 text-xs">
+        <div :class="getStyle('cart.taxInformation')">
             <template v-if="cart?.price?.taxStatus === 'net'">
                 *{{ $t('general.netTaxInformation') }}
             </template>
@@ -128,21 +131,22 @@ const addSelectedPromotionCode = (promotionCode: string) => {
         </div>
     </slot>
     <slot name="promotion">
-        <div class="mb-4">
+        <div :class="getStyle('cart.promotionRow')">
             <slot name="promotion-input-button">
-                <div class="flex w-full max-w-sm">
+                <div :class="getStyle('cart.promotionInputWrapper')">
                     <UiInput
                         :id="t('checkout.promoLabel')"
                         v-model="inputPromotionCode"
-                        class="w-full"
+                        :class="getStyle('cart.promotionInput')"
                         type="text"
                         :placeholder="$t('checkout.addPromotionPlaceholder')"
                     />
                     <slot name="promotion-button">
                         <UiButton
-                            :aria-label="t('checkout.addPromotionPlaceholder')" 
+                            :aria-label="t('checkout.addPromotionPlaceholder')"
                             :is-loading="isLoading.promotion"
                             :disabled="!inputPromotionCode.trim()"
+                            :class="getStyle('cart.promotionButton')"
                             @click="addSelectedPromotionCode(inputPromotionCode)"
                         >
                             <Icon name="mdi:check" class="size-4" />
