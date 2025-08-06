@@ -3,13 +3,15 @@ import type { SortingForm } from '~/types/vueForm/Sorting';
 import type { SelectItems } from '~/types/vueForm/Form';
 import type { Vueform } from '@vueform/vueform';
 
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
       sortingItems?: SelectItems;
       initialValue?: string;
+      isLoading?: boolean;
     }>(),
 {
     sortingItems: undefined,
     initialValue: undefined,
+    isLoading: false,
 },
 );
 
@@ -17,19 +19,13 @@ defineEmits<{
   onChange: [order: string];
 }>();
 
-const form$: Ref<null | Vueform> = ref(null);
-
-onMounted(async () => {
-    // Form value is updated, since default-value is not reactive
-    form$.value?.update({
-        order: props.initialValue,
-    });
-});
+const { getStyle } = usePondStyle();
 </script>
 
 <template>
+    <UiSkeleton v-if="isLoading" :class="getStyle('listing.sorting.skeleton')" />
     <Vueform
-        ref="form$"
+        v-else
         :endpoint="false"
         @change="(value: SortingForm) => $emit('onChange', value.order)"
     >
@@ -38,6 +34,7 @@ onMounted(async () => {
             name="order"
             :placeholder="$t('general.sortingLabel')"
             :items="sortingItems"
+            :default-value="initialValue"
         />
     </Vueform>
 </template>

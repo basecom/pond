@@ -14,7 +14,8 @@
         },
         "currencySwitch": "Currency switched to {currency}",
         "errorHeadline": "An error has occurred.",
-        "errorMessage": "Please try again later."
+        "errorMessage": "Please try again later.",
+        "sortingLabel": "Sorting"
     },
     "image": {
         "altText": "Image",

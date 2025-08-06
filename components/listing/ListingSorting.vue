@@ -6,6 +6,7 @@ const {
     changeCurrentSortingOrder,
     getCurrentSortingOrder,
     getSortingOrders,
+    loading,
 } = useCategoryListing();
 const route = useRoute();
 const router = useRouter();
@@ -39,6 +40,7 @@ const currentSortingOrder = computed({
 
 <template>
     <ListingSortingInner
+        :is-loading="loading"
         :sorting-items="selectSortingItems"
         :initial-value="getCurrentSortingOrder"
         @on-change="(value: string) => currentSortingOrder = value"
