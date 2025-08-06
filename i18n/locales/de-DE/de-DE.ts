@@ -8,19 +8,15 @@ export default defineI18nLocale(async () => {
         runtimeConfig.public?.shopware?.endpoint;
     const shopwareAccessToken = runtimeConfig.public?.shopware?.accessToken;
 
-    const apiClient = createAPIClient({
+    const apiClient = createAPIClient<operations>({
         accessToken: shopwareAccessToken,
         baseURL: shopwareEndpoint,
     });
 
     if (apiClient) {
         try {
-            // @ts-expect-error - this store api exists
             const res = (await apiClient.invoke('loadSnippets post /pond/snippet', {
-                body: {
-                    domainUrl: url.origin as string,
-                },
-                // @ts-expect-error - this store api exists
+                body: { domainUrl: url.origin as string },
             })).data;
             return res.snippets;
         } catch (error) {

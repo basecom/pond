@@ -8,14 +8,11 @@ export type ExtendedOperations = coreOperations & {
             domainUrl: string,
         };
         response: {
-            data: {
-                snippets: {
-                    [key: string]: string;
-                },
-                error?: string,
-                apiAlias: string,
-            }
-            status: number,
+            snippets: {
+                [key: string]: string;
+            },
+            error?: string,
+            apiAlias: string,
         };
         responseCode: 200;
     };
