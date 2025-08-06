@@ -8,6 +8,7 @@ export default defineI18nLocale(async () => {
         runtimeConfig.public?.shopware?.endpoint;
     const shopwareAccessToken = runtimeConfig.public?.shopware?.accessToken;
 
+    // Have to create the apiClient, because the shopware context is missing here if useShopwareContext() is used instead
     const apiClient = createAPIClient<operations>({
         accessToken: shopwareAccessToken,
         baseURL: shopwareEndpoint,
