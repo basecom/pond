@@ -1,17 +1,22 @@
 <script setup lang="ts">
-import type { CmsElementSidebarFilter } from "@shopware/composables";
+import type { CmsElementSidebarFilter } from '@shopware/composables';
 
-const props = defineProps<{
+defineProps<{
   content: CmsElementSidebarFilter;
 }>();
 
-const config = useCmsElementConfig(props.content);
-const showSorting = inject('showSorting');
-console.log('sorting', showSorting);
+const injectedShowSorting: Ref<boolean>|undefined = inject('showSorting');
+const showSorting = ref(false);
+
+onMounted(() => {
+    if (injectedShowSorting) {
+        showSorting.value = injectedShowSorting.value;
+    }
+});
 </script>
 <template>
-  <div class="grid sm:grid-cols-2">
-    <SwProductListingFilters :content="content" />
-    <ListingSorting v-if="showSorting" />
-  </div>
+    <div class="grid sm:grid-cols-2">
+        <SwProductListingFilters :content="content" />
+        <ListingSorting v-if="showSorting" />
+    </div>
 </template>

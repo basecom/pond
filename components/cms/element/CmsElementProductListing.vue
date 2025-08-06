@@ -18,6 +18,13 @@ const props = withDefaults(defineProps<{
     style: undefined,
 },
 );
+
+// Added showSorting-config
+const data: Ref<boolean> | undefined = inject('showSorting');
+if (data) {
+    data.value = props.content.config.showSorting?.value ?? true;
+}
+
 // Changed: use snippets instead of provided translations
 const defaultLimit = 15;
 const defaultPage = 1;
