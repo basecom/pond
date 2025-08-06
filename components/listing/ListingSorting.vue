@@ -10,6 +10,7 @@ const {
 } = useCategoryListing();
 const route = useRoute();
 const router = useRouter();
+const { getStyle } = usePondStyle();
 
 const selectSortingItems: Ref<undefined | SelectItems> = ref(undefined);
 const isFormAvailable = ref(false);
@@ -55,5 +56,5 @@ const currentSortingOrder = computed({
             />
         </Vueform>
     </ClientOnly>
-    <UiSkeleton v-if="!isFormAvailable" class="w-full h-10" />
+    <UiSkeleton v-if="!isFormAvailable" :class="getStyle('listing.sorting.skeleton')" />
 </template>
