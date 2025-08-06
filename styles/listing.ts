@@ -42,7 +42,4 @@ export default {
             inner: 'h-7',
         },
     },
-    sorting: {
-        skeleton: 'w-full h-10',
-    },
 };

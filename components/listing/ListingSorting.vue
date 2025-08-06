@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { operations } from '@shopware/api-client/api-types';
-import type { SortingForm } from '~/types/vueForm/Sorting';
 import type { SelectItems } from '~/types/vueForm/Form';
 
 const {
@@ -10,10 +9,8 @@ const {
 } = useCategoryListing();
 const route = useRoute();
 const router = useRouter();
-const { getStyle } = usePondStyle();
 
 const selectSortingItems: Ref<undefined | SelectItems> = ref(undefined);
-const isFormAvailable = ref(false);
 
 onMounted(async () => {
     selectSortingItems.value = getSortingOrders.value?.map(item => ({
@@ -41,20 +38,9 @@ const currentSortingOrder = computed({
 </script>
 
 <template>
-    <ClientOnly>
-        <Vueform
-            :endpoint="false"
-            @mounted="() => isFormAvailable = true"
-            @change="(value: SortingForm) => currentSortingOrder = value.order"
-        >
-            <UiSelectElement
-                id="listing-sorting"
-                name="order"
-                :placeholder="$t('account.customer.salutation.placeholder')"
-                :items="selectSortingItems"
-                :default-value="getCurrentSortingOrder"
-            />
-        </Vueform>
-    </ClientOnly>
-    <UiSkeleton v-if="!isFormAvailable" :class="getStyle('listing.sorting.skeleton')" />
+    <ListingSortingInner
+        :sorting-items="selectSortingItems"
+        :initial-value="getCurrentSortingOrder"
+        @on-change="(value: string) => currentSortingOrder = value"
+    />
 </template>
