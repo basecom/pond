@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ToastRoot, type ToastRootEmits, type ToastRootProps, useForwardPropsEmits } from 'reka-ui';
+import { ToastRoot,   useForwardPropsEmits } from 'reka-ui';
+import type { ToastRootEmits, ToastRootProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 
 export interface ToastProps extends ToastRootProps {

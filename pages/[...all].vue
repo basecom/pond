@@ -45,12 +45,13 @@ onBeforeRouteLeave(() => {
 });
 
 const pascalRouteName = computed(() => pascalCase(routeName.value));
+const doesComponentExists = computed(() => componentExists(pascalRouteName.value));
 </script>
 
 <template>
     <component
         :is="pascalRouteName"
-        v-if="componentExists(pascalRouteName)"
+        v-if="doesComponentExists"
         :navigation-id="foreignKey"
     />
 </template>

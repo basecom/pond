@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ToastAction, type ToastActionProps } from 'reka-ui';
+import { ToastAction  } from 'reka-ui';
+import type { ToastActionProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 
 const props = defineProps<ToastActionProps & { class?: HTMLAttributes['class'] }>();
