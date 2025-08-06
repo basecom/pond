@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
 
-const props =
-    defineProps<{
-        cartItem: Schemas['LineItem'];
-    }>();
+const props = defineProps<{
+    cartItem: Schemas['LineItem'];
+}>();
 
-console.log(props.cartItem);
 const reactiveCartItem = toRef(props, 'cartItem');
 const {
     itemOptions,
@@ -18,8 +16,6 @@ const {
     isStackable,
     changeItemQuantity,
 } = useCartItem(reactiveCartItem);
-
-console.log(itemOptions.value);
 </script>
 
 <template>
@@ -27,6 +23,10 @@ console.log(itemOptions.value);
         :cart-item="reactiveCartItem"
         :item-options="itemOptions"
         :is-removable="isRemovable"
+        :is-stackable="isStackable"
+        :item-quantity="itemQuantity"
+        :item-total-price="itemTotalPrice"
         @remove-item="() => removeItem()"
+        @change-quantity="quantity => changeItemQuantity(quantity)"
     />
 </template>

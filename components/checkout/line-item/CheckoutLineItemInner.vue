@@ -1,24 +1,32 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import type { ProductOption } from '~/types/framework/ProductOption';
+import type { LineItemOption } from '~/types/framework/LineItem';
 
 const props = withDefaults(
     defineProps<{
         cartItem: Schemas['LineItem'];
-        itemOptions?: ProductOption[];
+        itemOptions?: LineItemOption[];
         isRemovable?: boolean;
+        isStackable?: boolean;
+        itemQuantity?: number;
+        itemTotalPrice?: number;
     }>(),
     {
         itemOptions: undefined,
         isRemovable: false,
+        isStackable: false,
+        itemQuantity: undefined,
+        itemTotalPrice: undefined,
     },
 );
 
 defineEmits<{
     'remove-item': [];
+    'change-quantity': [quantity: number];
 }>();
 
 const { getStyle } = usePondStyle();
+const { getFormattedPrice } = usePrice();
 
 // we need the cast it
 // the type definition says wrongly that cover has a media object in it, but it's not the case
@@ -46,7 +54,12 @@ const cover = computed(() => props.cartItem?.cover as unknown as Schemas['Media'
                     {{ cartItem.label }}
                 </h5>
 
-                <UiButton v-if="isRemovable" variant="link" class="!p-0 h-min w-min" @click="$emit('remove-item')">
+                <UiButton
+                    v-if="isRemovable"
+                    variant="link"
+                    class="!p-0 h-min w-min"
+                    @click="$emit('remove-item')"
+                >
                     <Icon name="mdi:close" :class="getStyle('ui.sheet.title.icon')" />
                 </UiButton>
             </div>
@@ -67,5 +80,16 @@ const cover = computed(() => props.cartItem?.cover as unknown as Schemas['Media'
                 </p>
             </div>
         </div>
+    </div>
+
+    <CheckoutLineItemQuantity
+        :cart-item="cartItem"
+        :item-quantity="itemQuantity"
+        :is-stackable="isStackable"
+        @change-quantity="quantity => $emit('change-quantity', quantity)"
+    />
+
+    <div class="mt-4 text-right font-bold">
+        {{ getFormattedPrice(itemTotalPrice) }}
     </div>
 </template>

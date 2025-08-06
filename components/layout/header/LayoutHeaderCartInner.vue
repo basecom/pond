@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import CheckoutLineItem from '~/components/checkout/CheckoutLineItem.vue';
 
-const props = withDefaults(
+withDefaults(
     defineProps<{
         cartItems?: Schemas['LineItem'][];
         cartDeliveries?: Schemas['CartDelivery'][];
@@ -87,7 +86,6 @@ const { getStyle } = usePondStyle();
     @apply
     absolute w-full z-10
     motion-safe:transition-[all_0.3s_cubic-bezier(0.4,0,0.2,1)]
-    motion-safe:ease-in-out;
 }
 
 .cart-item-leave-to {
@@ -95,9 +93,6 @@ const { getStyle } = usePondStyle();
     motion-safe:opacity-0
     motion-safe:translate-y-[-10px]
     motion-safe:scale-95
-    motion-safe:h-0
-    motion-safe:p-0
-    motion-safe:m-0
     motion-safe:overflow-hidden;
 }
 
