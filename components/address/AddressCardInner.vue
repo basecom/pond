@@ -5,13 +5,17 @@ import { getTranslatedProperty } from '@shopware/helpers';
 withDefaults(
     defineProps<{
       headline?: string;
-      address?: Schemas['CustomerAddress'],
+      address?: Schemas['CustomerAddress'];
       description?: string;
+      isDefaultShippingAddress?: boolean;
+      isDefaultBillingAddress?: boolean;
     }>(),
     {
         headline: undefined,
         address: undefined,
         description: undefined,
+        isDefaultShippingAddress: false,
+        isDefaultBillingAddress: false,
     },
 );
 
@@ -39,6 +43,15 @@ const showPhoneNumberField = configStore.get('core.loginRegistration.showPhoneNu
 
         <slot name="address-card-fields">
             <div v-if="address" :class="getStyle('account.address.card.outer')">
+                <div :class="getStyle('account.address.badges')">
+                    <UiBadge v-if="isDefaultBillingAddress">
+                        {{ $t('address.defaultBillingAddress.label') }}
+                    </UiBadge>
+                    <UiBadge v-if="isDefaultShippingAddress">
+                        {{ $t('address.defaultShippingAddress.label') }}
+                    </UiBadge>
+                </div>
+
                 <p
                     v-if="address.company"
                     :class="getStyle('account.address.boldText')"

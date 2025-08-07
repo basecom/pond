@@ -5,11 +5,10 @@ export default {
     icon: 'size-4',
     deleteAddressButton: 'w-1/2',
     setDefaultAddressButton: 'pl-0 justify-start',
-    defaultBillingAddress: 'col-start-1',
     boldText: 'font-bold',
     dialog: {
         outer: 'w-full',
-        inner: 'max-h-4/5 overflow-scroll md:!max-w-1/2',
+        inner: 'max-h-4/5 overflow-scroll md:!max-w-1/2 overflow-visible',
     },
     trigger: {
         outer: 'flex flex-start w-1/2',
@@ -34,4 +33,5 @@ export default {
         outer: 'w-full flex gap-3',
         button: 'w-full',
     },
+    badges: 'flex gap-2.5 md:gap-5',
 };
