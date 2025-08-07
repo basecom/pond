@@ -14,7 +14,7 @@ export default {
         outer: 'flex flex-start w-1/2',
     },
     availableAddresses: {
-        outer: 'gap-2 flex flex-col',
+        outer: 'gap-2 flex flex-col border-b border-gray-200 pb-5',
         inner: 'flex gap-2',
     },
     editOrCreateAddressButton: {

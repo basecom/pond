@@ -97,6 +97,32 @@ const dialogOpen = ref(false);
                             :is-default-billing-address="defaultBillingAddressId === address.id"
                         />
 
+                        <slot name="set-as-default-billing-address">
+                            <UiButton
+                                v-if="defaultBillingAddressId !== address.id"
+                                variant="link"
+                                :class="getStyle('account.address.setDefaultAddressButton')"
+                                :is-loading="isLoading"
+                                @click="$emit('set-as-default-billing-address', address.id)"
+                            >
+                                <Icon name="mdi:list-box-outline" :class="getStyle('account.address.icon')" />
+                                {{ $t('address.defaultBillingAddress.setAsDefault') }}
+                            </UiButton>
+                        </slot>
+
+                        <slot name="set-as-default-shipping-address">
+                            <UiButton
+                                v-if="defaultShippingAddressId !== address.id"
+                                variant="link"
+                                :class="getStyle('account.address.setDefaultAddressButton')"
+                                :is-loading="isLoading"
+                                @click="$emit('set-as-default-shipping-address', address.id)"
+                            >
+                                <Icon name="mdi:truck-outline" :class="getStyle('account.address.icon')" />
+                                {{ $t('address.defaultShippingAddress.setAsDefault') }}
+                            </UiButton>
+                        </slot>
+
                         <div :class="getStyle('account.address.availableAddresses.inner')">
                             <UiDialog :class="getStyle('account.address.dialog')">
                                 <slot name="edit-address-trigger">
@@ -168,32 +194,6 @@ const dialogOpen = ref(false);
                                 </UiDialog>
                             </slot>
                         </div>
-
-                        <slot name="set-as-default-billing-address">
-                            <UiButton
-                                v-if="defaultBillingAddressId !== address.id"
-                                variant="link"
-                                :class="getStyle('account.address.setDefaultAddressButton')"
-                                :is-loading="isLoading"
-                                @click="$emit('set-as-default-billing-address', address.id)"
-                            >
-                                <Icon name="mdi:list-box-outline" :class="getStyle('account.address.icon')" />
-                                {{ $t('address.defaultBillingAddress.setAsDefault') }}
-                            </UiButton>
-                        </slot>
-
-                        <slot name="set-as-default-shipping-address">
-                            <UiButton
-                                v-if="defaultShippingAddressId !== address.id"
-                                variant="link"
-                                :class="getStyle('account.address.setDefaultAddressButton')"
-                                :is-loading="isLoading"
-                                @click="$emit('set-as-default-shipping-address', address.id)"
-                            >
-                                <Icon name="mdi:truck-outline" :class="getStyle('account.address.icon')" />
-                                {{ $t('address.defaultShippingAddress.setAsDefault') }}
-                            </UiButton>
-                        </slot>
                     </div>
                 </template>
 
