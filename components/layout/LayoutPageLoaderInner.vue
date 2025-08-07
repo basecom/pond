@@ -3,7 +3,9 @@ const { getStyle } = usePondStyle();
 </script>
 
 <template>
-    <div :class="getStyle('layout.loader.outer')">
-        <Icon name="mdi:loading" :class="getStyle('layout.loader.icon')" />
-    </div>
+    <slot name="page-loader">
+        <div :class="getStyle('layout.loader.outer')">
+            <Icon name="mdi:loading" :class="getStyle('layout.loader.icon')" />
+        </div>
+    </slot>
 </template>
