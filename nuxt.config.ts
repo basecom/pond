@@ -79,7 +79,7 @@ export default defineNuxtConfig({
     },
 
     i18n: {
-        // https://i18n.nuxtjs.org/docs/guide/lazy-load-translations
+        // more information about the snippet handling: https://i18n.nuxtjs.org/docs/guide/lazy-load-translations
         locales: [
             {
                 code: 'de-DE',
