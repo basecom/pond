@@ -4,8 +4,8 @@ export function usePondPrice() {
 
     const getFormattedPrice = (value: number) => new Intl.NumberFormat(locale.value, {
         style: 'currency',
-        currency: currency.value?.isoCode,
-    }).format(+value);
+        currency: currency.value?.isoCode ?? 'EUR',
+    }).format(value);
 
     return { getFormattedPrice };
 }
