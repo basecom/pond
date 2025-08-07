@@ -12,6 +12,7 @@ const { getSlotContent } = useCmsBlock(props.content);
 const leftContent = getSlotContent('left');
 const rightContent = getSlotContent('right');
 </script>
+
 <template>
     <!-- Added responsive design -->
     <div class="cms-block-image-text grid md:grid-cols-2 md:gap-10">

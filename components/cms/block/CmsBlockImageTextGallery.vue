@@ -40,6 +40,7 @@ function onImageClick(
     }
 }
 </script>
+
 <template>
     <!-- Added grid layout; Added border -->
     <article

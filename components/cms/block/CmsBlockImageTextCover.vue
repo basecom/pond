@@ -12,6 +12,7 @@ const { getSlotContent } = useCmsBlock(props.content);
 const leftContent = getSlotContent('left');
 const rightContent = getSlotContent('right');
 </script>
+
 <template>
     <article class="md:grid md:grid-cols-2 gap-10 cms-block-image-text-cover">
         <CmsGenericElement

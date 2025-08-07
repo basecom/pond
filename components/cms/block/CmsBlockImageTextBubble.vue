@@ -16,6 +16,7 @@ const centerImage = getSlotContent('center-image');
 const rightText = getSlotContent('right-text');
 const rightImage = getSlotContent('right-image');
 </script>
+
 <template>
     <!-- Change styling -->
     <div class="cms-block-image-text-bubble grid md:grid-cols-3">

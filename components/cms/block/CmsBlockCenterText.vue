@@ -12,6 +12,7 @@ const slotLeftContent = getSlotContent('left');
 const slotRightContent = getSlotContent('right');
 const slotCenterContent = getSlotContent('center');
 </script>
+
 <template>
     <!-- Change styling & move styling to CmsGenericElement (otherwise we receive errors) -->
     <div class="cms-block-center-text grid md:grid-cols-3 md:gap-10 content-center">

@@ -16,6 +16,7 @@ const centerTextContent = getSlotContent('center-text');
 const rightImageContent = getSlotContent('right-image');
 const rightTextContent = getSlotContent('right-text');
 </script>
+
 <template>
     <div class="cms-block-image-text-row grid md:grid-cols-3 gap-10">
         <div class="cms-block-image-text-row__column">
