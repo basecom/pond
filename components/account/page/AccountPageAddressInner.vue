@@ -37,13 +37,13 @@ const dialogOpen = ref(false);
     <div :class="getStyle('account.address.outer')">
         <slot name="headline">
             <h1 :class="getStyle('account.address.headline')">
-                {{ $t('address.accountHeadline') }}
+                {{ $t('account.addressTitle') }}
             </h1>
         </slot>
 
         <slot name="description">
             <h2 :class="getStyle('account.address.headline')">
-                {{ $t('address.accountDescription') }}
+                {{ $t('account.addressText') }}
             </h2>
         </slot>
 
@@ -53,7 +53,7 @@ const dialogOpen = ref(false);
                     <UiDialogTrigger :class="getStyle('account.address.trigger.outer')">
                         <UiButton>
                             <Icon name="mdi:plus" :class="getStyle('account.address.icon')" />
-                            {{ $t('address.createAddress') }}
+                            {{ $t('account.addressCreateBtn') }}
                         </UiButton>
                     </UiDialogTrigger>
                 </slot>
@@ -62,7 +62,7 @@ const dialogOpen = ref(false);
                     <UiDialogContent :class="getStyle('account.address.dialog.inner')">
                         <UiDialogHeader>
                             <UiDialogTitle>
-                                {{ $t('address.createAddress') }}
+                                {{ $t('account.addressCreateBtn') }}
                             </UiDialogTitle>
                         </UiDialogHeader>
                         <AddressCreateOrEdit
@@ -83,7 +83,7 @@ const dialogOpen = ref(false);
 
                 <AddressCard
                     v-else
-                    :headline="$t('address.defaultBillingAddress.label')"
+                    :headline="$t('account.addressesTitleDefaultBillingAddress')"
                     :address="defaultBillingAddress"
                 />
             </div>
@@ -94,7 +94,7 @@ const dialogOpen = ref(false);
 
             <AddressCard
                 v-else
-                :headline="$t('address.defaultShippingAddress.label')"
+                :headline="$t('account.addressesTitleDefaultShippingAddress')"
                 :address="defaultShippingAddress"
             />
         </slot>
@@ -102,7 +102,7 @@ const dialogOpen = ref(false);
         <slot name="available-addresses">
             <slot name="available-addresses-headline">
                 <h3 :class="getStyle('account.address.subHeadline')">
-                    {{ $t('address.availableAddresses') }}
+                    {{ $t('account.availableAddresses') }}
                 </h3>
             </slot>
 
@@ -121,7 +121,7 @@ const dialogOpen = ref(false);
                                     <UiDialogTrigger :class="getStyle('account.address.trigger.outer')">
                                         <UiButton :class="getStyle('account.address.editOrCreateAddressButton.trigger')" variant="secondary">
                                             <Icon name="mdi:pencil" :class="getStyle('account.address.icon')" />
-                                            {{ $t('address.editAddress') }}
+                                            {{ $t('account.addressEditBtn') }}
                                         </UiButton>
                                     </UiDialogTrigger>
                                 </slot>
@@ -130,7 +130,7 @@ const dialogOpen = ref(false);
                                     <UiDialogContent :class="getStyle('account.address.dialog.inner')">
                                         <UiDialogHeader>
                                             <UiDialogTitle>
-                                                {{ $t('address.editAddress') }}
+                                                {{ $t('account.addressEditMetaTitle') }}
                                             </UiDialogTitle>
                                         </UiDialogHeader>
                                         <AddressCreateOrEdit
@@ -151,7 +151,7 @@ const dialogOpen = ref(false);
                                         <UiDialogTrigger :class="getStyle('account.address.trigger.outer')">
                                             <UiButton variant="secondary" :class="getStyle('account.address.editOrCreateAddressButton.trigger')">
                                                 <Icon name="mdi:delete-forever-outline" :class="getStyle('account.address.icon')" />
-                                                {{ $t('address.deleteAddress') }}
+                                                {{ $t('account.addressesContentItemActionDelete') }}
                                             </UiButton>
                                         </UiDialogTrigger>
                                     </slot>
@@ -160,11 +160,11 @@ const dialogOpen = ref(false);
                                         <UiDialogContent :class="getStyle('account.address.dialog.inner')">
                                             <UiDialogHeader>
                                                 <UiDialogTitle>
-                                                    {{ $t('address.deleteAddress') }}
+                                                    {{ $t('account.addressesContentItemActionDelete') }}
                                                 </UiDialogTitle>
                                             </UiDialogHeader>
 
-                                            {{ $t('address.deleteAddressDescription') }}
+                                            {{ $t('account.addressesContentItemActionDeleteDescription') }}
                                             <div :class="getStyle('account.address.deleteAddress.outer')">
                                                 <UiButton
                                                     :is-loading="isLoading"
@@ -172,13 +172,13 @@ const dialogOpen = ref(false);
                                                     @click="$emit('delete-address', address.id)"
                                                 >
                                                     <Icon name="mdi:delete-forever-outline" :class="getStyle('account.address.icon')" />
-                                                    {{ $t('address.deleteAddress') }}
+                                                    {{ $t('account.addressesContentItemActionDelete') }}
                                                 </UiButton>
 
                                                 <UiDialogClose
                                                     :class="[getStyle('account.address.deleteAddress.button'), getStyle('ui.button.base'), getStyle('ui.button.variants.secondary')]"
                                                 >
-                                                    {{ $t('general.cancel') }}
+                                                    {{ $t('global.default.cancel') }}
                                                 </UiDialogClose>
                                             </div>
                                         </UiDialogContent>
@@ -196,7 +196,7 @@ const dialogOpen = ref(false);
                                 @click="$emit('set-as-default-billing-address', address.id)"
                             >
                                 <Icon name="mdi:list-box-outline" :class="getStyle('account.address.icon')" />
-                                {{ $t('address.defaultBillingAddress.setAsDefault') }}
+                                {{ $t('account.addressesSetAsDefaultBillingAction') }}
                             </UiButton>
                         </slot>
 
@@ -209,7 +209,7 @@ const dialogOpen = ref(false);
                                 @click="$emit('set-as-default-shipping-address', address.id)"
                             >
                                 <Icon name="mdi:truck-outline" :class="getStyle('account.address.icon')" />
-                                {{ $t('address.defaultShippingAddress.setAsDefault') }}
+                                {{ $t('account.addressesSetAsDefaultShippingAction') }}
                             </UiButton>
                         </slot>
                     </div>

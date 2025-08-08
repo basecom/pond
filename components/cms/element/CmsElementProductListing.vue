@@ -153,7 +153,7 @@ onMounted(async () => {
 <template>
     <!-- changed: product card component, grid, translations, no products message -->
     <div v-if="!loading && getElements.length === 0">
-        {{ $t('listing.noProducts') }}
+        {{ $t('listing.emptyResultMessage') }}
     </div>
     <div
         v-if="!loading && getElements.length > 0"

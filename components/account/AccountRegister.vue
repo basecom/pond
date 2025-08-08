@@ -18,7 +18,7 @@ const register = async (registerData: RegisterFormData) => {
     try {
         await customerStore.register(registerData);
         toast({
-            title: t('account.register.success'),
+            title: t('account.registerSucceeded'),
         });
     } catch (error) {
         if (error instanceof ApiClientError) {
@@ -26,11 +26,11 @@ const register = async (registerData: RegisterFormData) => {
             if (firstError?.code) {
                 errorMessage.value = t(`error.${firstError.code}`);
             } else {
-                errorMessage.value = t('error.generic');
+                errorMessage.value = t('error.message-default');
             }
         } else {
             handleError(`Unexpected registration error: ${error}`);
-            errorMessage.value = t('error.generic');
+            errorMessage.value = t('error.message-default');
         }
     } finally {
         isLoading.value = false;

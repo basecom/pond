@@ -12,14 +12,14 @@ const shopName = configStore.get('core.basicInformation.shopName') as string|nul
 onMounted(() => {
     if(!hashQuery.value) {
         toast({
-            title: t('account.recover.errorMessage'),
+            title: t('account.passwordHashNotFound'),
             variant: 'destructive',
         });
     }
 });
 
 useHead(() => ({
-    title: `${t('account.recover.header')  } | ${shopName}`,
+    title: `${t('account.profileRecoverPasswordTitle')  } | ${shopName}`,
 }));
 </script>
 

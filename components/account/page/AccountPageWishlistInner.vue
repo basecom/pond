@@ -66,7 +66,7 @@ const { getStyle } = usePondStyle();
             <slot name="wishlist-no-products">
                 <UiAlert :class="getStyle('account.wishlist.noProducts.outer')">
                     <Icon name="mdi:alert-circle-outline" :class="getStyle('account.wishlist.noProducts.icon')" />
-                    <UiAlertTitle :class="getStyle('account.wishlist.noProducts.inner')"> {{ $t('wishlist.noProducts') }} </UiAlertTitle>
+                    <UiAlertTitle :class="getStyle('account.wishlist.noProducts.inner')"> {{ $t('wishlist.wishlistEmptyHeader') }} </UiAlertTitle>
                 </UiAlert>
             </slot>
         </template>

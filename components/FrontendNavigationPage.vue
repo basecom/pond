@@ -13,7 +13,7 @@ const categoryResponse = await search(props.navigationId, {
 });
 
 if (!categoryResponse) {
-    throw createError({ statusCode: 404, message: t('error.404.heading') });
+    throw createError({ statusCode: 404, message: t('general.404ErrorPageHeader') });
 }
 
 const { category } = useCategory(categoryResponse);

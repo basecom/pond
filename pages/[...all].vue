@@ -37,7 +37,7 @@ const { routeName, foreignKey } = useNavigationContext(seoResult);
 const { componentExists } = usePondCmsUtils();
 
 if (!routeName.value) {
-    throw createError({ statusCode: 404, message: t('error.404.heading') });
+    throw createError({ statusCode: 404, message: t('general.404ErrorPageHeader') });
 }
 
 onBeforeRouteLeave(() => {

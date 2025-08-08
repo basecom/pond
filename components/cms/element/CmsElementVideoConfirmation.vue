@@ -44,7 +44,7 @@ const emits = defineEmits<{
                             color="primary"
                             @click="emits('confirm', true)"
                         >
-                            {{  $t('general.button.acceptLabel') }}
+                            {{  $t('general.accept') }}
                         </UiButton>
                     </slot>
                 </div>

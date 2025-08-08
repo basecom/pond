@@ -19,7 +19,7 @@ defineEmits<(e: 'changePage', page: number) => void>();
             class="cursor-pointer relative inline-flex items-center px-2 py-2 rounded-l-md border border-secondary-300 bg-white text-sm font-medium text-secondary-500 hover:bg-secondary-50"
             @click="$emit('changePage', current - 1)"
         >
-            <span class="sr-only">{{ $t('listing.pagination.previous') }}</span>
+            <span class="sr-only">{{ $t('general.pagination.prev') }}</span>
             <!-- Heroicon name: solid/chevron-left -->
             <div class="w-5 h-5 i-carbon-chevron-left" />
         </button>
@@ -28,7 +28,7 @@ defineEmits<(e: 'changePage', page: number) => void>();
             class="cursor-pointer bg-white border-secondary-300 text-secondary-500 hover:bg-secondary-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
             @click="$emit('changePage', 1)"
         >
-            <span class="sr-only">{{ $t('listing.pagination.page') }} </span>1
+            <span class="sr-only">{{ $t('general.pagination.page') }} </span>1
         </button>
         <span
             v-if="current - 1 > 2"
@@ -42,7 +42,7 @@ defineEmits<(e: 'changePage', page: number) => void>();
             :class="[current == 2 ? 'rounded-l-md border border-secondary-300' : '']"
             @click="$emit('changePage', current - 1)"
         >
-            <span class="sr-only">{{ $t('listing.pagination.page') }} </span>{{ current - 1 }}
+            <span class="sr-only">{{ $t('general.pagination.page') }} </span>{{ current - 1 }}
         </button>
         <button
             aria-current="page"
@@ -52,7 +52,7 @@ defineEmits<(e: 'changePage', page: number) => void>();
                 total == current ? 'rounded-r-md border border-secondary-300' : '',
             ]"
         >
-            <span class="sr-only">{{ $t('listing.pagination.page') }} </span>{{ current }}
+            <span class="sr-only">{{ $t('general.pagination.page') }} </span>{{ current }}
         </button>
         <button
             v-if="current < total"
@@ -62,7 +62,7 @@ defineEmits<(e: 'changePage', page: number) => void>();
             ]"
             @click="$emit('changePage', current + 1)"
         >
-            <span class="sr-only">{{ $t('listing.pagination.page') }} </span>{{ current + 1 }}
+            <span class="sr-only">{{ $t('general.pagination.page') }} </span>{{ current + 1 }}
         </button>
         <span
             v-if="total - current > 2"
@@ -82,7 +82,7 @@ defineEmits<(e: 'changePage', page: number) => void>();
             class="cursor-pointer relative inline-flex items-center px-2 py-2 rounded-r-md border border-secondary-300 bg-white text-sm font-medium text-secondary-500 hover:bg-secondary-50"
             @click="$emit('changePage', current + 1)"
         >
-            <span class="sr-only">{{ $t('listing.pagination.next') }}</span>
+            <span class="sr-only">{{ $t('general.pagination.next') }}</span>
             <!-- Heroicon name: solid/chevron-right -->
             <div class="w-5 h-5 i-carbon-chevron-right" />
         </button>

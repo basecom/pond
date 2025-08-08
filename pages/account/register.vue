@@ -8,7 +8,7 @@ const { signedIn } = storeToRefs(customerStore);
 const shopName = configStore.get('core.basicInformation.shopName') as string|null ?? 'pond';
 
 useHead(() => ({
-    title: `${t('account.registerPage')  } | ${shopName}`,
+    title: `${t('account.registerMetaTitle')  } | ${shopName}`,
 }));
 
 const { rerouteIfLoggedIn } = usePondAuthentication();

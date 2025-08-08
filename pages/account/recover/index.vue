@@ -7,7 +7,7 @@ await configStore.loadConfig();
 const shopName = configStore.get('core.basicInformation.shopName') as string|null ?? 'pond';
 
 useHead(() => ({
-    title: `${t('account.recover.header')  } | ${shopName}`,
+    title: `${t('account.profileRecoverPasswordTitle')  } | ${shopName}`,
 }));
 </script>
 

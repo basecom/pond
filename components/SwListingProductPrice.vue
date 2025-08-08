@@ -39,7 +39,7 @@ const { getStyle } = usePondStyle();
         >
             <template #beforePrice>
                 <span v-if="displayFromVariants" :class="getStyle('listing.price.variantPrice.inner')">
-                    {{ $t('listing.price.variantsFrom') }}
+                    {{ $t('listing.cheapestPriceLabel') }}
                 </span>
             </template>
         </SwSharedPrice>
@@ -53,7 +53,7 @@ const { getStyle } = usePondStyle();
         >
             <template #beforePrice>
                 <span v-if="displayFrom || displayFromVariants" :class="getStyle('listing.price.unitPrice.inner')">
-                    {{ $t('listing.price.from') }}
+                    {{ $t('listing.listingTextFrom') }}
                 </span>
             </template>
         </SwSharedPrice>

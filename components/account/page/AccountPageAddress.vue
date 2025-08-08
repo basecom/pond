@@ -24,10 +24,14 @@ const createAddress = async (value: AddressData) => {
         await refreshSessionContext();
         await loadCustomerAddresses();
         toast({
-            title: t('address.createdAddress'),
+            title: t('account.addressSaved'),
         });
     } catch (error) {
         handleError(error);
+        toast({
+            title: t('error.message-default'),
+            variant: 'destructive',
+        });
     } finally {
         isLoading.value = false;
     }
@@ -41,9 +45,13 @@ const deleteAddress = async (addressId: string) => {
         await refreshSessionContext();
         await loadCustomerAddresses();
         toast({
-            title: t('address.deletedAddress'),
+            title: t('account.addressDeleted'),
         });
     } catch (error) {
+        toast({
+            title: t('account.addressNotDeleted'),
+            variant: 'destructive',
+        });
         handleError(error);
     } finally {
         isLoading.value = false;
@@ -58,9 +66,13 @@ const setAsDefaultBillingAddress = async (addressId: string) => {
         await refreshSessionContext();
         await loadCustomerAddresses();
         toast({
-            title: t('address.defaultBillingAddress.success'),
+            title: t('account.addressDefaultChanged'),
         });
     } catch (error) {
+        toast({
+            title: t('account.addressDefaultNotChanged'),
+            variant: 'destructive',
+        });
         handleError(error);
     } finally {
         isLoading.value = false;
@@ -75,9 +87,13 @@ const setAsDefaultShippingAddress = async (addressId: string) => {
         await refreshSessionContext();
         await loadCustomerAddresses();
         toast({
-            title: t('address.defaultShippingAddress.success'),
+            title: t('account.addressDefaultChanged'),
         });
     } catch (error) {
+        toast({
+            title: t('account.addressDefaultNotChanged'),
+            variant: 'destructive',
+        });
         handleError(error);
     } finally {
         isLoading.value = false;
@@ -97,9 +113,13 @@ const editAddress = async (address: AddressData, addressId: string) => {
         await refreshSessionContext();
         await loadCustomerAddresses();
         toast({
-            title: t('address.updatedAddress'),
+            title: t('account.addressSuccessfulChange'),
         });
     } catch (error) {
+        toast({
+            title: t('error.message-default'),
+            variant: 'destructive',
+        });
         handleError(error);
     } finally {
         isLoading.value = false;

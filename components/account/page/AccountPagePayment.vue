@@ -11,14 +11,13 @@ const updatePaymentMethod = async (paymentMethodForm: PaymentMethodDataForm) => 
         await setPaymentMethod({ id: paymentMethodForm.paymentId });
         await refreshSessionContext();
         toast({
-            title: t('account.defaultPaymentMethod.status.changeSuccessfully.title'),
-            description: t('account.defaultPaymentMethod.status.changeSuccessfully.description'),
+            title: t('account.paymentSuccess'),
         });
     } catch (error) {
         if (error instanceof ApiClientError) {
             const errorCode = error.details?.errors?.[0]?.code ?? 'GENERAL';
             toast({
-                title: t('error.generalHeadline'),
+                title: t('error.message-default'),
                 description: t(`error.${errorCode}`),
                 variant: 'destructive',
             });
