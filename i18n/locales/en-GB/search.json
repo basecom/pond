@@ -3,6 +3,7 @@
     "allResults": "Show all search results",
     "allResultsDescription": "This button navigates to the search results page",
     "noResult": "No search results found.",
-    "viewProduct": "View product"
+    "viewProduct": "View product",
+    "minCharacterInfo": "Enter at least {count} characters"
   }
 }

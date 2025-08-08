@@ -34,6 +34,8 @@ export default {
 
         search: {
             icon: '!size-5 cursor-pointer',
+            trigger: 'flex justify-center',
+            popover: 'gap-2 flex flex-col min-w-screen md:min-w-96',
             skeleton: {
                 wrapper: 'gap-2.5 flex flex-col',
                 outer: 'flex gap-2.5 w-full',
@@ -42,10 +44,11 @@ export default {
                 line: 'w-full p-2.5',
             },
             results: {
-                outer: 'p-2.5 border-b flex gap-2.5 w-full',
-                product: 'w-10 h-fit m-auto',
-                video: 'w-10 h-fit m-auto',
-                fallback: 'w-10 h-fit m-auto',
+                outer: 'p-2.5 border-b flex gap-2.5 w-full items-center relative',
+                product: 'w-10 h-fit',
+                video: 'w-10 h-fit',
+                fallback: 'w-10 h-fit',
+                productName: 'truncate w-full',
             },
             page: {
                 outer: 'flex mt-2.5 items-center gap-1',
