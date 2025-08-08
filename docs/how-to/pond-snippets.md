@@ -43,7 +43,7 @@ In the project context, the project will probably not be called PondCompanion.
 But the PondCompanion project is the associated Shopware project for which Pond is used.
 ## Store API
 
-We use the following Store API, which expects the domain url as a parameter
+We use the following Store API, which expects the `domainUrl` (origin + pathname, including the locale segment, e.g. `https://example.com/en-GB`) as a parameter.
 
 ```
 'loadSnippets post /pond/snippet': {

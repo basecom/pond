@@ -83,11 +83,17 @@ export default defineNuxtConfig({
         locales: [
             {
                 code: 'de-DE',
-                file: 'de-DE/de-DE.ts',
+                file: {
+                    path: 'de-DE/de-DE.ts',
+                    cache: true,
+                },
             },
             {
                 code: 'en-GB',
-                file: 'en-GB/en-GB.ts',
+                file: {
+                    path: 'en-GB/en-GB.ts',
+                    cache: true,
+                },
             },
         ],
         lazy: true,
