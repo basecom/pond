@@ -47,11 +47,11 @@ const limit = ref(
 // Corrected defu usage
 const initalRoute = defu({}, route);
 
+/**
+ * The loading indicator from the composable is only used for API calls. However, we also need a loading indicator during
+ * the initial page load so that the listing results don't change during the mount. This can happen because of setInitialListing.
+ */
 const isLoading = ref(true);
-
-onMounted(() => {
-    isLoading.value = loading.value;
-});
 
 watch(
     () => route,
@@ -145,6 +145,7 @@ setInitialListing(
 );
 
 onMounted(async () => {
+    isLoading.value = loading.value;
     // Call compareRouteQueryWithInitialListing within onMounted
     await compareRouteQueryWithInitialListing();
 });
@@ -152,11 +153,11 @@ onMounted(async () => {
 
 <template>
     <!-- changed: product card component, grid, translations, no products message -->
-    <div v-if="!loading && getElements.length === 0">
+    <div v-if="!isLoading && getElements.length === 0">
         {{ $t('listing.noProducts') }}
     </div>
     <div
-        v-if="!loading && getElements.length > 0"
+        v-if="!isLoading && getElements.length > 0"
         ref="productListElement"
         :class="getStyle('listing.outer')"
     >
@@ -168,7 +169,7 @@ onMounted(async () => {
         />
     </div>
     <div
-        v-if="loading"
+        v-if="isLoading"
         data-testid="loading"
         :class="getStyle('listing.loading.outer')"
     >
