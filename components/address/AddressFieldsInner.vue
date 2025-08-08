@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Columns } from '~/types/vueForm/Columns';
+import type { Columns, SelectItems } from '~/types/vueForm/Form';
 
 withDefaults(
     defineProps<{
@@ -121,8 +121,8 @@ withDefaults(
 const configStore = useConfigStore();
 const { getCountries: countries, getStatesForCountry, fetchCountries } = useCountries();
 
-const formattedCountries: Ref<undefined | { value: string; label: string; }[]> = ref(undefined);
-const states: Ref<undefined | { value: string; label: string; }[]> = ref(undefined);
+const formattedCountries: Ref<undefined | SelectItems> = ref(undefined);
+const states: Ref<undefined | SelectItems> = ref(undefined);
 // Admin configs
 const showAdditionalAddress1Field = ref(configStore.get('core.loginRegistration.showAdditionalAddressField1') as boolean);
 const isAdditionalAddress1FieldRequired = ref(configStore.get('core.loginRegistration.additionalAddressField1Required') as boolean);
