@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { getProductRoute } from '@shopware/helpers';
 import type { SearchForm } from '~/types/vueForm/Search';
+import type { Vueform } from '@vueform/vueform';
 
 const { getStyle } = usePondStyle();
 const { searchTerm, search, getProducts, getTotal, loading } =
     useProductSearchSuggest();
 const { formatLink } = useInternationalization();
+const route = useRoute();
 
 const displayTotal = ref(5);
 const displayResultsContainer = ref(false);
@@ -15,6 +17,15 @@ const minSearchTermLength = ref(3);
  * been performed and the search term has then been reduced/deleted
  */
 const inputValue = ref('');
+const form$: Ref<null | Vueform> = ref(null);
+
+// Watcher is needed, because form is rendered only on client due to hydration mismatches
+watch(() => form$.value, () => {
+  // updates form data
+  form$.value?.update({
+    search: route.query.search,
+  });
+});
 
 const onInput = async (value: string) => {
     inputValue.value = value;
@@ -29,7 +40,7 @@ const onInput = async (value: string) => {
 };
 
 const navigateToSearchPage = () => {
-    if (searchTerm.value.length >= minSearchTermLength.value) {
+    if (inputValue.value.length >= minSearchTermLength.value) {
         navigateTo(formatLink({ path: '/search', query: { search: searchTerm.value } }));
         displayResultsContainer.value = false;
     }
@@ -43,6 +54,7 @@ const navigateToSearchPage = () => {
                 <UiPopover>
                     <UiPopoverTrigger>
                         <Vueform
+                            ref="form$"
                             id="header-search-form"
                             :display-errors="false"
                             :endpoint="false"
