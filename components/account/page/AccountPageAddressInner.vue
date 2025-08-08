@@ -106,7 +106,9 @@ const dialogOpen = ref(false);
                                 @click="$emit('set-as-default-billing-address', address.id)"
                             >
                                 <Icon name="mdi:list-box-outline" :class="getStyle('account.address.icon')" />
-                                {{ $t('address.defaultBillingAddress.setAsDefault') }}
+                                <span :class="getStyle('account.address.text')">
+                                    {{ $t('address.defaultBillingAddress.setAsDefault') }}
+                                </span>
                             </UiButton>
                         </slot>
 
@@ -119,7 +121,9 @@ const dialogOpen = ref(false);
                                 @click="$emit('set-as-default-shipping-address', address.id)"
                             >
                                 <Icon name="mdi:truck-outline" :class="getStyle('account.address.icon')" />
-                                {{ $t('address.defaultShippingAddress.setAsDefault') }}
+                                <span :class="getStyle('account.address.text')">
+                                    {{ $t('address.defaultShippingAddress.setAsDefault') }}
+                                </span>
                             </UiButton>
                         </slot>
 
@@ -129,7 +133,9 @@ const dialogOpen = ref(false);
                                     <UiDialogTrigger :class="getStyle('account.address.trigger.outer')">
                                         <UiButton :class="getStyle('account.address.editOrCreateAddressButton.trigger')" variant="secondary">
                                             <Icon name="mdi:pencil" :class="getStyle('account.address.icon')" />
-                                            {{ $t('address.editAddress') }}
+                                            <span :class="getStyle('account.address.text')">
+                                                {{ $t('address.editAddress') }}
+                                            </span>
                                         </UiButton>
                                     </UiDialogTrigger>
                                 </slot>
@@ -159,7 +165,9 @@ const dialogOpen = ref(false);
                                         <UiDialogTrigger :class="getStyle('account.address.trigger.outer')">
                                             <UiButton variant="secondary" :class="getStyle('account.address.editOrCreateAddressButton.trigger')">
                                                 <Icon name="mdi:delete-forever-outline" :class="getStyle('account.address.icon')" />
-                                                {{ $t('address.deleteAddress') }}
+                                                <span :class="getStyle('account.address.text')">
+                                                    {{ $t('address.deleteAddress') }}
+                                                </span>
                                             </UiButton>
                                         </UiDialogTrigger>
                                     </slot>
