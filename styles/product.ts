@@ -8,9 +8,8 @@ export default {
         outer: 'relative sw-product-card not-prose group flex max-w-full flex-col justify-between rounded-lg border border-gray-200 bg-white transition duration-300 hover:shadow-lg',
         cover: {
             outer: {
-                default: 'group relative inline-block flex-none w-full overflow-hidden rounded-t-lg h-40 md:h-60',
+                default: 'group relative inline-block flex-none w-full overflow-hidden rounded-t-lg h-40 md:h-60 group-hover:opacity-75',
                 layout: 'h-40 md:h-80',
-                media: 'hover:opacity-75',
             },
             default: 'absolute inset-0 size-full rounded-t-lg',
             fallback: 'm-auto h-full object-contain p-8',
