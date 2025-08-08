@@ -10,7 +10,7 @@ export default {
     text: 'truncate',
     dialog: {
         outer: 'w-full',
-        inner: 'max-h-4/5 overflow-scroll md:!max-w-1/2 overflow-visible',
+        inner: 'max-h-4/5 md:!max-w-1/2 overflow-visible',
     },
     trigger: {
         outer: 'flex flex-start w-1/2',
