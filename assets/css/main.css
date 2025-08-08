@@ -93,7 +93,7 @@
 
 /* Define global Vueform CSS vars: https://vueform.com/docs/styles-and-layout#local-customization */
 :root, :before, :after, * {
-  --vf-primary: --color-black;
+  --vf-primary: var(--color-black);
   --vf-ring-width: 0.063rem;
-  --vf-ring-color: --color-gray-500;
+  --vf-ring-color: var(--color-gray-500);
 }
