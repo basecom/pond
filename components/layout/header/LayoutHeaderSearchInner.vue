@@ -10,8 +10,14 @@ const { formatLink } = useInternationalization();
 const displayTotal = ref(5);
 const displayResultsContainer = ref(false);
 const minSearchTermLength = ref(3);
+/**
+ * inputValue represents the current form input, so that no outdated results are displayed if a product search has already
+ * been performed and the search term has then been reduced/deleted
+ */
+const inputValue = ref('');
 
 const onInput = async (value: string) => {
+    inputValue.value = value;
     if (value.length >= minSearchTermLength.value) {
         displayResultsContainer.value = true;
         // Set search term
@@ -20,8 +26,6 @@ const onInput = async (value: string) => {
         await search();
         return;
     }
-
-    displayResultsContainer.value = false;
 };
 
 const navigateToSearchPage = () => {
@@ -71,7 +75,7 @@ const navigateToSearchPage = () => {
                             </div>
 
                             <template v-else>
-                                <template v-if="getTotal > 0">
+                                <template v-if="getTotal > 0 && inputValue.length >= minSearchTermLength">
                                     <slot name="header-search-results-product-link">
                                         <NuxtLinkLocale
                                             v-for="product in getProducts?.slice(0, displayTotal)"
