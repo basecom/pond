@@ -14,6 +14,7 @@ const minSearchTermLength = ref(3);
  * been performed and the search term has then been reduced/deleted
  */
 const inputValue = ref('');
+const isOpen = ref(false);
 
 const onInput = async (value: string) => {
     inputValue.value = value;
@@ -29,15 +30,23 @@ const onInput = async (value: string) => {
 const navigateToSearchPage = () => {
     if (inputValue.value.length >= minSearchTermLength.value) {
         navigateTo(formatLink({ path: '/search', query: { search: searchTerm.value } }));
+        isOpen.value = false;
     }
 };
+
+watch(
+    () => isOpen.value,
+    (isOpen) => {
+        if(!isOpen) inputValue.value = '';
+    },
+);
 </script>
 
 <template>
     <slot name="header-search">
         <slot name="header-search-input">
             <ClientOnly>
-                <UiPopover>
+                <UiPopover v-model:open="isOpen">
                     <UiPopoverTrigger :class="getStyle('header.actions.search.trigger')">
                         <Icon
                             name="mdi:magnify"
