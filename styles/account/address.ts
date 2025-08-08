@@ -35,5 +35,5 @@ export default {
         outer: 'w-full flex gap-3',
         button: 'w-full',
     },
-    badges: 'flex gap-2.5 md:gap-5',
+    badges: 'flex gap-2.5 md:gap-5 md:border-b md:border-gray-200 md:pb-2.5',
 };
