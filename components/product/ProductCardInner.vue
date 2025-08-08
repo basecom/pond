@@ -84,7 +84,7 @@ const showReview = configStore.get('core.listing.showReview') as boolean;
                                     :to="getProductRoute(product)"
                                 >
                                     <h2 :class="getStyle('product.card.information.title.inner')">
-                                        {{ getProductName( product ) }}
+                                        {{ getProductName( { product } ) }}
                                     </h2>
                                 </NuxtLinkLocale>
                             </slot>
