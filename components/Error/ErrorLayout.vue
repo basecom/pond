@@ -1,4 +1,8 @@
 <script setup lang="ts">
+// context should be fetched alone, as other calls depend on its result
+const customerStore = useCustomerStore();
+await customerStore.refreshContext();
+
 const { locale } = useI18n();
 const url = useRequestURL();
 const route = useRoute();
@@ -6,18 +10,13 @@ const { handleError } = useHandleError();
 
 const { refreshCart } = useCart();
 const { getWishlistProducts } = useWishlist();
+const { setAffiliateCode } = useAffiliateMarketing();
 
-const customerStore = useCustomerStore();
 const configStore = useConfigStore();
-const navigationStore = useNavigationStore();
 
 try {
     await Promise.all([
-        customerStore.refreshContext(),
         configStore.loadConfig(),
-        navigationStore.loadNavigation('main-navigation', 2),
-        navigationStore.loadNavigation('footer-navigation', 1),
-        navigationStore.loadNavigation('service-navigation', 1),
     ]);
 } catch (error) {
     handleError(error, false);
@@ -42,6 +41,8 @@ const updateSessionWithLanguage = async () => {
 await updateSessionWithLanguage();
 
 useNotifications();
+
+setAffiliateCode('affiliateCode');
 
 useHead(() => ({
     htmlAttrs: {

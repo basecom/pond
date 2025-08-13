@@ -1,16 +1,6 @@
 <script setup lang="ts">
-const { languageIdChain } = useSessionContext();
-
-const navigationStore = useNavigationStore();
-const { mainNavigation } = storeToRefs(navigationStore);
-
-watch(
-    languageIdChain,
-    async () => {
-        await navigationStore.loadNavigation('main-navigation', 2, true);
-    },
-    { immediate: false },
-);
+const { navigation: mainNavigation, loadNavigation } = useProxyNavigation('main-navigation', 2);
+await loadNavigation();
 </script>
 
 <template>

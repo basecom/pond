@@ -1,67 +1,54 @@
-import type { NavigationType, NavigationInstance } from '~/types/navigation/Navigation';
 import type { Schemas } from '@shopware/api-client/api-types';
 
+interface NavigationState {
+    [salesChannelId: string]: {
+        [type: string]: {
+            [depth: number]: Schemas['NavigationRouteResponse'] | null;
+        }
+    }
+}
+
 export const useNavigationStore = defineStore('navigation', () => {
-    const navigationTypes: NavigationType[] = ['main-navigation', 'footer-navigation', 'service-navigation'];
+    const navigation = ref<NavigationState>({});
 
-    const instances = {} as Record<NavigationType, NavigationInstance>;
-    const storedDepths = {} as Record<NavigationType, Ref<number>>;
-    const navigationElements = {}  as Record<NavigationType, ComputedRef<Schemas['NavigationRouteResponse'] | null>>;
-
-    // Track pending requests to avoid duplicates when the store is being accessed multiple times while being empty
-    const pendingRequests = {} as Record<string, Promise<Schemas['NavigationRouteResponse']> | null>;
-
-    navigationTypes.forEach(type => {
-        instances[type] = useNavigation({ type });
-        storedDepths[type] = ref(0);
-        navigationElements[type] = instances[type].navigationElements;
-    });
-
-    const loadNavigation = async (type: NavigationType, depth: number, force: boolean = false) => {
-        if (!navigationTypes.includes(type)) {
-            console.error(`[NavigationStore] Invalid navigation type: ${type}`);
-            return [];
+    function setNavigation(salesChannelId: string, type: string, depth: number, data: Schemas['NavigationRouteResponse']) {
+        if (!navigation.value[salesChannelId]) {
+            navigation.value[salesChannelId] = {};
         }
 
-        const requestKey = `${type}-${depth}`;
-
-        // Return existing pending request if one exists
-        if (pendingRequests[requestKey]) {
-            return pendingRequests[requestKey];
+        if (!navigation.value[salesChannelId][type]) {
+            navigation.value[salesChannelId][type] = {};
         }
 
-        // Check if we already have sufficient data
-        const shouldFetch = force || !navigationElements[type].value?.length || depth > storedDepths[type].value;
-        if (!shouldFetch) {
-            return navigationElements[type].value;
+        navigation.value[salesChannelId][type][depth] = data;
+    }
+
+    function getNavigation(salesChannelId: string, type: string, depth: number): Schemas['NavigationRouteResponse'] | null {
+        const salesChannel = navigation.value[salesChannelId];
+        // no data for this sales channel at all
+        if (!salesChannel) return null;
+
+        // no data stored matching the requested navigation type
+        if (!salesChannel[type]) return null;
+
+        // direct match found
+        if (salesChannel[type]?.[depth]) {
+            return salesChannel[type]?.[depth];
         }
 
-        // Create a new promise for this request
-        pendingRequests[requestKey] = (async () => {
-            try {
-                const result = await instances[type].loadNavigationElements({ depth });
+        // find all available depths, sort them from deepest to shallowest
+        const availableDepths = Object.keys(salesChannel[type]).map(Number).sort((a, b) => b - a);
+        // find data that has a depth greater than or equal to what's requested
+        const sufficientDepth = availableDepths.find(existingDepth => existingDepth >= depth);
 
-                if (depth > storedDepths[type].value) {
-                    storedDepths[type].value = depth;
-                }
-
-                return result;
-            } catch (error) {
-                console.error(`[NavigationStore][loadNavigation] Error loading ${type}:`, import.meta.dev ? error : '');
-                return [];
-            } finally {
-                // Clear the pending request after it completes
-                pendingRequests[requestKey] = null;
-            }
-        })();
-
-        return pendingRequests[requestKey];
-    };
+        return sufficientDepth !== undefined
+            ? salesChannel[type][sufficientDepth] as Schemas['NavigationRouteResponse']
+            : null;
+    }
 
     return {
-        mainNavigation: navigationElements['main-navigation'],
-        footerNavigation: navigationElements['footer-navigation'],
-        serviceNavigation: navigationElements['service-navigation'],
-        loadNavigation,
+        navigation,
+        setNavigation,
+        getNavigation,
     };
 });

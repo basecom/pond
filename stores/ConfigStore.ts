@@ -1,37 +1,63 @@
 import type { PluginConfiguration } from '~/types/PluginConfiguration';
 
+interface ConfigState {
+    [salesChannelId: string]: PluginConfiguration | null;
+}
+
 export const useConfigStore = defineStore('config', () => {
-    const { data, execute } = usePluginConfig();
+    const { config, error, fetchConfig } = usePluginConfig();
     const { handleError } = useHandleError();
-    const _configValues: Ref<PluginConfiguration | null> = ref(null);
-    const loading = ref(false);
+    const { sessionContext } = useSessionContext();
+
+    const currentSalesChannelId = computed(() => sessionContext.value?.salesChannel?.id);
+    const configState = ref<ConfigState>({});
 
     const loadConfig = async () => {
-        loading.value = true;
-        await execute();
-        _configValues.value = data.value as PluginConfiguration | null;
-        loading.value = false;
+        if (!currentSalesChannelId.value) {
+            console.warn('[ConfigStore] Attempted to load config before session context was available.');
+            return;
+        }
+
+        if (configState.value[currentSalesChannelId.value]) {
+            return;
+        }
+
+        await fetchConfig();
+
+        if (error.value && !config.value) {
+            handleError('[Pond]: Failed to load config values', false);
+        }
+
+        if (config.value && currentSalesChannelId.value) {
+            configState.value[currentSalesChannelId.value] = config.value;
+        }
     };
 
-    const configValues = computed(() => _configValues.value);
+    const configValues = computed(() => {
+        if (!currentSalesChannelId.value) return null;
+        return configState.value[currentSalesChannelId.value] ?? null;
+    });
 
     const get = (key: string) => {
-        if (!_configValues.value) {
-            handleError('[Pond]: config values not loaded', false);
+        const currentConfig = configValues.value;
+
+        if (!currentConfig) {
+            handleError('[Pond]: config values not loaded for the current sales channel', false);
             return undefined;
         }
 
-        if (!(key in _configValues.value)) {
+        if (!(key in currentConfig)) {
             handleError(`[Pond]: The configuration for '${key}' was not found`, false);
             return undefined;
         }
 
-        return _configValues.value[key];
+        return currentConfig[key];
     };
 
     return {
-        loadConfig,
+        configState,
         configValues,
         get,
+        loadConfig,
     };
 });

@@ -4,7 +4,7 @@
         "dropdownHeading": "Ihr Konto",
         "overview": {
             "heading": "Übersicht",
-            "subHeading": "Hier sehen Sie ihre Daten, gespeicherten Bezahlmethoden und Adressen.",
+            "subHeading": "Hier sehen Sie Ihre Daten, gespeicherten Bezahlmethoden und Adressen.",
             "personalInformation": {
                 "heading": "Persönliche Informationen",
                 "nameLabel": "Name:",
@@ -19,7 +19,7 @@
             "shippingAddressHeading": "Lieferadresse",
             "newsletter": {
                 "heading": "Newsletter Abonnement",
-                "label": "Ja, ich möchte den kostenlosen Newsletter erhalten. (Ich kann ihn jederzeit abbestellen)"
+                "label": "Ja, Ich möchte den kostenlosen Newsletter erhalten. (Sie können ihn jederzeit abbestellen)"
             },
             "latestOrderHeading" : "Letzte Bestellung"
         },
@@ -34,7 +34,7 @@
             "editSuccess": "Ihre Adresse wurde bearbeitet.",
             "editError": "Ihre Adresse konnte nicht geändert werden.",
             "deleteSuccess": "Ihre Adresse wurde gelöscht.",
-            "deleteError": "Beim Löschen ihrer Adresse ist ein Fehler aufgetreten, versuchen Sie es später erneut.",
+            "deleteError": "Beim Löschen Ihrer Adresse ist ein Fehler aufgetreten, versuchen Sie es später erneut.",
             "nothingFound": "Es wurden keine Adressen gefunden.",
             "defaultBilling": "Standard-Rechnungsadresse",
             "defaultShipping": "Standard-Lieferadresse",
@@ -104,7 +104,7 @@
             "dataHeading": "Ihre Daten:",
             "salutation": {
                 "label": "Anrede",
-                "placeholder": "Wählen Sie ihre Anrede",
+                "placeholder": "Wählen Sie Ihre Anrede",
                 "help": "Wählen Sie, wie Sie angesprochen werden möchten"
             },
             "firstname": {
@@ -130,7 +130,7 @@
             },
             "country": {
                 "label": "Land:",
-                "placeholder": "Wählen Sie ihr Land"
+                "placeholder": "Wählen Sie Ihr Land"
             },
             "alternativeShippingAddress": "Lieferadresse weicht von Rechnungsadresse ab",
             "shippingAddressHeading": "Lieferadresse",
@@ -163,13 +163,13 @@
                 "heading": "Passwort wiederherstellen",
                 "subHeading": "Wir schicken Ihnen eine Email zu. Klicke auf den Link in der Email, um ein neues Passwort zu vergeben.",
                 "submitLabel": "Email anfordern",
-                "successMessage": "Falls Ihre Email-Adresse bei uns registriert ist, haben wir Ihnen eine Email geschickt. Bitte überprüfen Sie ihr Postfach.",
+                "successMessage": "Falls Ihre Email-Adresse bei uns registriert ist, haben wir Ihnen eine Email geschickt. Bitte überprüfen Sie Ihr Postfach.",
                 "loginButtonLabel": "Zum Login"
             },
             "recover": {
                 "heading": "Lege ein neues Passwort fest",
                 "submitLabel": "Passwort ändern",
-                "errorMessage": "Etwas ist beim Ändern ihres Passworts schiefgegangen.",
+                "errorMessage": "Etwas ist beim Ändern Ihres Passworts schiefgegangen.",
                 "successMessage": "Ihr Passwort wurde erfolgreich geändert.",
                 "passwordLabel": "Neues Passwort",
                 "confirmLabel": "Neues Passwort bestätigen",

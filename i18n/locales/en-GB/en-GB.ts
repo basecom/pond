@@ -17,7 +17,7 @@ import utility from './utility.json';
 import violations from './violations.json';
 import wishlist from './wishlist.json';
 
-export default {
+export default defineI18nLocale(() => ({
     ...global,
     ...account,
     ...checkout,
@@ -36,4 +36,4 @@ export default {
     ...utility,
     ...violations,
     ...wishlist,
-};
+}));

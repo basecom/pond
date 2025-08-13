@@ -1,6 +1,4 @@
 <template>
-    <NuxtRouteAnnouncer />
-
     <LayoutHeader />
     <UtilityToastNotifications />
 

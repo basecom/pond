@@ -2,25 +2,13 @@
 import type { Schemas } from '@shopware/api-client/api-types';
 import { getTranslatedProperty } from '@shopware/helpers';
 
-const { languageIdChain } = useSessionContext();
 const { t } = useI18n();
-
 const sideMenuController = useModal();
 
-const navigationStore = useNavigationStore();
-const { mainNavigation } = storeToRefs(navigationStore);
+const { navigation: mainNavigation, loadNavigation } = useProxyNavigation('main-navigation', 2);
+await loadNavigation();
 
 const navigationPath = ref<string[]>([]);
-
-watch(
-    languageIdChain,
-    async () => {
-        await navigationStore.loadNavigation('main-navigation', 2, true);
-        // Reset the path when language changes
-        navigationPath.value = [];
-    },
-    { immediate: false },
-);
 
 // Get the current category based on the last ID in the path
 const currentCategory = computed<Schemas['Category'] | null>(() => {

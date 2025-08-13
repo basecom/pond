@@ -69,21 +69,6 @@ export default defineNuxtConfig({
         '/newsletter/**': { ssr: false },
         '/search/**': { ssr: false },
         '/wishlist/**': { ssr: false },
-        // nitro caching
-        // can be enabled here to be used as a proxy to cache certain predefined store-api routes
-        // supported routes: /navigation, /config
-        // cache every proxy api route:
-        // '/api/proxy/**': {
-        //     swr: 60 * 5,
-        // },
-        // cache a specific route:
-        // '/api/proxy/config': {
-        //     swr: 60 * 5,
-        // },
-        // cache a specific sub-route:
-        // '/api/proxy/navigation/**': {
-        //     swr: 60 * 5,
-        // },
     },
 
     extends: ['@shopware/composables/nuxt-layer'],
@@ -121,12 +106,15 @@ export default defineNuxtConfig({
         bundle: {
             optimizeTranslationDirective: false,
         },
+        lazy: true,
         locales: [
             {
                 code: 'de-DE',
+                file: 'de-DE/de-DE.ts',
             },
             {
                 code: 'en-GB',
+                file: 'en-GB/en-GB.ts',
             },
         ],
     },
