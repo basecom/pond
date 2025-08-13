@@ -13,17 +13,23 @@ export function usePluginConfig() {
         execute: fetchConfig,
     } = useAsyncData<PluginConfiguration | null>(
         key,
-        async () => await $fetch<PluginConfiguration>('/api/proxy/config', {
-            method: 'GET',
-            query: {
-                salesChannel: salesChannelId.value,
-                endpoint: 'loadConfig get /pond/config',
-            },
-        }).catch((error) => {
-            console.error('Failed to fetch plugin config:', import.meta.dev ? error : '');
+        async () => {
+            try {
+                return await $fetch<PluginConfiguration>('/api/proxy/config', {
+                    method: 'GET',
+                    query: {
+                        salesChannel: salesChannelId.value,
+                        endpoint: 'loadConfig get /pond/config',
+                    },
+                });
+            } catch (error) {
+                if (import.meta.dev) {
+                    console.error('Failed to fetch plugin config: ', error);
+                }
 
-            throw error;
-        }),
+                throw error;
+            }
+        },
         {
             immediate: false,
             watch: [salesChannelId],
