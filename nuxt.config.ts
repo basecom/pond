@@ -69,25 +69,6 @@ export default defineNuxtConfig({
         '/newsletter/**': { ssr: false },
         '/search/**': { ssr: false },
         '/wishlist/**': { ssr: false },
-        // nitro caching
-        // can be enabled here to be used as a proxy to cache certain predefined store-api routes
-        // supported routes: /navigation, /config
-        // possible options are provided by nuxt (https://nuxt.com/docs/guide/concepts/rendering) and nitro (https://nitro.build/guide/cache)
-        // e.g.: cache every proxy api route for 5 minutes and never serve stale data (as opposed to swr):
-        // '/api/proxy/**': {
-        //     cache: {
-        //         maxAge: 60 * 5,
-        //         staleMaxAge: 0,
-        //     },
-        // },
-        // e.g.: cache a specific route and serve stale data for the first hit even after maxAge expired:
-        // '/api/proxy/config': {
-        //     swr: 60 * 5,
-        // },
-        // e.g.: cache a specific sub-route:
-        // '/api/proxy/navigation/**': {
-        //     swr: 60 * 5,
-        // },
     },
 
     extends: ['@shopware/composables/nuxt-layer'],

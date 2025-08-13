@@ -7,7 +7,6 @@ export const useProxyNavigation = (type: string, depth: number) => {
     const { sessionContext } = useSessionContext();
     const salesChannelId = computed(() => sessionContext.value?.salesChannel?.id);
 
-    // create a reactive key that depends on the sales channel.
     const key = computed(() => `proxy-navigation-${salesChannelId.value}-${type}-${depth}`);
 
     const {
@@ -32,11 +31,13 @@ export const useProxyNavigation = (type: string, depth: number) => {
 
                 // if not cached, fetch from the API
                 const fetchedData = await $fetch(`/api/proxy/navigation/${type}`, {
-                    method: 'POST',
-                    body: {
-                        headers: { 'sw-include-seo-urls': true },
+                    method: 'GET',
+                    query: {
+                        salesChannel: salesChannelId.value,
                         endpoint: 'readNavigation post /navigation/{activeId}/{rootId}',
-                        pathParams: { activeId: type, rootId: type },
+                        'pathParams[activeId]': type,
+                        'pathParams[rootId]': type,
+                        'headers[sw-include-seo-urls]': true,
                         depth,
                     },
                 }).catch((error) => {

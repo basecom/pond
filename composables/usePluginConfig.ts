@@ -4,7 +4,6 @@ export function usePluginConfig() {
     const { sessionContext } = useSessionContext();
     const salesChannelId = computed(() => sessionContext.value?.salesChannel?.id);
 
-    // create a reactive key that depends on the sales channel.
     const key = computed(() => `proxy-config-${salesChannelId.value}`);
 
     const {
@@ -15,8 +14,9 @@ export function usePluginConfig() {
     } = useAsyncData<PluginConfiguration | null>(
         key,
         async () => await $fetch('/api/proxy/config', {
-            method: 'POST',
-            body: {
+            method: 'GET',
+            query: {
+                salesChannel: salesChannelId.value,
                 endpoint: 'loadConfig get /pond/config',
             },
         }).catch((error) => {
