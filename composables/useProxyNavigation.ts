@@ -2,7 +2,7 @@ import type { Schemas } from '@shopware/api-client/api-types';
 
 const pendingRequests = new Map<string, Promise<Schemas['NavigationRouteResponse']>>();
 
-export const useAdvancedNavigation = (type: string, depth: number) => {
+export const useProxyNavigation = (type: string, depth: number) => {
     const navigationStore = useNavigationStore();
     const { sessionContext } = useSessionContext();
     const salesChannelId = computed(() => sessionContext.value?.salesChannel?.id);

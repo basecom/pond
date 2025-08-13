@@ -6,7 +6,7 @@ defineProps<{
     element: CmsElementCategoryNavigation;
 }>();
 
-const { navigation: mainNavigation, loadNavigation } = useAdvancedNavigation('main-navigation', 2);
+const { navigation: mainNavigation, loadNavigation } = useProxyNavigation('main-navigation', 2);
 await loadNavigation();
 
 const { isActive } = useActivePath();

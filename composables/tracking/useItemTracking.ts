@@ -25,7 +25,7 @@ export type UseItemTrackingReturn = {
 };
 
 export function useItemTracking(): UseItemTrackingReturn {
-    const { navigation: mainNavigation } = useAdvancedNavigation('main-navigation', 2);
+    const { navigation: mainNavigation } = useProxyNavigation('main-navigation', 2);
     const { sessionContext } = useSessionContext();
 
     const _getCategoryTree = (product: Schemas['Product']): Schemas['Category'][] => {

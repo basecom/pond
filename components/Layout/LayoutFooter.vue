@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { getTranslatedProperty, getCategoryRoute } from '@shopware/helpers';
 
-const { navigation: footerNavigation, loadNavigation: loadFooterNavigation } = useAdvancedNavigation('footer-navigation', 1);
-const { navigation: serviceNavigation, loadNavigation: loadServiceNavigation } = useAdvancedNavigation('service-navigation', 1);
+const { navigation: footerNavigation, loadNavigation: loadFooterNavigation } = useProxyNavigation('footer-navigation', 1);
+const { navigation: serviceNavigation, loadNavigation: loadServiceNavigation } = useProxyNavigation('service-navigation', 1);
 
 await Promise.all([
     loadFooterNavigation(),
