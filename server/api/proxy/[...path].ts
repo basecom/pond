@@ -22,13 +22,10 @@ export default defineCachedEventHandler(async (event) => {
         baseURL: shopwareEndpoint,
     });
 
-    const options: {
-        headers?: Record<string, string>,
-        pathParams?: Record<string, any>,
-        body?: Record<string, any>
-    } = { body: {} };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const options: Record<string, any> = {};
 
-    // Matches keys like "key[nestedKey]"
+    // matches keys like "key[nestedKey]"
     const namespaceRegex = /^(\w+)\[(.+?)]$/;
 
     for (const key in params) {
@@ -36,16 +33,23 @@ export default defineCachedEventHandler(async (event) => {
         const match = key.match(namespaceRegex);
 
         if (match) {
-            // This is a namespaced parameter (e.g., for headers or pathParams)
+            // this is a namespaced parameter (e.g., for headers or pathParams)
             const namespace = match[1] as 'headers' | 'pathParams';
             const innerKey = match[2];
 
-            if (!options[namespace]) {
-                options[namespace] = {};
+            if (innerKey) {
+                if (!options[namespace]) {
+                    options[namespace] = {};
+                }
+
+                options[namespace][innerKey] = value;
             }
-            options[namespace]![innerKey] = value;
         } else {
-            // This is a root parameter, so it goes into the body
+            // this is a root parameter, so it goes into the body
+            if (!options.body) {
+                options.body = {};
+            }
+
             options.body![key] = value;
         }
     }
@@ -55,16 +59,13 @@ export default defineCachedEventHandler(async (event) => {
     if (options.headers && Object.keys(options.headers).length === 0) delete options.headers;
     if (options.pathParams && Object.keys(options.pathParams).length === 0) delete options.pathParams;
 
-    const { data } = await apiClient.invoke(endpoint, options);
+    const { data } = await apiClient.invoke(endpoint as never, options as never);
 
     return data;
 }, {
     name: 'store-api-proxy-cache',
-    getKey: (event) => {
-        const query = getQuery(event);
-        // this creates a key from the full query, ensuring that every unique combination of parameters gets its own cache entry
-        return JSON.stringify(query);
-    },
+    // this creates a key from the full query, ensuring that every unique combination of parameters gets its own cache entry
+    getKey: (event) => JSON.stringify(getQuery(event)),
     // keep cache entry valid for x seconds
     maxAge: 60,
     // do not serve stale data

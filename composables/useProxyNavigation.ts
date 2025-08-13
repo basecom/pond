@@ -30,7 +30,7 @@ export const useProxyNavigation = (type: string, depth: number) => {
                 }
 
                 // if not cached, fetch from the API
-                const fetchedData = await $fetch(`/api/proxy/navigation/${type}`, {
+                const fetchedData = await $fetch<Schemas['NavigationRouteResponse']>(`/api/proxy/navigation/${type}`, {
                     method: 'GET',
                     query: {
                         salesChannel: salesChannelId.value,

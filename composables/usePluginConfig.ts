@@ -13,7 +13,7 @@ export function usePluginConfig() {
         execute: fetchConfig,
     } = useAsyncData<PluginConfiguration | null>(
         key,
-        async () => await $fetch('/api/proxy/config', {
+        async () => await $fetch<PluginConfiguration>('/api/proxy/config', {
             method: 'GET',
             query: {
                 salesChannel: salesChannelId.value,
