@@ -15,16 +15,9 @@ const rightContent = getSlotContent('right');
 
 <template>
     <!-- Added responsive design -->
-    <div class="cms-block-image-text grid md:grid-cols-2 md:gap-10">
+    <div class="grid md:grid-cols-2 md:gap-10">
         <CmsGenericElement :content="leftContent" />
         <!-- Added mt-0 -->
         <CmsGenericElement class="*:mt-0" :content="rightContent" />
     </div>
 </template>
-
-<style>
-/* Changed styling */
-.cms-block-image-text .cms-element-image img {
-  @apply object-contain;
-}
-</style>

@@ -14,7 +14,7 @@ const rightContent = getSlotContent('right');
 </script>
 
 <template>
-    <article class="md:grid md:grid-cols-2 gap-10 cms-block-image-text-cover">
+    <article class="md:grid md:grid-cols-2 gap-10">
         <CmsGenericElement
             :content="leftContent"
             class="cms-block-image-text-cover__image"
@@ -26,10 +26,3 @@ const rightContent = getSlotContent('right');
         />
     </article>
 </template>
-
-<style>
-/* change styling */
-.cms-block-image-text-cover .cms-element-image img {
-  @apply object-contain;
-}
-</style>
