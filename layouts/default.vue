@@ -1,5 +1,10 @@
+<script setup lang="ts">
+const showLayoutPageLoader = inject('showLayoutPageLoader');
+const { getStyle } = usePondStyle();
+</script>
+
 <template>
-    <NuxtLoadingIndicator class="!bg-brand-primary bg-none!" />
+    <NuxtLoadingIndicator :class="getStyle('layout.loadingIndicator')" />
     <NuxtRouteAnnouncer />
 
     <ClientOnly>
@@ -9,6 +14,7 @@
     <LayoutHeader />
 
     <main>
+        <LayoutPageLoader v-if="showLayoutPageLoader" />
         <NuxtPage />
     </main>
 

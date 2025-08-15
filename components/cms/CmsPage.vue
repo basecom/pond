@@ -10,6 +10,10 @@ const props = defineProps<{
   content: Schemas['CmsPage'];
 }>();
 
+// Added showSorting; relevant for CmsElementSidebarFilter and CmsElementProductListing
+const showSorting= ref(false);
+provide('showSorting', showSorting);
+
 const { routeName } = useNavigationContext();
 if (routeName.value === 'frontend.navigation.page') {
     createCategoryListingContext();

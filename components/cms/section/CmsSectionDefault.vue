@@ -16,7 +16,7 @@ const { cssClasses, layoutStyles } = getCmsLayoutConfiguration(props.content);
         <CmsGenericBlock
             v-for="cmsBlock in content.blocks"
             :key="cmsBlock.id"
-            class="prose overflow-auto"
+            class="prose"
             :content="cmsBlock"
         />
     </div>

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { Columns } from '~/types/vueForm/Columns';
+import type { Columns, SelectItems } from '~/types/vueForm/Form';
 
 withDefaults(
     defineProps<{
       isDetail?: boolean;
-      accountTypeConditions?: [];
+      accountTypeConditions?: string[][];
       /**
        * This component can be used multiple times in a form (e.g., registration form). To ensure that the form fields
        * are unique upon submission, it is possible to specify a prefix
@@ -32,6 +32,7 @@ withDefaults(
       departmentColumns?: Columns;
       emailColumns?: Columns;
       passwordColumns?: Columns,
+        inModal?: boolean // when the address fields are in a modal, we open the last two dropdowns to top (for accessibility reasons)
     }>(),
     {
         isDetail: false,
@@ -115,14 +116,15 @@ withDefaults(
             sm: 12,
             md: 6,
         }),
+        inModal: false,
     },
 );
 
 const configStore = useConfigStore();
 const { getCountries: countries, getStatesForCountry, fetchCountries } = useCountries();
 
-const formattedCountries: Ref<undefined | { value: string; label: string; }[]> = ref(undefined);
-const states: Ref<undefined | { value: string; label: string; }[]> = ref(undefined);
+const formattedCountries: Ref<undefined | SelectItems> = ref(undefined);
+const states: Ref<undefined | SelectItems> = ref(undefined);
 // Admin configs
 const showAdditionalAddress1Field = ref(configStore.get('core.loginRegistration.showAdditionalAddressField1') as boolean);
 const isAdditionalAddress1FieldRequired = ref(configStore.get('core.loginRegistration.additionalAddressField1Required') as boolean);
@@ -259,6 +261,7 @@ const onSelectCountry = (selectedCountryId: string) => {
                 rules="required"
                 :items="formattedCountries"
                 :columns="countryColumns"
+                :open-direction="inModal ? 'top' : 'bottom'"
                 @on-change="(value: string) => onSelectCountry(value)"
             />
         </slot>
@@ -272,6 +275,7 @@ const onSelectCountry = (selectedCountryId: string) => {
                 :placeholder="$t('address.state.placeholder')"
                 :items="states"
                 :columns="stateColumns"
+                :open-direction="inModal ? 'top' : 'bottom'"
             />
         </slot>
 
