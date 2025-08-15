@@ -4,7 +4,7 @@ import type { Columns } from '~/types/vueForm/Columns';
 withDefaults(
     defineProps<{
       isDetail?: boolean;
-      accountTypeConditions?: [];
+      accountTypeConditions?: string[][];
       /**
        * This component can be used multiple times in a form (e.g., registration form). To ensure that the form fields
        * are unique upon submission, it is possible to specify a prefix
@@ -32,6 +32,7 @@ withDefaults(
       departmentColumns?: Columns;
       emailColumns?: Columns;
       passwordColumns?: Columns,
+        inModal?: boolean // when the address fields are in a modal, we open the last two dropdowns to top (for accessibility reasons)
     }>(),
     {
         isDetail: false,
@@ -115,6 +116,7 @@ withDefaults(
             sm: 12,
             md: 6,
         }),
+        inModal: false,
     },
 );
 
@@ -259,6 +261,7 @@ const onSelectCountry = (selectedCountryId: string) => {
                 rules="required"
                 :items="formattedCountries"
                 :columns="countryColumns"
+                :open-direction="inModal ? 'top' : 'bottom'"
                 @on-change="(value: string) => onSelectCountry(value)"
             />
         </slot>
@@ -272,6 +275,7 @@ const onSelectCountry = (selectedCountryId: string) => {
                 :placeholder="$t('address.state.placeholder')"
                 :items="states"
                 :columns="stateColumns"
+                :open-direction="inModal ? 'top' : 'bottom'"
             />
         </slot>
 

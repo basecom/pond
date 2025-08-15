@@ -18,6 +18,7 @@ withDefaults(
       items?: string[] | number[] | { value: string; label: string; }[];
       defaultValue?: string;
       classes?: string;
+      openDirection?: 'top' | 'bottom'
     }>(),
     {
         id: undefined,
@@ -35,6 +36,7 @@ withDefaults(
         defaultValue: undefined,
         canDeselect: false,
         classes: undefined,
+        openDirection: 'bottom',
     },
 );
 
@@ -60,6 +62,7 @@ defineEmits<{
             :default="defaultValue"
             :floating="floating"
             :class="classes"
+            :open-direction="openDirection"
             @change="(value: string) => $emit('on-change', value)"
         />
     </slot>

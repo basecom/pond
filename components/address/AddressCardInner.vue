@@ -43,13 +43,20 @@ const showPhoneNumberField = configStore.get('core.loginRegistration.showPhoneNu
 
         <slot name="address-card-fields">
             <div v-if="address" :class="getStyle('account.address.card.outer')">
-                <div v-if="isDefaultShippingAddress || isDefaultBillingAddress" :class="getStyle('account.address.badges')">
+                <div
+                    v-if="isDefaultShippingAddress || isDefaultBillingAddress"
+                    :class="{
+                        [getStyle('account.address.badges.multiple')]: isDefaultShippingAddress && isDefaultBillingAddress,
+                        [getStyle('account.address.badges.one')]: isDefaultShippingAddress || isDefaultBillingAddress
+                    }"
+                >
                     <UiBadge v-if="isDefaultBillingAddress" variant="outline" :class="getStyle('account.address.badge')">
                         <Icon name="mdi:list-box-outline" :class="getStyle('account.address.icon')" />
                         <span :class="getStyle('account.address.text')">
                             {{ $t('address.defaultBillingAddress.label') }}
                         </span>
                     </UiBadge>
+
                     <UiBadge v-if="isDefaultShippingAddress" variant="outline" :class="getStyle('account.address.badge')">
                         <Icon name="mdi:truck-outline" :class="getStyle('account.address.icon')" />
                         <span :class="getStyle('account.address.text')">
