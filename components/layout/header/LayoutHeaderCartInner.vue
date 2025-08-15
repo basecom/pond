@@ -34,10 +34,10 @@ const { getStyle } = usePondStyle();
 
                 <slot name="cart-badge">
                     <UiBadge
-                        v-if="cartItems?.length > 0"
+                        v-if="cartItemCount > 0"
                         :class="getStyle('header.actions.cart.badge')"
                     >
-                        {{ cartItems.length }}
+                        {{ cartItemCount }}
                     </UiBadge>
                 </slot>
             </UiSheetTrigger>
@@ -70,11 +70,35 @@ const { getStyle } = usePondStyle();
                         </li>
                     </TransitionGroup>
 
-                    <slot name="cart-offcanvas-no-content">
-                        <div v-if="cartItemCount === 0" :class="getStyle('cart.empty')">
-                            {{ $t('checkout.noLineItems') }}
+                        <CheckoutSummary/>
+
+                    <div :class="getStyle('cart.buttonGroup')">
+                        <div :class="getStyle('cart.buttonWrapper')">
+                            <slot name="proceed-to-checkout-button">
+                                <NuxtLinkLocale to="/checkout/confirm">
+                                    <UiButton :class="getStyle('cart.proceedToCheckoutButton')">
+                                        {{ $t('checkout.proceedToCheckout') }}
+                                    </UiButton>
+                                </NuxtLinkLocale>
+                            </slot>
                         </div>
-                    </slot>
+
+                        <div :class="getStyle('cart.buttonWrapper')">
+                            <slot name="proceed-to-cart-button">
+                                <NuxtLinkLocale to="/checkout/cart">
+                                    <UiButton variant="link">
+                                        {{ $t('checkout.proceedToCart') }}
+                                    </UiButton>
+                                </NuxtLinkLocale>
+                            </slot>
+                        </div>
+                    </div>
+                </slot>
+
+                <slot name="cart-offcanvas-no-content">
+                    <div v-if="cartItemCount === 0" :class="getStyle('cart.empty')">
+                        {{ $t('checkout.noLineItems') }}
+                    </div>
                 </slot>
             </UiSheetHeader>
         </UiSheetContent>
