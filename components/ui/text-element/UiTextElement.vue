@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Columns } from '~/types/vueForm/Columns';
+import type { Columns } from '~/types/vueForm/Form';
 
 withDefaults(
     defineProps<{
@@ -12,7 +12,7 @@ withDefaults(
       columns?: Columns,
       floating?: string;
       autocomplete?: string;
-      conditions?: [];
+      conditions?: string[][];
       inputType?: string;
       debounce?: number;
       classes?: string;

@@ -77,28 +77,6 @@ const dialogOpen = ref(false);
             </UiDialog>
         </slot>
 
-        <slot name="default-billing-address">
-            <div :class="getStyle('account.address.defaultBillingAddress')">
-                <AddressCardSkeleton v-if="isLoading" />
-
-                <AddressCard
-                    v-else
-                    :headline="$t('account.addressesTitleDefaultBillingAddress')"
-                    :address="defaultBillingAddress"
-                />
-            </div>
-        </slot>
-
-        <slot name="default-shipping-address">
-            <AddressCardSkeleton v-if="isLoading" />
-
-            <AddressCard
-                v-else
-                :headline="$t('account.addressesTitleDefaultShippingAddress')"
-                :address="defaultShippingAddress"
-            />
-        </slot>
-
         <slot name="available-addresses">
             <slot name="available-addresses-headline">
                 <h3 :class="getStyle('account.address.subHeadline')">
@@ -113,105 +91,119 @@ const dialogOpen = ref(false);
                         :key="address.id"
                         :class="getStyle('account.address.availableAddresses.outer')"
                     >
-                        <AddressCard :address="address" />
+                        <AddressCard
+                            :address="address"
+                            :is-default-shipping-address="defaultShippingAddressId === address.id"
+                            :is-default-billing-address="defaultBillingAddressId === address.id"
+                        />
 
-                        <div :class="getStyle('account.address.availableAddresses.inner')">
-                            <UiDialog :class="getStyle('account.address.dialog')">
-                                <slot name="edit-address-trigger">
-                                    <UiDialogTrigger :class="getStyle('account.address.trigger.outer')">
-                                        <UiButton :class="getStyle('account.address.editOrCreateAddressButton.trigger')" variant="secondary">
-                                            <Icon name="mdi:pencil" :class="getStyle('account.address.icon')" />
-                                            {{ $t('account.addressEditBtn') }}
-                                        </UiButton>
-                                    </UiDialogTrigger>
-                                </slot>
-
-                                <slot name="edit-address-content">
-                                    <UiDialogContent :class="getStyle('account.address.dialog.inner')">
-                                        <UiDialogHeader>
-                                            <UiDialogTitle>
-                                                {{ $t('account.addressEditMetaTitle') }}
-                                            </UiDialogTitle>
-                                        </UiDialogHeader>
-                                        <AddressCreateOrEdit
-                                            :is-loading="isLoading"
-                                            :address="address"
-                                            @on-submit="(value: AddressData) => $emit('edit-address', value, address.id)"
-                                        />
-                                    </UiDialogContent>
-                                </slot>
-                            </UiDialog>
-
-                            <slot name="delete-address">
-                                <UiDialog
-                                    v-if="defaultShippingAddressId !== address.id && defaultBillingAddressId !== address.id"
-                                    :class="getStyle('account.address.dialog')"
+                        <div :class="getStyle('account.address.availableAddresses.actions')">
+                            <slot name="set-as-default-billing-address">
+                                <UiButton
+                                    v-if="defaultBillingAddressId !== address.id"
+                                    variant="link"
+                                    :class="getStyle('account.address.setDefaultAddressButton')"
+                                    :is-loading="isLoading"
+                                    @click="$emit('set-as-default-billing-address', address.id)"
                                 >
-                                    <slot name="delete-address-trigger">
+                                    <Icon name="mdi:list-box-outline" :class="getStyle('account.address.icon')" />
+                                    <span :class="getStyle('account.address.text')">
+                                        {{ $t('address.defaultBillingAddress.setAsDefault') }}
+                                    </span>
+                                </UiButton>
+                            </slot>
+
+                            <slot name="set-as-default-shipping-address">
+                                <UiButton
+                                    v-if="defaultShippingAddressId !== address.id"
+                                    variant="link"
+                                    :class="getStyle('account.address.setDefaultAddressButton')"
+                                    :is-loading="isLoading"
+                                    @click="$emit('set-as-default-shipping-address', address.id)"
+                                >
+                                    <Icon name="mdi:truck-outline" :class="getStyle('account.address.icon')" />
+                                    <span :class="getStyle('account.address.text')">
+                                        {{ $t('address.defaultShippingAddress.setAsDefault') }}
+                                    </span>
+                                </UiButton>
+                            </slot>
+
+                            <div :class="getStyle('account.address.availableAddresses.inner')">
+                                <UiDialog :class="getStyle('account.address.dialog')">
+                                    <slot name="edit-address-trigger">
                                         <UiDialogTrigger :class="getStyle('account.address.trigger.outer')">
-                                            <UiButton variant="secondary" :class="getStyle('account.address.editOrCreateAddressButton.trigger')">
-                                                <Icon name="mdi:delete-forever-outline" :class="getStyle('account.address.icon')" />
-                                                {{ $t('account.addressesContentItemActionDelete') }}
+                                            <UiButton :class="getStyle('account.address.editOrCreateAddressButton.trigger')" variant="secondary">
+                                                <Icon name="mdi:pencil" :class="getStyle('account.address.icon')" />
+                                                <span :class="getStyle('account.address.text')">
+                                                    {{ $t('account.addressEditBtn') }}
+                                                </span>
                                             </UiButton>
                                         </UiDialogTrigger>
                                     </slot>
 
-                                    <slot name="delete-address-content">
+                                    <slot name="edit-address-content">
                                         <UiDialogContent :class="getStyle('account.address.dialog.inner')">
                                             <UiDialogHeader>
                                                 <UiDialogTitle>
-                                                    {{ $t('account.addressesContentItemActionDelete') }}
+                                                    {{ $t('account.addressEditMetaTitle') }}
                                                 </UiDialogTitle>
                                             </UiDialogHeader>
-
-                                            {{ $t('account.addressesContentItemActionDeleteDescription') }}
-                                            <div :class="getStyle('account.address.deleteAddress.outer')">
-                                                <UiButton
-                                                    :is-loading="isLoading"
-                                                    :class="getStyle('account.address.deleteAddress.button')"
-                                                    @click="$emit('delete-address', address.id)"
-                                                >
-                                                    <Icon name="mdi:delete-forever-outline" :class="getStyle('account.address.icon')" />
-                                                    {{ $t('account.addressesContentItemActionDelete') }}
-                                                </UiButton>
-
-                                                <UiDialogClose
-                                                    :class="[getStyle('account.address.deleteAddress.button'), getStyle('ui.button.base'), getStyle('ui.button.variants.secondary')]"
-                                                >
-                                                    {{ $t('global.default.cancel') }}
-                                                </UiDialogClose>
-                                            </div>
+                                            <AddressCreateOrEdit
+                                                :is-loading="isLoading"
+                                                :address="address"
+                                                @on-submit="(value: AddressData) => $emit('edit-address', value, address.id)"
+                                            />
                                         </UiDialogContent>
                                     </slot>
                                 </UiDialog>
-                            </slot>
+
+                                <slot name="delete-address">
+                                    <UiDialog
+                                        v-if="defaultShippingAddressId !== address.id && defaultBillingAddressId !== address.id"
+                                        :class="getStyle('account.address.dialog')"
+                                    >
+                                        <slot name="delete-address-trigger">
+                                            <UiDialogTrigger :class="getStyle('account.address.trigger.outer')">
+                                                <UiButton variant="secondary" :class="getStyle('account.address.editOrCreateAddressButton.trigger')">
+                                                    <Icon name="mdi:delete-forever-outline" :class="getStyle('account.address.icon')" />
+                                                    <span :class="getStyle('account.address.text')">
+                                                        {{ $t('account.addressesContentItemActionDelete') }}
+                                                    </span>
+                                                </UiButton>
+                                            </UiDialogTrigger>
+                                        </slot>
+
+                                        <slot name="delete-address-content">
+                                            <UiDialogContent :class="getStyle('account.address.dialog.inner')">
+                                                <UiDialogHeader>
+                                                    <UiDialogTitle>
+                                                        {{ $t('account.addressesContentItemActionDelete') }}
+                                                    </UiDialogTitle>
+                                                </UiDialogHeader>
+
+                                                {{ $t('account.addressesContentItemActionDeleteDescription') }}
+                                                <div :class="getStyle('account.address.deleteAddress.outer')">
+                                                    <UiButton
+                                                        :is-loading="isLoading"
+                                                        :class="getStyle('account.address.deleteAddress.button')"
+                                                        @click="$emit('delete-address', address.id)"
+                                                    >
+                                                        <Icon name="mdi:delete-forever-outline" :class="getStyle('account.address.icon')" />
+                                                        {{ $t('account.addressesContentItemActionDelete') }}
+                                                    </UiButton>
+
+                                                    <UiDialogClose
+                                                        :class="[getStyle('account.address.deleteAddress.button'), getStyle('ui.button.base'), getStyle('ui.button.variants.secondary')]"
+                                                    >
+                                                        {{ $t('global.default.cancel') }}
+                                                    </UiDialogClose>
+                                                </div>
+                                            </UiDialogContent>
+                                        </slot>
+                                    </UiDialog>
+                                </slot>
+                            </div>
                         </div>
-
-                        <slot name="set-as-default-billing-address">
-                            <UiButton
-                                v-if="defaultBillingAddressId !== address.id"
-                                variant="link"
-                                :class="getStyle('account.address.setDefaultAddressButton')"
-                                :is-loading="isLoading"
-                                @click="$emit('set-as-default-billing-address', address.id)"
-                            >
-                                <Icon name="mdi:list-box-outline" :class="getStyle('account.address.icon')" />
-                                {{ $t('account.addressesSetAsDefaultBillingAction') }}
-                            </UiButton>
-                        </slot>
-
-                        <slot name="set-as-default-shipping-address">
-                            <UiButton
-                                v-if="defaultShippingAddressId !== address.id"
-                                variant="link"
-                                :class="getStyle('account.address.setDefaultAddressButton')"
-                                :is-loading="isLoading"
-                                @click="$emit('set-as-default-shipping-address', address.id)"
-                            >
-                                <Icon name="mdi:truck-outline" :class="getStyle('account.address.icon')" />
-                                {{ $t('account.addressesSetAsDefaultShippingAction') }}
-                            </UiButton>
-                        </slot>
                     </div>
                 </template>
 

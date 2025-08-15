@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Columns } from '~/types/vueForm/Columns';
+import type { Columns } from '~/types/vueForm/Form';
 
 withDefaults(
     defineProps<{

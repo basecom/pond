@@ -4,13 +4,13 @@ import type { AcceptableValue } from 'reka-ui';
 
 const { currency, setCurrency } = useSessionContext();
 const { getAvailableCurrencies } = usePondSalesChannel();
-const { toast } = usePondToast();
 const { getStyle } = usePondStyle();
 const { handleError } = usePondHandleError();
-const { t } = useI18n();
 
 const availableCurrencies: Ref<undefined | Schemas['Currency'][]> = ref(undefined);
 const selectedCurrencyId: Ref<undefined | AcceptableValue> = ref(undefined);
+
+const showLayoutPageLoader: Ref<boolean> | undefined = inject('showLayoutPageLoader');
 
 onMounted(() => {
     selectedCurrencyId.value = currency.value.id;
@@ -28,11 +28,13 @@ const onUpdate = async (selectedId: AcceptableValue) => {
     const currency = arrayOfAvailableCurrencies.find(availableCurrency => availableCurrency.id === selectedId);
     if (currency) {
         try {
+            if(showLayoutPageLoader) {
+                showLayoutPageLoader.value = true;
+            }
             await setCurrency(currency);
             selectedCurrencyId.value = selectedId;
-            toast({
-                title: t('footer.currencySwitch', { currency: currency.isoCode }),
-            });
+            // Reload is necessary, so all price values are correct
+            window.location.reload();
         } catch {
             handleError('Currency switch failed');
         }

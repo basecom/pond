@@ -84,6 +84,7 @@ onMounted(() => {
                 sm: 12,
                 md: 6,
             }"
+            :in-modal="true"
         />
 
         <UiFormButton

@@ -50,13 +50,18 @@ const onChange = async (formData: NewsletterFormData) => {
             });
             // alert is no longer displayed
             displayDoubleNewsletterRegistrationAlert.value = false;
-            newsletterStatus.value = await getNewsletterStatus();
         } catch (error) {
+            // When an error occurs, the checkbox is unset
+            form$.value?.update({
+                newsletter: false,
+            });
             toast({
                 title: t('error.message-default'),
                 variant: 'destructive',
             });
             handleError(error);
+        } finally {
+            newsletterStatus.value = await getNewsletterStatus();
         }
         return;
     }
@@ -64,7 +69,17 @@ const onChange = async (formData: NewsletterFormData) => {
     // Otherwise, subscribe to newsletter (only if not already subscribed to the newsletter)
     if (newsletterStatus.value?.status !== 'direct' && newsletterStatus.value?.status !== 'optIn' && newsletterStatus.value?.status !== 'notSet') {
         try {
-            await newsletterSubscribe({ email: props.customer.email, option: 'subscribe' });
+            await newsletterSubscribe({
+                option: 'subscribe',
+                email: props.customer.email,
+                firstName: props.customer.firstName,
+                lastName: props.customer.lastName,
+                salutation: props.customer.salutationId,
+                title: props.customer.title,
+                street: props.customer.defaultBillingAddress?.street,
+                zipCode: props.customer.defaultBillingAddress?.zipcode,
+                city: props.customer.defaultBillingAddress?.city,
+            });
             toast({
                 title: t('newsletter.subscriptionConfirmationSuccess'),
             });
@@ -78,12 +93,18 @@ const onChange = async (formData: NewsletterFormData) => {
 
             displayDoubleNewsletterRegistrationAlert.value = false;
         } catch (error) {
+            // When an error occurs, the checkbox is unset
+            form$.value?.update({
+                newsletter: false,
+            });
             toast({
                 title: t('error.message-default'),
                 description: t('newsletter.subscriptionConfirmationFailed'),
                 variant: 'destructive',
             });
             handleError(error);
+        } finally {
+            newsletterStatus.value = await getNewsletterStatus();
         }
     }
 };

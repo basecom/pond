@@ -5,13 +5,17 @@ import { getTranslatedProperty } from '@shopware/helpers';
 withDefaults(
     defineProps<{
       headline?: string;
-      address?: Schemas['CustomerAddress'],
+      address?: Schemas['CustomerAddress'];
       description?: string;
+      isDefaultShippingAddress?: boolean;
+      isDefaultBillingAddress?: boolean;
     }>(),
     {
         headline: undefined,
         address: undefined,
         description: undefined,
+        isDefaultShippingAddress: false,
+        isDefaultBillingAddress: false,
     },
 );
 
@@ -39,6 +43,28 @@ const showPhoneNumberField = configStore.get('core.loginRegistration.showPhoneNu
 
         <slot name="address-card-fields">
             <div v-if="address" :class="getStyle('account.address.card.outer')">
+                <div
+                    v-if="isDefaultShippingAddress || isDefaultBillingAddress"
+                    :class="{
+                        [getStyle('account.address.badges.multiple')]: isDefaultShippingAddress && isDefaultBillingAddress,
+                        [getStyle('account.address.badges.one')]: isDefaultShippingAddress || isDefaultBillingAddress
+                    }"
+                >
+                    <UiBadge v-if="isDefaultBillingAddress" variant="outline" :class="getStyle('account.address.badge')">
+                        <Icon name="mdi:list-box-outline" :class="getStyle('account.address.icon')" />
+                        <span :class="getStyle('account.address.text')">
+                            {{ $t('address.defaultBillingAddress.label') }}
+                        </span>
+                    </UiBadge>
+
+                    <UiBadge v-if="isDefaultShippingAddress" variant="outline" :class="getStyle('account.address.badge')">
+                        <Icon name="mdi:truck-outline" :class="getStyle('account.address.icon')" />
+                        <span :class="getStyle('account.address.text')">
+                            {{ $t('address.defaultShippingAddress.label') }}
+                        </span>
+                    </UiBadge>
+                </div>
+
                 <p
                     v-if="address.company"
                     :class="getStyle('account.address.boldText')"
