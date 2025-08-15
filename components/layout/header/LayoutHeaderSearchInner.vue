@@ -3,8 +3,7 @@ import { getProductRoute } from '@shopware/helpers';
 import type { SearchForm } from '~/types/vueForm/Search';
 
 const { getStyle } = usePondStyle();
-const { searchTerm, search, getProducts, getTotal, loading } =
-    useProductSearchSuggest();
+const { searchTerm, search, getProducts, getTotal, loading } = useProductSearchSuggest();
 const { formatLink } = useInternationalization();
 
 const displayTotal = ref(5);
@@ -72,6 +71,7 @@ watch(
                                 @on-icon-click="navigateToSearchPage()"
                             />
                         </Vueform>
+
                         <slot name="header-search-results">
                             <div v-if="loading" :class="getStyle('header.actions.search.skeleton.wrapper')">
                                 <slot name="header-search-results-loading">
@@ -85,11 +85,12 @@ watch(
                             </div>
 
                             <template v-else>
-                                <template v-if="inputValue.length < minSearchTermLength">
+                                <span v-if="inputValue.length < minSearchTermLength" :class="getStyle('header.actions.search.minSearchTerm')">
                                     <slot name="header-search-results-no-products">
                                         {{ $t('search.minCharacterInfo', { count: minSearchTermLength }) }}
                                     </slot>
-                                </template>
+                                </span>
+
                                 <template v-else-if="getTotal > 0 && inputValue.length >= minSearchTermLength">
                                     <slot name="header-search-results-product-link">
                                         <NuxtLinkLocale
@@ -99,6 +100,7 @@ watch(
                                             :class="getStyle('header.actions.search.results.outer')"
                                             :aria-label="$t('search.viewProduct')"
                                             :aria-description="`${product.translated.name} - ${product.calculatedPrice?.totalPrice}`"
+                                            @click="isOpen = false"
                                         >
                                             <ProductCover
                                                 :is-video="product.cover?.media?.mimeType?.includes('video')"
@@ -126,12 +128,22 @@ watch(
                                             :aria-label="$t('search.allResults')"
                                             :aria-description="$t('search.allResultsDescription')"
                                         >
-                                            <Icon name="material-symbols:arrow-forward-ios-rounded" :class="getStyle('header.actions.search.page.inner')" />
+                                            <span :class="getStyle('header.actions.search.page.inner')">
+                                                {{ $t('search.allResults') }}
 
-                                            {{ $t('search.allResults') }}
+                                                <Icon
+                                                    name="material-symbols:arrow-forward-ios-rounded"
+                                                    :class="getStyle('header.actions.search.page.icon')"
+                                                />
+                                            </span>
+
+                                            <span :class="getStyle('header.actions.search.page.results')">
+                                                {{ $t('search.results', { count: getTotal }) }}
+                                            </span>
                                         </NuxtLinkLocale>
                                     </slot>
                                 </template>
+
                                 <template v-else>
                                     <slot name="header-search-results-no-products">
                                         {{ $t('search.noResult') }}

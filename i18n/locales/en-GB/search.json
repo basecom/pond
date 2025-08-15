@@ -4,6 +4,7 @@
     "allResultsDescription": "This button navigates to the search results page",
     "noResult": "No search results found.",
     "viewProduct": "View product",
-    "minCharacterInfo": "Enter at least {count} characters"
+    "minCharacterInfo": "Enter at least {count} characters",
+    "results": "One result | {count} results"
   }
 }
