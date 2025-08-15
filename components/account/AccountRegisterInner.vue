@@ -102,7 +102,7 @@ const onSubmit = (data: VueFormRequestData) => {
     <div :class="getStyle('account.register.outer')">
         <slot name="headline">
             <h1 :class="getStyle('account.register.headline')">
-                {{ $t('account.register.headline') }}
+                {{ $t('account.registerTitle') }}
             </h1>
         </slot>
 
@@ -121,7 +121,7 @@ const onSubmit = (data: VueFormRequestData) => {
                             :is-detail="true"
                             :account-type-conditions="[['billing-address.account-type.accountType', 'business']]"
                             :headline-classes="getStyle('account.register.addressHeadline')"
-                            :headline="$t('address.headline')"
+                            :headline="$t('account.registerAddressBillingHeader')"
                         />
                     </GroupElement>
                 </slot>
@@ -132,7 +132,7 @@ const onSubmit = (data: VueFormRequestData) => {
                         name="differentShippingAddress"
                     >
                         <template #checkbox-element-content>
-                            {{ $t('address.differentShippingAddress') }}
+                            {{ $t('account.registerAddressShippingHeader') }}
                         </template>
                     </UiCheckboxElement>
                 </slot>
@@ -155,7 +155,7 @@ const onSubmit = (data: VueFormRequestData) => {
                         id="acceptedDataProtection"
                         name="acceptedDataProtection"
                         rules="required"
-                        :messages="{ required: $t('account.register.dataProtection.errorRequired') }"
+                        :messages="{ required: $t('account.dataProtectionRequired') }"
                     >
                         <template #checkbox-element-content>
                             <AccountDataProtection />
@@ -173,7 +173,7 @@ const onSubmit = (data: VueFormRequestData) => {
                         </slot>
 
                         <div>
-                            <UiAlertTitle>{{ $t('error.generalHeadline') }}</UiAlertTitle>
+                            <UiAlertTitle>{{ $t('error.message-default') }}</UiAlertTitle>
                             <UiAlertDescription>
                                 {{ errorMessage }}
                             </UiAlertDescription>
@@ -183,7 +183,7 @@ const onSubmit = (data: VueFormRequestData) => {
 
                 <slot name="register-submit-button">
                     <UiFormButton :is-loading="isLoading">
-                        {{ $t('account.auth.register') }}
+                        {{ $t('account.register') }}
                     </UiFormButton>
                 </slot>
             </Vueform>

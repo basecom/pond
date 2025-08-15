@@ -93,7 +93,7 @@ onMounted(() => {
             :is-loading="isLoading"
             :class="getStyle('account.address.editOrCreateAddressButton.submit')"
         >
-            {{ $t('general.save') }}
+            {{ $t('global.default.save') }}
         </UiFormButton>
     </Vueform>
 </template>

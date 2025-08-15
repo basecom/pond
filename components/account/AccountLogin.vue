@@ -30,7 +30,7 @@ const login = async (loginData: LoginData) => {
         }
 
         toast({
-            title: t('account.auth.loginSuccess'),
+            title: t('account.loginSucceeded'),
         });
     } catch (error) {
         if (error instanceof ApiClientError) {

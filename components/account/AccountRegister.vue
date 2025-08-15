@@ -7,18 +7,21 @@ const { t } = useI18n();
 const { handleError } = usePondHandleError();
 const { toast } = usePondToast();
 const { getStyle } = usePondStyle();
+const runtimeConfig = useRuntimeConfig();
 
 const isLoading = ref(false);
 const errorMessage: Ref<string|undefined> = ref(undefined);
+const url = useRequestURL();
+const domainUrl = runtimeConfig.public.pond?.salesChannelDomain || url;
 
 const register = async (registerData: RegisterFormData) => {
     isLoading.value = true;
     errorMessage.value = undefined;
 
     try {
-        await customerStore.register(registerData);
+        await customerStore.register({ ...registerData, storefrontUrl: domainUrl });
         toast({
-            title: t('account.register.success'),
+            title: t('account.registerSucceeded'),
         });
     } catch (error) {
         if (error instanceof ApiClientError) {
@@ -26,11 +29,11 @@ const register = async (registerData: RegisterFormData) => {
             if (firstError?.code) {
                 errorMessage.value = t(`error.${firstError.code}`);
             } else {
-                errorMessage.value = t('error.generic');
+                errorMessage.value = t('error.message-default');
             }
         } else {
             handleError(`Unexpected registration error: ${error}`);
-            errorMessage.value = t('error.generic');
+            errorMessage.value = t('error.message-default');
         }
     } finally {
         isLoading.value = false;

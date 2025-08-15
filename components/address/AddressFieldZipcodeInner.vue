@@ -19,11 +19,11 @@ withDefaults(
 <template>
     <UiTextElement
         :id="`${prefix}zipcode`"
-        :label="$t('address.zipCode.label')"
+        :label="$t('address.zipcodeLabel')"
         :name="`${prefix}zipcode`"
-        :placeholder="$t('address.zipCode.placeholder')"
+        :placeholder="$t('address.zipcodePlaceholder')"
         rules="required"
-        :messages="{ required: $t('address.zipCode.errorRequired') }"
+        :messages="{ required: $t('address.zipcodeRequired') }"
         :columns="columns"
     />
 </template>

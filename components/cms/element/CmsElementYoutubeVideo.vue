@@ -51,7 +51,7 @@ const confirmed = ref(false);
     <CmsElementVideoConfirmation
         v-if="config.needsConfirmation && !confirmed"
         :preview-url="content?.data?.media?.url"
-        alt="Video preview"
+        :alt="$t('component.cms.video.youtube.alt')"
         @confirm="(hasConfirmed: boolean) => confirmed = hasConfirmed"
     />
     <template v-else>
@@ -59,7 +59,7 @@ const confirmed = ref(false);
             <iframe 
                 class="inset-0 aspect-video w-full" 
                 :src="videoUrl" 
-                :title="$t('video.youtubeTitle')"
+                :title="$t('component.cms.video.youtube.title')"
             />
         </div>
     </template>

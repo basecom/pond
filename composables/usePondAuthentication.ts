@@ -38,7 +38,7 @@ export function usePondAuthentication() {
             await navigateTo(formatLink(redirectTo));
             await customerStore.logout();
             toast({
-                title: t('account.auth.logoutSuccess'),
+                title: t('account.logoutSucceeded'),
             });
         } catch (error) {
             handleError(error);

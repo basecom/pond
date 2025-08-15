@@ -13,7 +13,7 @@ const productResponse = await search(props.navigationId, {
 });
 
 if (!productResponse) {
-    throw createError({ statusCode: 404, message: t('error.404.heading') });
+    throw createError({ statusCode: 404, message: t('general.404ErrorPageHeader') });
 }
 
 const { product: productDetail } = useProduct(productResponse);

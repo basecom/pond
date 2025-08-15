@@ -28,7 +28,7 @@ const { getStyle } = usePondStyle();
 <template>
     <div :class="getStyle('account.recover.password.outer')">
         <slot name="headline">
-            <h1> {{ $t('account.recover.header') }} </h1>
+            <h1> {{ $t('account.profileRecoverPasswordTitle') }} </h1>
         </slot>
 
         <slot name="form">
@@ -44,12 +44,12 @@ const { getStyle } = usePondStyle();
                     :show-confirm="true"
                     password-id="newPassword"
                     password-name="newPassword"
-                    :password-label="$t('account.recover.password.new.label')"
-                    :password-placeholder="$t('account.recover.password.new.placeholder')"
+                    :password-label="$t('account.profilePasswordCreateNew')"
+                    :password-placeholder="$t('account.profilePasswordCreateNewPlaceholder')"
                     password-confirm-id="newPassword_confirmation"
                     password-confirm-name="newPassword_confirmation"
-                    :password-confirm-label="$t('account.recover.password.newConfirm.label')"
-                    :password-confirm-placeholder="$t('account.recover.password.newConfirm.placeholder')"
+                    :password-confirm-label="$t('account.personalPasswordConfirmationLabel')"
+                    :password-confirm-placeholder="$t('account.personalPasswordConfirmationPlaceholder')"
                 />
 
                 <slot name="recover-submit-button">
@@ -60,7 +60,7 @@ const { getStyle } = usePondStyle();
                         :class="getStyle('account.recover.password.button')"
                         :is-loading="isLoading"
                     >
-                        {{ $t('account.recover.submitRecoverButton') }}
+                        {{ $t('account.profileChangePassword') }}
                     </UiFormButton>
                 </slot>
             </Vueform>

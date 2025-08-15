@@ -7,7 +7,7 @@ const wishlistEnabled = configStore.get('core.cart.wishlistEnabled') as boolean;
 
 const accountLinks: {name: string, link: string}[] = [
     {
-        name: 'account',
+        name: 'overview',
         link: '/account',
     },
     {

@@ -39,8 +39,7 @@ const recoverPassword = async (recoverPasswordFormData: RecoverPasswordFormData)
         if (result && result.status === 200) {
             await navigateTo(formatLink('/account/login'));
             toast({
-                title: t('account.recover.successResetHeader'),
-                description: t('account.recover.successResetMessage'),
+                title: t('account.passwordChangeSuccess'),
             });
         }
     } catch {
@@ -53,7 +52,7 @@ const recoverPassword = async (recoverPasswordFormData: RecoverPasswordFormData)
 const handleError = async () => {
     await navigateTo(formatLink('/account/recover'));
     toast({
-        title: t('account.recover.errorMessage'),
+        title: t('account.passwordHashNotFound'),
         variant: 'destructive',
     });
 };

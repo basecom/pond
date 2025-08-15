@@ -126,9 +126,5 @@ withDefaults(
         <template #password>
             <slot name="password" />
         </template>
-
-        <template #password-confirm>
-            <slot name="password-confirm" />
-        </template>
     </AccountCustomerFieldsInner>
 </template>

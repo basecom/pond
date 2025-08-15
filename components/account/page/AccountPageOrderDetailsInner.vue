@@ -55,10 +55,10 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.s
         <div :class="getStyle('account.order.header.outer')">
             <slot name="line-items-header">
                 <div :class="getStyle('account.order.header.inner')">
-                    <span :class="getStyle('account.order.header.product')">{{ $t('order.lineItem.product') }}</span>
-                    <span :class="getStyle('account.order.header.quantity')"> {{ $t('order.lineItem.quantity') }}</span>
-                    <span :class="getStyle('account.order.header.unitPrice')"> {{ $t('order.lineItem.unitPrice') }} </span>
-                    <span :class="getStyle('account.order.header.totalPrice')">{{ $t('order.lineItem.totalPrice') }}</span>
+                    <span :class="getStyle('account.order.header.product')">{{ $t('account.orderItemColumnName') }}</span>
+                    <span :class="getStyle('account.order.header.quantity')"> {{ $t('account.orderItemColumnQuantity') }}</span>
+                    <span :class="getStyle('account.order.header.unitPrice')"> {{ $t('account.orderItemColumnPrice') }} </span>
+                    <span :class="getStyle('account.order.header.totalPrice')">{{ $t('account.orderItemColumnTotal') }}</span>
                 </div>
 
                 <hr :class="getStyle('account.order.header.separator')">
@@ -77,7 +77,7 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.s
                     <div :class="getStyle('account.order.information.general.outer')">
                         <slot name="order-date">
                             <span :class="getStyle('account.order.information.general.label')">
-                                {{ $t('order.orderDate') }}
+                                {{ $t('account.orderItemDate') }}
                             </span>
                             <span :class="getStyle('account.order.information.general.value')">
                                 {{ formatLocaleDate(order?.orderDate) }}
@@ -86,7 +86,7 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.s
 
                         <slot name="order-number">
                             <span :class="getStyle('account.order.information.general.label')">
-                                {{ $t('order.orderNumber') }}
+                                {{ $t('account.orderItemColumnNumber') }}
                             </span>
                             <span :class="getStyle('account.order.information.general.value')">
                                 {{ order?.orderNumber }}
@@ -95,7 +95,7 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.s
 
                         <slot name="payment-method">
                             <span :class="getStyle('account.order.information.general.label')">
-                                {{ $t('order.paymentMethod') }}
+                                {{ $t('account.orderItemPaymentMethod') }}
                             </span>
                             <span :class="getStyle('account.order.information.general.value')">
                                 {{ paymentMethodName }}
@@ -104,7 +104,7 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.s
 
                         <slot name="payment-state">
                             <span :class="getStyle('account.order.information.general.label')">
-                                {{ $t('order.paymentState') }}
+                                {{ $t('account.orderPaymentStatus') }}
                             </span>
                             <span :class="getStyle('account.order.information.general.value')">
                                 {{ paymentState }}
@@ -116,7 +116,7 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.s
                                 v-if="orderHasPhysicalProductsInOrder"
                                 :class="getStyle('account.order.information.general.label')"
                             >
-                                {{ $t('order.shippingMethod') }}
+                                {{ $t('account.orderItemShippingMethod') }}
                             </span>
                             <span
                                 v-if="orderHasPhysicalProductsInOrder"
@@ -131,7 +131,7 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.s
                                 v-if="orderHasPhysicalProductsInOrder"
                                 :class="getStyle('account.order.information.general.label')"
                             >
-                                {{ $t('order.shippingState') }}
+                                {{ $t('account.orderShippingStatus') }}
                             </span>
                             <span
                                 v-if="orderHasPhysicalProductsInOrder"
@@ -146,7 +146,7 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.s
                                 v-if="orderHasPhysicalProductsInOrder"
                                 :class="getStyle('account.order.information.general.label')"
                             >
-                                {{ $t('order.tracking') }}
+                                {{ $t('account.orderItemTracking') }}
                             </span>
                             <span
                                 v-if="orderHasPhysicalProductsInOrder"
@@ -162,7 +162,7 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.s
                                     </template>
                                 </template>
                                 <template v-else>
-                                    {{ $t('order.noTracking') }}
+                                    {{ $t('account.orderTrackingNotAvailable') }}
                                 </template>
                             </span>
                         </slot>
@@ -176,7 +176,7 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.s
                                 v-if="orderHasPhysicalProductsInOrder"
                                 :class="getStyle('account.order.price.label')"
                             >
-                                {{ $t('order.shipping') }}
+                                {{ $t('account.orderItemShippingcosts') }}
                             </span>
                             <span
                                 v-if="orderHasPhysicalProductsInOrder"
@@ -192,7 +192,7 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.s
                                 :key="calculatedTax.taxRate"
                             >
                                 <span :class="getStyle('account.order.price.label')">
-                                    {{ $t('order.tax', { taxRate: calculatedTax.taxRate }) }}
+                                    {{ $t('checkout.summaryTax', { rate: calculatedTax.taxRate }) }}
                                 </span>
                                 <span :class="getStyle('account.order.price.value')">
                                     {{ getFormattedPrice(calculatedTax.tax) }}
@@ -202,7 +202,7 @@ const orderHasPhysicalProductsInOrder = computed(() => props.order?.lineItems?.s
 
                         <slot name="total">
                             <span :class="getStyle('account.order.price.label')">
-                                {{ $t('order.total') }}
+                                {{ $t('account.orderItemTotal') }}
                             </span>
                             <span :class="getStyle('account.order.price.value')">
                                 {{ getFormattedPrice(total ?? 0) }}
