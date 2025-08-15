@@ -108,7 +108,7 @@ const dialogOpen = ref(false);
                                 >
                                     <Icon name="mdi:list-box-outline" :class="getStyle('account.address.icon')" />
                                     <span :class="getStyle('account.address.text')">
-                                        {{ $t('address.defaultBillingAddress.setAsDefault') }}
+                                        {{ $t('account.addressesSetAsDefaultBillingAction') }}
                                     </span>
                                 </UiButton>
                             </slot>
@@ -123,7 +123,7 @@ const dialogOpen = ref(false);
                                 >
                                     <Icon name="mdi:truck-outline" :class="getStyle('account.address.icon')" />
                                     <span :class="getStyle('account.address.text')">
-                                        {{ $t('address.defaultShippingAddress.setAsDefault') }}
+                                        {{ $t('account.addressesSetAsDefaultShippingAction') }}
                                     </span>
                                 </UiButton>
                             </slot>
