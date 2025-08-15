@@ -12,7 +12,7 @@ withDefaults(
       columns?: Columns,
       floating?: string;
       autocomplete?: string;
-      conditions?: [];
+      conditions?: string[][];
       inputType?: string;
       debounce?: number;
       classes?: string;
