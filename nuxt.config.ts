@@ -114,6 +114,9 @@ export default defineNuxtConfig({
                 endpoint: '',
                 accessToken: '',
             },
+            pond: {
+                salesChannelDomain: '',
+            },
         },
     },
 

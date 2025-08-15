@@ -7,16 +7,19 @@ const { t } = useI18n();
 const { handleError } = usePondHandleError();
 const { toast } = usePondToast();
 const { getStyle } = usePondStyle();
+const runtimeConfig = useRuntimeConfig();
 
 const isLoading = ref(false);
 const errorMessage: Ref<string|undefined> = ref(undefined);
+const url = useRequestURL();
+const domainUrl = runtimeConfig.public.pond?.salesChannelDomain || url;
 
 const register = async (registerData: RegisterFormData) => {
     isLoading.value = true;
     errorMessage.value = undefined;
 
     try {
-        await customerStore.register(registerData);
+        await customerStore.register({ ...registerData, storefrontUrl: domainUrl });
         toast({
             title: t('account.registerSucceeded'),
         });

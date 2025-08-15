@@ -5,9 +5,9 @@ export function usePondSnippets() {
     const { handleError } = usePondHandleError();
 
     const getSnippets = async (url: string) => {
-
         const shopwareEndpoint = runtimeConfig.public?.shopware?.endpoint;
         const shopwareAccessToken = runtimeConfig.public?.shopware?.accessToken;
+        const domainUrl = runtimeConfig.public.pond?.salesChannelDomain || url;
 
         // Have to create the apiClient, because the shopware context is missing here if useShopwareContext() is used instead
         const apiClient = createAPIClient<operations>({
@@ -17,12 +17,10 @@ export function usePondSnippets() {
 
         if (apiClient) {
             try {
-                const res = (await apiClient.invoke('loadSnippets post /pond/snippet', {
-                    body: {
-                        domainUrl: url,
-                    },
+                const response = (await apiClient.invoke('loadSnippets post /pond/snippet', {
+                    body: { domainUrl },
                 })).data;
-                return res.snippets;
+                return response.snippets;
             } catch (error) {
                 handleError(error);
                 return null;
