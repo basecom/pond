@@ -127,6 +127,7 @@ watch(
                                             :class="getStyle('header.actions.search.page.outer')"
                                             :aria-label="$t('search.allResults')"
                                             :aria-description="$t('search.allResultsDescription')"
+                                            @click="isOpen = false"
                                         >
                                             <span :class="getStyle('header.actions.search.page.inner')">
                                                 {{ $t('search.allResults') }}
