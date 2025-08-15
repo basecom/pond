@@ -1,3 +1,5 @@
+export type SelectItems = { value: string; label: string; }[];
+
 export type ColumnSizeObject = {
     container?: number;
     label?: number;

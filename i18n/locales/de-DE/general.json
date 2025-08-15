@@ -14,7 +14,8 @@
         },
         "currencySwitch": "Währung umgestellt auf {currency}",
         "errorHeadline": "Es ist ein Fehler aufgetreten.",
-        "errorMessage": "Versuchen Sie es später erneut."
+        "errorMessage": "Versuchen Sie es später erneut.",
+        "sortingLabel": "Sortierung"
     },
     "image": {
         "altText": "Bild",
