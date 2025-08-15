@@ -5,7 +5,7 @@ withDefaults(
     defineProps<{
       // The detail view includes the fields email, password, vat id and birthday
       isDetail?: boolean;
-      accountTypeConditions?: [];
+      accountTypeConditions?: string[][];
       /**
        * This component can be used multiple times in a form (e.g., registration form). To ensure that the form fields
        * are unique upon submission, it is possible to specify a prefix
