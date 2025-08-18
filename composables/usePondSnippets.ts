@@ -7,6 +7,7 @@ export function usePondSnippets() {
     const getSnippets = async (url: string) => {
         const shopwareEndpoint = runtimeConfig.public?.shopware?.endpoint;
         const shopwareAccessToken = runtimeConfig.public?.shopware?.accessToken;
+        console.log(runtimeConfig.public.pond?.salesChannelDomain)
         const domainUrl = runtimeConfig.public.pond?.salesChannelDomain || url;
 
         // Have to create the apiClient, because the shopware context is missing here if useShopwareContext() is used instead
