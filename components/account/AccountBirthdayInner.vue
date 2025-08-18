@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Columns } from '~/types/vueForm/Columns';
+import type { Columns } from '~/types/vueForm/Form';
 
 withDefaults(
     defineProps<{
@@ -28,14 +28,14 @@ const possibleBirthdayYears = computed(() => {
 
 <template>
     <slot name="birthday">
-        <GroupElement name="birthday" :label="$t('account.customer.birthday.label', { required: isBirthdayRequired ? '*' : '' })">
+        <GroupElement name="birthday" :label="$t('account.personalBirthdayLabel', { required: isBirthdayRequired ? '*' : '' })">
             <slot name="birthday-day">
                 <UiSelectElement
                     :id="`${prefix}birthdayDay`"
                     :name="`${prefix}birthdayDay`"
-                    :placeholder="$t('account.customer.birthday.day')"
+                    :placeholder="$t('account.personalBirthdaySelectDay')"
                     :rules="isBirthdayRequired ? ['required'] : ''"
-                    :messages="{ required: $t('account.customer.birthday.errorRequired') }"
+                    :messages="{ required: $t('account.personalBirthdayRequired') }"
                     :items="birthdayDays"
                     :columns="columns"
                 />
@@ -45,8 +45,8 @@ const possibleBirthdayYears = computed(() => {
                 <UiSelectElement
                     :id="`${prefix}birthdayMonth`"
                     :name="`${prefix}birthdayMonth`"
-                    :placeholder="$t('account.customer.birthday.month')"
-                    :messages="{ required: $t('account.customer.birthday.errorRequired') }"
+                    :placeholder="$t('account.personalBirthdaySelectMonth')"
+                    :messages="{ required: $t('account.personalBirthdayRequired') }"
                     :rules="isBirthdayRequired ? ['required'] : ''"
                     :items="birthdayMonths"
                     :columns="columns"
@@ -57,8 +57,8 @@ const possibleBirthdayYears = computed(() => {
                 <UiSelectElement
                     :id="`${prefix}birthdayYear`"
                     :name="`${prefix}birthdayYear`"
-                    :placeholder="$t('account.customer.birthday.year')"
-                    :messages="{ required: $t('account.customer.birthday.errorRequired') }"
+                    :placeholder="$t('account.personalBirthdaySelectYear')"
+                    :messages="{ required: $t('account.personalBirthdayRequired') }"
                     :rules="isBirthdayRequired ? ['required'] : ''"
                     :items="possibleBirthdayYears"
                     :columns="columns"

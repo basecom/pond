@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Columns } from '~/types/vueForm/Columns';
+import type { Columns } from '~/types/vueForm/Form';
 
 withDefaults(
     defineProps<{
@@ -55,7 +55,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
                 passwordMinRule
             ]"
             :debounce="300"
-            :messages="{ required: $t('account.customer.password.errorRequired'), confirmed: $t('account.customer.password.errorConfirmed'), min: $t('account.customer.password.errorMin', { number: passwordMinLength }) }"
+            :messages="{ required: $t('account.personalPasswordRequired'), confirmed: $t('account.personalPasswordConfirmationInvalidMessage'), min: $t('account.personalPasswordDescription', { minLength: passwordMinLength }) }"
             :columns="columns"
         />
     </slot>
@@ -69,7 +69,7 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
                 :label="passwordConfirmLabel"
                 input-type="password"
                 :placeholder="passwordConfirmPlaceholder"
-                :messages="{ required: $t('account.customer.password.errorRequired') }"
+                :messages="{ required: $t('account.personalPasswordRequired') }"
                 rules="required"
                 :columns="columns"
             />

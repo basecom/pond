@@ -127,7 +127,7 @@ const showReview = configStore.get('core.listing.showReview') as boolean;
                                         :aria-label="`navigate-to-${getProductName({ product })}`"
                                     >
                                         <UiButton variant="secondary" :class="getStyle('product.card.information.detailsButton')">
-                                            {{ $t('product.details') }}
+                                            {{ $t('listing.boxProductDetails') }}
                                         </UiButton>
                                     </NuxtLinkLocale>
                                 </template>

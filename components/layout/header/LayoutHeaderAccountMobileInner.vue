@@ -48,22 +48,22 @@ provide('closeDialog', () => {
                     <!-- user view -->
                     <template v-if="signedIn">
                         <slot name="signed-in">
-                            <AccountActionLink link="/account" :label="$t('account.account')" @click="() => $emit('click')" />
-                            <AccountActionLink link="/account/profile" :label="$t('account.profile')" @click="() => $emit('click')" />
-                            <AccountActionLink link="/account/address" :label="$t('account.address')" @click="() => $emit('click')" />
-                            <AccountActionLink link="/account/payment" :label="$t('account.payment')" @click="() => $emit('click')" />
-                            <AccountActionLink link="/account/order" :label="$t('account.order')" @click="() => $emit('click')" />
+                            <AccountActionLink link="/account" :label="$t('account.overviewLink')" @click="() => $emit('click')" />
+                            <AccountActionLink link="/account/profile" :label="$t('account.profileLink')" @click="() => $emit('click')" />
+                            <AccountActionLink link="/account/address" :label="$t('account.addressLink')" @click="() => $emit('click')" />
+                            <AccountActionLink link="/account/payment" :label="$t('account.paymentLink')" @click="() => $emit('click')" />
+                            <AccountActionLink link="/account/order" :label="$t('account.ordersLink')" @click="() => $emit('click')" />
                             <AccountActionLink
                                 v-if="wishlistEnabled"
                                 link="/account/wishlist"
-                                :label="$t('account.wishlist')"
+                                :label="$t('account.wishlistLink')"
                                 @click="() => $emit('click')"
                             />
 
                             <div :class="getStyle('header.actions.account.mobile.logoutWrapper')" @click="$emit('logout')">
                                 <slot name="logout">
                                     <div :class="getStyle('header.actions.account.mobile.logout')">
-                                        {{ $t('account.auth.logout') }}
+                                        {{ $t('account.logout') }}
                                     </div>
                                 </slot>
                             </div>
@@ -78,7 +78,7 @@ provide('closeDialog', () => {
                                     <slot name="action-login">
                                         <slot name="login">
                                             <div :class="getStyle('header.actions.account.mobile.logout')">
-                                                {{ $t('account.auth.login') }}
+                                                {{ $t('account.login') }}
                                             </div>
                                         </slot>
                                     </slot>
@@ -87,7 +87,7 @@ provide('closeDialog', () => {
                                 <UiDialogContent>
                                     <UiDialogHeader>
                                         <UiDialogTitle>
-                                            {{ $t('account.auth.login') }}
+                                            {{ $t('account.login') }}
                                         </UiDialogTitle>
                                     </UiDialogHeader>
                                     <AccountLogin :redirect-to="null" />
@@ -95,7 +95,7 @@ provide('closeDialog', () => {
                             </UiDialog>
 
                             <slot name="action-register">
-                                <AccountActionLink link="/account/register" :label="$t('account.auth.register')" @click="() => $emit('click')" />
+                                <AccountActionLink link="/account/register" :label="$t('account.register')" @click="() => $emit('click')" />
                             </slot>
                         </slot>
                     </template>

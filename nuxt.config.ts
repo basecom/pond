@@ -79,24 +79,25 @@ export default defineNuxtConfig({
     },
 
     i18n: {
-        vueI18n: './i18n.config.ts',
-        strategy: 'prefix_except_default',
-        defaultLocale: 'de-DE',
-        detectBrowserLanguage: false,
+        // more information about the snippet handling: https://i18n.nuxtjs.org/docs/guide/lazy-load-translations
         locales: [
             {
                 code: 'de-DE',
-                files: ['de-DE/account.json', 'de-DE/error.json', 'de-DE/general.json', 'de-DE/order.json', 'de-DE/payment.json', 'de-DE/address.json', 'de-DE/product.json', 'de-DE/newsletter.json', 'de-DE/listing.json', 'de-DE/wishlist.json', 'de-DE/search.json'],
+                file: {
+                    path: 'de-DE/de-DE.ts',
+                    cache: true,
+                },
             },
             {
                 code: 'en-GB',
-                files: ['en-GB/account.json', 'en-GB/error.json', 'en-GB/general.json', 'en-GB/order.json', 'en-GB/payment.json', 'en-GB/address.json', 'en-GB/product.json', 'en-GB/newsletter.json', 'en-GB/listing.json', 'en-GB/wishlist.json', 'en-GB/search.json'],
+                file: {
+                    path: 'en-GB/en-GB.ts',
+                    cache: true,
+                },
             },
         ],
         lazy: true,
-        bundle: {
-            optimizeTranslationDirective: false,
-        },
+        defaultLocale: 'de-DE',
     },
 
     compatibilityDate: '2025-02-24',
@@ -112,6 +113,9 @@ export default defineNuxtConfig({
             shopware: {
                 endpoint: '',
                 accessToken: '',
+            },
+            pond: {
+                salesChannelDomain: '',
             },
         },
     },

@@ -24,17 +24,17 @@ const { getStyle } = usePondStyle();
 const schema = z.object({
     newPassword: z
         .string({
-            required_error: t('account.password.errorGeneral'),
+            required_error: t('account.personalPasswordRequired'),
         }),
 
     newPasswordConfirm: z
         .string({
-            required_error: t('account.password.errorGeneral'),
+            required_error: t('account.personalPasswordRequired'),
         }),
 
     password: z
         .string({
-            required_error: t('account.password.errorGeneral'),
+            required_error: t('account.personalPasswordRequired'),
         }),
 });
 export type ChangePasswordForm = z.infer<typeof schema>;
@@ -74,7 +74,7 @@ watch(() => props.resetForm, (newValue) => {
 <template>
     <slot name="headline">
         <h3 :class="getStyle('account.personalData.subHeadline')">
-            {{ $t('account.personalProfile.changePassword.headline') }}
+            {{ $t('account.profileChangePassword') }}
         </h3>
     </slot>
 
@@ -82,7 +82,7 @@ watch(() => props.resetForm, (newValue) => {
         <UiAccordion type="single" :class="getStyle('account.personalData.accordion.outer')" collapsible>
             <UiAccordionItem value="mail" :class="getStyle('account.personalData.accordion.item')">
                 <UiAccordionTrigger :class="getStyle('account.personalData.accordion.trigger')">
-                    {{ $t('account.personalProfile.changePassword.headline') }}
+                    {{ $t('account.profileChangePassword') }}
                 </UiAccordionTrigger>
 
                 <UiAccordionContent :class="getStyle('account.personalData.accordion.content')">
@@ -94,24 +94,24 @@ watch(() => props.resetForm, (newValue) => {
                             :schema="schema"
                             :field-config="{
                                 newPassword: {
-                                    label: $t('account.personalProfile.changePassword.newPassword'),
+                                    label: $t('account.profilePasswordCreateNew'),
                                     inputProps: {
                                         type: 'password',
-                                        placeholder: $t('account.password.placeholder'),
+                                        placeholder: $t('account.profilePasswordCreateNewPlaceholder'),
                                     },
                                 },
                                 newPasswordConfirm: {
-                                    label: $t('account.personalProfile.changePassword.confirmation'),
+                                    label: $t('account.personalPasswordConfirmationLabel'),
                                     inputProps: {
                                         type: 'password',
-                                        placeholder: $t('account.password.placeholder'),
+                                        placeholder: $t('account.personalPasswordConfirmationPlaceholder'),
                                     },
                                 },
                                 password: {
-                                    label: $t('account.personalProfile.changePassword.oldPassword'),
+                                    label: $t('account.profilePasswordCurrent'),
                                     inputProps: {
                                         type: 'password',
-                                        placeholder: $t('account.password.placeholder'),
+                                        placeholder: $t('account.profilePasswordCurrentPlaceholder'),
                                     },
                                 },
                             }"
@@ -125,7 +125,7 @@ watch(() => props.resetForm, (newValue) => {
 
                             <slot name="submit-button">
                                 <UiButton type="submit" class="md:col-span-2" :is-loading="isLoading">
-                                    {{ $t('general.save') }}
+                                    {{ $t('global.default.save') }}
                                 </UiButton>
                             </slot>
                         </UiAutoForm>

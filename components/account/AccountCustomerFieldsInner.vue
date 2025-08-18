@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { Columns } from '~/types/vueForm/Columns';
+import type { Columns } from '~/types/vueForm/Form';
 
 withDefaults(
     defineProps<{
       // The detail view includes the fields email, password, vat id and birthday
       isDetail?: boolean;
-      accountTypeConditions?: [];
+      accountTypeConditions?: string[][];
       /**
        * This component can be used multiple times in a form (e.g., registration form). To ensure that the form fields
        * are unique upon submission, it is possible to specify a prefix
@@ -84,8 +84,6 @@ const confirmEmail = ref(configStore.get('core.loginRegistration.requireEmailCon
 const showBirthday = ref(configStore.get('core.loginRegistration.showBirthdayField') as boolean);
 const confirmPassword = ref(configStore.get('core.loginRegistration.requirePasswordConfirmation') as boolean);
 const showAccountType = ref(configStore.get('core.loginRegistration.showAccountTypeSelection') as boolean);
-const passwordMinLength = configStore.get('core.loginRegistration.passwordMinLength') as number;
-const passwordMinRule = ref(`min:${passwordMinLength}`);
 </script>
 
 <template>
@@ -104,9 +102,9 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
             <UiTextElement
                 v-if="showTitle"
                 :id="`${prefix}title`"
-                :label="$t('account.customer.title.label')"
+                :label="$t('account.personalTitleLabel')"
                 :name="`${prefix}title`"
-                :placeholder="$t('account.customer.title.placeholder')"
+                :placeholder="$t('account.personalTitlePlaceholder')"
                 :columns="titleColumns"
             />
         </slot>
@@ -116,11 +114,11 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
         <slot name="first-name">
             <UiTextElement
                 :id="`${prefix}firstName`"
-                :label="$t('account.customer.firstName.label')"
+                :label="$t('account.personalFirstNameLabel')"
                 :name="`${prefix}firstName`"
-                :placeholder="$t('account.customer.firstName.placeholder')"
+                :placeholder="$t('account.personalFirstNamePlaceholder')"
                 rules="required"
-                :messages="{ required: $t('account.customer.firstName.errorRequired') }"
+                :messages="{ required: $t('account.personalFirstNameRequired') }"
                 :columns="firstNameColumns"
             />
         </slot>
@@ -128,11 +126,11 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
         <slot name="last-name">
             <UiTextElement
                 :id="`${prefix}lastName`"
-                :label="$t('account.customer.lastName.label')"
+                :label="$t('account.personalLastNameLabel')"
                 :name="`${prefix}lastName`"
-                :placeholder="$t('account.customer.lastName.placeholder')"
+                :placeholder="$t('account.personalLastNamePlaceholder')"
                 rules="required"
-                :messages="{ required: $t('account.customer.lastName.errorRequired') }"
+                :messages="{ required: $t('account.personalLastNameRequired') }"
                 :columns="lastNameColumns"
             />
         </slot>
@@ -147,10 +145,10 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
             <UiTextElement
                 :id="`${prefix}company`"
                 :name="`${prefix}company`"
-                :placeholder="$t('account.customer.company.placeholder')"
-                :label="$t('account.customer.company.label')"
+                :placeholder="$t('address.companyNamePlaceholder')"
+                :label="$t('address.companyNameLabel')"
                 rules="required"
-                :messages="{ required: $t('account.customer.company.errorRequired') }"
+                :messages="{ required: $t('address.companyNameRequired') }"
                 :conditions="accountTypeConditions"
                 :columns="companyColumns"
             />
@@ -160,8 +158,8 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
             <UiTextElement
                 :id="`${prefix}department`"
                 :name="`${prefix}department`"
-                :label="$t('account.customer.department.label')"
-                :placeholder="$t('account.customer.department.placeholder')"
+                :label="$t('address.companyDepartmentLabel')"
+                :placeholder="$t('address.companyDepartmentPlaceholder')"
                 :conditions="accountTypeConditions"
                 :columns="departmentColumns"
             />
@@ -172,8 +170,8 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
                 v-if="isDetail && !isVatIdRequiredBySelectedCountry"
                 :id="`${prefix}vatIds`"
                 :name="`${prefix}vatIds`"
-                :label="$t('account.customer.vatId.label')"
-                :placeholder="$t('account.customer.vatId.placeholder')"
+                :label="$t('address.companyVatLabel')"
+                :placeholder="$t('address.companyVatPlaceholder')"
                 :conditions="accountTypeConditions"
                 :columns="vatIdColumns"
             />
@@ -181,10 +179,11 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
                 v-if="isDetail && isVatIdRequiredBySelectedCountry"
                 :id="`${prefix}vatIds`"
                 :name="`${prefix}vatIds`"
-                :label="$t('account.customer.vatId.label')"
-                :placeholder="$t('account.customer.vatId.placeholder')"
+                :label="$t('address.companyVatLabel')"
+                :placeholder="$t('address.companyVatPlaceholder')"
                 :conditions="accountTypeConditions"
                 :columns="vatIdColumns"
+                :messages="{ required: $t('address.companyVatRequired') }"
                 rules="required"
             />
         </slot>
@@ -196,15 +195,15 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
             :id="`${prefix}email`"
             :name="`${prefix}email`"
             autocomplete="user"
-            :label="$t('account.customer.email.label')"
-            :placeholder="$t('account.customer.email.placeholder')"
+            :label="$t('account.personalMailLabel')"
+            :placeholder="$t('account.personalMailPlaceholder')"
             :rules="confirmEmail ? [
                 'required', 'email', 'confirmed'
             ] : [
                 'required', 'email'
             ]"
             :debounce="300"
-            :messages="{ email: $t('account.customer.email.errorInvalid'), confirmed: $t('account.customer.email.errorConfirmed'), required: $t('account.customer.email.errorRequired') }"
+            :messages="{ email: $t('account.emailInvalid'), confirmed: $t('account.personalMailConfirmationInvalidMessage'), required: $t('account.emailRequired') }"
             :columns="emailColumns"
         />
     </slot>
@@ -215,50 +214,28 @@ const passwordMinRule = ref(`min:${passwordMinLength}`);
             :id="`${prefix}email_confirmation`"
             autocomplete="new-user"
             :name="`${prefix}email_confirmation`"
-            :label="$t('account.customer.email.confirm.label')"
-            :placeholder="$t('account.customer.email.confirm.placeholder')"
+            :label="$t('account.personalMailConfirmationLabel')"
+            :placeholder="$t('account.personalMailConfirmationPlaceholder')"
             rules="required|email"
             :debounce="300"
-            :messages="{ email: $t('account.customer.email.errorInvalid'), required: $t('account.customer.email.errorRequired') }"
+            :messages="{ email: $t('account.emailInvalid'), required: $t('account.emailRequired') }"
             :columns="emailColumns"
         />
     </slot>
 
     <slot name="password">
-        <UiTextElement
+        <AccountPassword
             v-if="isDetail"
-            :id="`${prefix}password`"
-            :label="$t('account.customer.password.label')"
-            autocomplete="password"
-            :name="`${prefix}password`"
-            input-type="password"
-            :placeholder="$t('account.customer.password.placeholder')"
-            :rules="confirmPassword ? [
-                'required',
-                'confirmed',
-                passwordMinRule
-            ] : [
-                'required',
-                passwordMinRule
-            ]"
-            :debounce="300"
-            :messages="{ required: $t('account.customer.password.errorRequired'), confirmed: $t('account.customer.password.errorConfirmed'), min: $t('account.customer.password.errorMin', { number: passwordMinLength }) }"
+            :password-id="`${prefix}password`"
+            :password-label="$t('account.personalPasswordLabel')"
+            :password-name="`${prefix}password`"
+            :password-placeholder="$t('account.personalPasswordPlaceholder')"
+            :password-confirm-id="`${prefix}password_confirmation`"
+            :password-confirm-name="`${prefix}password_confirmation`"
+            :password-confirm-label="$t('account.personalPasswordConfirmationLabel')"
+            :password-confirm-placeholder="$t('account.personalPasswordConfirmationPlaceholder')"
             :columns="passwordColumns"
-        />
-    </slot>
-
-    <slot name="password-confirm">
-        <UiTextElement
-            v-if="confirmPassword && isDetail"
-            :id="`${prefix}password_confirmation`"
-            autocomplete="new-password"
-            :name="`${prefix}password_confirmation`"
-            :label="$t('account.customer.password.confirm.label')"
-            input-type="password"
-            :placeholder="$t('account.customer.password.confirm.placeholder')"
-            :messages="{ required: $t('account.customer.password.errorRequired') }"
-            rules="required"
-            :columns="passwordColumns"
+            :show-confirm="confirmPassword"
         />
     </slot>
 </template>

@@ -11,6 +11,8 @@ const { getStyle } = usePondStyle();
 const selectedLanguage: Ref<undefined | Schemas['Language']> = ref(undefined);
 const selectedLanguageId = ref(languageIdChain);
 
+const showLayoutPageLoader: Ref<boolean> | undefined = inject('showLayoutPageLoader');
+
 onMounted(async () => {
     await getAvailableLanguages();
     if(selectedLanguageId.value) {
@@ -21,6 +23,9 @@ onMounted(async () => {
 const onUpdate = async (selectedValue: AcceptableValue): Promise<void> =>  {
     if (typeof selectedValue === 'string') {
         try {
+            if(showLayoutPageLoader) {
+                showLayoutPageLoader.value = true;
+            }
             const response = await changeLanguage(selectedValue);
             // Update language
             selectedLanguage.value = languages.value.find(language => language.id === selectedValue);

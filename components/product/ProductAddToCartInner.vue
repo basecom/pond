@@ -22,7 +22,7 @@ defineEmits<{
             :is-loading="isLoading"
             @click="$emit('addToCart')"
         >
-            {{ $t('product.addToCart') }}
+            {{ $t('listing.boxAddProduct') }}
         </UiButton>
     </slot>
 </template>

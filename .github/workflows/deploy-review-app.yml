@@ -26,7 +26,7 @@ jobs:
         id: deploy
         uses: superfly/fly-pr-review-apps@1.5.0
         with:
-          secrets: NUXT_PUBLIC_SHOPWARE_ACCESS_TOKEN=${{ vars.DEMO_SHOPWARE_ACCESS_TOKEN }} NUXT_PUBLIC_SHOPWARE_ENDPOINT=${{ vars.DEMO_SHOPWARE_ENDPOINT }}
+          secrets: NUXT_PUBLIC_SHOPWARE_ACCESS_TOKEN=${{ vars.DEMO_SHOPWARE_ACCESS_TOKEN }} NUXT_PUBLIC_SHOPWARE_ENDPOINT=${{ vars.DEMO_SHOPWARE_ENDPOINT }} NUXT_PUBLIC_POND_SALES_CHANNEL_DOMAIN="https://pond-demo.fly.dev"
           launch_options: --local-only
 
       - name: Get Github App Token

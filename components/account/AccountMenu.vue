@@ -2,10 +2,12 @@
 const customerStore = useCustomerStore();
 const { customer } = storeToRefs(customerStore);
 const { logout } = usePondAuthentication();
+const configStore = useConfigStore();
+const wishlistEnabled = configStore.get('core.cart.wishlistEnabled') as boolean;
 
 const accountLinks: {name: string, link: string}[] = [
     {
-        name: 'account',
+        name: 'overview',
         link: '/account',
     },
     {
@@ -24,11 +26,14 @@ const accountLinks: {name: string, link: string}[] = [
         name: 'order',
         link: '/account/order',
     },
-    {
+];
+
+if (wishlistEnabled) {
+    accountLinks.push({
         name: 'wishlist',
         link: '/account/wishlist',
-    },
-];
+    });
+}
 </script>
 
 <template>
