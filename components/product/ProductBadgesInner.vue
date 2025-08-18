@@ -26,14 +26,14 @@ const { getStyle } = usePondStyle();
     <slot name="is-topseller-badge">
         <template v-if="isTopseller">
             <UiBadge :class="getStyle('product.card.badge.topseller')">
-                {{ $t('product.badge.topseller') }}
+                {{ $t('listing.boxLabelTopseller') }}
             </UiBadge>
         </template>
     </slot>
     <slot name="is-new-badge">
         <template v-if="isNew">
             <UiBadge :class="getStyle('product.card.badge.new')">
-                {{ $t('product.badge.new') }}
+                {{ $t('listing.boxLabelNew') }}
             </UiBadge>
         </template>
     </slot>

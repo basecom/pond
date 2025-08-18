@@ -40,7 +40,7 @@ const { getStyle } = usePondStyle();
                                         :active-class="getStyle('account.menu.accordion.links.item')"
                                         :class="getStyle('account.menu.accordion.links.activeItem')"
                                     >
-                                        {{ $t(`account.${accountLink.name}`) }}
+                                        {{ $t(`account.${accountLink.name}Link`) }}
                                     </NuxtLinkLocale>
                                 </slot>
                             </div>
@@ -55,7 +55,7 @@ const { getStyle } = usePondStyle();
             <div :class="getStyle('account.menu.navigation.outer')">
                 <slot name="welcome">
                     <h3 v-if="customer" :class="getStyle('account.menu.welcome')">
-                        {{ $t('account.welcome', { name: customer.firstName + ' ' + customer.lastName }) }}
+                        {{ $t('account.greetings') }} {{ customer.firstName }} {{ customer.lastName }}
                     </h3>
                 </slot>
 
@@ -69,7 +69,7 @@ const { getStyle } = usePondStyle();
                                 :active-class="getStyle('account.menu.navigation.links.activeItem')"
                                 :class="getStyle('account.menu.navigation.links.item')"
                             >
-                                {{ $t('account.'+accountLink.name) }}
+                                {{ $t(`account.${accountLink.name}Link`) }}
                             </NuxtLinkLocale>
                         </slot>
                     </div>
@@ -80,7 +80,7 @@ const { getStyle } = usePondStyle();
                 <slot name="action-logout">
                     <div :class="getStyle('account.menu.navigation.logout')" @click="$emit('logout')">
                         <slot name="logout">
-                            {{ $t('account.auth.logout') }}
+                            {{ $t('account.logout') }}
                         </slot>
                     </div>
                 </slot>

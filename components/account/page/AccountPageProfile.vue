@@ -38,14 +38,13 @@ const doUpdatePersonalData = async (personalDataForm: PersonalDataForm) => {
         await updatePersonalInfo(personalDataForm);
         await customerStore.refreshContext();
         toast({
-            title: t('account.personalProfile.status.changePersonalDataSuccessfully.title'),
-            description: t('account.personalProfile.status.changePersonalDataSuccessfully.description'),
+            title: t('account.profileUpdateSuccess'),
         });
     } catch (error) {
         if (error instanceof ApiClientError) {
             const errorCode = error.details?.errors?.[0]?.code ?? 'GENERAL';
             toast({
-                title: t('error.generalHeadline'),
+                title: t('error.message-default'),
                 description: t(`error.${errorCode}`),
                 variant: 'destructive',
             });
@@ -62,14 +61,13 @@ const doUpdateEmail = async (mailForm: ChangeMailForm) => {
         await updateEmail(mailForm);
         await customerStore.refreshContext();
         toast({
-            title: t('account.personalProfile.status.changeMailSuccessfully.title'),
-            description: t('account.personalProfile.status.changeMailSuccessfully.description'),
+            title: t('account.emailChangeSuccess'),
         });
         resetForm.value.mail = true;
     } catch (error) {
         if (error instanceof ApiClientError) {
             toast({
-                title: t('error.generalHeadline'),
+                title: t('account.emailChangeNoSuccess'),
                 description: t(`error.${ error.details.errors[0]?.code}`),
                 variant: 'destructive',
             });
@@ -85,14 +83,13 @@ const doUpdatePassword = async (passwordForm: ChangePasswordForm) => {
     try {
         await updatePassword(passwordForm);
         toast({
-            title: t('account.personalProfile.status.changePasswordSuccessfully.title'),
-            description: t('account.personalProfile.status.changePasswordSuccessfully.description'),
+            title: t('account.passwordChangeSuccess'),
         });
         resetForm.value.password = true;
     } catch (error) {
         if (error instanceof ApiClientError) {
             toast({
-                title: t('error.generalHeadline'),
+                title: t('account.passwordChangeNoSuccess'),
                 description: t(`error.${ error.details.errors[0]?.code}`),
                 variant: 'destructive',
             });

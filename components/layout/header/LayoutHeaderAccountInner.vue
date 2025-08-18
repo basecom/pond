@@ -55,7 +55,7 @@ provide('closeDialog', () => {
                         <slot name="action-overview">
                             <NuxtLinkLocale to="/account">
                                 <slot name="overview">
-                                    {{ $t('account.account') }}
+                                    {{ $t('account.overviewLink') }}
                                 </slot>
                             </NuxtLinkLocale>
                         </slot>
@@ -64,7 +64,7 @@ provide('closeDialog', () => {
                         <slot name="action-personal-profile">
                             <NuxtLinkLocale to="/account/profile">
                                 <slot name="personal-profile">
-                                    {{ $t('account.profile') }}
+                                    {{ $t('account.profileLink') }}
                                 </slot>
                             </NuxtLinkLocale>
                         </slot>
@@ -73,7 +73,7 @@ provide('closeDialog', () => {
                         <slot name="action-addresses">
                             <NuxtLinkLocale to="/account/address">
                                 <slot name="personal-addresses">
-                                    {{ $t('account.address') }}
+                                    {{ $t('account.addressLink') }}
                                 </slot>
                             </NuxtLinkLocale>
                         </slot>
@@ -82,7 +82,7 @@ provide('closeDialog', () => {
                         <slot name="action-payment-methods">
                             <NuxtLinkLocale to="/account/payment">
                                 <slot name="personal-payment-methods">
-                                    {{ $t('account.payment') }}
+                                    {{ $t('account.paymentLink') }}
                                 </slot>
                             </NuxtLinkLocale>
                         </slot>
@@ -91,7 +91,7 @@ provide('closeDialog', () => {
                         <slot name="action-orders">
                             <NuxtLinkLocale to="/account/order">
                                 <slot name="personal-orders">
-                                    {{ $t('account.order') }}
+                                    {{ $t('account.ordersLink') }}
                                 </slot>
                             </NuxtLinkLocale>
                         </slot>
@@ -100,7 +100,7 @@ provide('closeDialog', () => {
                         <slot name="action-wishlist">
                             <NuxtLinkLocale to="/account/wishlist">
                                 <slot name="wishlist">
-                                    {{ $t('account.wishlist') }}
+                                    {{ $t('account.wishlistLink') }}
                                 </slot>
                             </NuxtLinkLocale>
                         </slot>
@@ -112,7 +112,7 @@ provide('closeDialog', () => {
                         @click="$emit('logout')"
                     >
                         <slot name="logout">
-                            {{ $t('account.auth.logout') }}
+                            {{ $t('account.logout') }}
                         </slot>
                     </UiDropdownMenuItem>
                 </slot>
@@ -126,7 +126,7 @@ provide('closeDialog', () => {
                             <slot name="action-login">
                                 <UiDropdownMenuItem @select.prevent="">
                                     <slot name="login">
-                                        {{ $t('account.auth.login') }}
+                                        {{ $t('account.login') }}
                                     </slot>
                                 </UiDropdownMenuItem>
                             </slot>
@@ -135,7 +135,7 @@ provide('closeDialog', () => {
                         <UiDialogContent>
                             <UiDialogHeader>
                                 <UiDialogTitle>
-                                    {{ $t('account.auth.login') }}
+                                    {{ $t('account.login') }}
                                 </UiDialogTitle>
                             </UiDialogHeader>
 
@@ -147,7 +147,7 @@ provide('closeDialog', () => {
                         <slot name="action-register">
                             <NuxtLinkLocale to="/account/register">
                                 <slot name="register">
-                                    {{ $t('account.auth.register') }}
+                                    {{ $t('account.register') }}
                                 </slot>
                             </NuxtLinkLocale>
                         </slot>

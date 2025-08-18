@@ -53,14 +53,14 @@ const showPhoneNumberField = configStore.get('core.loginRegistration.showPhoneNu
                     <UiBadge v-if="isDefaultBillingAddress" variant="outline" :class="getStyle('account.address.badge')">
                         <Icon name="mdi:list-box-outline" :class="getStyle('account.address.icon')" />
                         <span :class="getStyle('account.address.text')">
-                            {{ $t('address.defaultBillingAddress.label') }}
+                            {{ $t('account.addressesTitleDefaultBillingAddress') }}
                         </span>
                     </UiBadge>
 
                     <UiBadge v-if="isDefaultShippingAddress" variant="outline" :class="getStyle('account.address.badge')">
                         <Icon name="mdi:truck-outline" :class="getStyle('account.address.icon')" />
                         <span :class="getStyle('account.address.text')">
-                            {{ $t('address.defaultShippingAddress.label') }}
+                            {{ $t('account.addressesTitleDefaultShippingAddress') }}
                         </span>
                     </UiBadge>
                 </div>
