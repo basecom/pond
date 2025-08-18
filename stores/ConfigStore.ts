@@ -25,12 +25,12 @@ export const useConfigStore = defineStore('config', () => {
 
     const get = (key: string) => {
         if (!configValues.value) {
-            handleError('[Pond][ConfigStore]: config values not loaded', false);
+            handleError('config values not loaded', false);
             return undefined;
         }
 
         if (!(key in configValues.value)) {
-            handleError(`[Pond][ConfigStore]: The configuration for '${key}' was not found`, false);
+            handleError(`The configuration for '${key}' was not found`, false);
             return undefined;
         }
 
