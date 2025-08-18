@@ -29,7 +29,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-    <div class="m-0 mx-auto grid gap-4" :class="containerClass">
+    <div class="m-0 mx-auto grid min-h-[133px] gap-4 md:min-h-[167px]" :class="containerClass">
         <div class="flex justify-end border-b border-gray-light pb-6 pt-2">
             <ProductListingSorting
                 :options="sortingOptions"
