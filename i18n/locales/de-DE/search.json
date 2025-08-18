@@ -1,0 +1,10 @@
+{
+  "search": {
+    "allResults": "Alle Suchergebnisse anzeigen",
+    "allResultsDescription": "Dieser Button navigiert zur Suchergebnisseite",
+    "noResult": "Keine Suchergebnisse gefunden.",
+    "viewProduct": "Produkt ansehen",
+    "minCharacterInfo": "Geben Sie bitte mindestens {count} Zeichen ein",
+    "results": "Ein Ergebnis | {count} Ergebnisse"
+  }
+}

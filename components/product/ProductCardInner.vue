@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { BoxLayout, DisplayMode } from '@shopware/composables';
-import { buildUrlPrefix, getProductName, getProductRoute, getSmallestThumbnailUrl } from '@shopware/helpers';
-import { useUrlResolver } from '#imports';
-import { RouterLink } from 'vue-router';
+import { getProductName, getProductRoute } from '@shopware/helpers';
 
 withDefaults(
     defineProps<{
@@ -22,17 +20,9 @@ withDefaults(
 const configStore = useConfigStore();
 const { product } = useProduct();
 const { isListPrice } = useProductPrice(product);
-const { getUrlPrefix } = useUrlResolver();
 const { getStyle } = usePondStyle();
 
-const mediaType = product.value?.cover?.media?.mimeType?.split('/')[0];
-const showControls = ref(false);
-const productFallBackCover = configStore.get('BasecomPondCompanionPlugin.config.productFallBackCover') as string;
 const showReview = configStore.get('core.listing.showReview') as boolean;
-
-const srcPath = computed(() => getSmallestThumbnailUrl(
-    product.value?.cover?.media,
-) ?? product.value?.cover?.media?.url);
 </script>
 
 <template>
@@ -46,62 +36,35 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
                 </div>
             </slot>
             <slot name="product-image">
-                <RouterLink
-                    :to="buildUrlPrefix(getProductRoute(product), getUrlPrefix())"
+                <NuxtLinkLocale
+                    :to="getProductRoute(product)"
                     :class="[getStyle('product.card.cover.outer.default'), {
                         [getStyle('product.card.cover.outer.layout')]: layoutType === 'image',
-                        [getStyle('product.card.cover.outer.media')]: mediaType === 'image',
                     }]"
                     :aria-label="`navigate-to-${getProductName({ product })}`"
                 >
-                    <template v-if="mediaType === 'image'">
-                        <slot name="product-cover-image">
-                            <img
-                                loading="lazy"
-                                :src="srcPath"
-                                :alt="getProductName({ product }) || $t('product.image')"
-                                :title="$t('product.image')"
-                                :class="[getStyle('product.card.cover.default'), {
-                                    [getStyle('product.card.cover.object.cover')]: displayMode === 'cover' ||
-                                        (displayMode === 'standard' && layoutType === 'image'),
-                                    [getStyle('product.card.cover.object.contain')]: displayMode === 'contain',
-                                    [getStyle('product.card.cover.object.scale')]: displayMode === 'standard' && layoutType !== 'image',
-                                }]"
-                            >
-                        </slot>
-                    </template>
-                    <template v-else-if="mediaType === 'video'">
-                        <slot name="product-cover-video">
-                            <video
-                                :src="srcPath"
-                                :class="[getStyle('product.card.cover.default'), {
-                                    [getStyle('product.card.cover.object.cover')]: displayMode === 'cover' ||
-                                        (displayMode === 'standard' && layoutType === 'image'),
-                                    [getStyle('product.card.cover.object.contain')]: displayMode === 'contain',
-                                    [getStyle('product.card.cover.object.scale')]: displayMode === 'standard' && layoutType !== 'image',
-                                }]"
-                                :autoplay="autoPlayVideoInListing"
-                                loop
-                                muted
-                                playsinline
-                                :controls="showControls"
-                                :aria-label="`product-video-${getProductName({ product })}`"
-                                @mouseenter="showControls = true"
-                                @mouseleave="showControls = false"
-                            />
-                        </slot>
-                    </template>
-                    <template v-else>
-                        <slot name="fallback-cover">
-                            <img
-                                :src="productFallBackCover"
-                                :alt="$t('product.fallback.alt', { product: getProductName({ product }) })"
-                                :title="$t('product.fallback.title', { product: getProductName({ product }) })"
-                                :class="getStyle('product.card.cover.fallback')"
-                            >
-                        </slot>
-                    </template>
-                </RouterLink>
+                    <ProductCover
+                        :is-video="product?.cover?.media?.mimeType.includes('video')"
+                        :src-path="product?.cover?.media?.url"
+                        :alt-text="product?.cover?.media?.translated?.alt"
+                        :title="product?.cover?.media?.translated?.title"
+                        :label="product.name"
+                        :video-classes="[getStyle('product.card.cover.default'), {
+                            [getStyle('product.card.cover.object.cover')]: displayMode === 'cover' ||
+                                (displayMode === 'standard' && layoutType === 'image'),
+                            [getStyle('product.card.cover.object.contain')]: displayMode === 'contain',
+                            [getStyle('product.card.cover.object.scale')]: displayMode === 'standard' && layoutType !== 'image',
+                        }]"
+                        :product-classes="[getStyle('product.card.cover.default'), {
+                            [getStyle('product.card.cover.object.cover')]: displayMode === 'cover' ||
+                                (displayMode === 'standard' && layoutType === 'image'),
+                            [getStyle('product.card.cover.object.contain')]: displayMode === 'contain',
+                            [getStyle('product.card.cover.object.scale')]: displayMode === 'standard' && layoutType !== 'image',
+                        }]"
+                        :fallback-classes="getStyle('product.card.cover.fallback')"
+                        :auto-play="autoPlayVideoInListing"
+                    />
+                </NuxtLinkLocale>
             </slot>
 
             <slot name="product-info">
@@ -116,14 +79,14 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
                             </slot>
 
                             <slot name="title">
-                                <RouterLink
+                                <NuxtLinkLocale
                                     :class="getStyle('product.card.information.title.outer')"
-                                    :to="buildUrlPrefix(getProductRoute(product), getUrlPrefix())"
+                                    :to="getProductRoute(product)"
                                 >
                                     <h2 :class="getStyle('product.card.information.title.inner')">
-                                        {{ getProductName({ product }) }}
+                                        {{ getProductName( { product } ) }}
                                     </h2>
-                                </RouterLink>
+                                </NuxtLinkLocale>
                             </slot>
 
                             <slot name="variant-characteristics">
@@ -159,14 +122,14 @@ const srcPath = computed(() => getSmallestThumbnailUrl(
                                 </template>
 
                                 <template v-else>
-                                    <RouterLink
-                                        :to="buildUrlPrefix(getProductRoute(product), getUrlPrefix())"
+                                    <NuxtLinkLocale
+                                        :to="getProductRoute(product)"
                                         :aria-label="`navigate-to-${getProductName({ product })}`"
                                     >
                                         <UiButton variant="secondary" :class="getStyle('product.card.information.detailsButton')">
                                             {{ $t('listing.boxProductDetails') }}
                                         </UiButton>
-                                    </RouterLink>
+                                    </NuxtLinkLocale>
                                 </template>
                             </slot>
                         </div>

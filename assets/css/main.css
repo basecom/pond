@@ -90,3 +90,10 @@
 #__nuxt {
   @apply flex flex-col min-h-screen;
 }
+
+/* Define global Vueform CSS vars: https://vueform.com/docs/styles-and-layout#local-customization */
+:root, :before, :after, * {
+  --vf-primary: var(--color-black);
+  --vf-ring-width: 0.063rem;
+  --vf-ring-color: var(--color-gray-500);
+}

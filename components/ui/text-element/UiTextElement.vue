@@ -10,12 +10,14 @@ withDefaults(
       rules?: string[] | string;
       messages?: {[key: string]: string};
       columns?: Columns,
-      floating?: string;
+      floating?: string|boolean;
       autocomplete?: string;
       conditions?: string[][];
       inputType?: string;
       debounce?: number;
       classes?: string;
+      icon?: string;
+      iconClasses?: string;
     }>(),
     {
         id: undefined,
@@ -31,8 +33,14 @@ withDefaults(
         inputType: undefined,
         debounce: undefined,
         classes: undefined,
+        icon: undefined,
+        iconClasses: undefined,
     },
 );
+
+defineEmits<{
+  onIconClick: [];
+}>();
 </script>
 
 <template>
@@ -51,6 +59,15 @@ withDefaults(
             :input-type="inputType"
             :debounce="debounce"
             :class="classes"
-        />
+        >
+            <template #addon-before>
+                <Icon
+                    v-if="icon"
+                    :name="icon"
+                    :class="iconClasses"
+                    @click="$emit('onIconClick')"
+                />
+            </template>
+        </TextElement>
     </slot>
 </template>
