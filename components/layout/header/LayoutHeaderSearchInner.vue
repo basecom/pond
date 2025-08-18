@@ -2,12 +2,21 @@
 import { getProductRoute } from '@shopware/helpers';
 import type { SearchForm } from '~/types/vueForm/Search';
 
+const props = withDefaults(
+    defineProps<{
+        displayTotal?: number;
+        minSearchTermLength?: number;
+    }>(),
+    {
+        displayTotal: 5,
+        minSearchTermLength: 3,
+    },
+);
+
 const { getStyle } = usePondStyle();
 const { searchTerm, search, getProducts, getTotal, loading } = useProductSearchSuggest();
 const { formatLink } = useInternationalization();
 
-const displayTotal = ref(5);
-const minSearchTermLength = ref(3);
 /**
  * inputValue represents the current form input, so that no outdated results are displayed if a product search has already
  * been performed and the search term has then been reduced/deleted
@@ -17,7 +26,7 @@ const isOpen = ref(false);
 
 const onInput = async (value: string) => {
     inputValue.value = value;
-    if (value.length >= minSearchTermLength.value) {
+    if (value.length >= (props.minSearchTermLength || 0)) {
         // Set search term
         searchTerm.value = value;
         // Perform search
@@ -27,7 +36,7 @@ const onInput = async (value: string) => {
 };
 
 const navigateToSearchPage = () => {
-    if (inputValue.value.length >= minSearchTermLength.value) {
+    if (inputValue.value.length >= (props.minSearchTermLength || 0)) {
         navigateTo(formatLink({ path: '/search', query: { search: searchTerm.value } }));
         isOpen.value = false;
     }
@@ -68,6 +77,8 @@ watch(
                                 :icon-classes="getStyle('header.actions.search.icon')"
                                 :debounce="300"
                                 autocomplete="off"
+                                :placeholder="$t('header.searchPlaceholder')"
+                                :floating="false"
                                 @on-icon-click="navigateToSearchPage()"
                             />
                         </Vueform>
@@ -85,13 +96,7 @@ watch(
                             </div>
 
                             <template v-else>
-                                <span v-if="inputValue.length < minSearchTermLength" :class="getStyle('header.actions.search.minSearchTerm')">
-                                    <slot name="header-search-results-no-products">
-                                        {{ $t('search.minCharacterInfo', { count: minSearchTermLength }) }}
-                                    </slot>
-                                </span>
-
-                                <template v-else-if="getTotal > 0 && inputValue.length >= minSearchTermLength">
+                                <template v-if="getTotal > 0 && inputValue.length >= minSearchTermLength">
                                     <slot name="header-search-results-product-link">
                                         <NuxtLinkLocale
                                             v-for="product in getProducts?.slice(0, displayTotal)"
@@ -125,12 +130,12 @@ watch(
                                         <NuxtLinkLocale
                                             :to="formatLink({ path: `/search`, query: { search: searchTerm } })"
                                             :class="getStyle('header.actions.search.page.outer')"
-                                            :aria-label="$t('search.allResults')"
-                                            :aria-description="$t('search.allResultsDescription')"
+                                            :aria-label="$t('header.searchAllResults')"
+                                            :aria-description="$t('header.searchAllResults')"
                                             @click="isOpen = false"
                                         >
                                             <span :class="getStyle('header.actions.search.page.inner')">
-                                                {{ $t('search.allResults') }}
+                                                {{ $t('header.searchAllResults') }}
 
                                                 <Icon
                                                     name="material-symbols:arrow-forward-ios-rounded"
@@ -139,15 +144,15 @@ watch(
                                             </span>
 
                                             <span :class="getStyle('header.actions.search.page.results')">
-                                                {{ $t('search.results', { count: getTotal }) }}
+                                                {{ $t('header.searchResults', { count: getTotal }) }}
                                             </span>
                                         </NuxtLinkLocale>
                                     </slot>
                                 </template>
 
-                                <template v-else>
+                                <template v-else-if="inputValue.length > minSearchTermLength">
                                     <slot name="header-search-results-no-products">
-                                        {{ $t('search.noResult') }}
+                                        {{ $t('header.searchNoResult') }}
                                     </slot>
                                 </template>
                             </template>

@@ -10,7 +10,7 @@ withDefaults(
       rules?: string[] | string;
       messages?: {[key: string]: string};
       columns?: Columns,
-      floating?: string;
+      floating?: string|boolean;
       autocomplete?: string;
       conditions?: string[][];
       inputType?: string;
