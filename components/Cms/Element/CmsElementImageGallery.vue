@@ -86,7 +86,7 @@ const isSliderLoaded = ref(false);
                 v-if="!isSliderLoaded"
                 :class="{
                     'w-full': galleryPosition.value === 'underneath',
-                    'grid grid-rows-3 gap-4 max-w-[clamp(100px,100%,150px)]': true
+                    'grid max-w-[clamp(100px,100%,150px)] grid-rows-3 gap-4': true
                 }"
             >
                 <div

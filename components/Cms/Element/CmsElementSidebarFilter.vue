@@ -42,8 +42,6 @@ watch(
         listingStore.displayPaginationSkeleton = false;
     },
 );
-
-const filterLoaded = ref(false);
 </script>
 
 <template>
