@@ -69,4 +69,4 @@ For further information about the store api, check out the Pond Companion projec
 Review apps may crash if the backend does not recognize the domain URL. 
 :::
 
-This can be resolved either by adding the URL to the sales channel or by using the optional env variable `NUXT_PUBLIC_POND_SALESCHANNEL_DOMAIN`, where you enter the frontend URL.
+This can be resolved either by adding the URL to the sales channel or by using the optional env variable `NUXT_PUBLIC_POND_SALES_CHANNEL_DOMAIN`, where you enter the frontend URL.
