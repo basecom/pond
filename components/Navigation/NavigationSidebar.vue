@@ -5,8 +5,8 @@ import { getTranslatedProperty } from '@shopware/helpers';
 const { t } = useI18n();
 const sideMenuController = useModal();
 
-const { navigation: mainNavigation, loadNavigation } = useProxyNavigation('main-navigation', 2);
-await loadNavigation();
+const { navigation: mainNavigation, loadNavigation: loadMainNavigation } = useProxyNavigation('main-navigation', 2);
+await loadMainNavigation();
 
 const navigationPath = ref<string[]>([]);
 

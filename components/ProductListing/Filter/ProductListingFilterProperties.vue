@@ -2,7 +2,6 @@
 import type { Schemas } from '@shopware/api-client/api-types';
 import { getTranslatedProperty } from '@shopware/helpers';
 import type { ListingPropertyFilter } from '~/types/listing/Filter';
-import { useListingStore } from '~/stores/ListingStore';
 import type { ChangePropertyFilter } from '~/types/listing/FilterEvents';
 
 const props = withDefaults(

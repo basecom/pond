@@ -77,10 +77,11 @@ const onProductSelect = (product: Schemas['Product'], index: string | number) =>
             {{ title }}
         </h3>
 
+        <LayoutSkeletonProductSlider v-if="!isSliderLoaded" :slides="slides" />
+
         <ClientOnly>
             <LayoutSlider
                 :slides-counter="slides.length"
-                class="w-full"
                 :auto-slide="shouldAutoSlide"
                 :navigation-arrows="showNavigationArrows"
                 :navigation-dots="false"
@@ -104,10 +105,6 @@ const onProductSelect = (product: Schemas['Product'], index: string | number) =>
                     />
                 </LayoutSliderSlide>
             </LayoutSlider>
-
-            <template #fallback>
-                <LayoutSkeletonProductSlider :slides="slides" />
-            </template>
         </ClientOnly>
     </div>
 </template>

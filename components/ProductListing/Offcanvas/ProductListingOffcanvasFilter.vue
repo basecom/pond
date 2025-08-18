@@ -2,7 +2,6 @@
 import type { Schemas } from '@shopware/api-client/api-types';
 import type { ListingFilter } from '~/types/listing/Filter';
 import type { ChangePriceFilter, ChangePropertyFilter } from '~/types/listing/FilterEvents';
-import { useListingStore } from '~/stores/ListingStore';
 
 const props = withDefaults(
     defineProps<{

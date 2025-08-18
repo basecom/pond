@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
 import type { ListingFilter } from '~/types/listing/Filter';
-import { useListingStore } from '~/stores/ListingStore';
 
 const props = withDefaults(
     defineProps<{

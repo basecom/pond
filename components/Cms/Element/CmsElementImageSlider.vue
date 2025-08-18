@@ -78,6 +78,8 @@ if (isHomePage.value) {
         });
     });
 }
+
+const isSliderLoaded = ref(false);
 </script>
 
 <template>
@@ -85,6 +87,20 @@ if (isHomePage.value) {
         v-if="slides?.length"
         :style="{ minHeight: minHeight }"
     >
+        <template v-if="!isSliderLoaded">
+            <img
+                v-cms-element-lazy-load="{ id: firstSlide?.media?.id ?? firstSlide?.media?.url, type: 'image' }"
+                :src="firstSlide?.media?.url"
+                :loading="shouldPreloadImage ? 'eager' : 'lazy'"
+                :alt="getTranslatedProperty(firstSlide?.media, 'alt') || t('cms.element.imageAlt')"
+                :title="getTranslatedProperty(firstSlide?.media, 'title') || t('cms.element.imageAlt')"
+                class="size-full object-center"
+                :class="'object-' + displayMode"
+                :width="firstSlide.media?.metaData?.width"
+                :height="firstSlide.media?.metaData?.height"
+            >
+        </template>
+
         <ClientOnly>
             <LayoutSlider
                 ref="sliderRef"
@@ -96,6 +112,7 @@ if (isHomePage.value) {
                 :pagination="navigationDots !== 'None'"
                 :navigation="navigationArrows !== 'None'"
                 :loop="true"
+                @slides-change="isSliderLoaded = true"
             >
                 <LayoutSliderSlide
                     v-for="slide in slides"
@@ -109,21 +126,14 @@ if (isHomePage.value) {
                         :title="getTranslatedProperty(slide.media, 'title') || t('cms.element.imageAlt')"
                         class="size-full object-center"
                         :class="'object-' + displayMode"
+                        :width="slide.media?.metaData?.width"
+                        :height="slide.media?.metaData?.height"
                     >
                 </LayoutSliderSlide>
             </LayoutSlider>
 
-            <template #fallback>
-                <img
-                    v-cms-element-lazy-load="{ id: firstSlide?.media?.id ?? firstSlide?.media?.url, type: 'image' }"
-                    :src="firstSlide?.media?.url"
-                    :loading="shouldPreloadImage ? 'eager' : 'lazy'"
-                    :alt="getTranslatedProperty(firstSlide?.media, 'alt') || t('cms.element.imageAlt')"
-                    :title="getTranslatedProperty(firstSlide?.media, 'title') || t('cms.element.imageAlt')"
-                    class="size-full object-center"
-                    :class="'object-' + displayMode"
-                >
-            </template>
+            <!-- empty fallback to prevent rendering of <span> -->
+            <template #fallback />
         </ClientOnly>
     </div>
 

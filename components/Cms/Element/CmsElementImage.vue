@@ -75,6 +75,8 @@ if (shouldPreloadImage && !isVideoElement.value && srcPath.value) {
             :title="getTranslatedProperty(mediaObject, 'title') || mediaObject?.fileName || t('cms.element.imageAlt')"
             :src="srcPath"
             :srcset="imageAttrs.srcset"
+            :width="mediaObject?.metaData?.width"
+            :height="mediaObject?.metaData?.height"
         >
     </component>
 </template>

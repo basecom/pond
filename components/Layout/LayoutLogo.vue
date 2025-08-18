@@ -3,11 +3,13 @@ withDefaults(
     defineProps<{
         smallLogo?: boolean;
         logoClasses?: string;
+        smallLogoClasses?: string;
         withLink?: boolean;
     }>(),
     {
         smallLogo: false,
         logoClasses: '',
+        smallLogoClasses: '',
         withLink: true,
     },
 );
@@ -28,6 +30,8 @@ const shopName = configStore.get('core.basicInformation.shopName') as string|nul
             :alt="shopName"
             :title="shopName"
             :class="logoClasses"
+            width="160px"
+            height="38px"
         >
 
         <img
@@ -35,7 +39,9 @@ const shopName = configStore.get('core.basicInformation.shopName') as string|nul
             src="/logo-small.svg"
             :alt="shopName"
             :title="shopName"
-            :class="logoClasses"
+            :class="smallLogoClasses"
+            width="48px"
+            height="48px"
         >
     </LocaleLink>
 </template>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { getTranslatedProperty } from '@shopware/helpers';
-import { useListingStore } from '~/stores/ListingStore';
 import type { RemoveFilterEvent } from '~/types/listing/FilterEvents';
 
 const props = withDefaults(

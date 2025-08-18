@@ -67,6 +67,8 @@ const onSelectProduct = async (product: Schemas['Product']) => {
 
 const { shouldPreloadElement } = useCmsElementPreload();
 const shouldPreloadImage = shouldPreloadElement(props.element);
+
+const isSliderLoaded = ref(false);
 </script>
 
 <template>
@@ -78,6 +80,8 @@ const shouldPreloadImage = shouldPreloadElement(props.element);
             {{ crossSelling.crossSelling.translated.name }}
         </h3>
 
+        <LayoutSkeletonProductSlider v-if="!isSliderLoaded" :slides="crossSelling.products" />
+
         <ClientOnly>
             <LayoutSlider
                 :slides-counter="crossSelling.products.length"
@@ -86,6 +90,7 @@ const shouldPreloadImage = shouldPreloadElement(props.element);
                 :slides-per-view="slidesPerView"
                 :space-between="spaceBetween"
                 :breakpoints="breakpoints"
+                @slides-change="isSliderLoaded = true"
             >
                 <LayoutSliderSlide
                     v-for="slide in crossSelling.products"
@@ -101,10 +106,6 @@ const shouldPreloadImage = shouldPreloadElement(props.element);
                     />
                 </LayoutSliderSlide>
             </LayoutSlider>
-
-            <template #fallback>
-                <LayoutSkeletonProductSlider :slides="crossSelling.products" />
-            </template>
         </ClientOnly>
     </template>
 </template>
