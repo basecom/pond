@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useListingStore } from '~/stores/ListingStore';
-
 const props = withDefaults(
     defineProps<{
         element: CmsElementProductListing;

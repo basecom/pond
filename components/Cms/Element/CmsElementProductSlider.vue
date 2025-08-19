@@ -34,7 +34,7 @@ const breakpoints = {
 };
 
 const slides = computed(() => products);
-const { showNavigationArrows, shouldAutoSlide } = useComputeSliderConfig({
+const { showNavigationArrows, shouldAutoSlide, shouldLoop } = useComputeSliderConfig({
     slidesPerView,
     slides,
     breakpoints,
@@ -77,16 +77,32 @@ const onProductSelect = (product: Schemas['Product'], index: string | number) =>
             {{ title }}
         </h3>
 
+        <template v-if="!isSliderLoaded">
+            <div class="relative grid size-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                <div
+                    v-for="slide in slides.slice(0, 4)"
+                    :key="slide.id"
+                    class="py-2"
+                >
+                    <ProductCard
+                        :product="slide"
+                        :layout="boxLayout"
+                        :display-mode="displayMode"
+                    />
+                </div>
+            </div>
+        </template>
+
         <ClientOnly>
             <LayoutSlider
                 :slides-counter="slides.length"
-                class="w-full"
                 :auto-slide="shouldAutoSlide"
                 :navigation-arrows="showNavigationArrows"
                 :navigation-dots="false"
                 :slides-per-view="slidesPerView"
                 :space-between="spaceBetween"
                 :breakpoints="breakpoints"
+                :loop="shouldLoop"
                 @slides-change="isSliderLoaded = true"
             >
                 <LayoutSliderSlide
@@ -104,10 +120,6 @@ const onProductSelect = (product: Schemas['Product'], index: string | number) =>
                     />
                 </LayoutSliderSlide>
             </LayoutSlider>
-
-            <template #fallback>
-                <LayoutSkeletonProductSlider :slides="slides" />
-            </template>
         </ClientOnly>
     </div>
 </template>

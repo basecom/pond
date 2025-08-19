@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
-import { useListingStore } from '~/stores/ListingStore';
 import type { ListingPriceFilter } from '~/types/listing/Filter';
 import type { ChangePriceFilter } from '~/types/listing/FilterEvents';
 

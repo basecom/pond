@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const { navigation: mainNavigation, loadNavigation } = useProxyNavigation('main-navigation', 2);
-await loadNavigation();
+const { navigation: mainNavigation, loadNavigation: loadMainNavigation } = useProxyNavigation('main-navigation', 2);
+await loadMainNavigation();
 </script>
 
 <template>

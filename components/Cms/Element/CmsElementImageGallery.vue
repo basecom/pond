@@ -45,25 +45,84 @@ const openLightbox = (slideMediaId: string) => {
     );
     lightboxModalController.open();
 };
+
+const isSliderLoaded = ref(false);
 </script>
 
 <template>
     <div
         class="flex max-h-[640px] gap-4"
-        :class="galleryPosition.value === 'underneath' ? 'max-h-full flex-col flex-wrap' : 'flex-row-reverse'"
+        :class="galleryPosition === 'underneath' ? 'max-h-full flex-col flex-wrap' : 'flex-row-reverse'"
     >
         <template v-if="slides.length > 0">
+            <div
+                v-if="!isSliderLoaded"
+                class="w-full max-w-[calc(100%-clamp(100px,100%,150px)-16px)]"
+                :class="[
+                    slides.length > 1 ? 'cursor-grab' : '',
+                    galleryPosition === 'underneath' ? 'w-full' : 'w-auto',
+                ]"
+            >
+                <img
+                    v-if="firstSlide?.media.url"
+                    :src="firstSlide?.media.url"
+                    :alt="getTranslatedProperty(firstSlide?.media, 'alt') || t('cms.element.imageAlt')"
+                    :title="getTranslatedProperty(firstSlide?.media, 'title') || t('cms.element.imageAlt')"
+                    class="size-full object-center"
+                    :class="'object-' + displayMode"
+                    loading="eager"
+                    :width="firstSlide?.media?.metaData?.width"
+                    :height="firstSlide?.media?.metaData?.height"
+                >
+
+                <template v-else>
+                    <div class="w-full bg-gray-light">
+                        <SharedImagePlaceholder :size="'lg'" />
+                    </div>
+                </template>
+            </div>
+
+            <div
+                v-if="!isSliderLoaded"
+                :class="{
+                    'w-full': galleryPosition === 'underneath',
+                    'grid max-w-[clamp(100px,100%,150px)] grid-rows-3 gap-4': true
+                }"
+            >
+                <div
+                    v-for="(slide, index) in staticThumbnails"
+                    :key="slide.media.id || index"
+                    class="group flex"
+                    :class="index === 0 ? 'swiper-slide-thumb-active' : ''"
+                >
+                    <img
+                        v-if="slide.media.url"
+                        :src="slide.media.url"
+                        :alt="getTranslatedProperty(slide.media, 'alt') || t('cms.element.imageAlt')"
+                        :title="getTranslatedProperty(slide.media, 'title') || t('cms.element.imageAlt')"
+                        class="object-cover object-center opacity-40 group-[.swiper-slide-thumb-active]:border-2 group-[.swiper-slide-thumb-active]:border-brand-primary group-[.swiper-slide-thumb-active]:opacity-100"
+                    >
+
+                    <template v-else>
+                        <div
+                            class="w-full bg-gray-light opacity-40 group-[.swiper-slide-thumb-active]:border-2 group-[.swiper-slide-thumb-active]:border-brand-primary group-[.swiper-slide-thumb-active]:opacity-100"
+                        >
+                            <SharedImagePlaceholder :size="'sm'" />
+                        </div>
+                    </template>
+                </div>
+            </div>
+
             <ClientOnly>
                 <LayoutSlider
                     :classes="{
-                        'w-full': galleryPosition.value === 'underneath',
-                        'w-auto': galleryPosition.value !== 'underneath',
-                        'max-w-[calc(100%-clamp(100px,100%,150px)-16px)]': true,
+                        'w-full max-w-[calc(100%-clamp(100px,100%,150px)-16px)]': true,
                     }"
                     :slides-counter="slides.length"
                     :navigation-dots="navigationDots !== 'None' && navigationDots !== 'Keine'"
-                    :navigation-arrows="navigationArrows !== 'None' && navigationArrows !== 'Keine'"
+                    :navigation-arrows="navigationArrows !== 'None' && navigationArrows !== 'Keine' && slides.length > 1"
                     :thumbs-swiper="`.thumbnailRef-${element.id}`"
+                    @slides-change="isSliderLoaded = true"
                 >
                     <LayoutSliderSlide
                         v-for="(slide, index) in slides"
@@ -91,7 +150,7 @@ const openLightbox = (slideMediaId: string) => {
 
                 <LayoutSlider
                     :classes="{
-                        'w-full': galleryPosition.value === 'underneath',
+                        'w-full': galleryPosition === 'underneath',
                         'max-w-[clamp(100px,100%,150px)]': true
                     }"
                     :navigation-dots="false"
@@ -101,6 +160,7 @@ const openLightbox = (slideMediaId: string) => {
                     :space-between="spaceBetween"
                     :slides-per-view="thumbnailSlidesPerView"
                     :thumb-ref="`thumbnailRef-${element.id}`"
+                    @slides-change="isSliderLoaded = true"
                 >
                     <LayoutSliderSlide
                         v-for="(slide, index) in slides"
@@ -126,61 +186,8 @@ const openLightbox = (slideMediaId: string) => {
                     </LayoutSliderSlide>
                 </LayoutSlider>
 
-                <template #fallback>
-                    <div
-                        class="grid size-full min-h-[430px] max-w-[calc(100%-clamp(100px,100%,150px)-16px)]"
-                        :class="[
-                            slides.length > 1 ? 'cursor-grab' : '',
-                            galleryPosition === 'underneath' ? 'w-full' : 'w-auto',
-                        ]"
-                    >
-                        <img
-                            v-if="firstSlide?.media.url"
-                            :src="firstSlide?.media.url"
-                            :alt="getTranslatedProperty(firstSlide?.media, 'alt') || t('cms.element.imageAlt')"
-                            :title="getTranslatedProperty(firstSlide?.media, 'title') || t('cms.element.imageAlt')"
-                            class="size-full object-center"
-                            :class="'object-' + displayMode"
-                            loading="eager"
-                        >
-
-                        <template v-else>
-                            <div class="w-full bg-gray-light">
-                                <SharedImagePlaceholder :size="'lg'" />
-                            </div>
-                        </template>
-                    </div>
-
-                    <div
-                        :class="{
-                            'w-full': galleryPosition.value === 'underneath',
-                            'max-w-[clamp(100px,100%,150px)]': true
-                        }"
-                    >
-                        <div
-                            v-for="(slide, index) in staticThumbnails"
-                            :key="slide.media.id"
-                            class="group mb-4 flex h-[122.2px] last:mb-0"
-                            :class="index === 0 ? 'swiper-slide-thumb-active' : ''"
-                        >
-                            <img
-                                v-if="slide.media.url"
-                                :src="slide.media.url"
-                                :alt="getTranslatedProperty(slide.media, 'alt') || t('cms.element.imageAlt')"
-                                :title="getTranslatedProperty(slide.media, 'title') || t('cms.element.imageAlt')"
-                                class="object-cover object-center opacity-40 group-[.swiper-slide-thumb-active]:border-2 group-[.swiper-slide-thumb-active]:border-brand-primary group-[.swiper-slide-thumb-active]:opacity-100"
-                            >
-
-                            <template v-else>
-                                <div
-                                    class="w-full bg-gray-light opacity-40 group-[.swiper-slide-thumb-active]:border-2 group-[.swiper-slide-thumb-active]:border-brand-primary group-[.swiper-slide-thumb-active]:opacity-100"
-                                >
-                                    <SharedImagePlaceholder :size="'sm'" />
-                                </div>
-                            </template>
-                        </div>
-                    </div>
-                </template>
+                <!-- empty fallback to prevent rendering of <span> tag breaking layout -->
+                <template #fallback />
             </ClientOnly>
         </template>
 
