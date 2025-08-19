@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Columns } from '~/types/vueForm/Columns';
+import type { Columns, SelectItems } from '~/types/vueForm/Form';
 
 withDefaults(
     defineProps<{
@@ -15,9 +15,10 @@ withDefaults(
       isNative?: boolean;
       canClear?: boolean;
       canDeselect?: boolean;
-      items?: string[] | number[] | { value: string; label: string; }[];
+      items?: string[] | number[] | SelectItems;
       defaultValue?: string;
       classes?: string;
+      openDirection?: 'top' | 'bottom'
     }>(),
     {
         id: undefined,
@@ -35,6 +36,7 @@ withDefaults(
         defaultValue: undefined,
         canDeselect: false,
         classes: undefined,
+        openDirection: 'bottom',
     },
 );
 
@@ -60,6 +62,7 @@ defineEmits<{
             :default="defaultValue"
             :floating="floating"
             :class="classes"
+            :open-direction="openDirection"
             @change="(value: string) => $emit('on-change', value)"
         />
     </slot>

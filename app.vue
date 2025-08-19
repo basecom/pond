@@ -47,6 +47,9 @@ useHead(() => ({
         },
     ],
 }));
+
+const showLayoutPageLoader = ref(false);
+provide('showLayoutPageLoader', showLayoutPageLoader);
 </script>
 
 <template>

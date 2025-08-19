@@ -15,7 +15,7 @@ const shopName = configStore.get('core.basicInformation.shopName') as string|nul
         <div :class="getStyle('footer.serviceNavigation.left')">
             <slot name="copyright">
                 <span :class="getStyle('footer.serviceNavigation.copyright')">
-                    {{ $t('general.copyright', { 'companyName': shopName }) }}
+                    {{ $t('footer.copyrightInfo', { 'companyName': shopName }) }}
                 </span>
             </slot>
             <slot name="language-switcher">

@@ -1,10 +1,13 @@
 <script setup lang="ts">
 const { rerouteIfLoggedOut } = usePondAuthentication();
+const { getStyle } = usePondStyle();
+
 await rerouteIfLoggedOut();
+const showLayoutPageLoader = inject('showLayoutPageLoader');
 </script>
 
 <template>
-    <NuxtLoadingIndicator class="bg-brand-primary! bg-none!" />
+    <NuxtLoadingIndicator :class="getStyle('layout.loadingIndicator')" />
     <NuxtRouteAnnouncer />
 
     <ClientOnly>
@@ -14,9 +17,10 @@ await rerouteIfLoggedOut();
     <LayoutHeader />
 
     <main class="container">
+        <LayoutPageLoader v-if="showLayoutPageLoader" />
         <AccountBreadcrumb />
 
-        <div class="md:mt-6 md:grid md:grid-cols-[3fr_9fr] md:gap-8">
+        <div :class="getStyle('layout.account')">
             <AccountMenu />
 
             <div>

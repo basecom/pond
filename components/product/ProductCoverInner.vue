@@ -1,18 +1,18 @@
 <script setup lang="ts">
 withDefaults(
     defineProps<{
-        isVideo?: boolean;
-        isPromotion?: boolean;
-        srcPath?: string;
-        altText?: string;
-        title?: string;
-        label?: string;
-        videoClasses?: string | (string | { [key: string]: boolean })[];
-        productClasses?: string | (string | { [key: string]: boolean })[];
-        fallbackClasses?: string;
-        promotionClasses?: string;
-        promotionIconClasses?: string;
-        autoPlay?: boolean;
+      isVideo?: boolean;
+      isPromotion?: boolean;
+      srcPath?: string;
+      altText?: string;
+      title?: string;
+      label?: string;
+      videoClasses?: string | (string | { [key: string]: boolean })[];
+      productClasses?: string | (string | { [key: string]: boolean })[];
+      fallbackClasses?: string;
+      promotionClasses?: string;
+      promotionIconClasses?: string;
+      autoPlay?: boolean;
     }>(),
     {
         isVideo: false,
@@ -29,7 +29,9 @@ withDefaults(
         autoPlay: false,
     },
 );
+
 const configStore = useConfigStore();
+
 const fallBackCover = configStore.get('BasecomPondCompanionPlugin.config.productFallBackCover') as string;
 const showControls = ref(false);
 </script>

@@ -8,7 +8,7 @@ const configStore = useConfigStore();
 const wishlistEnabled = configStore.get('core.cart.wishlistEnabled') as boolean;
 
 if(!wishlistEnabled) {
-    throw createError({ statusCode: 404, message: t('error.404.heading') });
+    throw createError({ statusCode: 404, message: t('general.404ErrorPageHeader') });
 }
 </script>
 

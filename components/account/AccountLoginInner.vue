@@ -24,14 +24,14 @@ const { getStyle } = usePondStyle();
 const schema = z.object({
     username: z
         .string({
-            required_error: t('account.email.required'),
+            required_error: t('account.emailRequired'),
         })
         .email({
-            message: t('account.email.invalid'),
+            message: t('account.emailInvalid'),
         }),
     password: z
         .string({
-            required_error: t('account.password.errorGeneral'),
+            required_error: t('account.personalPasswordRequired'),
         }),
 });
 export type LoginData = z.infer<typeof schema>;
@@ -48,18 +48,18 @@ const login = async (loginData: LoginData) => {
         :schema="schema"
         :field-config="{
             username: {
-                label: $t('account.email.label'),
+                label: $t('account.loginMailLabel'),
                 inputProps: {
                     type: 'email',
-                    placeholder: $t('account.email.placeholder'),
+                    placeholder: $t('account.loginMailPlaceholder'),
                     autocomplete: 'username'
                 },
             },
             password: {
-                label: $t('account.password.label'),
+                label: $t('account.loginPasswordLabel'),
                 inputProps: {
                     type: 'password',
-                    placeholder: $t('account.password.placeholder'),
+                    placeholder: $t('account.loginPasswordPlaceholder'),
                     autocomplete: 'current-password',
                 },
             },
@@ -73,7 +73,7 @@ const login = async (loginData: LoginData) => {
                     :class="getStyle('account.login.passwordForgotten')"
                     @click="closeDialog?.()"
                 >
-                    {{ $t('account.password.forgotten') }}
+                    {{ $t('account.loginPasswordRecover') }}
                 </NuxtLinkLocale>
             </slot>
 
@@ -84,7 +84,7 @@ const login = async (loginData: LoginData) => {
                     </slot>
 
                     <div>
-                        <UiAlertTitle>{{ $t('error.generalHeadline') }}</UiAlertTitle>
+                        <UiAlertTitle>{{ $t('error.message-default') }}</UiAlertTitle>
                         <UiAlertDescription>
                             {{ errorMessage }}
                         </UiAlertDescription>
@@ -94,7 +94,7 @@ const login = async (loginData: LoginData) => {
 
             <slot name="submit-button">
                 <UiButton type="submit" :is-loading="isLoading">
-                    {{ $t('account.auth.login') }}
+                    {{ $t('account.login') }}
                 </UiButton>
             </slot>
         </div>

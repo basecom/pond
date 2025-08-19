@@ -26,23 +26,23 @@ const { getStyle } = usePondStyle();
 const schema = z.object({
     email: z
         .string({
-            required_error: t('account.email.required'),
+            required_error: t('account.emailRequired'),
         })
         .email({
-            message: t('account.email.invalid'),
+            message: t('account.emailInvalid'),
         }),
 
     emailConfirmation: z
         .string({
-            required_error: t('account.email.required'),
+            required_error: t('account.emailRequired'),
         })
         .email({
-            message: t('account.email.invalid'),
+            message: t('account.emailInvalid'),
         }),
 
     password: z
         .string({
-            required_error: t('account.password.errorGeneral'),
+            required_error: t('account.personalPasswordRequired'),
         }),
 });
 export type ChangeMailForm = z.infer<typeof schema>;
@@ -82,19 +82,19 @@ watch(() => props.resetForm, (newValue) => {
 <template>
     <slot name="headline">
         <h3 :class="getStyle('account.personalData.subHeadline')">
-            {{ $t('account.personalProfile.changeMailAddress.headline') }}
+            {{ $t('account.profileChangeEmail') }}
         </h3>
     </slot>
 
     <slot name="current-mail">
-        <p>{{ $t('account.personalProfile.currentMailAddress') }}: {{ customer.email }}</p>
+        <p>{{ $t('account.profileCurrentMail') }}: {{ customer.email }}</p>
     </slot>
 
     <slot name="change-mail">
         <UiAccordion type="single" :class="getStyle('account.personalData.accordion.outer')" collapsible>
             <UiAccordionItem value="mail" :class="getStyle('account.personalData.accordion.item')">
                 <UiAccordionTrigger :class="getStyle('account.personalData.accordion.trigger')">
-                    {{ $t('account.personalProfile.changeMailAddress.headline') }}
+                    {{ $t('account.profileChangeEmail') }}
                 </UiAccordionTrigger>
 
                 <UiAccordionContent :class="getStyle('account.personalData.accordion.content')">
@@ -106,24 +106,24 @@ watch(() => props.resetForm, (newValue) => {
                             :schema="schema"
                             :field-config="{
                                 email: {
-                                    label: $t('account.email.label'),
+                                    label: $t('account.profileCurrentMail'),
                                     inputProps: {
                                         type: 'email',
-                                        placeholder: $t('account.email.placeholder'),
+                                        placeholder: $t('account.profileCurrentMailPlaceholder'),
                                     },
                                 },
                                 emailConfirmation: {
-                                    label: $t('account.personalProfile.changeMailAddress.confirmation'),
+                                    label: $t('account.personalMailConfirmationLabel'),
                                     inputProps: {
                                         type: 'email',
-                                        placeholder: $t('account.email.placeholder'),
+                                        placeholder: $t('account.personalMailConfirmationPlaceholder'),
                                     },
                                 },
                                 password: {
-                                    label: $t('account.password.label'),
+                                    label: $t('account.profilePasswordCurrent'),
                                     inputProps: {
                                         type: 'password',
-                                        placeholder: $t('account.password.placeholder'),
+                                        placeholder: $t('account.profilePasswordCurrentPlaceholder'),
                                     },
                                 },
                             }"
@@ -137,7 +137,7 @@ watch(() => props.resetForm, (newValue) => {
 
                             <slot name="submit-button">
                                 <UiButton type="submit" class="md:col-span-2" :is-loading="isLoading">
-                                    {{ $t('general.save') }}
+                                    {{ $t('global.default.save') }}
                                 </UiButton>
                             </slot>
                         </UiAutoForm>

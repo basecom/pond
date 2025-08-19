@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Columns } from '~/types/vueForm/Columns';
+import type { SelectItems, Columns } from '~/types/vueForm/Form';
 
 withDefaults(
     defineProps<{
@@ -21,7 +21,7 @@ withDefaults(
 
 const { getSalutations: salutations, fetchSalutations } = useSalutations();
 
-const formattedSalutations: Ref<undefined | { value: string; label: string; }[]> = ref(undefined);
+const formattedSalutations: Ref<undefined | SelectItems> = ref(undefined);
 
 onMounted(async () => {
     await fetchSalutations();
@@ -37,9 +37,9 @@ onMounted(async () => {
         <UiSelectElement
             :id="`${prefix}salutationId`"
             :name="`${prefix}salutationId`"
-            :label="$t('account.customer.salutation.label')"
-            :placeholder="$t('account.customer.salutation.placeholder')"
-            :messages="{ required: $t('account.customer.salutation.errorRequired') }"
+            :label="$t('account.personalSalutationLabel')"
+            :placeholder="$t('account.personalSalutationPlaceholder')"
+            :messages="{ required: $t('account.personalSalutationRequired') }"
             rules="required"
             :items="formattedSalutations"
             :columns="columns"

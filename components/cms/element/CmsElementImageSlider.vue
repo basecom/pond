@@ -83,8 +83,8 @@ const anchorAttrs = (slide: SliderCmsImageSliderItem) =>
                     >
                         <img
                             :src="slide?.media?.url || productFallBackCover || ''"
-                            :alt="isDecorative ? '' : $t('image.altSliderText', { 'currentSlide':  index, 'totalSlides': slides?.length })"
-                            :title="$t('image.altSliderText', { 'currentSlide':  index, 'totalSlides': slides?.length })"
+                            :alt="isDecorative ? '' : $t('component.cms.imageGallery.sliderDotLabel', { 'index':  index, 'total': slides?.length })"
+                            :title="$t('component.cms.imageGallery.sliderDotLabel', { 'index':  index, 'total': slides?.length })"
                             :class="imageClass"
                         >
                     </component>

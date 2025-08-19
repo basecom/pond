@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { Columns } from '~/types/vueForm/Columns';
+import type { Columns, SelectItems } from '~/types/vueForm/Form';
 
 withDefaults(
     defineProps<{
       isDetail?: boolean;
-      accountTypeConditions?: [];
+      accountTypeConditions?: string[][];
       /**
        * This component can be used multiple times in a form (e.g., registration form). To ensure that the form fields
        * are unique upon submission, it is possible to specify a prefix
@@ -32,6 +32,7 @@ withDefaults(
       departmentColumns?: Columns;
       emailColumns?: Columns;
       passwordColumns?: Columns,
+        inModal?: boolean // when the address fields are in a modal, we open the last two dropdowns to top (for accessibility reasons)
     }>(),
     {
         isDetail: false,
@@ -115,14 +116,15 @@ withDefaults(
             sm: 12,
             md: 6,
         }),
+        inModal: false,
     },
 );
 
 const configStore = useConfigStore();
 const { getCountries: countries, getStatesForCountry, fetchCountries } = useCountries();
 
-const formattedCountries: Ref<undefined | { value: string; label: string; }[]> = ref(undefined);
-const states: Ref<undefined | { value: string; label: string; }[]> = ref(undefined);
+const formattedCountries: Ref<undefined | SelectItems> = ref(undefined);
+const states: Ref<undefined | SelectItems> = ref(undefined);
 // Admin configs
 const showAdditionalAddress1Field = ref(configStore.get('core.loginRegistration.showAdditionalAddressField1') as boolean);
 const isAdditionalAddress1FieldRequired = ref(configStore.get('core.loginRegistration.additionalAddressField1Required') as boolean);
@@ -194,11 +196,11 @@ const onSelectCountry = (selectedCountryId: string) => {
         <slot name="street">
             <UiTextElement
                 :id="`${prefix}street`"
-                :label="$t('address.street.label')"
+                :label="$t('address.streetLabel')"
                 :name="`${prefix}street`"
-                :placeholder="$t('address.street.placeholder')"
+                :placeholder="$t('address.streetPlaceholder')"
                 rules="required"
-                :messages="{ required: $t('address.street.errorRequired') }"
+                :messages="{ required: $t('address.streetRequired') }"
                 :columns="streetColumns"
             />
         </slot>
@@ -210,11 +212,11 @@ const onSelectCountry = (selectedCountryId: string) => {
         <slot name="city">
             <UiTextElement
                 :id="`${prefix}city`"
-                :label="$t('address.city.label')"
+                :label="$t('address.cityLabel')"
                 :name="`${prefix}city`"
-                :placeholder="$t('address.city.placeholder')"
+                :placeholder="$t('address.cityPlaceholder')"
                 rules="required"
-                :messages="{ required: $t('address.city.errorRequired') }"
+                :messages="{ required: $t('address.cityRequired') }"
                 :columns="cityColumns"
             />
         </slot>
@@ -227,11 +229,11 @@ const onSelectCountry = (selectedCountryId: string) => {
             <UiTextElement
                 v-if="showAdditionalAddress1Field"
                 :id="`${prefix}additionalAddressLine1`"
-                :label="$t('address.additionalAddressLine1.label')"
+                :label="$t('address.additionalField1Label')"
                 :name="`${prefix}additionalAddressLine1`"
-                :placeholder="$t('address.additionalAddressLine1.placeholder')"
+                :placeholder="$t('address.additionalField1Placeholder')"
                 :rules="isAdditionalAddress1FieldRequired ? 'required': ''"
-                :messages="{ required: $t('address.additionalAddressLine1.errorRequired') }"
+                :messages="{ required: $t('address.additionalField1Required') }"
                 :columns="additionalAddressLine1Columns"
             />
         </slot>
@@ -240,11 +242,11 @@ const onSelectCountry = (selectedCountryId: string) => {
             <UiTextElement
                 v-if="showAdditionalAddress2Field"
                 :id="`${prefix}additionalAddressLine2`"
-                :label="$t('address.additionalAddressLine2.label')"
+                :label="$t('address.additionalField2Label')"
                 :name="`${prefix}additionalAddressLine2`"
-                :placeholder="$t('address.additionalAddressLine2.placeholder')"
+                :placeholder="$t('address.additionalField2Placeholder')"
                 :rules="isAdditionalAddress2FieldRequired ? 'required': ''"
-                :messages="{ required: $t('address.additionalAddressLine2.errorRequired') }"
+                :messages="{ required: $t('address.additionalField2Required') }"
                 :columns="additionalAddressLine2Columns"
             />
         </slot>
@@ -253,12 +255,13 @@ const onSelectCountry = (selectedCountryId: string) => {
             <UiSelectElement
                 :id="`${prefix}countryId`"
                 :name="`${prefix}countryId`"
-                :placeholder="$t('address.country.placeholder')"
-                :label="$t('address.country.label')"
-                :messages="{ required: $t('address.country.errorRequired') }"
+                :placeholder="$t('address.countryPlaceholder')"
+                :label="$t('address.countryLabel')"
+                :messages="{ required: $t('address.countryRequired') }"
                 rules="required"
                 :items="formattedCountries"
                 :columns="countryColumns"
+                :open-direction="inModal ? 'top' : 'bottom'"
                 @on-change="(value: string) => onSelectCountry(value)"
             />
         </slot>
@@ -268,10 +271,11 @@ const onSelectCountry = (selectedCountryId: string) => {
                 v-if="states && states.length > 0"
                 :id="`${prefix}countryStateId`"
                 :name="`${prefix}countryStateId`"
-                :label="$t('address.state.label')"
-                :placeholder="$t('address.state.placeholder')"
+                :label="$t('address.countryStateLabel')"
+                :placeholder="$t('address.countryStatePlaceholder')"
                 :items="states"
                 :columns="stateColumns"
+                :open-direction="inModal ? 'top' : 'bottom'"
             />
         </slot>
 
@@ -279,11 +283,11 @@ const onSelectCountry = (selectedCountryId: string) => {
             <UiTextElement
                 v-if="showPhoneNumber"
                 :id="`${prefix}phoneNumber`"
-                :label="$t('address.phoneNumber.label')"
+                :label="$t('address.phoneNumberLabel')"
                 :name="`${prefix}phoneNumber`"
-                :placeholder="$t('address.phoneNumber.placeholder')"
+                :placeholder="$t('address.phoneNumberPlaceholder')"
                 :rules="isPhoneNumberRequired ? 'required': ''"
-                :messages="{ required: $t('address.phoneNumber.errorRequired') }"
+                :messages="{ required: $t('address.phoneNumberRequired') }"
                 :columns="phoneNumberColumns"
             />
         </slot>
