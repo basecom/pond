@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { Schemas } from '@shopware/api-client/api-types';
 
-type NavigationArrowItem = {
+type SliderConfigItem = {
     id: string;
     showNavigationArrows: ComputedRef<boolean>;
+    shouldLoop: ComputedRef<boolean>;
 };
 
 const props = defineProps<{
@@ -37,11 +38,11 @@ const breakpoints = {
     },
 };
 
-const navigationArrowsMap = computed(() =>
+const sliderConfigMap = computed(() =>
     filteredCrossSellings.value.map((crossSelling: Schemas['CrossSellingElement']) => {
         const crossSellingProducts = computed(() => crossSelling.products);
 
-        const { showNavigationArrows } = useComputeSliderConfig({
+        const { showNavigationArrows, shouldLoop } = useComputeSliderConfig({
             slidesPerView,
             slides: crossSellingProducts,
             breakpoints,
@@ -52,13 +53,19 @@ const navigationArrowsMap = computed(() =>
         return {
             id: crossSelling.crossSelling.id,
             showNavigationArrows,
+            shouldLoop,
         };
     }),
 );
 
 const showNavigationArrowForCrossSelling = (crossSellingId: string) => {
-    const item = navigationArrowsMap.value.find((item: NavigationArrowItem) => item.id === crossSellingId);
+    const item = sliderConfigMap.value.find((item: SliderConfigItem) => item.id === crossSellingId);
     return item ? item.showNavigationArrows.value : false;
+};
+
+const shouldLoopForCrossSelling = (crossSellingId: string) => {
+    const item = sliderConfigMap.value.find((item: SliderConfigItem) => item.id === crossSellingId);
+    return item ? item.shouldLoop.value : false;
 };
 
 const onSelectProduct = async (product: Schemas['Product']) => {
@@ -68,7 +75,7 @@ const onSelectProduct = async (product: Schemas['Product']) => {
 const { shouldPreloadElement } = useCmsElementPreload();
 const shouldPreloadImage = shouldPreloadElement(props.element);
 
-const isSliderLoaded = ref(false);
+const sliderLoadedById = reactive<Record<string, boolean>>({});
 </script>
 
 <template>
@@ -80,7 +87,23 @@ const isSliderLoaded = ref(false);
             {{ crossSelling.crossSelling.translated.name }}
         </h3>
 
-        <LayoutSkeletonProductSlider v-if="!isSliderLoaded" :slides="crossSelling.products" />
+        <template v-if="!sliderLoadedById[crossSelling.crossSelling.id]">
+            <div class="relative grid size-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                <div
+                    v-for="slide in crossSelling.products.slice(0, 4)"
+                    :key="slide.id"
+                    class="py-2"
+                >
+                    <ProductCard
+                        :product="slide"
+                        :layout="boxLayout"
+                        :display-mode="displayMode"
+                        :should-preload-image="shouldPreloadImage && index === 0"
+                        @select-product="onSelectProduct(slide)"
+                    />
+                </div>
+            </div>
+        </template>
 
         <ClientOnly>
             <LayoutSlider
@@ -90,7 +113,8 @@ const isSliderLoaded = ref(false);
                 :slides-per-view="slidesPerView"
                 :space-between="spaceBetween"
                 :breakpoints="breakpoints"
-                @slides-change="isSliderLoaded = true"
+                :loop="shouldLoopForCrossSelling(crossSelling.crossSelling.id)"
+                @slides-change="sliderLoadedById[crossSelling.crossSelling.id] = true"
             >
                 <LayoutSliderSlide
                     v-for="slide in crossSelling.products"

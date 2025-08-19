@@ -52,12 +52,12 @@ const isSliderLoaded = ref(false);
 <template>
     <div
         class="flex max-h-[640px] gap-4"
-        :class="galleryPosition.value === 'underneath' ? 'max-h-full flex-col flex-wrap' : 'flex-row-reverse'"
+        :class="galleryPosition === 'underneath' ? 'max-h-full flex-col flex-wrap' : 'flex-row-reverse'"
     >
         <template v-if="slides.length > 0">
             <div
                 v-if="!isSliderLoaded"
-                class="max-w-[calc(100%-clamp(100px,100%,150px)-16px)]"
+                class="w-full max-w-[calc(100%-clamp(100px,100%,150px)-16px)]"
                 :class="[
                     slides.length > 1 ? 'cursor-grab' : '',
                     galleryPosition === 'underneath' ? 'w-full' : 'w-auto',
@@ -85,13 +85,13 @@ const isSliderLoaded = ref(false);
             <div
                 v-if="!isSliderLoaded"
                 :class="{
-                    'w-full': galleryPosition.value === 'underneath',
+                    'w-full': galleryPosition === 'underneath',
                     'grid max-w-[clamp(100px,100%,150px)] grid-rows-3 gap-4': true
                 }"
             >
                 <div
                     v-for="(slide, index) in staticThumbnails"
-                    :key="slide.media.id"
+                    :key="slide.media.id || index"
                     class="group flex"
                     :class="index === 0 ? 'swiper-slide-thumb-active' : ''"
                 >
@@ -116,13 +116,11 @@ const isSliderLoaded = ref(false);
             <ClientOnly>
                 <LayoutSlider
                     :classes="{
-                        'w-full': galleryPosition.value === 'underneath',
-                        'w-auto': galleryPosition.value !== 'underneath',
-                        'max-w-[calc(100%-clamp(100px,100%,150px)-16px)]': true,
+                        'w-full max-w-[calc(100%-clamp(100px,100%,150px)-16px)]': true,
                     }"
                     :slides-counter="slides.length"
                     :navigation-dots="navigationDots !== 'None' && navigationDots !== 'Keine'"
-                    :navigation-arrows="navigationArrows !== 'None' && navigationArrows !== 'Keine'"
+                    :navigation-arrows="navigationArrows !== 'None' && navigationArrows !== 'Keine' && slides.length > 1"
                     :thumbs-swiper="`.thumbnailRef-${element.id}`"
                     @slides-change="isSliderLoaded = true"
                 >
@@ -152,7 +150,7 @@ const isSliderLoaded = ref(false);
 
                 <LayoutSlider
                     :classes="{
-                        'w-full': galleryPosition.value === 'underneath',
+                        'w-full': galleryPosition === 'underneath',
                         'max-w-[clamp(100px,100%,150px)]': true
                     }"
                     :navigation-dots="false"

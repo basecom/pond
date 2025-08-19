@@ -87,7 +87,7 @@ const isSliderLoaded = ref(false);
         v-if="slides?.length"
         :style="{ minHeight: minHeight }"
     >
-        <template v-if="!isSliderLoaded">
+        <template v-if="!isSliderLoaded && firstSlide?.media?.url">
             <img
                 v-cms-element-lazy-load="{ id: firstSlide?.media?.id ?? firstSlide?.media?.url, type: 'image' }"
                 :src="firstSlide?.media?.url"
@@ -96,8 +96,8 @@ const isSliderLoaded = ref(false);
                 :title="getTranslatedProperty(firstSlide?.media, 'title') || t('cms.element.imageAlt')"
                 class="size-full object-center"
                 :class="'object-' + displayMode"
-                :width="firstSlide.media?.metaData?.width"
-                :height="firstSlide.media?.metaData?.height"
+                :width="firstSlide?.media?.metaData?.width"
+                :height="firstSlide?.media?.metaData?.height"
             >
         </template>
 
@@ -111,7 +111,7 @@ const isSliderLoaded = ref(false);
                 :speed="speedConfig"
                 :pagination="navigationDots !== 'None'"
                 :navigation="navigationArrows !== 'None'"
-                :loop="true"
+                :loop="slides.length > 1"
                 @slides-change="isSliderLoaded = true"
             >
                 <LayoutSliderSlide

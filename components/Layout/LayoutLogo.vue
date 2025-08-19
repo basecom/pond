@@ -30,8 +30,8 @@ const shopName = configStore.get('core.basicInformation.shopName') as string|nul
             :alt="shopName"
             :title="shopName"
             :class="logoClasses"
-            width="160px"
-            height="38px"
+            width="160"
+            height="38"
         >
 
         <img
@@ -40,8 +40,8 @@ const shopName = configStore.get('core.basicInformation.shopName') as string|nul
             :alt="shopName"
             :title="shopName"
             :class="smallLogoClasses"
-            width="48px"
-            height="48px"
+            width="48"
+            height="48"
         >
     </LocaleLink>
 </template>
