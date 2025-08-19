@@ -47,14 +47,14 @@ const { getStyle } = usePondStyle();
             <UiSheetHeader>
                 <UiSheetTitle>
                     <slot name="cart-offcanvas-header">
-                        <span>{{ $t('checkout.cart') }}</span>
+                        <span>{{ $t('checkout.cartHeader') }}</span>
                     </slot>
                 </UiSheetTitle>
 
                 <UiSheetDescription>
                     <slot name="cart-offcanvas-description">
                         <template v-if="cartItemCount > 0">
-                            {{ cartItemCount }} {{ $t('checkout.items') }}
+                            {{ $t('checkout.itemCounter', { count: cartItemCount }) }}
                         </template>
                     </slot>
                 </UiSheetDescription>
@@ -64,34 +64,31 @@ const { getStyle } = usePondStyle();
                         <li v-for="cartItem in cartItems" :key="cartItem.id">
                             <CheckoutLineItem
                                 :cart-item="cartItem"
+                                :cart-deliveries="cartDeliveries"
                             />
 
                             <UiSeparator class="mt-4" />
                         </li>
                     </TransitionGroup>
 
-                        <CheckoutSummary/>
+                    <CheckoutSummary />
 
-                    <div :class="getStyle('cart.buttonGroup')">
-                        <div :class="getStyle('cart.buttonWrapper')">
-                            <slot name="proceed-to-checkout-button">
-                                <NuxtLinkLocale to="/checkout/confirm">
-                                    <UiButton :class="getStyle('cart.proceedToCheckoutButton')">
-                                        {{ $t('checkout.proceedToCheckout') }}
-                                    </UiButton>
-                                </NuxtLinkLocale>
-                            </slot>
-                        </div>
+                    <div :class="getStyle('cart.summary.links.outer')">
+                        <slot name="proceed-to-checkout-button">
+                            <NuxtLinkLocale to="/checkout/confirm">
+                                <UiButton :class="getStyle('cart.summary.links.confirm')">
+                                    {{ $t('checkout.proceedToCheckout') }}
+                                </UiButton>
+                            </NuxtLinkLocale>
+                        </slot>
 
-                        <div :class="getStyle('cart.buttonWrapper')">
-                            <slot name="proceed-to-cart-button">
-                                <NuxtLinkLocale to="/checkout/cart">
-                                    <UiButton variant="link">
-                                        {{ $t('checkout.proceedToCart') }}
-                                    </UiButton>
-                                </NuxtLinkLocale>
-                            </slot>
-                        </div>
+                        <slot name="proceed-to-cart-button">
+                            <NuxtLinkLocale to="/checkout/cart">
+                                <UiButton variant="link" :class="getStyle('cart.summary.links.cart')">
+                                    {{ $t('checkout.proceedToCart') }}
+                                </UiButton>
+                            </NuxtLinkLocale>
+                        </slot>
                     </div>
                 </slot>
 

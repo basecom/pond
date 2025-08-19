@@ -11,7 +11,7 @@ const shippingCost = computed(() => shippingCosts.value.find((shippingCost) => s
 const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
     try {
         const shippingMethodIdString = shippingMethodId?.toString();
-            await setShippingMethod({ id: shippingMethodIdString });
+        await setShippingMethod({ id: shippingMethodIdString });
     } catch (error) {
     } finally {
     }

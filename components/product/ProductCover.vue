@@ -3,6 +3,7 @@ withDefaults(
     defineProps<{
       isVideo?: boolean;
       isPromotion?: boolean;
+        productId?: string;
       srcPath?: string;
       altText?: string;
       title?: string;
@@ -13,10 +14,12 @@ withDefaults(
       promotionClasses?: string;
       promotionIconClasses?: string;
       autoPlay?: boolean;
+        showWishlistIcon?: boolean;
     }>(),
     {
         isVideo: false,
         isPromotion: false,
+        productId: undefined,
         srcPath: undefined,
         altText: undefined,
         title: undefined,
@@ -27,6 +30,7 @@ withDefaults(
         promotionClasses: undefined,
         promotionIconClasses: undefined,
         autoPlay: false,
+        showWishlistIcon: false,
     },
 );
 </script>
