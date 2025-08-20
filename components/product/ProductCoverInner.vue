@@ -10,9 +10,9 @@ withDefaults(
         label?: string;
         videoClasses?: string | (string | { [key: string]: boolean })[];
         productClasses?: string | (string | { [key: string]: boolean })[];
-        fallbackClasses?: string;
-        promotionClasses?: string;
-        promotionIconClasses?: string;
+        fallbackClasses?: string | (string | { [key: string]: boolean })[];
+        promotionClasses?: string | (string | { [key: string]: boolean })[];
+        promotionIconClasses?: string | (string | { [key: string]: boolean })[];
         autoPlay?: boolean;
         showWishlistIcon?: boolean;
     }>(),

@@ -8,9 +8,9 @@ withDefaults(
         label?: string;
         videoClasses?: string | (string | { [key: string]: boolean })[];
         productClasses?: string | (string | { [key: string]: boolean })[];
-        fallbackClasses?: string;
-        promotionClasses?: string;
-        promotionIconClasses?: string;
+        fallbackClasses?: string | (string | { [key: string]: boolean })[];
+        promotionClasses?: string | (string | { [key: string]: boolean })[];
+        promotionIconClasses?: string | (string | { [key: string]: boolean })[];
         isPromotion?: boolean;
         autoPlay?: boolean;
         showWishlistIcon?: boolean;
@@ -35,7 +35,7 @@ withDefaults(
     <ProductCoverInner
         :is-video="Boolean(cover?.mimeType?.startsWith('video/'))"
         :src-path="cover?.url"
-        :alt-text="cover?.translated?.alt || label || cover?.fileName || ''"
+        :alt-text="cover?.translated?.alt || label || ''"
         :title="cover?.translated?.title"
         :product-id="productId"
         :label="label"
