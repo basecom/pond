@@ -107,6 +107,8 @@ const { getStyle } = usePondStyle();
 </template>
 
 <style scoped>
+@reference "~/assets/css/main.css";
+
 .cart-item-leave-active {
     @apply motion-safe:transition-all duration-300 ease-in-out;
 }
