@@ -23,7 +23,7 @@ const accountLinks: {name: string, link: string}[] = [
         link: '/account/payment',
     },
     {
-        name: 'order',
+        name: 'orders',
         link: '/account/order',
     },
 ];

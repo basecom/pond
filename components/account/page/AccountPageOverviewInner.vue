@@ -19,6 +19,7 @@ const showTitle = configStore.get('core.loginRegistration.showTitleField') as bo
 const form$: Ref<null | Vueform> = ref(null);
 const newsletterStatus: Ref<undefined | Schemas['AccountNewsletterRecipient']> = ref(undefined);
 const displayDoubleNewsletterRegistrationAlert = ref(false);
+const isLoading = ref(false);
 
 onMounted(async () => {
     try {
@@ -41,7 +42,12 @@ onMounted(async () => {
 });
 
 const onChange = async (formData: NewsletterFormData) => {
-    // Unsubscribe, if checkbox value is unchecked
+    if (isLoading.value) {
+        return;
+    }
+    isLoading.value = true;
+
+    // Unsubscribe, if checkbox value is checked
     if (!formData.newsletter) {
         try {
             await newsletterUnsubscribe(props.customer.email);
@@ -61,7 +67,13 @@ const onChange = async (formData: NewsletterFormData) => {
             });
             handleError(error);
         } finally {
-            newsletterStatus.value = await getNewsletterStatus();
+            try {
+                newsletterStatus.value = await getNewsletterStatus();
+            } catch (error) {
+                handleError(error);
+            }
+
+            isLoading.value = false;
         }
         return;
     }
@@ -104,9 +116,17 @@ const onChange = async (formData: NewsletterFormData) => {
             });
             handleError(error);
         } finally {
-            newsletterStatus.value = await getNewsletterStatus();
+            try {
+                newsletterStatus.value = await getNewsletterStatus();
+            } catch (error) {
+                handleError(error);
+            }
+
+            isLoading.value = false;
         }
     }
+
+    isLoading.value = false;
 };
 </script>
 
