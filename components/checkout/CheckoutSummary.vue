@@ -13,29 +13,28 @@ const setSelectedShippingMethod = async (shippingMethodId: AcceptableValue) => {
     try {
         const shippingMethodIdString = shippingMethodId?.toString();
 
-        if (shippingMethodIdString) {
-            await setShippingMethod({ id: shippingMethodIdString });
-            refreshCart();
-        } else {
+        if (!shippingMethodIdString) {
             toast({ title: t('error.message-default'), variant: 'destructive' });
+            return;
         }
+
+        await setShippingMethod({ id: shippingMethodIdString });
+        await refreshCart();
     } catch (error) {
-        handleError(error,true);
+        handleError(error, true);
         toast({ title: t('error.message-default'), variant: 'destructive' });
     }
 };
 
 const addPromotionCodeToCart = async (promotionCode: string) => {
     promotionIsLoading.value = true;
-
     try {
         const result = await addPromotionCode(promotionCode);
+        const errorKeys = Object.keys(result?.errors ?? {});
 
-        const errorKeys = Object.keys(result.errors);
         if (errorKeys.length > 0) {
             const itsAnError = !errorKeys[0]?.includes('promotion-discount-added');
             const code = !itsAnError ? 'promotion-discount-added' : errorKeys[0];
-
             toast({
                 title: t(`checkout.${code}`, {
                     name: promotionCode,
@@ -45,7 +44,7 @@ const addPromotionCodeToCart = async (promotionCode: string) => {
             });
         }
     } catch (error) {
-        handleError(error,true);
+        handleError(error, true);
         toast({ title: t('error.message-default'), variant: 'destructive' });
     } finally {
         promotionIsLoading.value = false;
@@ -54,7 +53,7 @@ const addPromotionCodeToCart = async (promotionCode: string) => {
 
 onMounted(async () => {
     try {
-        getShippingMethods();
+        await getShippingMethods();
     } catch (error) {
         handleError(error,true);
     }

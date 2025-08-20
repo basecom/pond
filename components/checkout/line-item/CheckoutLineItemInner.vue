@@ -80,7 +80,7 @@ const latest = computed(() => formatLocaleDate(props.deliveryInformation?.delive
 
             <div v-if="!isPromotion" :class="getStyle('cart.lineItem.information.description')">
                 <p>
-                    {{ cartItem.payload.productNumber }}
+                    {{ cartItem.payload?.productNumber }}
                 </p>
 
                 <p v-if="itemOptions">
@@ -110,10 +110,12 @@ const latest = computed(() => formatLocaleDate(props.deliveryInformation?.delive
 
     <div :class="getStyle('cart.lineItem.price.outer')">
         <div :class="getStyle('cart.lineItem.price.total')">
-            {{ getFormattedPrice(itemTotalPrice) }}
+            {{ getFormattedPrice(itemTotalPrice ?? cartItem.price?.totalPrice ?? 0) }}
         </div>
-
-        <div v-if="itemQuantity > 1" :class="getStyle('cart.lineItem.price.regular')">
+        <div
+            v-if="(itemQuantity ?? 0) > 1 && itemRegularPrice !== undefined"
+            :class="getStyle('cart.lineItem.price.regular')"
+        >
             {{ getFormattedPrice(itemRegularPrice) }} / {{ $t('checkout.lineItemUnitPriceDescriptor') }}
         </div>
     </div>

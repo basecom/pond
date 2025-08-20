@@ -10,6 +10,7 @@ export function usePondDate() {
             const dateObject = new Date(date);
             if (isNaN(dateObject.getTime())) {
                 handleError('Invalid date format');
+                return undefined;
             }
 
             // formatter for the current locale

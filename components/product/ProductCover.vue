@@ -33,9 +33,9 @@ withDefaults(
 
 <template>
     <ProductCoverInner
-        :is-video="cover?.mimeType?.includes('video')"
+        :is-video="Boolean(cover?.mimeType?.startsWith('video/'))"
         :src-path="cover?.url"
-        :alt-text="cover?.translated?.alt"
+        :alt-text="cover?.translated?.alt || label || cover?.fileName || ''"
         :title="cover?.translated?.title"
         :product-id="productId"
         :label="label"
@@ -43,6 +43,7 @@ withDefaults(
         :product-classes="productClasses"
         :fallback-classes="fallbackClasses"
         :promotion-classes="promotionClasses"
+        :promotion-icon-classes="promotionIconClasses"
         :is-promotion="isPromotion"
         :auto-play="autoPlay"
         :show-wishlist-icon="showWishlistIcon"

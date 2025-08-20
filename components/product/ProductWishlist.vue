@@ -9,7 +9,7 @@ const { isInWishlist, addToWishlist, removeFromWishlist } = useProductWishlist(p
 <template>
     <ProductWishlistInner
         :is-in-wishlist="isInWishlist"
-        @add-to-wishlist="() => addToWishlist"
-        @remove-from-wishlist="() => removeFromWishlist"
+        @add-to-wishlist="addToWishlist"
+        @remove-from-wishlist="removeFromWishlist"
     />
 </template>

@@ -61,18 +61,20 @@ const { getStyle } = usePondStyle();
             </UiSheetDescription>
 
             <slot name="cart-offcanvas-content">
-                <slot name="cart-offcanvas-line-items">
-                    <TransitionGroup name="cart-item" tag="ul" :class="getStyle('cart.sheet.transitionGroup')">
-                        <li v-for="cartItem in cartItems" :key="cartItem.id">
-                            <CheckoutLineItem
-                                :cart-item="cartItem"
-                                :cart-deliveries="cartDeliveries"
-                            />
+                <template v-if="cartItemCount > 0">
+                    <slot name="cart-offcanvas-line-items">
+                        <TransitionGroup name="cart-item" tag="ul" :class="getStyle('cart.sheet.transitionGroup')">
+                            <li v-for="cartItem in (cartItems ?? [])" :key="cartItem.id">
+                                <CheckoutLineItem
+                                    :cart-item="cartItem"
+                                    :cart-deliveries="cartDeliveries"
+                                />
 
-                            <UiSeparator :class="getStyle('cart.sheet.separator')" />
-                        </li>
-                    </TransitionGroup>
-                </slot>
+                                <UiSeparator :class="getStyle('cart.sheet.separator')" />
+                            </li>
+                        </TransitionGroup>
+                    </slot>
+                </template>
 
                 <CheckoutSummary />
 
