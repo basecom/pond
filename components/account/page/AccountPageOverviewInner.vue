@@ -20,6 +20,7 @@ const form$: Ref<null | Vueform> = ref(null);
 const newsletterStatus: Ref<undefined | Schemas['AccountNewsletterRecipient']> = ref(undefined);
 const displayDoubleNewsletterRegistrationAlert = ref(false);
 const isLoading = ref(false);
+const domainUrl = runtimeConfig.public.pond?.salesChannelDomain || url;
 
 onMounted(async () => {
     try {
@@ -86,6 +87,7 @@ const onChange = async (formData: NewsletterFormData) => {
                 street: props.customer.defaultBillingAddress?.street,
                 zipCode: props.customer.defaultBillingAddress?.zipcode,
                 city: props.customer.defaultBillingAddress?.city,
+                storefrontUrl: domainUrl
             });
             toast({
                 title: t('newsletter.subscriptionConfirmationSuccess'),
