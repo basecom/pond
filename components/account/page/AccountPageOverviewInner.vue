@@ -46,10 +46,9 @@ const onChange = async (formData: NewsletterFormData) => {
         return;
     }
 
-    isLoading.value = true;
-
-    // Unsubscribe, if checkbox value is unchecked
+    // Unsubscribe, if checkbox value is checked
     if (!formData.newsletter) {
+        isLoading.value = true;
         try {
             await newsletterUnsubscribe(props.customer.email);
             toast({
