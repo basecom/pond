@@ -69,9 +69,10 @@ const onChange = async (formData: NewsletterFormData) => {
         } finally {
             try {
                 newsletterStatus.value = await getNewsletterStatus();
-            } catch (err) {
-                handleError(err);
+            } catch (error) {
+                handleError(error);
             }
+
             isLoading.value = false;
         }
         return;
@@ -115,12 +116,12 @@ const onChange = async (formData: NewsletterFormData) => {
             });
             handleError(error);
         } finally {
-        } finally {
             try {
                 newsletterStatus.value = await getNewsletterStatus();
-            } catch (err) {
-                handleError(err);
+            } catch (error) {
+                handleError(error);
             }
+
             isLoading.value = false;
         }
     }
