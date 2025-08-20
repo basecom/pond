@@ -14,6 +14,8 @@ const { getNewsletterStatus, newsletterSubscribe, newsletterUnsubscribe } = useN
 const { handleError } = usePondHandleError();
 const { toast } = usePondToast();
 const { t } = useI18n();
+const runtimeConfig = useRuntimeConfig();
+const url = useRequestURL();
 
 const showTitle = configStore.get('core.loginRegistration.showTitleField') as boolean;
 const form$: Ref<null | Vueform> = ref(null);
@@ -87,7 +89,7 @@ const onChange = async (formData: NewsletterFormData) => {
                 street: props.customer.defaultBillingAddress?.street,
                 zipCode: props.customer.defaultBillingAddress?.zipcode,
                 city: props.customer.defaultBillingAddress?.city,
-                storefrontUrl: domainUrl
+                storefrontUrl: domainUrl,
             });
             toast({
                 title: t('newsletter.subscriptionConfirmationSuccess'),
