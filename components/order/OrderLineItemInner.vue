@@ -16,10 +16,7 @@ const { getFormattedPrice } = usePrice();
                 <slot name="line-item-cover">
                     <ProductCover
                         :is-promotion="lineItem.type === 'promotion'"
-                        :is-video="lineItem.cover?.mimeType?.includes('video')"
-                        :src-path="lineItem.cover?.url"
-                        :alt-text="lineItem.cover?.translated?.alt"
-                        :title="lineItem.cover?.translated?.title"
+                        :cover="lineItem.cover"
                         :label="lineItem.label"
                         :video-classes="getStyle('account.order.lineItem.cover')"
                         :product-classes="getStyle('account.order.lineItem.cover')"

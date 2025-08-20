@@ -9,6 +9,7 @@ const props = withDefaults(
         cartDeliveries: undefined,
     },
 );
+
 const configStore = useConfigStore();
 const showDeliveryTime = configStore.get('core.cart.showDeliveryTime') as boolean;
 
@@ -41,6 +42,7 @@ const deliveryInformation = computed(() => {
         :item-options="itemOptions"
         :is-removable="isRemovable"
         :is-stackable="isStackable"
+        :is-promotion="isPromotion"
         :item-quantity="itemQuantity"
         :item-total-price="itemTotalPrice"
         :item-regular-price="itemRegularPrice"

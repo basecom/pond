@@ -9,6 +9,7 @@ const props = withDefaults(
         deliveryInformation?: Schemas['CartDeliveryPosition']
         isRemovable?: boolean;
         isStackable?: boolean;
+        isPromotion?: boolean;
         itemQuantity?: number;
         itemTotalPrice?: number;
         itemRegularPrice?: number;
@@ -18,6 +19,7 @@ const props = withDefaults(
         deliveryInformation: undefined,
         isRemovable: false,
         isStackable: false,
+        isPromotion: false,
         itemQuantity: undefined,
         itemTotalPrice: undefined,
         itemRegularPrice: undefined,
@@ -42,13 +44,11 @@ const latest = computed(() => formatLocaleDate(props.deliveryInformation?.delive
 </script>
 
 <template>
-    <div class="grid grid-cols-[max-content_auto] gap-2">
+    <div :class="getStyle('cart.lineItem.outer')">
         <NuxtLinkLocale>
             <ProductCover
-                :is-video="cover?.mimeType?.includes('video')"
-                :src-path="cover?.url"
-                :alt-text="cover?.translated?.alt"
-                :title="cover?.translated?.title"
+                v-if="!isPromotion"
+                :cover="cover"
                 :label="cartItem.label"
                 :product-classes="getStyle('cart.lineItem.cover.product')"
                 :fallback-classes="getStyle('cart.lineItem.cover.fallback')"
@@ -56,25 +56,29 @@ const latest = computed(() => formatLocaleDate(props.deliveryInformation?.delive
                 :show-wishlist-icon="true"
                 :product-id="cartItem.id"
             />
+
+            <div v-else :class="[getStyle('cart.lineItem.cover.product'), 'flex items-center justify-center']">
+                <Icon name="mdi:percent" class="size-8" />
+            </div>
         </NuxtLinkLocale>
 
         <div>
-            <div class="flex justify-between">
-                <h5 class="line-clamp-2">
+            <div :class="getStyle('cart.lineItem.information.label.outer')">
+                <h5 :class="getStyle('cart.lineItem.information.label.inner')">
                     {{ cartItem.label }}
                 </h5>
 
                 <UiButton
                     v-if="isRemovable"
                     variant="link"
-                    class="!p-0 h-min w-min"
+                    :class="getStyle('cart.lineItem.information.remove')"
                     @click="$emit('removeItem')"
                 >
                     <Icon name="mdi:close" :class="getStyle('ui.sheet.title.icon')" />
                 </UiButton>
             </div>
 
-            <div class="grid gap-px mt-px text-sm text-gray-600">
+            <div v-if="!isPromotion" :class="getStyle('cart.lineItem.information.description')">
                 <p>
                     {{ cartItem.payload.productNumber }}
                 </p>
@@ -83,7 +87,7 @@ const latest = computed(() => formatLocaleDate(props.deliveryInformation?.delive
                     <span
                         v-for="option in itemOptions"
                         :key="option.group"
-                        class="grid gap-px"
+                        :class="getStyle('cart.lineItem.information.options')"
                     >
                         {{ option.group }}: {{ option.option }}
                     </span>
@@ -97,18 +101,19 @@ const latest = computed(() => formatLocaleDate(props.deliveryInformation?.delive
     </div>
 
     <CheckoutLineItemQuantity
+        v-if="!isPromotion"
         :cart-item="cartItem"
         :item-quantity="itemQuantity"
         :is-stackable="isStackable"
         @change-quantity="quantity => $emit('changeQuantity', quantity)"
     />
 
-    <div class="mt-4 text-right">
-        <div class="font-bold">
+    <div :class="getStyle('cart.lineItem.price.outer')">
+        <div :class="getStyle('cart.lineItem.price.total')">
             {{ getFormattedPrice(itemTotalPrice) }}
         </div>
 
-        <div v-if="itemQuantity > 1" class="text-sm">
+        <div v-if="itemQuantity > 1" :class="getStyle('cart.lineItem.price.regular')">
             {{ getFormattedPrice(itemRegularPrice) }} / {{ $t('checkout.lineItemUnitPriceDescriptor') }}
         </div>
     </div>

@@ -19,7 +19,7 @@ const { getStyle } = usePondStyle();
             </slot>
 
             <slot name="wishlist">
-                <LayoutHeaderWishlist v-if="wishlistEnabled" />
+                <LayoutHeaderWishlist v-show="wishlistEnabled" />
             </slot>
 
             <slot name="account-mobile">

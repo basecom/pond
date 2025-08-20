@@ -1,34 +1,30 @@
 <script setup lang="ts">
+import type { Schemas } from '@shopware/api-client/api-types';
+
 withDefaults(
     defineProps<{
-      isVideo?: boolean;
-      isPromotion?: boolean;
+        cover?: Schemas['Media'];
         productId?: string;
-      srcPath?: string;
-      altText?: string;
-      title?: string;
-      label?: string;
-      videoClasses?: string | (string | { [key: string]: boolean })[];
-      productClasses?: string | (string | { [key: string]: boolean })[];
-      fallbackClasses?: string;
-      promotionClasses?: string;
-      promotionIconClasses?: string;
-      autoPlay?: boolean;
+        label?: string;
+        videoClasses?: string | (string | { [key: string]: boolean })[];
+        productClasses?: string | (string | { [key: string]: boolean })[];
+        fallbackClasses?: string;
+        promotionClasses?: string;
+        promotionIconClasses?: string;
+        isPromotion?: boolean;
+        autoPlay?: boolean;
         showWishlistIcon?: boolean;
     }>(),
     {
-        isVideo: false,
-        isPromotion: false,
+        cover: undefined,
         productId: undefined,
-        srcPath: undefined,
-        altText: undefined,
-        title: undefined,
         label: undefined,
         videoClasses: undefined,
         productClasses: undefined,
         fallbackClasses: undefined,
         promotionClasses: undefined,
         promotionIconClasses: undefined,
+        isPromotion: false,
         autoPlay: false,
         showWishlistIcon: false,
     },
@@ -36,5 +32,19 @@ withDefaults(
 </script>
 
 <template>
-    <ProductCoverInner v-bind="$props" />
+    <ProductCoverInner
+        :is-video="cover?.mimeType?.includes('video')"
+        :src-path="cover?.url"
+        :alt-text="cover?.translated?.alt"
+        :title="cover?.translated?.title"
+        :product-id="productId"
+        :label="label"
+        :video-classes="videoClasses"
+        :product-classes="productClasses"
+        :fallback-classes="fallbackClasses"
+        :promotion-classes="promotionClasses"
+        :is-promotion="isPromotion"
+        :auto-play="autoPlay"
+        :show-wishlist-icon="showWishlistIcon"
+    />
 </template>

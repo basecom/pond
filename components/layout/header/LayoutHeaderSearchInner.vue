@@ -108,10 +108,7 @@ watch(
                                             @click="isOpen = false"
                                         >
                                             <ProductCover
-                                                :is-video="product.cover?.media?.mimeType?.includes('video')"
-                                                :src-path="product.cover?.media?.url"
-                                                :alt-text="product.cover?.media?.translated?.alt"
-                                                :title="product.cover?.media?.translated?.title"
+                                                :cover="product.cover"
                                                 :label="product.translated.name"
                                                 :product-classes="getStyle('header.actions.search.results.product')"
                                                 :fallback-classes="getStyle('header.actions.search.results.fallback')"

@@ -5,85 +5,118 @@ import type { AcceptableValue } from 'reka-ui';
 withDefaults(
     defineProps<{
         cart?: Schemas['Cart'];
-        shippingCost?: Schemas['CartDelivery'];
+        shippingCosts?: Schemas['CartDelivery'][];
         shippingMethods?: Schemas['ShippingMethod'][];
         selectedShippingMethod?: Schemas['ShippingMethod'];
         subtotal?: number;
         totalPrice?: number;
+        promotionIsLoading?: boolean;
     }>(),
     {
         cart: undefined,
-        shippingCost: undefined,
+        shippingCosts: undefined,
         shippingMethods: undefined,
         selectedShippingMethod: undefined,
         subtotal: undefined,
         totalPrice: undefined,
+        promotionIsLoading: false,
     },
 );
 
 const emits = defineEmits<{
-    'set-selected-shipping-method': [shippingMethodId: AcceptableValue];
-    'add-selected-promotion-code': [promotionCode: string];
+    setSelectedShippingMethod: [shippingMethodId: AcceptableValue];
+    addPromotionCode: [promotionCode: string];
 }>();
 
 const { getFormattedPrice } = usePrice();
+const { getStyle } = usePondStyle();
 
-const showSelectionSelect = ref(false);
+const promotionCode = ref('');
+
+const addPromotionCode = () => {
+    emits('addPromotionCode', promotionCode.value);
+    promotionCode.value = '';
+};
 </script>
 
 <template>
-    <div class="bg-gray-100 p-4 grid gap-4 mt-3">
-        <div class="grid grid-cols-2 gap-4 border-b pb-2 border-b-gray-200">
-            <div>
-                {{ $t('checkout.summaryPositionPrice') }}
-            </div>
-            <div class="text-right">
-                {{ getFormattedPrice(subtotal) }}
-            </div>
-        </div>
+    <div :class="getStyle('cart.summary.outer')">
+        <slot name="summary-position-price">
+            <div :class="getStyle('cart.summary.positionPrice')">
+                <div>
+                    {{ $t('checkout.summaryPositionPrice') }}
+                </div>
 
-        <div v-if="shippingCost.shippingCosts" class="grid grid-cols-2 gap-x-4 border-b pb-2 border-b-gray-200">
-            <div>
-                {{ $t('checkout.summaryShipping') }}
-
-                <UiButton class="!p-0" variant="ghost" @click="showSelectionSelect = !showSelectionSelect">
-                    ({{ selectedShippingMethod?.translated?.name || $t('checkout.noShippingMethod') }})
-                </UiButton>
+                <div :class="getStyle('cart.summary.price')">
+                    {{ getFormattedPrice(subtotal) }}
+                </div>
             </div>
+        </slot>
 
-            <div class="text-right">
-                {{ getFormattedPrice(shippingCost.shippingCosts?.totalPrice) }}
+        <slot name="summary-shipping">
+            <div :class="getStyle('cart.summary.shipping')">
+                <div>
+                    {{ $t('checkout.summaryShipping') }}
+
+                    <UiSelect
+                        v-if="shippingCosts"
+                        :model-value="selectedShippingMethod?.id"
+                        @update:model-value="(shippingMethodId: AcceptableValue) => emits('setSelectedShippingMethod', shippingMethodId)"
+                    >
+                        <UiSelectTrigger>
+                            <UiSelectValue />
+                        </UiSelectTrigger>
+
+                        <UiSelectContent>
+                            <UiSelectGroup>
+                                <template v-for="shippingMethod in shippingMethods" :key="shippingMethod.id">
+                                    <UiSelectItem :value="shippingMethod.id">
+                                        {{ shippingMethod.translated.name }}
+                                    </UiSelectItem>
+                                </template>
+                            </UiSelectGroup>
+                        </UiSelectContent>
+                    </UiSelect>
+                </div>
+
+                <div :class="getStyle('cart.summary.price')">
+                    <div
+                        v-for="(shippingCost, index) in shippingCosts"
+                        :key="index"
+                    >
+                        {{ getFormattedPrice(shippingCost.shippingCosts?.totalPrice ?? 0) }}
+                    </div>
+                </div>
             </div>
+        </slot>
 
-            <template v-if="showSelectionSelect">
-                <UiSelect
-                    :model-value="selectedShippingMethod?.id"
-                    @update:model-value="(shippingMethodId: AcceptableValue) => emits('set-selected-shipping-method', shippingMethodId)"
-                >
-                    <UiSelectTrigger>
-                        <UiSelectValue />
-                    </UiSelectTrigger>
+        <slot name="summary-total-price">
+            <div :class="getStyle('cart.summary.total')">
+                <div :class="getStyle('cart.summary.totalHighlight')">
+                    {{ $t('checkout.summaryTotalPrice') }}
+                </div>
 
-                    <UiSelectContent>
-                        <UiSelectGroup>
-                            <template v-for="shippingMethod in shippingMethods" :key="shippingMethod.id">
-                                <UiSelectItem :value="shippingMethod.id">
-                                    {{ shippingMethod.translated.name }}
-                                </UiSelectItem>
-                            </template>
-                        </UiSelectGroup>
-                    </UiSelectContent>
-                </UiSelect>
-            </template>
-        </div>
-
-        <div class="grid grid-cols-2 gap-4">
-            <div class="font-bold">
-                {{ $t('checkout.summaryTotalPrice') }}
+                <div :class="[getStyle('cart.summary.totalHighlight'), getStyle('cart.summary.price')]">
+                    {{ getFormattedPrice(totalPrice) }}
+                </div>
             </div>
-            <div class="text-right font-bold">
-                {{ getFormattedPrice(totalPrice) }}
-            </div>
-        </div>
+        </slot>
     </div>
+
+    <slot name="summary-promotion">
+        <form :class="getStyle('cart.summary.promotion')" @submit.prevent="addPromotionCode">
+            <UiInput
+                v-model="promotionCode"
+                type="text"
+                :placeholder="$t('checkout.addPromotionPlaceholder')"
+            />
+
+            <UiButton
+                :is-loading="promotionIsLoading"
+                :disabled="!promotionCode.trim()"
+            >
+                <Icon v-if="!promotionIsLoading" name="mdi:check" class="size-4" />
+            </UiButton>
+        </form>
+    </slot>
 </template>

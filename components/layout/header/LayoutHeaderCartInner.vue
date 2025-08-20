@@ -43,81 +43,77 @@ const { getStyle } = usePondStyle();
             </UiSheetTrigger>
         </slot>
 
-        <UiSheetContent>
+        <UiSheetContent :class="getStyle('cart.sheet.content')">
             <UiSheetHeader>
                 <UiSheetTitle>
                     <slot name="cart-offcanvas-header">
                         <span>{{ $t('checkout.cartHeader') }}</span>
                     </slot>
                 </UiSheetTitle>
+            </UiSheetHeader>
 
-                <UiSheetDescription>
-                    <slot name="cart-offcanvas-description">
-                        <template v-if="cartItemCount > 0">
-                            {{ $t('checkout.itemCounter', { count: cartItemCount }) }}
-                        </template>
-                    </slot>
-                </UiSheetDescription>
+            <UiSheetDescription :class="getStyle('cart.sheet.description')">
+                <slot name="cart-offcanvas-description">
+                    <template v-if="cartItemCount > 0">
+                        {{ $t('checkout.itemCounter', { count: cartItemCount }) }}
+                    </template>
+                </slot>
+            </UiSheetDescription>
 
-                <slot name="cart-offcanvas-content">
-                    <TransitionGroup name="cart-item" tag="ul" class="grid gap-4">
+            <slot name="cart-offcanvas-content">
+                <slot name="cart-offcanvas-line-items">
+                    <TransitionGroup name="cart-item" tag="ul" :class="getStyle('cart.sheet.transitionGroup')">
                         <li v-for="cartItem in cartItems" :key="cartItem.id">
                             <CheckoutLineItem
                                 :cart-item="cartItem"
                                 :cart-deliveries="cartDeliveries"
                             />
 
-                            <UiSeparator class="mt-4" />
+                            <UiSeparator :class="getStyle('cart.sheet.separator')" />
                         </li>
                     </TransitionGroup>
-
-                    <CheckoutSummary />
-
-                    <div :class="getStyle('cart.summary.links.outer')">
-                        <slot name="proceed-to-checkout-button">
-                            <NuxtLinkLocale to="/checkout/confirm">
-                                <UiButton :class="getStyle('cart.summary.links.confirm')">
-                                    {{ $t('checkout.proceedToCheckout') }}
-                                </UiButton>
-                            </NuxtLinkLocale>
-                        </slot>
-
-                        <slot name="proceed-to-cart-button">
-                            <NuxtLinkLocale to="/checkout/cart">
-                                <UiButton variant="link" :class="getStyle('cart.summary.links.cart')">
-                                    {{ $t('checkout.proceedToCart') }}
-                                </UiButton>
-                            </NuxtLinkLocale>
-                        </slot>
-                    </div>
                 </slot>
 
-                <slot name="cart-offcanvas-no-content">
-                    <div v-if="cartItemCount === 0" :class="getStyle('cart.empty')">
-                        {{ $t('checkout.noLineItems') }}
-                    </div>
-                </slot>
-            </UiSheetHeader>
+                <CheckoutSummary />
+
+                <div :class="getStyle('cart.summary.links.outer')">
+                    <slot name="cart-offcanvas-confirm">
+                        <NuxtLinkLocale to="/checkout/confirm">
+                            <UiButton :class="getStyle('cart.summary.links.confirm')">
+                                {{ $t('checkout.proceedToCheckout') }}
+                            </UiButton>
+                        </NuxtLinkLocale>
+                    </slot>
+
+                    <slot name="cart-offcanvas-cart">
+                        <NuxtLinkLocale to="/checkout/cart">
+                            <UiButton variant="link" :class="getStyle('cart.summary.links.cart')">
+                                {{ $t('checkout.proceedToCart') }}
+                            </UiButton>
+                        </NuxtLinkLocale>
+                    </slot>
+                </div>
+            </slot>
+
+            <slot name="cart-offcanvas-no-content">
+                <div v-if="cartItemCount === 0" :class="getStyle('cart.empty')">
+                    {{ $t('checkout.noLineItems') }}
+                </div>
+            </slot>
         </UiSheetContent>
     </UiSheet>
 </template>
 
 <style scoped>
 .cart-item-leave-active {
-    @apply
-    absolute w-full z-10
-    motion-safe:transition-[all_0.3s_cubic-bezier(0.4,0,0.2,1)]
+    @apply motion-safe:transition-all duration-300 ease-in-out;
 }
 
 .cart-item-leave-to {
-    @apply
-    motion-safe:opacity-0
-    motion-safe:translate-y-[-10px]
-    motion-safe:scale-95
-    motion-safe:overflow-hidden;
+    @apply opacity-0 -translate-y-2 scale-95;
 }
 
 .cart-item-move {
-    @apply motion-safe:transition-[all_0.3s_cubic-bezier(0.4,0,0.2,1)];
+    @apply motion-safe:transition-all duration-300 ease-in-out;
 }
 </style>

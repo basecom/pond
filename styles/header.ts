@@ -60,6 +60,7 @@ export default {
         },
 
         wishlist: {
+            outer: 'flex',
             trigger: 'relative h-5',
             icon: 'size-5',
             badge: 'absolute -right-2 -top-1.5 !px-1 !py-0 text-xs font-normal',
