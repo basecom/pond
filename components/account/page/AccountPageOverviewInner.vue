@@ -67,7 +67,11 @@ const onChange = async (formData: NewsletterFormData) => {
             });
             handleError(error);
         } finally {
-            newsletterStatus.value = await getNewsletterStatus();
+            try {
+                newsletterStatus.value = await getNewsletterStatus();
+            } catch (err) {
+                handleError(err);
+            }
             isLoading.value = false;
         }
         return;
