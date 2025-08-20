@@ -2,23 +2,29 @@ export function usePondDate() {
     const { locale } = useI18n();
     const { handleError } = usePondHandleError();
 
-    const localeFormats: {[key: string]: string;} = {
-        'de-DE': 'DD.MM.YYYY',
-        'en-GB': 'DD/MM/YYYY',
-    };
-
     const formatLocaleDate = (date: string) => {
-        const format = localeFormats[locale.value];
-        if (format) {
-            try {
-                return useDateFormat(date, format);
-            } catch {
-                handleError('[Pond][usePondDate]: Invalid date format');
+        if (!date) return undefined;
+
+        try {
+            // generate date object
+            const dateObject = new Date(date);
+            if (isNaN(dateObject.getTime())) {
+                handleError('Invalid date format');
                 return undefined;
             }
-        }
 
-        return undefined;
+            // formatter for the current locale
+            const formatter = new Intl.DateTimeFormat(locale.value, {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+            });
+
+            return formatter.format(dateObject);
+        } catch {
+            handleError('Invalid date format');
+            return undefined;
+        }
     };
 
     return { formatLocaleDate };

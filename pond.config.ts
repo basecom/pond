@@ -1,4 +1,5 @@
 import account from './styles/account/account';
+import cart from './styles/cart';
 import error from './styles/error';
 import footer from './styles/footer';
 import header from './styles/header';
@@ -11,6 +12,7 @@ import layout from './styles/layout';
 export default {
     styles: {
         account,
+        cart,
         error,
         footer,
         header,

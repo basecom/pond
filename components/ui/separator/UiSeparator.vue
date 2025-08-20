@@ -3,9 +3,16 @@ import { Separator  } from 'reka-ui';
 import type { SeparatorProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 
-const props = defineProps<
-  SeparatorProps & { class?: HTMLAttributes['class'], label?: string }
->();
+const props = withDefaults(
+    defineProps<
+        SeparatorProps & { class?: HTMLAttributes['class'], label?: string }
+    >(),
+    {
+        class: undefined,
+        label: undefined,
+        orientation: 'horizontal',
+    },
+);
 
 const { getStyle } = usePondStyle();
 
@@ -30,6 +37,8 @@ const delegatedProps = computed(() => {
                 [getStyle('ui.separator.inner.horizontal')]: orientation === 'horizontal',
                 [getStyle('ui.separator.inner.vertical')]: orientation === 'vertical',
             }, getStyle('ui.separator.inner.base'), props.class]"
-        >{{ props.label }}</span>
+        >
+            {{ props.label }}
+        </span>
     </Separator>
 </template>

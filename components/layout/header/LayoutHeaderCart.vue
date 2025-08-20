@@ -1,7 +1,11 @@
 <script setup lang="ts">
-const { cartItems } = useCart();
+const { cartItems, cart, count } = useCart();
 </script>
 
 <template>
-    <LayoutHeaderCartInner :cart-items="cartItems" />
+    <LayoutHeaderCartInner
+        :cart-items="cartItems"
+        :cart-deliveries="cart?.deliveries"
+        :cart-item-count="count"
+    />
 </template>
