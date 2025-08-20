@@ -6,7 +6,7 @@ const props = withDefaults(
     defineProps<{
         cartItem: Schemas['LineItem'];
         itemOptions?: LineItemOption[];
-        deliveryInformation?: Schemas['CartDeliveryPosition']
+        deliveryInformation?: Schemas['CartDeliveryPosition'];
         isRemovable?: boolean;
         isStackable?: boolean;
         isPromotion?: boolean;

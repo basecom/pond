@@ -45,7 +45,7 @@ const showControls = ref(false);
         <template v-if="isPromotion">
             <slot name="promotion-cover">
                 <div :class="promotionClasses">
-                    <Icon name="mdi:percent" :class="promotionIconClasses" />
+                    <Icon name="mdi:percent" :class="promotionIconClasses" aria-hidden="true" />
                 </div>
             </slot>
         </template>
@@ -99,6 +99,6 @@ const showControls = ref(false);
             </slot>
         </template>
 
-        <ProductWishlist v-if="showWishlistIcon" :product-id="productId" />
+        <ProductWishlist v-if="showWishlistIcon && productId" :product-id="productId" />
     </div>
 </template>

@@ -44,7 +44,7 @@ const showReview = configStore.get('core.listing.showReview') as boolean;
                     :aria-label="`navigate-to-${getProductName({ product })}`"
                 >
                     <ProductCover
-                        :cover="product?.cover?.media?.translated?.title"
+                        :cover="product?.cover?.media"
                         :label="product.name"
                         :video-classes="[getStyle('product.card.cover.default'), {
                             [getStyle('product.card.cover.object.cover')]: displayMode === 'cover' ||

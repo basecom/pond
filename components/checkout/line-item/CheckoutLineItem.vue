@@ -46,7 +46,7 @@ const deliveryInformation = computed(() => {
         :item-quantity="itemQuantity"
         :item-total-price="itemTotalPrice"
         :item-regular-price="itemRegularPrice"
-        @remove-item="() => removeItem()"
-        @change-quantity="quantity => changeItemQuantity(quantity)"
+        @remove-item="removeItem"
+        @change-quantity="changeItemQuantity"
     />
 </template>

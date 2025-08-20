@@ -68,7 +68,7 @@ onMounted(async () => {
         :selected-shipping-method="selectedShippingMethod"
         :subtotal="subtotal"
         :total-price="totalPrice"
-        @set-selected-shipping-method="shippingMethodId => setSelectedShippingMethod(shippingMethodId)"
-        @add-promotion-code="promotionCode => addPromotionCodeToCart(promotionCode)"
+        @set-selected-shipping-method="setSelectedShippingMethod"
+        @add-promotion-code="addPromotionCodeToCart"
     />
 </template>

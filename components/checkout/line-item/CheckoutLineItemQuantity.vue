@@ -14,10 +14,14 @@ withDefaults(
 );
 
 defineEmits<{
-    'change-quantity': [quantity: number];
+    changeQuantity: [quantity: number];
 }>();
 </script>
 
 <template>
-    <CheckoutLineItemQuantityInner v-if="isStackable" v-bind="$props" @change-quantity="quantity => $emit('change-quantity', quantity)" />
+    <CheckoutLineItemQuantityInner
+        v-if="isStackable"
+        v-bind="$props"
+        @change-quantity="quantity => $emit('changeQuantity', quantity)"
+    />
 </template>

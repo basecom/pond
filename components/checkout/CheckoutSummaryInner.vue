@@ -42,7 +42,7 @@ const addPromotionCode = () => {
 <template>
     <div :class="getStyle('cart.summary.outer')">
         <slot name="summary-position-price">
-            <div :class="getStyle('cart.summary.positionPrice')">
+            <div v-if="subtotal" :class="getStyle('cart.summary.positionPrice')">
                 <div>
                     {{ $t('checkout.summaryPositionPrice') }}
                 </div>
@@ -59,7 +59,7 @@ const addPromotionCode = () => {
                     {{ $t('checkout.summaryShipping') }}
 
                     <UiSelect
-                        v-if="shippingCosts"
+                        v-if="shippingCosts && (shippingMethods?.length ?? 0) > 0"
                         :model-value="selectedShippingMethod?.id"
                         @update:model-value="(shippingMethodId: AcceptableValue) => emits('setSelectedShippingMethod', shippingMethodId)"
                     >
@@ -91,7 +91,7 @@ const addPromotionCode = () => {
         </slot>
 
         <slot name="summary-total-price">
-            <div :class="getStyle('cart.summary.total')">
+            <div v-if="totalPrice" :class="getStyle('cart.summary.total')">
                 <div :class="getStyle('cart.summary.totalHighlight')">
                     {{ $t('checkout.summaryTotalPrice') }}
                 </div>
