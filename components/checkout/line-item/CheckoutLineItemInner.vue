@@ -86,7 +86,7 @@ const latest = computed(() => formatLocaleDate(props.deliveryInformation?.delive
                 <p v-if="itemOptions">
                     <span
                         v-for="option in itemOptions"
-                        :key="option.group"
+                        :key="`${option.group}:${option.option}`"
                         :class="getStyle('cart.lineItem.information.options')"
                     >
                         {{ option.group }}: {{ option.option }}
